@@ -1,0 +1,450 @@
+﻿@model TestAnalyser.Model.Usuario
+
+@{
+    ViewBag.Title = "Cadastrar Questões";
+}
+
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+    <style type="text/css">
+        body {
+            font-family: Arial;
+            font-size: 10pt;
+        }
+
+        .error {
+            color: red;
+        }
+    </style>
+</head>
+
+
+<h2>Cadastrar Questoes</h2>
+<div class="col-lg-12 tab-content">
+    @*Abas para cada tipo de questão ...*@
+    <br />
+    <ul class="nav justify-content-center nav-pills nav-fill">
+        <li id="SE" class="nav-item active"><a class="borda" data-toggle="tab" href="#divSE">Simples-Escolha</a></li>
+        <li id="ME" class="nav-item"><a class="borda" data-toggle="tab" href="#divME">Multripla-Escolha</a></li>
+        <li id="VF" class="nav-item"><a class="borda" data-toggle="tab" href="#divVF">Verdadeiro Ou Falso</a></li>
+        <li id="DT" class="nav-item"><a class="borda" data-toggle="tab" href="#divDT">Dissertativa</a></li>
+    </ul>
+
+    @*Cada DIV terá um tipo de questão que irá ser apresentado em tela...*@
+    <br />
+    <div id="divSE" class="tab-pane fade in active">
+        <h5>Tipo: Simples-Escolha</h5>
+        <br />
+        <form>
+            <div class="form-row">
+                <div class="col-md-4">
+                    <label for="AssuntoSE">Assunto</label>
+                    <input type="text" class="form-control" id="AssuntoSE">
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="col-md-8">
+                    <label for="EnunciadoSE">Enunciado</label>
+                    <textarea class="form-control" id="EnunciadoSE"></textarea>
+                </div>
+            </div>
+            <br />
+            <div class="form-row">
+                <div class="col-md-8">
+                    <div class="row">
+                        <div class="col-md-1" style="padding-right: 10px;">
+                            <input type="radio" id="SErdA" name="SEradio" />
+                            <label for="A">A)</label>
+                        </div>
+                        <div class="col-md-10">
+                            <input class="form-control" type="text" id="SEcampoA">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-1" style="padding-right: 10px;">
+                            <input type="radio" id="SErdB" name="SEradio" />
+                            <label for="B">B)</label>
+                        </div>
+                        <div class="col-md-10">
+                            <input class="form-control" type="text" id="SEcampoB">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-1" style="padding-right: 10px;">
+                            <input type="radio" id="SErdC" name="SEradio" />
+                            <label for="C">C)</label>
+                        </div>
+                        <div class="col-md-10">
+                            <input class="form-control" type="text" id="SEcampoC">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-1" style="padding-right: 10px;">
+                            <input type="radio" id="SErdD" name="SEradio" />
+                            <label for="D">D)</label>
+                        </div>
+                        <div class="col-md-10">
+                            <input class="form-control" type="text" id="SEcampoD">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-1" style="padding-right: 10px;">
+                            <input type="radio" id="SErdE" name="SEradio" />
+                            <label for="E">E)</label>
+                        </div>
+                        <div class="col-md-10">
+                            <input class="form-control" type="text" id="SEcampoE">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <br />
+            <div class="form-row">
+                <div class="col-md-3 offset-1">
+                    @*tentativa de usar os glyphicons ... falha*@
+                    <button witdh="50" title="Remover" class="btn-default glyphicon glyphicon-minus" onclick="RemoveLinha()"> - </button>
+                    <button witdh="50" title="Adicionar" class="btn-default glyphicon glyphicon-plus" onclick="AddLinha()"> + </button>
+                </div>
+            </div>
+            <br />
+            <div class="form-row">
+                <button witdh="50" title="Salvar" class="btn btn-primary btn-sm" onclick="SalvarSE()">Salvar</button>
+            </div>
+        </form>
+
+
+    </div>
+
+    <div id="divME" class="tab-pane fade">
+        <h5>Tipo: Multipla-Escolha</h5>
+        <br />
+        <br />
+
+        <form>
+            <div class="form-row">
+                <div class="col-md-4">
+                    <label for="AssuntoME">Assunto</label>
+                    <input type="text" class="form-control" id="AssuntoME">
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="col-md-8">
+                    <label for="EnunciadoME">Enunciado</label>
+                    <textarea class="form-control" id="EnunciadoME"></textarea>
+                </div>
+            </div>
+            <br />
+            <div class="form-row">
+                <div class="col-md-8">
+                    <div class="row">
+                        <div class="col-md-1">
+                            <label for="1">1)</label>
+                        </div>
+                        <div class="col-md-10">
+                            <input class="form-control" type="text" id="MEcampo1">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-1">
+                            <label for="2">2)</label>
+                        </div>
+                        <div class="col-md-10">
+                            <input class="form-control" type="text" id="MEcampo2">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-1">
+                            <label for="3">3)</label>
+                        </div>
+                        <div class="col-md-10">
+                            <input class="form-control" type="text" id="MEcampo3">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-1">
+                            <label for="4">4)</label>
+                        </div>
+                        <div class="col-md-10">
+                            <input class="form-control" type="text" id="MEcampo4">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-1">
+                            <label for="5">5)</label>
+                        </div>
+                        <div class="col-md-10">
+                            <input class="form-control" type="text" id="MEcampo5">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <br />
+            <div class="form-row">
+                <div class="col-md-3 offset-1">
+                    <button witdh="50" title="Remover Alternativa" class="btn-default" onclick="RemoveLinha()"> - </button>
+                    <button witdh="50" title="Adicionar Alternativa" class="btn-default" onclick="AddLinha()"> + </button>
+                </div>
+            </div>
+
+
+            <br />
+            <div class="form-row">
+                <div class="col-md-8">
+                    <div class="row">
+                        <div class="col-md-1" style="padding-right: 10px;">
+                            <input type="checkbox" id="MEcbA" />
+                            <label for="A">A)</label>
+                        </div>
+                        <div class="col-md-10">
+                            <input class="form-control" type="text" id="MEcampoA">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-1" style="padding-right: 10px;">
+                            <input type="checkbox" id="MEcbB" />
+                            <label for="B">B)</label>
+                        </div>
+                        <div class="col-md-10">
+                            <input class="form-control" type="text" id="MEcampoB">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-1" style="padding-right: 10px;">
+                            <input type="checkbox" id="MEcb " />
+                            <label for="C">C)</label>
+                        </div>
+                        <div class="col-md-10">
+                            <input class="form-control" type="text" id="MEcampoC">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-1" style="padding-right: 10px;">
+                            <input type="checkbox" id="MEcbD" />
+                            <label for="D">D)</label>
+                        </div>
+                        <div class="col-md-10">
+                            <input class="form-control" type="text" id="MEcampoD">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-1" style="padding-right: 10px;">
+                            <input type="checkbox" id="MEcbE" />
+                            <label for="E">E)</label>
+                        </div>
+                        <div class="col-md-10">
+                            <input class="form-control" type="text" id="MEcampoE">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <br />
+            <div class="form-row">
+                <div class="col-md-3 offset-1">
+                    <button witdh="50" title="Remover Alternativa" class="btn-default" onclick="RemoveLinha()"> - </button>
+                    <button witdh="50" title="Adicionar Alternativa" class="btn-default" onclick="AddLinha()"> + </button>
+                </div>
+            </div>
+            <br />
+            <div class="form-row">
+                <button witdh="50" title="Salvar" class="btn btn-primary btn-sm" onclick="SalvarME()">Salvar</button>
+            </div>
+        </form>
+    </div>
+
+
+    <div id="divVF" class="tab-pane fade">
+        <h5>Tipo: Verdadeiro ou Falso</h5>
+        <br />
+        <form>
+            <div class="form-row">
+                <div class="col-md-4">
+                    <label for="AssuntoVF">Assunto</label>
+                    <input type="text" class="form-control" id="AssuntoVF">
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="col-md-8">
+                    <label for="EnunciadoVF">Enunciado</label>
+                    <textarea class="form-control" id="EnunciadoVF"></textarea>
+                </div>
+            </div>
+            <br />
+            <div class="form-row">
+                <div class="col-md-8">
+                    <div class="row">
+                        <div class="col-md-1">
+                            <label for="I">I)</label>
+                        </div>
+                        <div class="col-md-10">
+                            <input class="form-control" type="text" id="VFcampoI">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-1">
+                            <label for="II">II)</label>
+                        </div>
+                        <div class="col-md-10">
+                            <input class="form-control" type="text" id="VFcampoII">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-1">
+                            <label for="III">III)</label>
+                        </div>
+                        <div class="col-md-10">
+                            <input class="form-control" type="text" id="VFcampoIII">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-1">
+                            <label for="IV">IV)</label>
+                        </div>
+                        <div class="col-md-10">
+                            <input class="form-control" type="text" id="VFcampoIV">
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <br />
+            <div class="form-row">
+                <div class="col-md-3 offset-1">
+                    <button witdh="50" title="Remover Alternativa" class="btn-default" onclick="RemoveLinha()"> - </button>
+                    <button witdh="50" title="Adicionar Alternativa" class="btn-default" onclick="AddLinha()"> + </button>
+                </div>
+            </div>
+
+
+            <br />
+            <div class="form-row">
+                <div class="col-md-8">
+                    <div class="row">
+                        <div class="col-md-1" style="padding-right: 10px;">
+                            <input type="radio" id="VFrdA" name="VFradio" />
+                            <label for="A">A)</label>
+                        </div>
+                        <div class="col-md-10">
+                            <input class="form-control" type="text" id="VFcampoA">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-1" style="padding-right: 10px;">
+                            <input type="radio" id="VFrdB" name="VFradio" />
+                            <label for="B">B)</label>
+                        </div>
+                        <div class="col-md-10">
+                            <input class="form-control" type="text" id="VFcampoB">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-1" style="padding-right: 10px;">
+                            <input type="radio" id="VFrdC" name="VFradio" />
+                            <label for="C">C)</label>
+                        </div>
+                        <div class="col-md-10">
+                            <input class="form-control" type="text" id="VFcampoC">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-1" style="padding-right: 10px;">
+                            <input type="radio" id="VFrdD" name="VFradio" />
+                            <label for="D">D)</label>
+                        </div>
+                        <div class="col-md-10">
+                            <input class="form-control" type="text" id="VFcampoD">
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <br />
+            <div class="form-row">
+                <div class="col-md-3 offset-1">
+                    <button witdh="50" title="Remover Alternativa" class="btn-default" onclick="RemoveLinha()"> - </button>
+                    <button witdh="50" title="Adicionar Alternativa" class="btn-default" onclick="AddLinha()"> + </button>
+                </div>
+            </div>
+            <br />
+            <div class="form-row">
+                <button witdh="50" title="Salvar" class="btn btn-primary btn-sm" onclick="SalvarVF()">Salvar</button>
+            </div>
+        </form>
+    </div>
+
+    <script src="ckeditor/ckeditor.js"></script>
+    <div id="divDT" class="tab-pane fade">
+        <h5>Tipo: Dissertativa</h5>
+        <br />
+        <form>
+            <div class="form-row">
+                <div class="col-md-4">
+                    <label for="AssuntoDT">Assunto</label>
+                    <input type="text" class="form-control" id="AssuntoDT">
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="col-md-8">
+                    @*<label for="EnuncuadoDT">Enunciado</label>
+                        <textarea class="form-control" id="EnuncuadoDT"></textarea>*@
+
+                    @using (Html.BeginForm("Index", "Home", FormMethod.Post))
+                    {
+
+                        <label for="EnuncuadoDT">Enunciado</label>
+                        @Html.TextAreaFor(m => m.PersonalDetails)
+                        @Html.ValidationMessageFor(m => m.PersonalDetails, "", new { @class = "error" })
+                        <br /><br />
+                        @*<input type="submit" value="Submit" />
+                        <br />*@
+                        <span>@Html.Raw(Model.PersonalDetails)</span>
+                    }
+                    @Scripts.Render("~/bundles/jquery")
+                    <script type="text/javascript" src="//tinymce.cachefly.net/4.0/tinymce.min.js"></script>
+                    <script type="text/javascript">
+                        tinymce.init({ selector: 'textarea', width: 500 });
+                    </script>
+
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="col-md-8">
+                    <label for="RespostaDT">Resposta correta</label>
+                    <textarea class="form-control" id="RespostaDT"></textarea>
+                </div>
+            </div>
+            <br />
+            <div class="form-row">
+                <div class="col-md-2">
+                    <button witdh="50" title="Salvar" class="btn btn-primary btn-sm btn-diss" onclick="SalvarDT()">Salvar</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+@*Cada botão, caixa de texto, e outros atributos da tela tem sua ID especifica, para salvar deverá ser resgatado os valores atraves dessas ID's*@
+
+@*<script>
+
+        function AddLinha() {
+
+        }
+
+        function SalvarSE() {
+
+        }
+
+        function SalvarME() {
+
+        }
+
+        function SalvarVF() {
+
+        }
+
+        function SalvarDT() {
+
+        }
+
+    </script>*@

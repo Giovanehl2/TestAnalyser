@@ -1,0 +1,87 @@
+﻿@{
+    ViewBag.Title = "AdicionarQuestoes";
+}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script> @*//remover*@
+
+<h2>Verificar e Modificar Questões da Prova</h2>
+<br/>
+<div class="col-md-12">
+    <div class="row">
+        <div class="col-md-8">
+            <h3>Questão 1</h3>
+            <textarea class="" style="min-width: 100%;" cols="30" rows="2" wrap="hard" name="DTquestao" id="DTquestao" placeholder="Pergunta numero 1 da prova"></textarea>
+        </div>
+        <div class="col-md-1">
+            <br />
+            <button witdh="50" title="Alterar Questão" class="btn btn-primary glyphicon glyphicon-refresh" onclick="TrocarQuestão()">Trocar</button>
+        </div>
+        <div class="col-md-1">
+            <h6>Nota: </h6>
+            <input class="form-control" type="number" id="NotaQ" />
+        </div>
+    </div>
+</div>
+<div class="col-md-12">
+    <div class="row">
+        <div class="col-md-8">
+            <h4>Resposta: </h4>
+            <textarea class="" style="min-width: 100%;" cols="30" rows="3" wrap="hard" name="DTreposta" id="DTreposta" placeholder="Reposta do professor"></textarea>
+        </div>
+        <div class="col-md-4">
+        </div>
+    </div>
+</div>
+
+<br />
+<div class="col-md-12">
+    <div class="row">
+        <div class="col-md-8">
+            <h3>Questão 2</h3>
+            <textarea class="" style="min-width: 100%;" cols="30" rows="2" wrap="hard" name="DTquestao" id="DTquestao" placeholder="Pergunta numero 2 da prova"></textarea>
+        </div>
+        <div class="col-md-1">
+            <br />
+            <button witdh="50" title="Alterar Questão" class="btn btn-primary glyphicon glyphicon-refresh" onclick="TrocarQuestão()">Trocar</button>
+        </div>
+        <div class="col-md-1">
+            <h6>Nota: </h6>
+            <input class="form-control" type="number" id="NotaQ" />
+        </div>
+    </div>
+</div>
+<div class="col-md-12">
+    <div class="row">
+        <div class="col-md-8">
+            <h4>Resposta: </h4>
+            <textarea class="" style="min-width: 100%;" cols="30" rows="3" wrap="hard" name="DTreposta" id="DTreposta" placeholder="Resposta do professor"></textarea>
+        </div>
+        <div class="col-md-4">
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-8"></div>
+        <div class="col-md-2">
+            <label>Total:</label>
+            <input class="form-control" type="number" id="NotaTotal" />
+        </div>
+    </div>
+</div>
+
+<br /><br />
+<div class="col-md-12">
+    <button witdh="50" title="Confirmar prova" class="btn btn-primary" onclick="SalvarProva()">Confirmar Prova</button>
+    
+</div>
+
+
+
+<script>
+    function SalvarProva() {
+        console.log("Prova Criada e Salva...");
+        $('#DivGerarProva').modal('hide');
+        location.href = "http://localhost:54994/GerarProva/GerarProva";
+    }
+
+
+</script>

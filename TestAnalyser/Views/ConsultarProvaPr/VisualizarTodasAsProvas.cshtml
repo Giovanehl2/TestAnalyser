@@ -1,0 +1,313 @@
+﻿
+@{
+    ViewBag.Title = "VisualizarTodasAsProvas";
+}
+
+<h2>Visualizar todas as provas por aluno</h2>
+<br />
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <form>
+                <div class="for-row">
+                    <div class="form-group col-md-12">
+
+                        <div class="row">
+                            <div class="col-md-4">
+                                <label for="AssuntoSE">Nome do aluno:</label>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-3">
+                                <input type="text" class="form-control" id="Aluno">
+                            </div>
+
+                            <div class="col-md-4">
+                                <input type="button" class="btn btn-primary" id="VisualizarPorAluno" value="Pesquisar">
+                            </div>
+                            
+                        </div>
+
+                    </div>
+                   
+                </div>
+            </form>
+
+        </div>
+    </div>
+    <div class="row">
+        <h3>Provas</h3>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">Aluno</th>
+                    <th scope="col">Data</th>
+                    <th scope="col">Disciplina</th>
+                    <th scope="col">Turma</th>
+                    <th scope="col">Assunto</th>
+                    <th>Ações</th>
+
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Jeferson</td>
+                    <td>21/02/2020</td>
+                    <td>Gestão de T.I</td>
+                    <td>3° A</td>
+                    <td>Gerenciamento de riscos</td>
+                    <td>
+                        <button witdh="50" title="Visualizar" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#VisualizarProva">Visualizar</button>
+                        <button witdh="50" title="Corrigir" class="btn btn-primary btn-sm" onclick="CorrigirProva()">Corrigir</button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Israel</td>
+                    <td>21/02/2020</td>
+                    <td>Gestão de T.I</td>
+                    <td>3° A</td>
+                    <td>Gerenciamento de riscos</td>
+                    <td>
+                        <button witdh="50" title="Visualizar" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#VisualizarProva">Visualizar</button>
+                        <button witdh="50" title="Corrigir" class="btn btn-primary btn-sm" onclick="CorrigirProva()">Corrigir</button>
+                    </td>
+
+
+                </tr>
+                <tr>
+                    <td>Amanda</td>
+                    <td>21/02/2020</td>
+                    <td>Gestão de T.I</td>
+                    <td>3° A</td>
+                    <td>Gerenciamento de riscos</td>
+                    <td>
+                        <button witdh="50" title="Visualizar" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#VisualizarProva">Visualizar</button>
+                        <button witdh="50" title="Corrigir" class="btn btn-primary btn-sm" onclick="CorrigirProva()">Corrigir</button>
+                    </td>
+
+
+                </tr>
+            </tbody>
+
+        </table>
+    </div>
+</div>
+    
+    <br />
+    @*<table class="table">
+            <tr>
+            </tr>
+        </table>*@
+<!--
+    <div id="divGridConsultaPr">
+
+        <div class="col-lg-12">
+            <div class="row">
+                <div class="col-lg-8">
+                    <input class="" style="min-width: 100%;" type="text" name="Detahes" value="" id="Detahes" placeholder="Data - Disciplina - Turma - Assunto" />
+                </div>
+                <div class="col-lg-4">
+                    <button witdh="50" title="Visualizar" class="btn btn-default btn-sm" data-toggle="modal" data-target="#VisualizarProva">Visualizar</button>
+                    <button witdh="50" title="Corrigir" class="btn btn-default btn-sm" onclick="CorrigirProva()">Corrigir</button>
+                </div>
+            </div>
+        </div>
+        @*Só visualização, deverá ser feito por um grid de grid que carrega depois da consulta...*@
+        <div class="col-lg-12">
+            <div class="row">
+                <div class="col-lg-8">
+                    <input class="" style="min-width: 100%;" type="text" name="Detahes" value="" id="Detahes" placeholder="Data - Disciplina - Turma - Assunto" />
+                </div>
+                <div class="col-lg-4">
+                    <button witdh="50" title="Visualizar" class="btn btn-default btn-sm" data-toggle="modal" data-target="#VisualizarProva">Visualizar</button>
+                    <button witdh="50" title="Corrigir" class="btn btn-default btn-sm" onclick="CorrigirProva()">Corrigir</button>
+                </div>
+            </div>
+        </div>
+    </div>-->
+
+    @* excluir posteriormente tambem... *@
+    <div id="divGridConsultaProvaPend" style="display:none">
+        @*Essa consulta deve ser com base no cheackbox de "Pend", = pendentes = não realizadas ainda...*@
+        <div id="divGridConsultaPr">
+            <div class="col-lg-12">
+                <div class="row">
+                    <div class="col-lg-8">
+                        <input class="" style="min-width: 100%;" type="text" name="Detahes" value="" id="Detahes" placeholder="Data - Disciplina - Turma - Assunto" />
+                    </div>
+                    <div class="col-lg-4">
+                        <button witdh="50" title="Editar" class="btn btn-default btn-sm" onclick="EditarProva()">Editar</button>
+                        <button witdh="50" title="Excluir" class="btn btn-default btn-sm" data-toggle="modal" data-target="#ExcluirProva">Excluir</button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-12">
+                <div class="row">
+                    <div class="col-lg-8">
+                        <input class="" style="min-width: 100%;" type="text" name="Detahes" value="" id="Detahes" placeholder="Data - Disciplina - Turma - Assunto" />
+                    </div>
+                    <div class="col-lg-4">
+                        <button witdh="50" title="Editar" class="btn btn-default btn-sm" onclick="EditarProva()">Editar</button>
+                        <button witdh="50" title="Excluir" class="btn btn-default btn-sm" data-toggle="modal" data-target="#ExcluirProva">Excluir</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<br />
+
+
+
+@* modal de visualização de Prova (sem corrigir) *@
+<div class="modal fade novep" id="VisualizarProva">
+    <div class="modal-dialog" style="min-width: 50%;">
+        <div class="modal-content">
+            <div>
+
+                <div class="container">
+                    <br />
+
+                    <div class="row">
+                        <div class="col-md-10 offset-md-1">
+                            <h5>Questão 1</h5>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-10 offset-md-1">
+                            <input class="form-control" id="questao1" type="text" value="Quanto é 1 + 1" disabled>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-10 offset-md-1">
+                            <h5>Resposta 1</h5>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-10 offset-md-1">
+                            <input class="form-control" id="resposta1" type="text" value="42" disabled>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-10 offset-md-1">
+                            <h5>Observações</h5>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-10 offset-md-1">
+                            <input class="form-control" id="obsevações" type="text" value="Vejá bem, aqui parece que está algo errado." disabled>
+                        </div>
+                    </div>
+
+
+                    <br />
+                    <br />
+                    <div class="row">
+                        <div class="col-md-10 offset-md-1">
+                            <h5>Questão 2</h5>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-10 offset-md-1">
+                            <input class="form-control" id="questao2" type="text" value="Quanto é 2 * 2" disabled>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-10 offset-md-1">
+                            <h5>Resposta 2</h5>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-10 offset-md-1">
+                            <input class="form-control" id="resposta2" type="text" value="4" disabled>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-10 offset-md-1">
+                            <h5>Observações</h5>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-10 offset-md-1">
+                            <input class="form-control" id="obsevações" type="text" value="" disabled>
+                        </div>
+                    </div>
+
+                    <br />
+                    <div class="row">
+                        <div class="col-md-5 offset-md-1">
+                            <h5>Nota</h5>
+                            <input class="form-control" id="nota" type="text" value="5,0" disabled>
+                        </div>
+                        <div class="col-md-5 offset-md-1">
+                            <button witdh="50" title="Fechar" class="btn btn-danger" data-dismiss="modal">Fechar</button>
+                        </div>
+                    </div>
+                    <br />
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@* Modal para confirmar exclusão *@
+<div class="modal fade" id="ExcluirProva">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Excluir:</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+                <p>Você realmente deseja excluir essa prova?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" onclick="ExcluirProva()">Sim</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Voltar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+
+    function ExcluirProva() {
+        console.log("Prova deletada...");
+        $('#ExcluirProva').modal('hide');
+    }
+
+    function EditarProva() {
+        location.href = "http://localhost:54994/GerarProva/GerarProva";
+    }
+
+    function CorrigirProva() {
+        location.href = "http://localhost:54994/ConsultarProvaPr/CorrigirProvaAlunoEspecifico";
+    }
+
+    var div1 = document.getElementById('divGridConsultaPr'),
+        div2 = document.getElementById('divGridConsultaProvaPend');
+    function switchVisible() {
+        if (!div1) return;
+        if (getComputedStyle(div1).display == 'block') {
+            div1.style.display = 'none';
+            div2.style.display = 'block';
+        } else {
+            div1.style.display = 'block';
+            div2.style.display = 'none';
+        }
+    }
+    document.getElementById('btnConsult').addEventListener('click', switchVisible);
+
+</script>

@@ -1,0 +1,145 @@
+﻿
+@{
+    ViewBag.Title = "Corrigir Prova";
+}
+
+<h2>Corrigir Prova</h2>
+
+<div class="col-lg-12 tab-content" id="CorrigirProva">
+    <div class="container">
+        <br />
+        
+        <form>
+            <div class="form-row">
+                <div class="form-group col-md-8 offset-md-1">
+                    <div class="row">
+                        <div class="col-md-4 ">
+                            <div class="row">
+                                <div class="col">
+                                    <label for="AssuntoSE">Nome do aluno:</label>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col">
+                                    <input type="text" class="form-control" id="Aluno">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="row">
+                                <div class="col">
+                                    <label for="AssuntoSE">Tipo de questão:</label>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col">
+                                    <select class="form-control" id="Turmas" name="Turmas">
+                                        <option>Dissertativa</option>
+                                        <option>Multipla escolha</option>
+                                        <option>Simples escolha</option>
+                                        <option>Verdadeira ou falso</option>
+                                    </select>
+                                </div>
+                                <div class="col">
+                                    <input type="button" class="btn btn-primary" id="VisualizarPorAluno" value="Pesquisar">
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <br />
+            <br />
+
+            <div class="form-row">
+                <div class="form-group col-md-8 offset-md-1">
+                    <h5>Aluno: Jeferson da Cruz</h5>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-8 offset-md-1">
+                    <h5>Questão 1</h5>
+                    <input class="form-control" id="questao1" type="text" value="Quanto é 1 + 1" disabled>
+                </div>
+                <div class="col-md-2">
+                    <h5>Status</h5>
+                    <select class="form-control" id="Prova" name="Prova">
+                        <option>Correto</option>
+                        <option>Parcial</option>
+                        <option>Incorreto</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-8 offset-md-1">
+                    <h5>Resposta 1</h5>
+                    <textarea class="form-control" id="resposta1" disabled>42</textarea>
+                </div>
+                <div class="col-md-2">
+                    <h5>Nota</h5>
+                    <input class="form-control" id="notaq1" type="text" value="1,0">
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-8 offset-md-1">
+                    <h5>Observações</h5>
+                    <textarea class="form-control" id="Observacoes">Acertou misseravi.</textarea>
+                </div>
+                <div class="col-md-2">
+                    <br /><br />
+                    <button witdh="50" title="Fechar" class="btn btn-primary" data-dismiss="modal">Salvar</button>
+                </div>
+            </div>
+
+            <br /><br />
+            <div class="form-row">
+                <div class="form-group col-md-8 offset-md-1">
+                    <h5>Aluno: José da Fonseca</h5>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-8 offset-md-1">
+                    <h5>Questão 2</h5>
+                    <input class="form-control" id="questao2" type="text" value="Quanto é 2 * 2" disabled>
+                </div>
+                <div class="col-md-2">
+                    <h5>Status</h5>
+                    <select class="form-control" id="Prova" name="Prova">
+                        <option>Correto</option>
+                        <option>Parcial</option>
+                        <option>Incorreto</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-8 offset-md-1">
+                    <h5>Resposta 1</h5>
+                    <textarea class="form-control" id="resposta1" disabled>4</textarea>
+                </div>
+                <div class="col-md-2">
+                    <h5>Nota</h5>
+                    <input class="form-control" id="notaq2" type="text" value="1,0">
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-8 offset-md-1">
+                    <h5>Observações</h5>
+                    <textarea class="form-control" id="Observacoes"></textarea>
+                </div>
+                <div class="col-md-2">
+                    <br /><br />
+                    <button witdh="50" title="Fechar" class="btn btn-primary" data-dismiss="modal">Salvar</button>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="col-md-10 offset-md-1">
+                    <button witdh="50" title="Fechar" class="btn btn-primary" data-dismiss="modal">Finalizar</button>
+
+                </div>
+            </div>
+            <br />
+        </form>
+    </div>
+</div>

@@ -1,0 +1,58 @@
+﻿@{
+    ViewBag.Title = "RealizarProva";
+}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script> @*//remover*@
+
+<h2>Realizar Prova</h2>
+
+<div class="col-md-12">
+    <div class="row">
+        <div class="col-md-8">
+            <h3>Questão 1</h3>
+            <textarea class="" style="min-width: 100%;" cols="30" rows="2" wrap="hard" name="DTquestao" id="DTquestao" placeholder="Pergunta numero 1 da prova" disabled></textarea>
+        </div>
+        <div class="col-md-4">
+            <br /><br />
+            <button witdh="50" title="Salvar" class="btn btn-default btn-sm btn-diss" onclick="SalvarQuestão()">Salvar</button>
+        </div>
+    </div>
+</div>
+<div class="col-md-12">
+    <div class="row">
+        <div class="col-md-8">
+            <h4>Resposta: </h4>
+            <textarea class="" style="min-width: 100%;" cols="30" rows="3" wrap="hard" name="DTreposta" id="DTreposta" placeholder="Reposta do aluno"></textarea>
+        </div>
+        <div class="col-md-4">
+        </div>
+    </div>
+</div>
+
+<br />
+<div class="col-md-12">
+    <div class="row">
+        <div class="col-md-8">
+            <h3>Questão 2</h3>
+            <textarea class="" style="min-width: 100%;" cols="30" rows="2" wrap="hard" name="DTquestao" id="DTquestao" placeholder="Qunato é 2 * 2?" disabled></textarea>
+        </div>
+        <div class="col-md-4">
+            <br /><br />
+            <button witdh="50" title="Salvar" class="btn btn-default btn-sm btn-diss" onclick="SalvarQuestão()">Salvar</button>
+        </div>
+    </div>
+</div>
+<div class="col-md-12">
+    <div class="row">
+        <div class="col-md-8">
+            <h4>Resposta: </h4>
+            <textarea class="" style="min-width: 100%;" cols="30" rows="3" wrap="hard" name="DTreposta" id="DTreposta" placeholder="4"></textarea>
+        </div>
+        <div class="col-md-4">
+        </div>
+    </div>
+</div>
+
+<br /><br />
+<div>
+    <button witdh="50" title="Enviar Prova" class="btn btn-default btn-sm btn-diss btn-orange" onclick="SalvarProva()">Enviar Prova</button>
+</div>

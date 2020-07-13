@@ -1,0 +1,209 @@
+﻿
+@{
+    ViewBag.Title = "ConsultarQuestoes";
+}
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script> @*//remover*@
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <form>
+                <h2>Consultar Questões</h2>
+                <div class="form-row">
+                    <div class="col-md-4">
+                        <div class="row">
+                            <div class="col">
+                                <label for="AssuntoSE">Disciplina</label>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col">
+                                <select class="form-control" id="Disciplina" name="Disciplina">
+                                    <option>Selecionar</option>
+                                    <option>Seila1</option>
+                                    <option>Seila2</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="row">
+                            <div class="col">
+                                <label for="AssuntoSE">Assunto</label>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col">
+                                <select class="form-control" id="Turma" name="Turma">
+                                    <option>Selecionar</option>
+                                    <option>Assunto 1</option>
+                                    <option>Assunto 2</option>
+                                </select>
+                            </div>
+                            <div class="col">
+                                <button witdh="50" title="Consultar" class="btn btn-default btn-sm btn-toggle" data-element="#divGridConsultaQuestao" onclick="ConsultarProvas()">Consultar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <br />
+    <br />
+    <div class="row" id="divGridConsultaQuestao" style="display:none">
+
+        @*Só visualização, deverá ser feito por um grid de grid que carrega depois da consulta...*@
+        <div class="col-lg-12">
+            <h3>Provas</h3>
+
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">Disciplina</th>
+                        <th scope="col">Assunto</th>
+                        <th scope="col">Enunciado</th>
+
+                        <th>Ações</th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>21/02/2020</td>
+                        <td>Gestão de T.I</td>
+                        <td>3° A</td>
+
+                        <td>
+                            <button witdh="50" title="Editar" class="btn btn-primary btn-sm" onclick="EditarQuestao()">Editar</button>
+                            <button witdh="50" title="Excluir" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#ConfirmaExcluir">Excluir</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>04/03/2020</td>
+                        <td>Sistemas operacionais</td>
+                        <td>2° C</td>
+
+                        <td>
+                            <button witdh="50" title="Editar" class="btn btn-primary btn-sm" onclick="EditarQuestao()">Editar</button>
+                            <button witdh="50" title="Excluir" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#ConfirmaExcluir">Excluir</button>
+                        </td>
+
+
+                    </tr>
+                    <tr>
+                        <td>04/03/2020</td>
+                        <td>Sistemas operacionais</td>
+                        <td>2° C</td>
+
+                        <td>
+                            <button witdh="50" title="Editar" class="btn btn-primary btn-sm" onclick="EditarQuestao()">Editar</button>
+                            <button witdh="50" title="Excluir" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#ConfirmaExcluir">Excluir</button>
+                        </td>
+
+
+                    </tr>
+                </tbody>
+
+            </table>
+    </div>
+</div>
+
+<!--
+<div id="divGridConsultaQuestao" style="display:none">
+    @*Só visualização, deverá ser feito por um grid de grid que carrega depois da consulta...*@
+    <div class="col-lg-12">
+        <div class="row">
+            <div class="col-lg-9">
+                <input class="" style="min-width: 100%;" type="text" name="Detahes" value="" id="Detahes" placeholder="Disciplina - Assunto - Enunciado..." />
+            </div>
+            <div class="col-lg-3">
+                <button witdh="50" title="Editar" class="btn btn-default btn-sm" onclick="EditarQuestao()">Editar</button>
+                <button witdh="50" title="Excluir" class="btn btn-default btn-sm" data-toggle="modal" data-target="#ConfirmaExcluir">Excluir</button>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-12">
+        <div class="row">
+            <div class="col-lg-9">
+                <input class="" style="min-width: 100%;" type="text" name="Detahes" value="" id="Detahes" placeholder="Disciplina - Assunto - Enunciado..." />
+            </div>
+            <div class="col-lg-3">
+                <button witdh="50" title="Editar" class="btn btn-default btn-sm" onclick="EditarQuestao()">Editar</button>
+                <button witdh="50" title="Excluir" class="btn btn-default btn-sm" data-toggle="modal" data-target="#ErroExcluir">Excluir</button>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-12">
+        <div class="row">
+            <div class="col-lg-9">
+                <input class="" style="min-width: 100%;" type="text" name="Detahes" value="" id="Detahes" placeholder="Disciplina - Assunto - Enunciado..." />
+            </div>
+            <div class="col-lg-3">
+                <button witdh="50" title="Editar" class="btn btn-default btn-sm" onclick="EditarQuestao()">Editar</button>
+                <button witdh="50" title="Excluir" class="btn btn-default btn-sm" data-toggle="modal" data-target="#ConfirmaExcluir">Excluir</button>
+                @*<button witdh="50" title="Visualizar" class="btn btn-default btn-sm" onclick="VisualizarAl()">Visualizar</button>*@
+            </div>
+        </div>
+    </div>
+</div>
+    -->
+@* Modal para confirmar exclusão *@
+<div class="modal fade" id="ConfirmaExcluir">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Excluir questão</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+                <p>Você deseja Excluir essa questão?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" onclick="ExcluirQuestão()">Sim</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Voltar</button>
+            </div>
+        </div>
+    </div>
+</div>
+@*Aqui existe apenas para exemplo, tem que criar a função para exibir a mesma mensagem*@
+<div class="modal fade" id="ErroExcluir">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Não é Possível Excluir:</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+                <p>Essa questão já está vinculada a uma prova, você deve Inativa-la!</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">OK</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+
+<script>
+    function ExcluirQuestão() {
+        console.log("Questão deletada...");
+        $('#ConfirmaExcluir').modal('hide');
+    }
+
+    function EditarQuestao() {
+        location.href = "http://localhost:54994/CadastrarQuestoes/CadastrarQuestoes";
+    }
+
+    $(function () { @*//remover*@
+        $(".btn-toggle").click(function (e) {
+            e.preventDefault();
+            el = $(this).data('element');
+            $(el).toggle();
+        });
+    });
+</script>

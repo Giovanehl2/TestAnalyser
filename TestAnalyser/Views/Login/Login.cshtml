@@ -1,0 +1,133 @@
+﻿@using TestAnalyser.Models;
+@using System.Web.Mvc;
+
+@{
+    ViewBag.Title = "Login";
+    Layout = "~/Views/Shared/_Login.cshtml";
+    Session["usu_id"] = 0;
+}
+
+<style>
+    input {
+        max-width: none;
+    }
+
+    legend {
+        width: auto;
+        font-size: 30px;
+        color: #0350bb;
+    }
+
+    fieldset {
+        border: 1px solid #c0c0c0;
+        padding: 0.35em 0.625em 0.75em;
+    }
+</style>
+
+<br />
+<br />
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-4 offset-4">
+            <form class="form-horizontal" id="formLogin" method="post" action="@Url.Action("Login", "Login")">
+                <fieldset>
+                    <legend>
+                        TestAnalyser Login
+                    </legend>
+
+                    <div class="form-group">
+                        <label for="inputUsuario" class="col-lg-2 control-label">Usuário</label>
+                        <div class="col-lg-10">
+                            <input type="text" class="form-control " id="inputUsuario" name="inputUsuario">
+                            <label id="labelinputUsuario" name="labelinputUsuario" class="text-danger" style="display:none;">Digite seu usuário</label>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="inputPassword" class="col-lg-2 control-label">Senha</label>
+                        <div class="col-lg-10">
+                            <input type="password" class="form-control" data-toggle="tooltip" title="" data-placement="right" id="inputPassword" name="inputPassword">
+                            <label id="labelinputPassword" name="labelinputPassword" class="text-danger" style="display:none;">Digite sua senha</label>
+                        </div>
+                    </div>
+                    <div class="col-lg-5 col-lg-offset-2">
+                        <label id="msgError" style="color:red; font-size:16px; display:none"> </label>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-lg-5">
+                            <button type="button" id="btnLogin" onclick="Login()" class="btn btn-primary btn-block">
+                                <span class="glyphicon glyphicon-log-in"></span>
+                                <span id="btn_txt"> Entrar </span>
+                            </button>
+                        </div>                        
+                    </div>
+                </fieldset>
+            </form>
+        </div>
+    </div>
+    
+</div>
+
+    <script>
+
+        $("#inputUsuario").focus();
+
+        $("#formLogin").on("keypress", function (e) {
+            if (e.which == 13 || e.keyCode == 13) {
+                e.preventDefault();
+                $("#btnLogin").click();
+            }
+        });
+
+        function Login() {
+
+            $("#msgError").hide();
+            var email = $.trim($("#inputUsuario").val());
+            var senha = $.trim($("#inputPassword").val());
+
+            if (email == "") {
+                document.getElementById("labelinputUsuario").style.display = 'block';
+                return;
+            }
+
+            if (senha == "") {
+                document.getElementById("labelinputPassword").style.display = 'block';
+                return;
+            }
+
+            var actionform = $("#formLogin").attr('action');
+
+            $.ajax({
+                url: actionform,
+                type: "POST",
+                data: $("#formLogin").serialize(),
+                success: function (data) {
+                    if (data.status == "success") {
+                        window.location.href = "/TelaInicial/TelaInicial";
+                    } else if (data.status == "validation") {
+                        $("#btnLogin").prop("disabled", false);
+                        $("#btn_txt").html("Entrar");
+                        $("#msgError").html(data.msg);
+                        $("#msgError").show();
+
+                    } else if (data.status == "error") {
+                        $("#btnLogin").prop("disabled", false);
+                        $("#btn_txt").html("Entrar");
+                        $("#msgError").html("Erro ...");
+                        $("#msgError").show();
+                    }
+                },
+                error: function (xhr, textStatus) {
+                    $("#msgError").html("Erro ...");
+                    $("#msgError").show();
+                }, beforeSend: function () {
+                    $("#btnLogin").prop("disabled", true);
+                    $("#btn_txt").html("Aguarde...");
+                }, complete: function () {
+
+                }
+            });
+        }
+
+    </script>

@@ -183,6 +183,20 @@
     <Content Include="Views\web.config" />
     <Content Include="Scripts\jquery-3.4.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.4.1.min.map" />
+    <Content Include="Views\CadastrarQuestoes\CadastrarQuestoes.cshtml" />
+    <Content Include="Views\Configuracoes\Configuracoes.cshtml" />
+    <Content Include="Views\ConsultarProvaAl\ConsultarProvaAl.cshtml" />
+    <Content Include="Views\ConsultarProvaAl\RealizarProva.cshtml" />
+    <Content Include="Views\ConsultarProvaPr\ConsultarProvaPr.cshtml" />
+    <Content Include="Views\ConsultarProvaPr\CorrigirProva.cshtml" />
+    <Content Include="Views\ConsultarProvaPr\CorrigirProvaAlunoEspecifico.cshtml" />
+    <Content Include="Views\ConsultarProvaPr\VisualizarTodasAsProvas.cshtml" />
+    <Content Include="Views\ConsultarQuestoes\ConsultarQuestoes.cshtml" />
+    <Content Include="Views\GerarProva\AdicionarQuestoesNaProva.cshtml" />
+    <Content Include="Views\GerarProva\GerarProva.cshtml" />
+    <Content Include="Views\Login\Login.cshtml" />
+    <Content Include="Views\Shared\_Login.cshtml" />
+    <Content Include="Views\TelaInicial\TelaInicial.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -198,14 +212,6 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Data\" />
-    <Folder Include="Views\CadastrarQuestoes\" />
-    <Folder Include="Views\Configuracoes\" />
-    <Folder Include="Views\ConsultarProvaAl\" />
-    <Folder Include="Views\ConsultarProvaPr\" />
-    <Folder Include="Views\ConsultarQuestoes\" />
-    <Folder Include="Views\GerarProva\" />
-    <Folder Include="Views\Login\" />
-    <Folder Include="Views\TelaInicial\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

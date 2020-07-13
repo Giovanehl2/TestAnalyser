@@ -3,38 +3,89 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title - My ASP.NET Application</title>
-    @Styles.Render("~/Content/css")
-    @Scripts.Render("~/bundles/modernizr")
+    <title>Test Analyser</title>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    @*<link rel="stylesheet" href="~/Content/cssgabriel.css" />*@
 </head>
 <body>
-    <div class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                @Html.ActionLink("Application name", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
-            </div>
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                </ul>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary ">
+        <div class="navbar-nav">
+            <div class="nav-item active">
+                <a class="nav-link" id="menu-toggle" href="@Url.Action("TelaInicial", "TelaInicial")"><h3>Test Analyser</h3></a>
             </div>
         </div>
-    </div>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item active" id="1">
+                    <a class="nav-link" href="@Url.Action("ConsultarProvaAl", "ConsultarProvaAl")">Consultar Provas</a>
+                </li>
+                <li class="nav-item active" id="2">
+                    <a class="nav-link" href="@Url.Action("ConsultarProvaPr", "ConsultarProvaPr")">Consultar Provas</a>
+                </li>
+                <li class="nav-item active" id="3">
+                    <a class="nav-link" href="@Url.Action("GerarProva", "GerarProva")">Gerar Prova</a>
+                </li>
+                <li class="nav-item active" id="4">
+                    <a class="nav-link" href="@Url.Action("CadastrarQuestoes", "CadastrarQuestoes")">Cadastrar Questões</a>
+                </li>
+                <li class="nav-item active" id="5">
+                    <a class="nav-link" href="@Url.Action("ConsultarQuestoes", "ConsultarQuestoes")">Consultar Questões</a>
+                </li>
+            </ul>
+            <ul class="nav navbar-nav ml-auto" >
+                <li class="nav-item active" id="6"><a class="nav-link" href="@Url.Action("Configuracoes", "Configuracoes")"><span class="glyphicon glyphicon-cog"></span>  Configurações </a></li>
+                <li class="nav-item active">
+                    <a id="usermenu" class="nav-link">
+                        <span class="glyphicon glyphicon-user "></span> &nbsp; @((Session["NomeUsuario"])) - 
+                    </a>
+                </li>
+                <li class="nav-item active"><a class="nav-link" href="@Url.Action("Login", "Login")"><span class="glyphicon glyphicon-log-out "></span> Sair </a></li>
+            </ul>
 
-    <div class="container body-content">
+        </div>
+    </nav>
+
+    <div class="container" style="background-color:aliceblue">
+        <br />
+        <br />
         @RenderBody()
         <hr />
-        <footer>
-            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
-        </footer>
-    </div>
 
-    @Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/bootstrap")
-    @RenderSection("scripts", required: false)
+    </div>
+    <script>
+
+        window.load = verifica_na();
+
+        //colocar na sessão se o usuario é aluno ou professor e dar hide nos botões... (por algum motivo de satã esse modelo não funciona aqui)
+        function verifica_na() {
+            if (@((Session["NivelAcesso"])) == 1)
+            {
+                document.getElementById("2").style.visibility = "hidden";
+                document.getElementById("3").style.visibility = "hidden";
+                document.getElementById("4").style.visibility = "hidden";
+                document.getElementById("5").style.visibility = "hidden";
+                document.getElementById("6").style.visibility = "hidden";
+            } else if (@((Session["NivelAcesso"])) == 2) {
+                document.getElementById("1").style.visibility = "hidden";
+                document.getElementById("6").style.visibility = "hidden";
+            } else {
+                document.getElementById("1").style.visibility = "hidden";
+                document.getElementById("2").style.visibility = "hidden";
+                document.getElementById("3").style.visibility = "hidden";
+                document.getElementById("4").style.visibility = "hidden";
+                document.getElementById("5").style.visibility = "hidden";
+            }
+        }
+
+    </script>
+    @*<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>*@
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
 </body>
 </html>
