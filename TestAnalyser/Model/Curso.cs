@@ -10,6 +10,11 @@ namespace TestAnalyser.Model
     [Table("Cursos")]
     public class Curso
     {
+        public Curso()
+        {
+            Disciplinas = new List<Disciplina>();
+        }
+
         [Key]
         public int CursoId { get; set; }
         public string nomeCurso { get; set; }

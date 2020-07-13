@@ -10,7 +10,11 @@ namespace TestAnalyser.Model
     [Table("Questoes")]
     public class Questao
     {
-
+        public Questao()
+        {
+            Disciplina = new Disciplina();
+            Opcoes = new List<Opcao>();
+        }
         [Key]
         public int QuestaoId { get; set; }
         public string assunto { get; set; }

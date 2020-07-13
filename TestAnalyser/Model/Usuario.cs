@@ -10,6 +10,12 @@ namespace TestAnalyser.Model
     [Table("Usuarios")]
     public class Usuario
     {
+        public Usuario()
+        {
+            Alunos = new Aluno();
+            Professor = new Professor();
+            Configuracao = new Configuracao();
+        }
         [Key]
         public int UsuarioId { get; set; }
         public int Matricula { get; set; }

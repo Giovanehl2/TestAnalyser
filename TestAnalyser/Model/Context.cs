@@ -8,7 +8,7 @@ namespace TestAnalyser.Model
 {
     public class Context : DbContext
     {
-        public Context() : base("DB_TestAnalyser") { }
+        public Context() : base("DBTestAnalyser") { }
         public DbSet<Alternativas> Alternativas { get; set; }
         public DbSet<Aluno> Alunos { get; set; }
         public DbSet<Professor> Professores { get; set; }

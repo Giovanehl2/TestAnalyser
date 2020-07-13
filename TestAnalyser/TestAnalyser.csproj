@@ -78,6 +78,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DAL\SingletonContext.cs" />
+    <Compile Include="Migrations\202007130332562_teste.cs" />
+    <Compile Include="Migrations\202007130332562_teste.designer.cs">
+      <DependentUpon>202007130332562_teste.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Model\Admin.cs" />
     <Compile Include="Model\Alternativas.cs" />
     <Compile Include="Model\Aluno.cs" />
@@ -103,6 +108,11 @@
     <None Include="Web.Release.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\202007130332562_teste.resx">
+      <DependentUpon>202007130332562_teste.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

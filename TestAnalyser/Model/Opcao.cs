@@ -13,6 +13,6 @@ namespace TestAnalyser.Model
         [Key]
         public int OpcaoId { get; set; }
         public string descricao { get; set; }
-        public Questao Questao { get; set; }
+
     }
 }

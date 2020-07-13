@@ -10,6 +10,11 @@ namespace TestAnalyser.Model
     [Table("RespostasAlunos")]
     public class RespostasAluno
     {
+        public RespostasAluno()
+        {
+            Questao = new Questao();
+            Alternativas = new List<Alternativas>();
+        }
         [Key]
         public int RespostasAlunoId { get; set; }
         public string RespostaDiscursiva { get; set; }

@@ -10,6 +10,12 @@ namespace TestAnalyser.Model
     [Table("Provas")]
     public class Prova
     {
+        public Prova()
+        {
+            RespostasAlunos = new List<RespostasAluno>();
+            Professor = new Professor();
+            Alunos = new List<Aluno>();
+        }
         [Key]
         public int ProvaId { get; set; }
 
