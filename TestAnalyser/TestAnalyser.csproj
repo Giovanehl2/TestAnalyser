@@ -111,6 +111,7 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\logo.png" />
     <Content Include="Content\Site.css" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -145,9 +146,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202007132356174_teste.cs" />
-    <Compile Include="Migrations\202007132356174_teste.designer.cs">
-      <DependentUpon>202007132356174_teste.cs</DependentUpon>
+    <Compile Include="Migrations\202007141514163_teste.cs" />
+    <Compile Include="Migrations\202007141514163_teste.designer.cs">
+      <DependentUpon>202007141514163_teste.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Model\Admin.cs" />
@@ -159,6 +160,7 @@
     <Compile Include="Model\Curso.cs" />
     <Compile Include="Model\Disciplina.cs" />
     <Compile Include="Model\Opcao.cs" />
+    <Compile Include="Model\Person.cs" />
     <Compile Include="Model\Professor.cs" />
     <Compile Include="Model\Prova.cs" />
     <Compile Include="Model\Questao.cs" />
@@ -209,8 +211,8 @@
     <Folder Include="Data\" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202007132356174_teste.resx">
-      <DependentUpon>202007132356174_teste.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202007141514163_teste.resx">
+      <DependentUpon>202007141514163_teste.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

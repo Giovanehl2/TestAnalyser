@@ -13,11 +13,11 @@ namespace TestAnalyser.Controllers
         //ActionResult para apresetar a tela de cadastro de questões...
         public ActionResult CadastrarQuestoes()
         {
-            return View(new Usuario()); //Não fui eu que coloquei isso aqui (new Login()), será que foi o Harri?
+            return View(new Person());
         }
 
         [HttpPost]
-        public ActionResult CadastrarQuestoes(Usuario person)
+        public ActionResult CadastrarQuestoes(Person person)
         {
             return View(person);
         }
