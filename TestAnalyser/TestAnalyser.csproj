@@ -145,9 +145,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202007130332562_teste.cs" />
-    <Compile Include="Migrations\202007130332562_teste.designer.cs">
-      <DependentUpon>202007130332562_teste.cs</DependentUpon>
+    <Compile Include="Migrations\202007132356174_teste.cs" />
+    <Compile Include="Migrations\202007132356174_teste.designer.cs">
+      <DependentUpon>202007132356174_teste.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Model\Admin.cs" />
@@ -205,13 +205,13 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202007130332562_teste.resx">
-      <DependentUpon>202007130332562_teste.cs</DependentUpon>
-    </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Data\" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\202007132356174_teste.resx">
+      <DependentUpon>202007132356174_teste.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

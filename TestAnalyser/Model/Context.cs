@@ -26,4 +26,12 @@ namespace TestAnalyser.Model
 
         
     }
+
+    /*   
+        Install-Package EntityFramework
+        Enable-Migrations
+        Add-Migration teste
+        Update-Database -verbose
+        Unistall-Package EntityFramework 
+     */
 }

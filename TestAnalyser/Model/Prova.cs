@@ -35,6 +35,8 @@ namespace TestAnalyser.Model
 
         public ConfigPln ConfigPln { get; set; }
 
+        public List<Questao> Questoes { get; set; }
+
         public List<RespostasAluno> RespostasAlunos { get; set; }
         public Professor Professor { get; set; }
         public List<Aluno> Alunos  { get; set; }

@@ -22,6 +22,7 @@ namespace TestAnalyser.Model
 
         public int TipoQuestao { get; set; }
 
+        public List<Prova> Provas { get; set; }
         public String RespostaDiscursiva { get; set; }
 
         public Disciplina Disciplina { get; set; }
