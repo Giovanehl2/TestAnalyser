@@ -18,10 +18,8 @@ namespace TestAnalyser.Model
         }
         [Key]
         public int UsuarioId { get; set; }
-        public int Matricula { get; set; }
-
+        public string Login { get; set; }
         public string Senha { get; set; }
-
         public int TipoUsr { get; set; }
 
         public Aluno Alunos { get; set; }

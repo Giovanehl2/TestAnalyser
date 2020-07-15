@@ -18,7 +18,7 @@ namespace TestAnalyser.Model
         }
         [Key]
         public int ProfessorId { get; set; }
-
+        public int Matricula { get; set; }
         public string Nome { get; set; }
 
         public string Email { get; set; }
