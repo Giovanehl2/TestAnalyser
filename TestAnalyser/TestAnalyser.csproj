@@ -140,9 +140,18 @@
     <Compile Include="Controllers\ConsultarProvaPrController.cs" />
     <Compile Include="Controllers\ConsultarQuestoesController.cs" />
     <Compile Include="Controllers\GerarProvaController.cs" />
+    <Compile Include="Controllers\ImportarDadosController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\TelaInicialController.cs" />
+    <Compile Include="DAL\AdminDAO.cs" />
+    <Compile Include="DAL\AlternativaDAO.cs" />
+    <Compile Include="DAL\AlunoDAO.cs" />
+    <Compile Include="DAL\OpcaoDAO.cs" />
+    <Compile Include="DAL\ProfessorDAO.cs" />
+    <Compile Include="DAL\QuestaoDAO.cs" />
     <Compile Include="DAL\SingletonContext.cs" />
+    <Compile Include="DAL\TurmaDAO.cs" />
+    <Compile Include="DAL\UsuarioDAO.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -152,7 +161,7 @@
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Model\Admin.cs" />
-    <Compile Include="Model\Alternativas.cs" />
+    <Compile Include="Model\Alternativa.cs" />
     <Compile Include="Model\Aluno.cs" />
     <Compile Include="Model\ConfigPln.cs" />
     <Compile Include="Model\Configuracao.cs" />
@@ -160,7 +169,6 @@
     <Compile Include="Model\Curso.cs" />
     <Compile Include="Model\Disciplina.cs" />
     <Compile Include="Model\Opcao.cs" />
-    <Compile Include="Model\Person.cs" />
     <Compile Include="Model\Professor.cs" />
     <Compile Include="Model\Prova.cs" />
     <Compile Include="Model\Questao.cs" />
