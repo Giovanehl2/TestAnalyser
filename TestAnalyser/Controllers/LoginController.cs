@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Security;
+using TestAnalyser.DAL;
+using TestAnalyser.Model;
 
 namespace TestAnalyser.Controllers
 {
@@ -15,41 +18,43 @@ namespace TestAnalyser.Controllers
             return View();
         }
 
+
         [HttpPost]
-        public ActionResult Login(FormCollection collection)
+        public ActionResult Login([Bind(Include = "Login,Senha")] Usuario usuario)
         {
-            string NomeUser = collection["inputUsuario"].Trim();
-            int NA = 0;
-            if (NomeUser == "Professor")
+            if (UsuarioDAO.BuscarUsuarioPorEmailSenha(usuario) != null)
             {
-                NA = 2;
-            }
-            else if (NomeUser == "Aluno")
-            {
-                NA = 1;
+                int NA = 0;
+                string NomeUser = "";
+                if (usuario.Alunos.AlunoId != 0)
+                {
+                    NA = 1;
+                    NomeUser = usuario.Alunos.Nome;
+                }else if (usuario.Professor.ProfessorId != 0)
+                {
+                    NA = 2;
+                    NomeUser = usuario.Professor.Nome;
+                }else if (usuario.TipoUsr == 1)
+                {
+                    NA = 3;
+                    NomeUser = "Administrador";
+                }
+
+                Session["NivelAcesso"] = NA;
+                Session["NomeUsuario"] = NomeUser;
+                return RedirectToAction("TelaInicial", "TelaInicial");
             }
             else
             {
-                NA = 3;
+                ModelState.AddModelError("", "Usuário ou Senha incorreto!");
+                return View();
             }
-            //A view passa os valores preenchidos, depois verificar se são validos com o WebService e retornar para a tela inicial...
-
-            Session["NivelAcesso"] = NA;
-            Session["NomeUsuario"] = NomeUser;
-            return Json(new { status = "success" });
         }
 
         public ActionResult Logoff()
         {
-            string culture = Session["culture"].ToString();
-            Session.Clear();
-
-            Session.RemoveAll();
-
-            Session["culture"] = culture;
-
-            return RedirectToAction("Login");
-
+            FormsAuthentication.SignOut();
+            return RedirectToAction("Login", "Login");
         }
     }
 }
