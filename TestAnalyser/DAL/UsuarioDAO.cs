@@ -14,5 +14,10 @@ namespace TestAnalyser.DAL
 
             return false;
         }
+
+        public static Usuario BuscarUsuarioPorEmailSenha(Usuario usuario)
+        {
+            return ctx.Usuarios.FirstOrDefault(x => x.Login.Equals(usuario.Login) && x.Senha.Equals(usuario.Senha));
+        }
     }
 }
