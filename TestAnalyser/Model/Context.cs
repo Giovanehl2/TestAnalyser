@@ -9,7 +9,7 @@ namespace TestAnalyser.Model
     public class Context : DbContext
     {
         public Context() : base("DBTestAnalyser") { }
-        public DbSet<Alternativas> Alternativas { get; set; }
+        public DbSet<Alternativa> Alternativas { get; set; }
         public DbSet<Aluno> Alunos { get; set; }
         public DbSet<Professor> Professores { get; set; }
         public DbSet<Disciplina> Disciplinas { get; set; }
@@ -33,5 +33,13 @@ namespace TestAnalyser.Model
         Add-Migration teste
         Update-Database -verbose
         Unistall-Package EntityFramework 
+     */
+
+    /*
+     1) curso - disciplinas - turmas objeto json relacionando 
+     2) professores serão associados as disciplinas de acordo com o objeto json
+     3) alunos serão associados a turma  "com base em curso e periodo"
+     4) 
+     
      */
 }

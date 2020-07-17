@@ -9,9 +9,10 @@ namespace TestAnalyser.Model
 {
     [Table("Usuarios")]
     public class Usuario
-    {
+    { 
         public Usuario()
         {
+            Admin = new Admin();
             Alunos = new Aluno();
             Professor = new Professor();
             Configuracao = new Configuracao();
@@ -24,6 +25,8 @@ namespace TestAnalyser.Model
 
         public Aluno Alunos { get; set; }
         public Professor Professor { get; set; }
+
+        public Admin Admin { get; set; }
         public Configuracao Configuracao { get; set; }
 
 
