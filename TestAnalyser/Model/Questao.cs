@@ -14,20 +14,23 @@ namespace TestAnalyser.Model
         {
             Disciplina = new Disciplina();
             Opcoes = new List<Opcao>();
+            Alternativas = new List<Alternativa>();
+
         }
         [Key]
         public int QuestaoId { get; set; }
-        public string assunto { get; set; }
+        public string Assunto { get; set; }
         public string Enunciado { get; set; }
 
         public int TipoQuestao { get; set; }
 
-        public List<Prova> Provas { get; set; }
-        public String RespostaDiscursiva { get; set; }
+        public string RespostaDiscursiva { get; set; }
 
         public Disciplina Disciplina { get; set; }
 
         public List<Opcao> Opcoes { get; set; }
+
+        public List<Alternativa> Alternativas { get; set; }
 
 
     }

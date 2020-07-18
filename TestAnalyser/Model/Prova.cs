@@ -15,6 +15,8 @@ namespace TestAnalyser.Model
             RespostasAlunos = new List<RespostasAluno>();
             Professor = new Professor();
             Alunos = new List<Aluno>();
+            Questoes = new List<Questao>();
+            ConfigPln = new ConfigPln();
         }
         [Key]
         public int ProvaId { get; set; }
