@@ -22,7 +22,7 @@ namespace TestAnalyser.Controllers
         [HttpPost]
         public ActionResult Login([Bind(Include = "Login,Senha")] Usuario usuario)
         {
-            if (UsuarioDAO.BuscarUsuarioPorEmailSenha(usuario) != null)
+            if (UsuarioDAO.ValidaLogin(usuario) != null)
             {
                 int NA = 0;
                 string NomeUser = "";

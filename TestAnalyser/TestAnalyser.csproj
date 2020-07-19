@@ -144,10 +144,7 @@
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\TelaInicialController.cs" />
     <Compile Include="DAL\AdminDAO.cs" />
-    <Compile Include="DAL\AlternativaDAO.cs" />
-    <Compile Include="DAL\AlunoDAO.cs" />
-    <Compile Include="DAL\OpcaoDAO.cs" />
-    <Compile Include="DAL\ProfessorDAO.cs" />
+    <Compile Include="DAL\ProvaDAO.cs" />
     <Compile Include="DAL\QuestaoDAO.cs" />
     <Compile Include="DAL\SingletonContext.cs" />
     <Compile Include="DAL\TurmaDAO.cs" />

@@ -24,6 +24,8 @@ namespace TestAnalyser.Model
 
         public int TipoQuestao { get; set; }
 
+        /* ativa = 1, inativa = 0*/
+        public int situacao { get; set; }
         public string RespostaDiscursiva { get; set; }
 
         public Disciplina Disciplina { get; set; }

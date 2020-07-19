@@ -21,6 +21,7 @@ namespace TestAnalyser.Model
 
         public int Matricula { get; set; }
 
+        public string cpf { get; set; }
         public string Email { get; set; }
 
         public List<Turma> Turmas { get; set; }
