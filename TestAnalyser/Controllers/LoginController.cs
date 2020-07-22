@@ -22,22 +22,32 @@ namespace TestAnalyser.Controllers
         [HttpPost]
         public ActionResult Login([Bind(Include = "Login,Senha")] Usuario usuario)
         {
-            if (UsuarioDAO.ValidaLogin(usuario) != null)
+            //Validar o Login e Senha digitados na View
+            var result = UsuarioDAO.BuscarUsuarioPorEmailSenha(usuario);
+            if (result != null)
             {
+                //Verificar se é o primeiro login, caso sim enviar para a tela de criar uma senha e confirmar dados.
+                if (usuario.Senha == null)
+                {
+                    FirstLogin("11111111111","Gabriel","123"); //chamando direto pra testar
+                    //return RedirectToAction("", "");
+                }
+
+                //Pegando o nivel de acesso do usuario para mostrar as telas corretas. (NA 1 = aluno, NA 2 = professor, NA 3 = Admin)
                 int NA = 0;
                 string NomeUser = "";
-                if (usuario.Alunos.AlunoId != 0)
+                if (result.TipoUsr == 1)
                 {
                     NA = 1;
-                    NomeUser = usuario.Alunos.Nome;
-                }else if (usuario.Professor.ProfessorId != 0)
+                    NomeUser = result.Alunos.Nome;
+                }else if (result.TipoUsr == 2)
                 {
                     NA = 2;
-                    NomeUser = usuario.Professor.Nome;
-                }else if (usuario.TipoUsr == 1)
+                    NomeUser = result.Professor.Nome;
+                }else if (result.TipoUsr == 3)
                 {
                     NA = 3;
-                    NomeUser = "Administrador";
+                    NomeUser = result.Admin.Nome;
                 }
 
                 Session["NivelAcesso"] = NA;
@@ -49,6 +59,37 @@ namespace TestAnalyser.Controllers
                 ModelState.AddModelError("", "Usuário ou Senha incorreto!");
                 return View();
             }
+        }
+
+        public ActionResult FirstLogin(string CPF, string Login, string Senha)
+        {
+            var usuario = new Usuario();
+            usuario.Login = Login;
+            usuario.Senha = null;
+            usuario = UsuarioDAO.BuscarUsuarioPorEmailSenha(usuario);
+
+            if (usuario.TipoUsr == 1)
+            {
+                if (usuario.Alunos.CPF.Equals(CPF))
+                {
+                    UsuarioDAO.SalvarNovoLogin(usuario, Senha);
+                }
+            } else if (usuario.TipoUsr == 2)
+            {
+                if (usuario.Professor.CPF.Equals(CPF))
+                {
+                    UsuarioDAO.SalvarNovoLogin(usuario, Senha);
+                }
+            }
+            else
+            {
+                if (usuario.Admin.CPF.Equals(CPF))
+                {
+                    UsuarioDAO.SalvarNovoLogin(usuario, Senha);
+                }
+            }
+            
+            return RedirectToAction("Login", "Login");
         }
 
         public ActionResult Logoff()

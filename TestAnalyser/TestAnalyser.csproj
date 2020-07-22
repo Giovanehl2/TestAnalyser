@@ -140,7 +140,6 @@
     <Compile Include="Controllers\ConsultarProvaPrController.cs" />
     <Compile Include="Controllers\ConsultarQuestoesController.cs" />
     <Compile Include="Controllers\GerarProvaController.cs" />
-    <Compile Include="Controllers\ImportarDadosController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\TelaInicialController.cs" />
     <Compile Include="DAL\AdminDAO.cs" />
@@ -152,11 +151,6 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202007181703240_teste1.cs" />
-    <Compile Include="Migrations\202007181703240_teste1.designer.cs">
-      <DependentUpon>202007181703240_teste1.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Model\Admin.cs" />
     <Compile Include="Model\Alternativa.cs" />
     <Compile Include="Model\Aluno.cs" />
@@ -215,11 +209,6 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Data\" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Migrations\202007181703240_teste1.resx">
-      <DependentUpon>202007181703240_teste1.cs</DependentUpon>
-    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
