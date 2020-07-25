@@ -17,20 +17,24 @@ namespace TestAnalyser.Controllers
         {
             return View();
         }
+        [HttpGet]
+        public ActionResult ConfirmarLogin()
+        {
+            return View();
+        }
 
 
         [HttpPost]
         public ActionResult Login([Bind(Include = "Login,Senha")] Usuario usuario)
         {
             //Validar o Login e Senha digitados na View
-            var result = UsuarioDAO.BuscarUsuarioPorEmailSenha(usuario);
+            var result = UsuarioDAO.ValidaLogin(usuario);
             if (result != null)
             {
                 //Verificar se é o primeiro login, caso sim enviar para a tela de criar uma senha e confirmar dados.
                 if (usuario.Senha == null)
                 {
-                    FirstLogin("11111111111","Gabriel","123"); //chamando direto pra testar
-                    //return RedirectToAction("", "");
+                    return RedirectToAction("ConfirmarLogin", "Login");
                 }
 
                 //Pegando o nivel de acesso do usuario para mostrar as telas corretas. (NA 1 = aluno, NA 2 = professor, NA 3 = Admin)
@@ -66,7 +70,7 @@ namespace TestAnalyser.Controllers
             var usuario = new Usuario();
             usuario.Login = Login;
             usuario.Senha = null;
-            usuario = UsuarioDAO.BuscarUsuarioPorEmailSenha(usuario);
+            usuario = UsuarioDAO.ValidaLogin(usuario);
 
             if (usuario.TipoUsr == 1)
             {

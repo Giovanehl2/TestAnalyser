@@ -35,12 +35,6 @@ namespace TestAnalyser.DAL
             var result = new Usuario();
             return result = ctx.Usuarios.Include("Alunos").Include("Admin").Include("Professor")
                 .Where(x => x.Login.Equals(usuario.Login) && x.Senha.Equals(usuario.Senha)).FirstOrDefault();
-            //return result = (from x in ctx.Usuarios where x.Login == usuario.Login && x.Senha == usuario.Senha select x).First();
-        }
-
-        public Usuario BuscarUsuarioId(int id)
-        {
-            return ctx.Usuarios.Find(id);
         }
 
         public static bool SalvarNovoLogin(Usuario usuario, string Senha)
