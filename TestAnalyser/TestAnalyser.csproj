@@ -1,4 +1,4 @@
-<Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+﻿<Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="..\packages\EntityFramework.6.4.4\build\EntityFramework.props" Condition="Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.props')" />
   <Import Project="..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props" Condition="Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" />
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
@@ -134,6 +134,7 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\ApiIntegracaoController.cs" />
     <Compile Include="Controllers\CadastrarQuestoesController.cs" />
     <Compile Include="Controllers\ConfiguracoesController.cs" />
     <Compile Include="Controllers\ConsultarProvaAlController.cs" />
@@ -146,25 +147,38 @@
     <Compile Include="DAL\ProvaDAO.cs" />
     <Compile Include="DAL\QuestaoDAO.cs" />
     <Compile Include="DAL\SingletonContext.cs" />
+    <Compile Include="DAL\DisciplinaDAO.cs" />
+    <Compile Include="DAL\CursoDAO.cs" />
     <Compile Include="DAL\TurmaDAO.cs" />
     <Compile Include="DAL\UsuarioDAO.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202007262233219_teste.cs" />
+    <Compile Include="Migrations\202007262233219_teste.designer.cs">
+      <DependentUpon>202007262233219_teste.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Model\Admin.cs" />
     <Compile Include="Model\Alternativa.cs" />
+    <Compile Include="Model\AlunoJson .cs" />
     <Compile Include="Model\Aluno.cs" />
     <Compile Include="Model\ConfigPln.cs" />
     <Compile Include="Model\Configuracao.cs" />
     <Compile Include="Model\Context.cs" />
+    <Compile Include="Model\CursoJson.cs" />
     <Compile Include="Model\Curso.cs" />
+    <Compile Include="Model\DisciplinaJson.cs" />
     <Compile Include="Model\Disciplina.cs" />
+    <Compile Include="Model\ObjApi.cs" />
     <Compile Include="Model\Opcao.cs" />
     <Compile Include="Model\Person.cs" />
+    <Compile Include="Model\ProfessorJson.cs" />
     <Compile Include="Model\Professor.cs" />
     <Compile Include="Model\Prova.cs" />
     <Compile Include="Model\Questao.cs" />
     <Compile Include="Model\RespostasAluno.cs" />
+    <Compile Include="Model\TurmaJson.cs" />
     <Compile Include="Model\Turma.cs" />
     <Compile Include="Model\Usuario.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -212,8 +226,8 @@
     <Folder Include="Data\" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202007252245513_teste.resx">
-      <DependentUpon>202007252245513_teste.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202007262233219_teste.resx">
+      <DependentUpon>202007262233219_teste.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
@@ -231,7 +245,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>53175</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>https://localhost:44310/</IISUrl>
+          <IISUrl>http://localhost:44310/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

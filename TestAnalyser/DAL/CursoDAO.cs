@@ -6,36 +6,37 @@ using TestAnalyser.Model;
 
 namespace TestAnalyser.DAL
 {
-    public class TurmaDAO
+    public class CursoDAO
     {
         private static Context ctx = SingletonContext.GetInstance();
-        public static bool CadastrarTurma(Turma turma)
+        public static bool CadastrarCurso(Curso curso)
         {
             /*não estou incluindo regras e nem validações no momento*/
-            if (BuscarTurmaNome(turma.NomeTurma) == null)
+            if (BuscarPorNome(curso.NomeCurso) == null)
             {
-                ctx.Turmas.Add(turma);
+                ctx.Cursos.Add(curso);
                 ctx.SaveChanges();
                 return true;
             }
             return false;
         }
-        public static bool EditarTurma(Turma turma)
+
+        public static bool EditarCurso(Curso curso)
         {
-            ctx.Entry(turma).State = System.Data.Entity.EntityState.Modified;
+            ctx.Entry(curso).State = System.Data.Entity.EntityState.Modified;
             ctx.SaveChanges();
             return true;
         }
 
-        public static Turma BuscarTurmaId(int id)
+        public static Curso BuscarCursoId(int id)
         {
-            return ctx.Turmas.Find(id);
+            return ctx.Cursos.Find(id);
         }
 
 
-        public static Turma BuscarTurmaNome(string nome)
+        public static Curso BuscarPorNome(string nome)
         {
-            return ctx.Turmas.Where(p => p.NomeTurma.Equals(nome)).FirstOrDefault();
+            return ctx.Cursos.Where(p => p.NomeCurso.Equals(nome)).FirstOrDefault();
         }
     }
 }

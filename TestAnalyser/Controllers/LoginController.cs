@@ -27,6 +27,9 @@ namespace TestAnalyser.Controllers
         [HttpPost]
         public ActionResult Login([Bind(Include = "Login,Senha")] Usuario usuario)
         {
+
+            ApiIntegracaoController.OrganizarObjParaPersistir();
+
             //Validar o Login e Senha digitados na View
             var result = UsuarioDAO.ValidaLogin(usuario);
             if (result != null)
@@ -43,7 +46,7 @@ namespace TestAnalyser.Controllers
                 if (result.TipoUsr == 1)
                 {
                     NA = 1;
-                    NomeUser = result.Alunos.Nome;
+                    NomeUser = result.Aluno.Nome;
                 }else if (result.TipoUsr == 2)
                 {
                     NA = 2;
@@ -74,7 +77,7 @@ namespace TestAnalyser.Controllers
 
             if (usuario.TipoUsr == 1)
             {
-                if (usuario.Alunos.CPF.Equals(CPF))
+                if (usuario.Aluno.CPF.Equals(CPF))
                 {
                     UsuarioDAO.SalvarNovoLogin(usuario, Senha);
                 }

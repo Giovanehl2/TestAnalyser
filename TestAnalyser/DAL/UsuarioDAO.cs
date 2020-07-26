@@ -33,8 +33,13 @@ namespace TestAnalyser.DAL
         public static Usuario ValidaLogin(Usuario usuario)
         {
             var result = new Usuario();
-            return result = ctx.Usuarios.Include("Alunos").Include("Admin").Include("Professor")
+            return result = ctx.Usuarios.Include("Aluno").Include("Admin").Include("Professor")
                 .Where(x => x.Login.Equals(usuario.Login) && x.Senha.Equals(usuario.Senha)).FirstOrDefault();
+        }
+
+        public static Usuario BuscarUsuarioPorLogin(String login)
+        {
+            return ctx.Usuarios.Include("Aluno").Include("Admin").Include("Professor").Where(x => x.Login.Equals(login)).FirstOrDefault();
         }
 
         public static bool SalvarNovoLogin(Usuario usuario, string Senha)
@@ -48,11 +53,11 @@ namespace TestAnalyser.DAL
                 usuario.Admin = null;
             }else if (usuario.TipoUsr == 2)
             {
-                usuario.Alunos = null;
+                usuario.Aluno = null;
                 usuario.Admin = null;
             } else
             {
-                usuario.Alunos = null;
+                usuario.Aluno = null;
                 usuario.Professor = null;
             }
 

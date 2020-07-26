@@ -13,7 +13,7 @@ namespace TestAnalyser.Model
         public Usuario()
         {
             Admin = new Admin();
-            Alunos = new Aluno();
+            Aluno = new Aluno();
             Professor = new Professor();
         }
         [Key]
@@ -23,7 +23,7 @@ namespace TestAnalyser.Model
         //TipoUsr 1 = Aluno, 2 = Professor, 3 = Admin
         public int TipoUsr { get; set; }
 
-        public Aluno Alunos { get; set; }
+        public Aluno Aluno { get; set; }
         public Professor Professor { get; set; }
         public Admin Admin { get; set; }
 

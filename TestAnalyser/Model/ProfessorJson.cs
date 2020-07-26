@@ -7,25 +7,13 @@ using System.Web;
 
 namespace TestAnalyser.Model
 {
-    [Table("Professores")]
-    public class Professor
+    public class ProfessorJson
     {
 
-        public Professor()
-        {
-            Disciplinas = new List<Disciplina>();
-            Provas = new List<Prova>();
-        }
-        [Key]
         public int ProfessorId { get; set; }
         public int Matricula { get; set; }
         public string Nome { get; set; }
         public string CPF { get; set; }
         public string Email { get; set; }
-
-        public List<Disciplina> Disciplinas { get; set; }
-
-        public List<Prova> Provas { get; set; }
-
     }
 }
