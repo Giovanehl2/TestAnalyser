@@ -29,6 +29,7 @@ namespace TestAnalyser.Controllers
         {
 
             ApiIntegracaoController.OrganizarObjParaPersistir();
+           // ApiIntegracaoController.fazerLigacoes();
 
             //Validar o Login e Senha digitados na View
             var result = UsuarioDAO.ValidaLogin(usuario);

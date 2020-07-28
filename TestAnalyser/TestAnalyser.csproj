@@ -150,13 +150,14 @@
     <Compile Include="DAL\DisciplinaDAO.cs" />
     <Compile Include="DAL\CursoDAO.cs" />
     <Compile Include="DAL\TurmaDAO.cs" />
+    <Compile Include="DAL\ProfessorDAO.cs" />
     <Compile Include="DAL\UsuarioDAO.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202007262233219_teste.cs" />
-    <Compile Include="Migrations\202007262233219_teste.designer.cs">
-      <DependentUpon>202007262233219_teste.cs</DependentUpon>
+    <Compile Include="Migrations\202007280114552_teste.cs" />
+    <Compile Include="Migrations\202007280114552_teste.designer.cs">
+      <DependentUpon>202007280114552_teste.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Model\Admin.cs" />
@@ -226,8 +227,8 @@
     <Folder Include="Data\" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202007262233219_teste.resx">
-      <DependentUpon>202007262233219_teste.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202007280114552_teste.resx">
+      <DependentUpon>202007280114552_teste.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

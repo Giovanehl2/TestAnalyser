@@ -9,33 +9,31 @@ namespace TestAnalyser.Controllers
 {
     public class ApiIntegracaoController
     {
+        public static Aluno aluno = new Aluno();
+        public static Professor professor = new Professor();
+        public static Disciplina disciplina = new Disciplina();
+        public static Curso curso = new Curso();
+        public static Turma turma = new Turma();
+        public static Usuario usr = new Usuario();
 
+        public static Aluno alunoEdit = new Aluno();
+        public static Professor professorEdit = new Professor();
+        public static Disciplina disciplinaEdit = new Disciplina();
+        public static Curso cursoEdit = new Curso();
+        public static Turma turmaEdit = new Turma();
+        public static Usuario usrEdit = new Usuario();
+
+        public static AlunoJson alunoJson = new AlunoJson();
+        public static ProfessorJson professorJson = new ProfessorJson();
+        public static DisciplinaJson disciplinaJson = new DisciplinaJson();
+        public static CursoJson cursoJson = new CursoJson();
+        public static TurmaJson turmaJson = new TurmaJson();
 
         public static void OrganizarObjParaPersistir()
         {
-            Aluno aluno = new Aluno();
-            Professor professor = new Professor();
-            Disciplina disciplina = new Disciplina();
-            Curso curso = new Curso();
-            Turma turma = new Turma();
-            Usuario usr = new Usuario();
-
-
-            Aluno alunoEdit = new Aluno();
-            Professor professorEdit = new Professor();
-            Disciplina disciplinaEdit = new Disciplina();
-            Curso cursoEdit = new Curso();
-            Turma turmaEdit = new Turma();
-            Usuario usrEdit = new Usuario();
-
-
-            AlunoJson alunoJson = new AlunoJson();
-            ProfessorJson professorJson = new ProfessorJson();
-            DisciplinaJson disciplinaJson = new DisciplinaJson();
-            CursoJson cursoJson = new CursoJson();
-            TurmaJson turmaJson = new TurmaJson();
-
-
+            
+            
+        
             alunoJson.CPF = "08107775210";
             alunoJson.Nome = "giovane";
             alunoJson.Email = "giovanehl2@gmail.com";
@@ -63,6 +61,7 @@ namespace TestAnalyser.Controllers
             aluno.Nome = alunoJson.Nome;
             aluno.Email = alunoJson.Email;
             aluno.Matricula = alunoJson.Matricula;
+            aluno.Provas = null;
             aluno.Turmas = null;/*preencher depois*/
 
             usr.Login = Convert.ToString(aluno.Matricula);
@@ -81,6 +80,7 @@ namespace TestAnalyser.Controllers
             professor.Nome = professorJson.Nome;
             professor.CPF = professorJson.CPF;
             professor.Email = professorJson.Email;
+            professor.Provas = null;
             professor.Disciplinas = null;/*preencher depois*/
 
 
@@ -101,7 +101,7 @@ namespace TestAnalyser.Controllers
             disciplina.Turmas = null;/*preencher depois*/
 
             /*persiste disciplina*/
-            DisciplinaDAO.CadastrarDisciplina(disciplina);
+           DisciplinaDAO.CadastrarDisciplina(disciplina);
 
 
             turma.NomeTurma = turmaJson.NomeTurma;
@@ -111,7 +111,7 @@ namespace TestAnalyser.Controllers
             turma.Alunos = null;
             turma.Disciplinas = null; /*preencher depois*/
 
-            TurmaDAO.CadastrarTurma(turma);
+           TurmaDAO.CadastrarTurma(turma);
 
             curso.NomeCurso = cursoJson.nomeCurso;
             curso.Descricao = cursoJson.descricao;
@@ -121,32 +121,14 @@ namespace TestAnalyser.Controllers
             CursoDAO.CadastrarCurso(curso);
 
 
-
-            /* Aluno*/
-
-            usrEdit = UsuarioDAO.BuscarUsuarioPorLogin(Convert.ToString(aluno.Matricula));
-
-            turmaEdit = TurmaDAO.BuscarTurmaNome(turma.NomeTurma);
-
-            usrEdit.Aluno.Turmas.Add(turmaEdit);
-
-            /*edição para inclusão de uma turma para o aluno*/
-            UsuarioDAO.EditarUsuario(usrEdit);
+            fazerLigacoes();
 
 
 
-            /*Professor*/
-            usrEdit = new Usuario();
 
-            usrEdit = UsuarioDAO.BuscarUsuarioPorLogin(Convert.ToString(professor.Matricula));
-
-            disciplinaEdit = DisciplinaDAO.BuscarPorNome(disciplina.nome);
-
-            usrEdit.Professor.Disciplinas.Add(disciplinaEdit);
-
-            /*edição para inclusão de uma Disciplina para o Professor*/
-            UsuarioDAO.EditarUsuario(usrEdit);
-
+        }
+        public static  void fazerLigacoes()
+        {
 
 
             /*Disciplina*/
@@ -155,10 +137,12 @@ namespace TestAnalyser.Controllers
             disciplinaEdit = DisciplinaDAO.BuscarPorNome(disciplina.nome);
 
             cursoEdit = CursoDAO.BuscarPorNome(curso.NomeCurso);
-            turmaEdit = TurmaDAO.BuscarTurmaNome(disciplina.nome);
+            turmaEdit = TurmaDAO.BuscarTurmaNome(turma.NomeTurma);
+            usrEdit   = UsuarioDAO.BuscarUsuarioPorLogin(Convert.ToString(professor.Matricula));
 
             disciplinaEdit.Turmas.Add(turmaEdit);
             disciplinaEdit.Cursos.Add(cursoEdit);
+            disciplinaEdit.Professores.Add(usrEdit.Professor);
 
             /*edição para inclusão de uma Disciplina para o Professor*/
             DisciplinaDAO.EditarDisciplina(disciplinaEdit);
@@ -198,7 +182,32 @@ namespace TestAnalyser.Controllers
             CursoDAO.EditarCurso(cursoEdit);
 
 
+            /* Aluno*/
 
+            usrEdit = UsuarioDAO.BuscarUsuarioPorLogin(Convert.ToString(aluno.Matricula));
+
+            turmaEdit = TurmaDAO.BuscarTurmaNome(turma.NomeTurma);
+
+            usrEdit.Aluno.Turmas.Add(turmaEdit);
+
+            /*edição para inclusão de uma turma para o aluno*/
+            UsuarioDAO.EditarUsuario(usrEdit);
+
+
+
+            /*Professor*/
+            usrEdit = new Usuario();
+            disciplinaEdit = new Disciplina();
+            professorEdit = new Professor();
+
+            professorEdit = ProfessorDAO.BuscarProfessorMatricula(professor.Matricula);
+
+            disciplinaEdit = DisciplinaDAO.BuscarPorNome(disciplina.nome);
+
+            professorEdit.Disciplinas.Add(disciplinaEdit);
+
+            /*edição para inclusão de uma Disciplina para o Professor*/
+            ProfessorDAO.EditarProfessor(professorEdit);
         }
     }
 }

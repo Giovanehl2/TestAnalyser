@@ -51,11 +51,13 @@ namespace TestAnalyser.DAL
             {
                 usuario.Professor = null;
                 usuario.Admin = null;
-            }else if (usuario.TipoUsr == 2)
+            }
+            else if (usuario.TipoUsr == 2)
             {
                 usuario.Aluno = null;
                 usuario.Admin = null;
-            } else
+            }
+            else
             {
                 usuario.Aluno = null;
                 usuario.Professor = null;
@@ -83,7 +85,9 @@ namespace TestAnalyser.DAL
 
         public static Professor BuscarProfessorMatricula(int matricula)
         {
-            return ctx.Professores.Where(p => p.Matricula.Equals(matricula)).FirstOrDefault();
+            return ctx.Professores.Include("Disciplinas").Include("Provas").Where(x => x.Matricula.Equals(matricula)).FirstOrDefault();
+
+
         }
     }
 }

@@ -36,7 +36,8 @@ namespace TestAnalyser.DAL
 
         public static Disciplina BuscarPorNome(string nome)
         {
-            return ctx.Disciplinas.Where(p => p.nome.Equals(nome)).FirstOrDefault();
+            return ctx.Disciplinas.Include("Turmas").Include("Professores").Include("Cursos").Where(p => p.nome.Equals(nome)).FirstOrDefault();
+
         }
     }
 }
