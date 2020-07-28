@@ -31,9 +31,9 @@ namespace TestAnalyser.Controllers
 
         public static void OrganizarObjParaPersistir()
         {
-            
-            
-        
+
+
+
             alunoJson.CPF = "08107775210";
             alunoJson.Nome = "giovane";
             alunoJson.Email = "giovanehl2@gmail.com";
@@ -101,7 +101,7 @@ namespace TestAnalyser.Controllers
             disciplina.Turmas = null;/*preencher depois*/
 
             /*persiste disciplina*/
-           DisciplinaDAO.CadastrarDisciplina(disciplina);
+            DisciplinaDAO.CadastrarDisciplina(disciplina);
 
 
             turma.NomeTurma = turmaJson.NomeTurma;
@@ -111,7 +111,7 @@ namespace TestAnalyser.Controllers
             turma.Alunos = null;
             turma.Disciplinas = null; /*preencher depois*/
 
-           TurmaDAO.CadastrarTurma(turma);
+            TurmaDAO.CadastrarTurma(turma);
 
             curso.NomeCurso = cursoJson.nomeCurso;
             curso.Descricao = cursoJson.descricao;
@@ -127,7 +127,7 @@ namespace TestAnalyser.Controllers
 
 
         }
-        public static  void fazerLigacoes()
+        public static void fazerLigacoes()
         {
 
 
@@ -138,7 +138,7 @@ namespace TestAnalyser.Controllers
 
             cursoEdit = CursoDAO.BuscarPorNome(curso.NomeCurso);
             turmaEdit = TurmaDAO.BuscarTurmaNome(turma.NomeTurma);
-            usrEdit   = UsuarioDAO.BuscarUsuarioPorLogin(Convert.ToString(professor.Matricula));
+            usrEdit = UsuarioDAO.BuscarUsuarioPorLogin(Convert.ToString(professor.Matricula));
 
             disciplinaEdit.Turmas.Add(turmaEdit);
             disciplinaEdit.Cursos.Add(cursoEdit);

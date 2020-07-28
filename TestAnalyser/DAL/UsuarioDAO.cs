@@ -13,9 +13,13 @@ namespace TestAnalyser.DAL
         /*o objeto deve vir validado e com todos os campos obrigatórios preenchidos*/
         public static bool CadastrarUsuario(Usuario usr)
         {
-            ctx.Usuarios.Add(usr);
-            ctx.SaveChanges();
-            return true;
+            if (BuscarPorLogin(usr.Login) == null)
+            {
+                ctx.Usuarios.Add(usr);
+                ctx.SaveChanges();
+                return true;
+            }
+            return false;
         }
 
         public static bool EditarUsuario(Usuario usr)
@@ -83,11 +87,9 @@ namespace TestAnalyser.DAL
             return ctx.Professores.Find(id);
         }
 
-        public static Professor BuscarProfessorMatricula(int matricula)
+        public static Usuario BuscarPorLogin(string Login)
         {
-            return ctx.Professores.Include("Disciplinas").Include("Provas").Where(x => x.Matricula.Equals(matricula)).FirstOrDefault();
-
-
+            return ctx.Usuarios.Where(p => p.Login.Equals(Login)).FirstOrDefault();
         }
     }
 }
