@@ -1,4 +1,7 @@
-﻿
+﻿@model TestAnalyser.Model.Configuracao
+@using TestAnalyser.Model;
+@using System.Web.Mvc;
+
 @{
     ViewBag.Title = "Configuracoes";
 }
@@ -6,22 +9,57 @@
 <h2>Configurar API WebService</h2>
 <div class="col-lg-12 tab-content">
     <br />
-
     <div>
-        
-
-            @*horario de correção*@
-
-        <form>
+        <form class="form-horizontal" id="formConfiguracoes" method="post" action="@Url.Action("SalvarConfiguracoes", "Configuracoes")">
             <div class="form-row">
                 <div class="col-md-10">
-                    <label for="UrlWebService">URL - WebService</label>
+                    <label for="Instituicao">Instituição:</label>
+                    <div class="row">
+                        <div class="col-md-10">
+                            @*<input type="text" class="form-control" id="Instituição">*@
+                            @Html.EditorFor(model => model.Instituicao, new { htmlAttributes = new { @class = "form-control" } })
+                        </div>
+                    </div>
+                    <br />
+                    <label for="Cnpj">CNPJ:</label>
+                    <div class="row">
+                        <div class="col-md-10">
+                            @*<input type="text" class="form-control" id="CNPJ">*@
+                            @Html.EditorFor(model => model.Cnpj, new { htmlAttributes = new { @class = "form-control" } })
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <br />
+            <br />
+            <div class="form-row">
+                <div class="col-md-10">
+                    <label for="UrlApi">URL - WebService</label>
                     <div class="row">
                         <div class="col-md-8">
-                            <input type="text" class="form-control" id="UrlWeb">
+                            @*<input type="text" class="form-control" id="UrlWeb">*@
+                            @Html.EditorFor(model => model.UrlApi, new { htmlAttributes = new { @class = "form-control" } })
                         </div>
-                        <div class="col-md-2">
+                        @*<div class="col-md-2">
                             <button witdh="50" title="Sinc" class="btn btn-default btn-sm" onclick="SincNow()">Sincronizar Agora</button>
+                        </div>*@
+                    </div>
+                </div>
+            </div>
+            <br />
+            <br />
+            <div class="form-row">
+                <div class="col-md-6">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label for="sincAuto">Sincronização Automatica (Data)</label>
+                            @*<input type="text" class="form-control" id="sincAuto" placeholder="Dia do Mês">*@
+                            @Html.EditorFor(model => model.sincAuto, new { htmlAttributes = new { @class = "form-control" } })
+                        </div>
+                        <div class="col-md-6">
+                            <label for="HoraCorrecao">Horário de correção</label>
+                            @*<input type="time" class="form-control" id="HoraCorrecao">*@
+                            @Html.EditorFor(model => model.HoraCorrecao, new { htmlAttributes = new { @class = "form-control" } })
                         </div>
                     </div>
                 </div>
@@ -29,32 +67,35 @@
             <br />
             <br />
             <div class="form-row">
-                <div class="col-md-4">
-                    <label for="SincronizacaoAut">Sincronização Automatica (Data)</label>
+                <div class="col-md-8">
+                    <label for="ServidorEmail">Servidor de Email:</label>
+                    <div class="row">
+                        <div class="col-md-10">
+                            @*<input type="text" class="form-control" id="ServidorEmail">*@
+                            @Html.EditorFor(model => model.ServidorEmail, new { htmlAttributes = new { @class = "form-control" } })
+                        </div>
+                    </div>
+                    <br />
+                    <label for="CaixaSaida">Caixa de Saida:</label>
+                    <div class="row">
+                        <div class="col-md-8">
+                            @*<input type="text" class="form-control" id="CaixaSaida">*@
+                            @Html.EditorFor(model => model.CaixaSaida, new { htmlAttributes = new { @class = "form-control" } })
+                        </div>
+                    </div>
+                    <br />
+                    <label for="Senha">Senha:</label>
                     <div class="row">
                         <div class="col-md-6">
-                            <input type="text" class="form-control" id="SincAut" placeholder="Dia do Mês">
-                        </div>
-                        <div class="col-md-2">
-                            <button witdh="50" title="SincAuto" class="btn btn-default btn-sm" onclick="SalvarSincAuto()">Salvar</button>
+                            @*<input type="text" class="form-control" id="Senha">*@
+                            @Html.EditorFor(model => model.Senha, new { htmlAttributes = new { @class = "form-control" } })
                         </div>
                     </div>
                 </div>
             </div>
             <br />
-            <br />
-            <div class="form-row">
-                <div class="col-md-4">
-                    <label for="HorarioCorrecao">Horário de correção</label>
-                    <div class="row">
-                        <div class="col-md-6">
-                            <input type="time" class="form-control" id="HorarioCorrecao">
-                        </div>
-                        <div class="col-md-2">
-                            <button witdh="50" class="btn btn-default btn-sm">Salvar</button>
-                        </div>
-                    </div>
-                </div>
+            <div class="col-md-2">
+                <button witdh="50" id="btnSalvar" type="submit" class="btn btn-primary btn-sm">Salvar</button>
             </div>
         </form>
         <br />
@@ -82,13 +123,9 @@
 <script>
 
     function SincNow() {
-        var url = document.getElementById('UrlLink').value;
+        var url = document.getElementById('UrlApi').value;
         console.log(url);
         $('#SincOK').modal('show');
-    }
-
-    function SalvarSincAuto() {
-
     }
 
 </script>

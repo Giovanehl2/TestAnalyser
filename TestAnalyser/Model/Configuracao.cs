@@ -18,7 +18,7 @@ namespace TestAnalyser.Model
 
         public DateTime HoraCorrecao { get; set; }
 
-        public int Instituicao { get; set; }
+        public string Instituicao { get; set; }
 
         public string Cnpj { get; set; }
 

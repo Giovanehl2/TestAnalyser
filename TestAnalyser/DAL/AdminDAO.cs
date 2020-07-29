@@ -31,5 +31,40 @@ namespace TestAnalyser.DAL
         {
             return ctx.Admins.Where(p => p.Matricula.Equals(matricula)).FirstOrDefault();
         }
+
+        public static bool SalvarConfiguracoes(Configuracao configuracao)
+        {
+            if(BuscarConfiguracoes())
+            {
+                ctx.Configuracoes.Add(configuracao);
+                ctx.SaveChanges();
+                return true;
+            }
+            else
+            {
+                ctx.Entry(configuracao).State = System.Data.Entity.EntityState.Modified;
+                ctx.SaveChanges();
+                return true;
+            }
+            
+        }
+
+        public static bool BuscarConfiguracoes()
+        {
+            //var x = ctx.Configuracoes.Find(ID);
+            var x = ctx.Configuracoes.Where(p => p.ConfiguracaoId != 1).FirstOrDefault();
+            if(x != null)
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+            
+        }
+
+        //1) Verificar como mostrar na tela os dados ja salvos da instituição. (como enviar o objeto para os campos)
+        //2) Verificar como salvar / usar os campos de data das configurações corretamente.
     }
 }
