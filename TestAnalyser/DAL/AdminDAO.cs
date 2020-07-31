@@ -36,6 +36,8 @@ namespace TestAnalyser.DAL
         {
             if(BuscarConfiguracoes())
             {
+                //var x = Convert.ToDateTime(configuracao.sincAuto);
+                //var x = Convert.ToDateTime(configuracao.HoraCorrecao);
                 ctx.Configuracoes.Add(configuracao);
                 ctx.SaveChanges();
                 return true;
@@ -51,7 +53,6 @@ namespace TestAnalyser.DAL
 
         public static bool BuscarConfiguracoes()
         {
-            //var x = ctx.Configuracoes.Find(ID);
             var x = ctx.Configuracoes.Where(p => p.ConfiguracaoId != 1).FirstOrDefault();
             if(x != null)
             {
@@ -65,6 +66,6 @@ namespace TestAnalyser.DAL
         }
 
         //1) Verificar como mostrar na tela os dados ja salvos da instituição. (como enviar o objeto para os campos)
-        //2) Verificar como salvar / usar os campos de data das configurações corretamente.
+        //2) OS campos de data estão como String, depois basta converte-los para DateTime pelo codigo se necessario.
     }
 }

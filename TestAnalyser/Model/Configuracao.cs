@@ -14,9 +14,9 @@ namespace TestAnalyser.Model
         [Key]
         public int ConfiguracaoId { get; set; }
         public string UrlApi { get; set; }
-        public DateTime sincAuto { get; set; }
+        public string sincAuto { get; set; }
 
-        public DateTime HoraCorrecao { get; set; }
+        public string HoraCorrecao { get; set; }
 
         public string Instituicao { get; set; }
 

@@ -53,13 +53,15 @@
                     <div class="row">
                         <div class="col-md-6">
                             <label for="sincAuto">Sincronização Automatica (Data)</label>
-                            @*<input type="text" class="form-control" id="sincAuto" placeholder="Dia do Mês">*@
-                            @Html.EditorFor(model => model.sincAuto, new { htmlAttributes = new { @class = "form-control" } })
+                            @*<input type="date" class="form-control" id="sincAuto" placeholder="Dia do Mês">*@
+                            <input id="sincAuto" class="form-control" name="sincAuto" type="date" value="" />
+                            @*@Html.EditorFor(model => model.sincAuto, new { htmlAttributes = new { @class = "form-control" } })*@
                         </div>
                         <div class="col-md-6">
                             <label for="HoraCorrecao">Horário de correção</label>
                             @*<input type="time" class="form-control" id="HoraCorrecao">*@
-                            @Html.EditorFor(model => model.HoraCorrecao, new { htmlAttributes = new { @class = "form-control" } })
+                            <input id="HoraCorrecao" class="form-control" name="HoraCorrecao" type="time" value="" />
+                            @*@Html.EditorFor(model => model.HoraCorrecao, new { htmlAttributes = new { @class = "form-control" } })*@
                         </div>
                     </div>
                 </div>
