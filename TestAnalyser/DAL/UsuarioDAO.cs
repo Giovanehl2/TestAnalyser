@@ -72,24 +72,5 @@ namespace TestAnalyser.DAL
             return true;
         }
 
-        public static Aluno BuscarAlunoId(int id)
-        {
-            return ctx.Alunos.Find(id);
-        }
-
-        public static Aluno BuscarAlunoMatricula(int matricula)
-        {
-            return ctx.Alunos.Where(p => p.Matricula.Equals(matricula)).FirstOrDefault();
-        }
-
-        public Professor BuscarProfessorId(int id)
-        {
-            return ctx.Professores.Find(id);
-        }
-
-        public static Usuario BuscarPorLogin(string Login)
-        {
-            return ctx.Usuarios.Where(p => p.Login.Equals(Login)).FirstOrDefault();
-        }
     }
 }

@@ -28,7 +28,6 @@ namespace TestAnalyser.Controllers
         public ActionResult Login([Bind(Include = "Login,Senha")] Usuario usuario)
         {
 
-            ApiIntegracaoController.OrganizarObjParaPersistir();
            // ApiIntegracaoController.fazerLigacoes();
 
             //Validar o Login e Senha digitados na View

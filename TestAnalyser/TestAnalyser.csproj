@@ -151,6 +151,7 @@
     <Compile Include="DAL\CursoDAO.cs" />
     <Compile Include="DAL\TurmaDAO.cs" />
     <Compile Include="DAL\ProfessorDAO.cs" />
+    <Compile Include="DAL\AlunoDAO.cs" />
     <Compile Include="DAL\UsuarioDAO.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
