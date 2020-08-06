@@ -2,14 +2,18 @@
 
 @{
     ViewBag.Title = "GerarProva";
+
 }
 
-<script src="//code.jquery.com/jquery-1.11.2.min.js"></script>
-<script src="//netdna.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
-<script src="js/multiselect.js"></script>
-
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.2/css/bootstrap-select.min.css">
+</head>
 <h2>Gerar Prova</h2>
 <br />
+
+
 <div class="container">
     <div class="row">
         <div class="col-md-12">
@@ -63,53 +67,32 @@
                     </div>
                     <div class="form-group col">
                         @*<label for="AssuntoProva">Assunto</label>
-                          <select class="form-control" id="Assuntos" name="Assuntos" size="1">
-                              <option>Selecione</option>
-                              <option>Assunto1</option>
-                              <option>Assunto2</option>
-                          </select>*@
+                            <select class="form-control" id="Assuntos" name="Assuntos" size="1">
+                                <option>Selecione</option>
+                                <option>Assunto1</option>
+                                <option>Assunto2</option>
+                            </select>*@
                     </div>
                 </div>
                 <br />
                 <br />
                 <div class="form-row">
-                    <div class="form-group col-md-6">
+                    <div class="form-group col-md-6" id="selectpicker_id">
                         <div class="row">
-                            <div class="col-md-1"></div>
+                            <div class="col-md-6"></div>
                             <label class="form-check-label" for="gridCheck">
                                 Assunto da Prova
                             </label>
                         </div>
                         <br>
-                        <div class="row">
-                            <div class="col-md-5">
-
-                                <select name="from" id="multiselect" class="form-control" size="8" multiple="multiple">
-                                    <option value="1">C#</option>
-                                    <option value="2">Orientação a Objetos</option>
-                                    <option value="3">SQL Server</option>
-                                    <option value="4">Banco de Dados Geral</option>
-                                    <option value="5">JavaScript</option>
-                                    <option value="6">Gerenciamento de TI</option>
-                                    @*<option value="7">Lua</option>
-                                    <option value="8">MATLAB</option>
-                                    <option value="9">NewLISP</option>
-                                    <option value="10">PHP</option>
-                                    <option value="11">Perl</option>
-                                    <option value="12">SQL</option>
-                                    <option value="13">Unix shell</option>*@
-                                </select>
-                            </div>
-                            <div class="col-md-2">
-                                <button type="button" id="multiselect_rightAll" class="btn btn-block"><i class="glyphicon glyphicon-forward"></i></button>
-                                <button type="button" id="multiselect_rightSelected" class="btn btn-block"><i class="glyphicon glyphicon-chevron-right"></i></button>
-                                <button type="button" id="multiselect_leftSelected" class="btn btn-block"><i class="glyphicon glyphicon-chevron-left"></i></button>
-                                <button type="button" id="multiselect_leftAll" class="btn btn-block"><i class="glyphicon glyphicon-backward"></i></button>
-                            </div>
-                            <div class="col-md-5">
-                                <select name="to" id="multiselect_to" class="form-control" size="8" multiple="multiple"></select>
-                            </div>
+                        <div class="form-group col-md-6">
+                            <select class="selectpicker" multiple>
+                                <option>Mustard</option>
+                                <option>Ketchup</option>
+                                <option>Relish</option>
+                            </select>
                         </div>
+
                     </div>
 
 
@@ -254,12 +237,33 @@
     </div>
 
 </div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.2/js/bootstrap-select.min.js"></script>
+
+
+<script type="text/javascript">
+    // run pre selected options
+    $('#pre-selected-options').multiSelect();
+</script>
+
 <script>
-    $('#multiselect').multiselect();
+    $('.selectpicker').selectpicker();
 
     function AdicionarQuestoesNaProva() {
         location.href = "https://localhost:44310/GerarProva/AdicionarQuestoesNaProva";
-    }
 
+        var val = $('.selectpicker').val();
+        $("#selectpicker_id .selectpicker").val();
+    }
+    function Salvarselectpicker() {
+
+        var val = $('.selectpicker').val();
+        @{
+
+        }
+
+    }
 </script>
 

@@ -34,6 +34,12 @@ namespace TestAnalyser.DAL
 
         }
 
+        public static List<Prova> BuscarProvasPorProfessor(int matricula)
+        {
+            return ctx.Provas.Where(p => p.Professor.Matricula == matricula).ToList();
+
+        }
+
         public static Prova VerificarQuestaoCadastrada(int id)
         {
             /*procura nas provas se existe alguma questão com o id pesquisado*/

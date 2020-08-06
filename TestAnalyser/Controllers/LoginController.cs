@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using System.Web.Security;
 using TestAnalyser.DAL;
 using TestAnalyser.Model;
+using TestAnalyser.Utils;
 
 namespace TestAnalyser.Controllers
 {
@@ -27,8 +28,13 @@ namespace TestAnalyser.Controllers
         [HttpPost]
         public ActionResult Login([Bind(Include = "Login,Senha")] Usuario usuario)
         {
+            string hash = Utilitarios.HashPassword("250389");
 
-           // ApiIntegracaoController.fazerLigacoes();
+            bool deu = Utilitarios.ValidatePassword("250389", hash);
+
+            if (deu)
+                Console.WriteLine("deu");
+
 
             //Validar o Login e Senha digitados na View
             var result = UsuarioDAO.ValidaLogin(usuario);
@@ -41,6 +47,10 @@ namespace TestAnalyser.Controllers
                 }
 
                 //Pegando o nivel de acesso do usuario para mostrar as telas corretas. (NA 1 = aluno, NA 2 = professor, NA 3 = Admin)
+
+                FormsAuthentication.SetAuthCookie(usuario.Login, false);
+
+
                 int NA = 0;
                 string NomeUser = "";
                 if (result.TipoUsr == 1)
@@ -68,8 +78,10 @@ namespace TestAnalyser.Controllers
             }
         }
 
-        public ActionResult FirstLogin(string CPF, string Login, string Senha)
+        public ActionResult ConfirmarLogin(string CPF, string Login, string Senha)
         {
+
+
             var usuario = new Usuario();
             usuario.Login = Login;
             usuario.Senha = null;

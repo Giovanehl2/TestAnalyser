@@ -6,6 +6,7 @@ using System.Web.Mvc;
 
 namespace TestAnalyser.Controllers
 {
+    [Authorize]
     public class GerarProvaController : Controller
     {
         // GET: GerarProva

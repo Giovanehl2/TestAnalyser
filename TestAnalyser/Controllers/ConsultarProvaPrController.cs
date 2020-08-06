@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using TestAnalyser.Model;
 
 namespace TestAnalyser.Controllers
 {
@@ -28,5 +29,17 @@ namespace TestAnalyser.Controllers
         {
             return View();
         }
+        public ActionResult GerarProva()
+        {
+
+            return View();
+        }
+
+        public static List<Disciplina> Consultar ()
+        {
+            return null;
+        }
+
+
     }
 }

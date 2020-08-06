@@ -45,6 +45,12 @@ namespace TestAnalyser.DAL
             ctx.Entry(questao).State = System.Data.Entity.EntityState.Modified;
             ctx.SaveChanges();
         }
+
+        public static List<String> BuscarAssuntoPorDisciplina(int disciplina)
+        {
+            return ctx.Questoes.Where(p => p.Disciplina.DisciplinaId == disciplina).Select(z => z.Assunto).Distinct().ToList();
+
+        }
         public static Questao BuscarQuestaoId(int id)
         {
             return ctx.Questoes.Find(id);
