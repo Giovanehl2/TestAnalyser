@@ -13,24 +13,43 @@ namespace TestAnalyser
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
-
             routes.MapRoute(
-                "Login",
-                "Login",
-                defaults: new { controller = "Login", action = "Login", id = UrlParameter.Optional }
+            "Login",
+            url: "{controller}/{action}",
+            defaults: new { controller = "Login", action = "Login", id = UrlParameter.Optional }
             );
 
             routes.MapRoute(
-            "GerarProva",
-            "GerarProva",
-            defaults: new { controller = "GerarProva", action = "GerarProva" }
-            );
-
-           routes.MapRoute(
-            "ConfirmarLogin",
+            "Confirmar Login",
             url: "{controller}/{action}",
             defaults: new { controller = "Login", action = "ConfirmarLogin" }
             );
+
+            routes.MapRoute(
+            "Gerar Prova",
+            url: "{controller}/{action}",
+            defaults: new { controller = "GerarProva", action = "GerarProva" }
+            );
+
+            routes.MapRoute(
+            "Cadastrar Questões",
+            url: "{controller}/{action}",
+            defaults: new { controller = "CadastrarQuestoes", action = "CadastrarQuestoes" }
+            );
+
+            routes.MapRoute(
+            "Consultar Questões",
+            url: "{controller}/{action}",
+            defaults: new { controller = "ConsultarQuestoes", action = "ConsultarQuestoes" }
+            );
+            
+            routes.MapRoute(
+            "Configurações",
+            url: "{controller}/{action}",
+            defaults: new { controller = "Configuracoes", action = "Configuracoes" }
+            );
+
+
 
             //routes.MapRoute(
             //    name: "Login",

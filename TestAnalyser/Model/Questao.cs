@@ -22,6 +22,7 @@ namespace TestAnalyser.Model
         public string Assunto { get; set; }
         public string Enunciado { get; set; }
 
+        //1 = Simples Escolha, 2 = Multipla Escolha, 3 = Verdadeiro ou Falso, 4 = Discursiva.
         public int TipoQuestao { get; set; }
 
         /* ativa = 1, inativa = 0*/
