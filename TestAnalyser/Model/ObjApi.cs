@@ -7,7 +7,7 @@ namespace TestAnalyser.Model
 {
     public class ObjApi
     {
-        public AlunoJson AlunoJson { get; set; }
+        public List<AlunoJson> AlunoJson { get; set; }
         public ProfessorJson ProfessorJson { get; set; }
         public DisciplinaJson DisciplinaJson { get; set; }
         public CursoJson CursoJson { get; set; }

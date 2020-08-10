@@ -12,7 +12,7 @@ namespace TestAnalyser.DAL
         public static bool CadastrarDisciplina(Disciplina disciplina)
         {
             /*não estou incluindo regras e nem validações no momento*/
-            if (BuscarPorNome(disciplina.nome) == null)
+            if (BuscarPorNome(disciplina.Nome) == null)
             {
                 ctx.Disciplinas.Add(disciplina);
                 ctx.SaveChanges();
@@ -36,7 +36,7 @@ namespace TestAnalyser.DAL
 
         public static Disciplina BuscarPorNome(string nome)
         {
-            return ctx.Disciplinas.Include("Turmas").Include("Professores").Include("Cursos").Where(p => p.nome.Equals(nome)).FirstOrDefault();
+            return ctx.Disciplinas.Include("Turmas").Include("Professores").Include("Cursos").Where(p => p.Nome.Equals(nome)).FirstOrDefault();
 
         }
     }

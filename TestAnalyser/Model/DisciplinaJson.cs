@@ -10,8 +10,8 @@ namespace TestAnalyser.Model
     public class DisciplinaJson
     {
 
-        public int DisciplinaId { get; set; }
-        public string nome { get; set; }
-        public string descrição { get; set; }
+        public string Nome { get; set; }
+        public string Descricao { get; set; }
+        public string Situacao { get; set; }
     }
 }

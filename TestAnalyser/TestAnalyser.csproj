@@ -240,33 +240,34 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202007280114552_teste.cs" />
-    <Compile Include="Migrations\202007280114552_teste.designer.cs">
-      <DependentUpon>202007280114552_teste.cs</DependentUpon>
+    <Compile Include="Migrations\202008091853310_teste.cs" />
+    <Compile Include="Migrations\202008091853310_teste.designer.cs">
+      <DependentUpon>202008091853310_teste.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Model\Admin.cs" />
     <Compile Include="Model\Alternativa.cs" />
-    <Compile Include="Model\AlunoJson .cs" />
     <Compile Include="Model\Aluno.cs" />
+    <Compile Include="Model\AlunoJson .cs" />
+    <Compile Include="Model\CargaDados.cs" />
     <Compile Include="Model\ConfigPln.cs" />
     <Compile Include="Model\Configuracao.cs" />
     <Compile Include="Model\Context.cs" />
-    <Compile Include="Model\CursoJson.cs" />
     <Compile Include="Model\Curso.cs" />
-    <Compile Include="Model\DisciplinaJson.cs" />
+    <Compile Include="Model\CursoJson.cs" />
     <Compile Include="Model\Disciplina.cs" />
+    <Compile Include="Model\DisciplinaJson.cs" />
     <Compile Include="Model\ObjApi.cs" />
     <Compile Include="Model\Opcao.cs" />
     <Compile Include="Model\Person.cs" />
-    <Compile Include="Model\ProfessorJson.cs" />
     <Compile Include="Model\Professor.cs" />
+    <Compile Include="Model\ProfessorJson.cs" />
     <Compile Include="Model\Prova.cs" />
     <Compile Include="Model\Questao.cs" />
     <Compile Include="Model\RespostasAluno.cs" />
     <Compile Include="Model\Roles.cs" />
-    <Compile Include="Model\TurmaJson.cs" />
     <Compile Include="Model\Turma.cs" />
+    <Compile Include="Model\TurmaJson.cs" />
     <Compile Include="Model\Usuario.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utils\Utilitarios.cs" />
@@ -314,8 +315,8 @@
     <Folder Include="Data\" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202007280114552_teste.resx">
-      <DependentUpon>202007280114552_teste.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202008091853310_teste.resx">
+      <DependentUpon>202008091853310_teste.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

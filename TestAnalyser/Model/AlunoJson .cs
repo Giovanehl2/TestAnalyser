@@ -10,11 +10,11 @@ namespace TestAnalyser.Model
 
     public class AlunoJson
     {
-        public int AlunoId { get; set; }
         public string Nome { get; set; }
         public string CPF { get; set; }
         public int Matricula { get; set; }
         public string Email { get; set; }
+        public string  Situacao { get; set; }
 
     }
 }

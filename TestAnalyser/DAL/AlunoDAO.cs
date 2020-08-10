@@ -29,9 +29,9 @@ namespace TestAnalyser.DAL
             return ctx.Alunos.Find(id);
         }
 
-        public static Aluno BuscarAlunoPorMatricula(String matricula)
+        public static Aluno BuscarAlunoPorMatricula(int matricula)
         {
-            return ctx.Alunos.Include("Turmas").Include("Provas").Where(x => x.Matricula.Equals(matricula)).FirstOrDefault();
+            return ctx.Alunos.Include("Turmas").Include("Provas").Where(x => x.Matricula == matricula).FirstOrDefault();
         }
 
     }

@@ -83,17 +83,6 @@ namespace TestAnalyser.DAL
             ctx.SaveChanges();
             return true;
         }
-        public void BCryptTest()
-        {
 
-            const string password = "PASSWORD";
-            const int workFactor = 13;
-
-            var start = DateTime.UtcNow;
-            var hashed = BCrypt.Net.BCrypt.HashPassword(password, workFactor);
-            var end = DateTime.UtcNow;
-
-
-        }
     }
 }

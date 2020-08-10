@@ -10,9 +10,10 @@ namespace TestAnalyser.Model
     public class CursoJson
     {
 
-        public int CursoId { get; set; }
-        public string nomeCurso { get; set; }
-        public string descricao { get; set; }
+        public string Nome { get; set; }
+        public string Descricao { get; set; }
+
+        public string Situacao { get; set; }
 
     }
 

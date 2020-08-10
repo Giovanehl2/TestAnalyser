@@ -28,12 +28,7 @@ namespace TestAnalyser.Controllers
         [HttpPost]
         public ActionResult Login([Bind(Include = "Login,Senha")] Usuario usuario)
         {
-            string hash = Utilitarios.HashPassword("250389");
-
-            bool deu = Utilitarios.ValidatePassword("250389", hash);
-
-            if (deu)
-                Console.WriteLine("deu");
+            ApiIntegracaoController.Importar();
 
 
             //Validar o Login e Senha digitados na View

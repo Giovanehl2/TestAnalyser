@@ -19,8 +19,8 @@ namespace TestAnalyser.Model
         
         [Key]
         public int DisciplinaId { get; set; }
-        public string nome { get; set; }
-        public string descrição { get; set; }
+        public string Nome { get; set; }
+        public string Descricao { get; set; }
         public List<Turma> Turmas { get; set; }
         public List<Professor> Professores { get; set; }
 

@@ -20,6 +20,8 @@ namespace TestAnalyser.Controllers
         public static Turma turma = new Turma();
         public static Usuario usr = new Usuario();
 
+        public static List<Aluno> alunos = new List<Aluno>();
+
         public static Aluno alunoEdit = new Aluno();
         public static Professor professorEdit = new Professor();
         public static Disciplina disciplinaEdit = new Disciplina();
@@ -32,12 +34,12 @@ namespace TestAnalyser.Controllers
         {
             try
             {
-
+                alunos.Clear();
                 /*Disciplina*/
                 disciplinaEdit = new Disciplina();
                 professorEdit = new Professor();
 
-                disciplinaEdit = DisciplinaDAO.BuscarPorNome(disciplina.nome);
+                disciplinaEdit = DisciplinaDAO.BuscarPorNome(disciplina.Nome);
 
                 cursoEdit = CursoDAO.BuscarPorNome(curso.NomeCurso);
                 turmaEdit = TurmaDAO.BuscarTurmaNome(turma.NomeTurma);
@@ -56,13 +58,18 @@ namespace TestAnalyser.Controllers
                 disciplinaEdit = new Disciplina();
                 alunoEdit = new Aluno();
 
-                disciplinaEdit = DisciplinaDAO.BuscarPorNome(disciplina.nome);
+                disciplinaEdit = DisciplinaDAO.BuscarPorNome(disciplina.Nome);
                 turmaEdit = TurmaDAO.BuscarTurmaNome(turma.NomeTurma);
                 cursoEdit = CursoDAO.BuscarPorNome(curso.NomeCurso);
-                alunoEdit = AlunoDAO.BuscarAlunoPorMatricula(Convert.ToString(aluno.Matricula));
+
+                foreach (AlunoJson item in objApi.AlunoJson)
+                {
+                    alunos.Add(AlunoDAO.BuscarAlunoPorMatricula(item.Matricula));
+                }
+
 
                 turmaEdit.Curso = cursoEdit;
-                turmaEdit.Alunos.Add(alunoEdit);
+                turmaEdit.Alunos = alunos; //insere todos alunos de uma vez
                 turmaEdit.Disciplinas.Add(disciplinaEdit);
 
                 TurmaDAO.EditarTurma(turmaEdit);
@@ -73,23 +80,31 @@ namespace TestAnalyser.Controllers
                 disciplinaEdit = new Disciplina();
 
                 cursoEdit = CursoDAO.BuscarPorNome(curso.NomeCurso);
-                disciplinaEdit = DisciplinaDAO.BuscarPorNome(disciplina.nome);
+                disciplinaEdit = DisciplinaDAO.BuscarPorNome(disciplina.Nome);
                 turmaEdit = TurmaDAO.BuscarTurmaNome(turma.NomeTurma);
                 cursoEdit.Turmas.Add(turmaEdit);
                 cursoEdit.Disciplinas.Add(disciplinaEdit);
 
                 CursoDAO.EditarCurso(cursoEdit);
 
+
+
+
                 /* Aluno*/
-                alunoEdit = new Aluno();
                 turmaEdit = new Turma();
-
-                alunoEdit = AlunoDAO.BuscarAlunoPorMatricula(Convert.ToString(aluno.Matricula));
                 turmaEdit = TurmaDAO.BuscarTurmaNome(turma.NomeTurma);
-                alunoEdit.Turmas.Add(turmaEdit);
 
-                /*edição para inclusão de uma turma para o aluno*/
-                UsuarioDAO.EditarUsuario(usrEdit);
+                foreach (AlunoJson item in objApi.AlunoJson)
+                {
+                    alunoEdit = new Aluno();
+
+                    alunoEdit = AlunoDAO.BuscarAlunoPorMatricula(item.Matricula);
+                    alunoEdit.Turmas.Add(turmaEdit);
+
+                    /*edição para inclusão de uma turma para o aluno*/
+                    AlunoDAO.EditarAluno(alunoEdit);
+                }
+
 
 
                 /*Professor*/
@@ -98,7 +113,7 @@ namespace TestAnalyser.Controllers
                 professorEdit = new Professor();
 
                 professorEdit = ProfessorDAO.BuscarProfessorMatricula(professor.Matricula);
-                disciplinaEdit = DisciplinaDAO.BuscarPorNome(disciplina.nome);
+                disciplinaEdit = DisciplinaDAO.BuscarPorNome(disciplina.Nome);
                 professorEdit.Disciplinas.Add(disciplinaEdit);
 
                 /*edição para inclusão de uma Disciplina para o Professor*/
@@ -118,28 +133,33 @@ namespace TestAnalyser.Controllers
         {
             try
             {
-
-                aluno.CPF = objApi.AlunoJson.CPF;
-                aluno.Nome = objApi.AlunoJson.Nome;
-                aluno.Email = objApi.AlunoJson.Email;
-                aluno.Matricula = objApi.AlunoJson.Matricula;
-                aluno.Provas = null;
-                aluno.Turmas = null;
-
-                usr.Login = Convert.ToString(aluno.Matricula);
-                usr.Senha = null;
-                usr.TipoUsr = 1;
-                usr.Aluno = aluno;
-                usr.Professor = null;
-                usr.Admin = null;
-
-
-                /*verifica se o registro ja se encontra na base*/
-                if (UsuarioDAO.BuscarUsuarioPorLogin(usr.Login) == null)
+                foreach (AlunoJson objAluno in objApi.AlunoJson)
                 {
-                    /*persiste usuario - Aluno*/
-                    UsuarioDAO.CadastrarUsuario(usr);
+                    aluno = new Aluno();
+
+                    aluno.CPF = objAluno.CPF;
+                    aluno.Nome = objAluno.Nome;
+                    aluno.Email = objAluno.Email;
+                    aluno.Matricula = objAluno.Matricula;
+                    aluno.Provas = null;
+                    aluno.Turmas = null;
+
+                    usr.Login = Convert.ToString(aluno.Matricula);
+                    usr.Senha = null;
+                    usr.TipoUsr = 1;
+                    usr.Aluno = aluno;
+                    usr.Professor = null;
+                    usr.Admin = null;
+
+
+                    /*verifica se o registro ja se encontra na base*/
+                    if (UsuarioDAO.BuscarUsuarioPorLogin(usr.Login) == null)
+                    {
+                        /*persiste usuario - Aluno*/
+                        UsuarioDAO.CadastrarUsuario(usr);
+                    }
                 }
+
 
 
                 usr = new Usuario();
@@ -154,7 +174,7 @@ namespace TestAnalyser.Controllers
 
                 usr.Login = Convert.ToString(professor.Matricula);
                 usr.Senha = null;
-                usr.TipoUsr = 1;
+                usr.TipoUsr = 2;
                 usr.Professor = professor;
                 usr.Aluno = null;
                 usr.Admin = null;
@@ -166,19 +186,18 @@ namespace TestAnalyser.Controllers
                     UsuarioDAO.CadastrarUsuario(usr);
                 }
 
-                disciplina.DisciplinaId = objApi.DisciplinaJson.DisciplinaId;
-                disciplina.nome = objApi.DisciplinaJson.nome;
-                disciplina.descrição = objApi.DisciplinaJson.descrição;
+                disciplina.Nome = objApi.DisciplinaJson.Nome;
+                disciplina.Descricao = objApi.DisciplinaJson.Descricao;
                 disciplina.Turmas = null;
 
                 /*verifica se o registro ja se encontra na base*/
-                if (DisciplinaDAO.BuscarPorNome(disciplina.nome) == null)
+                if (DisciplinaDAO.BuscarPorNome(disciplina.Nome) == null)
                 {
                     /*persiste disciplina*/
                     DisciplinaDAO.CadastrarDisciplina(disciplina);
                 }
 
-                turma.NomeTurma = objApi.TurmaJson.NomeTurma;
+                turma.NomeTurma = objApi.TurmaJson.Nome;
                 turma.Periodo = objApi.TurmaJson.Periodo;
                 turma.Curso = curso;
                 turma.Curso = null;
@@ -191,8 +210,8 @@ namespace TestAnalyser.Controllers
                     TurmaDAO.CadastrarTurma(turma);
 
                 }
-                curso.NomeCurso = objApi.CursoJson.nomeCurso;
-                curso.Descricao = objApi.CursoJson.descricao;
+                curso.NomeCurso = objApi.CursoJson.Nome;
+                curso.Descricao = objApi.CursoJson.Descricao;
                 curso.Turmas = null;/*preencher depois*/
 
                 /*verifica se o registro ja se encontra na base*/
@@ -211,15 +230,14 @@ namespace TestAnalyser.Controllers
             }
             return true;
         }
-        public ActionResult importar()
+        public static void Importar()
         {
             List<ObjApi> objApi = new List<ObjApi>();
 
 
-            // List<Investimento> invest = new List<Investimento>();
             using (var client = new WebClient())
             {
-                String json = client.DownloadString("http://localhost:51484/api/values");
+                String json = client.DownloadString("http://localhost:44351/api/values");
                 var serializer = new JavaScriptSerializer();
                 json = json.TrimStart('\"');
                 json = json.TrimEnd('\"');
@@ -237,7 +255,7 @@ namespace TestAnalyser.Controllers
                 }
 
             }
-            return RedirectToAction("Index", "Investimento");
+
         }
     }
 }

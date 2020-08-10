@@ -25,6 +25,7 @@ namespace TestAnalyser
             "GerarProva",
             defaults: new { controller = "GerarProva", action = "GerarProva" }
             );
+          
 
            routes.MapRoute(
             "ConfirmarLogin",
