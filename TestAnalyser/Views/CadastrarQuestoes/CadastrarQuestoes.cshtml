@@ -17,6 +17,93 @@
             color: red;
         }
     </style>
+
+    <script type="text/javascript">
+        //Total máximo de campos que você permitirá criar em seu site:
+        var totalCampos = 9;
+
+        //Não altere os valores abaixo, pois são variáveis controle;
+        var iLoop = 1;
+        var iCount = 0;
+        var linhaAtual;
+
+
+        function AddCampos() {
+            var hidden1 = document.getElementById("hidden1");
+            var hidden2 = document.getElementById("hidden2");
+
+            //Executar apenas se houver possibilidade de inserção de novos campos:
+            if (iCount < totalCampos) {
+
+                //Limpar hidden1, para atualizar a lista dos campos que ainda estão vazios:
+                hidden2.value = "";
+
+                //Atualizando a lista dos campos que estão ocultos.
+                //Essa lista ficará armazenada temporiariamente em hidden2;
+                for (iLoop = 1; iLoop <= totalCampos; iLoop++) {
+                    if (document.getElementById("linha" + iLoop).style.display == "none") {
+                        if (hidden2.value == "") {
+                            hidden2.value = "linha" + iLoop;
+                        } else {
+                            hidden2.value += ",linha" + iLoop;
+                        }
+                    }
+                }
+                //Quebrando a lista que foi armazenada em hidden2 em array:
+
+                linhasOcultas = hidden2.value.split(",");
+
+
+                if (linhasOcultas.length > 0) {
+                    //Tornar visível o primeiro elemento de linhasOcultas:
+                    document.getElementById(linhasOcultas[0]).style.display = "block"; iCount++;
+
+                    //Acrescentando o índice zero a hidden1:
+                    if (hidden1.value == "") {
+                        hidden1.value = linhasOcultas[0];
+                    } else {
+                        hidden1.value += "," + linhasOcultas[0];
+                    }
+
+                    /*Retirar a opção acima da lista de itens ocultos: <-------- OPCIONAL!!!
+                    if (hidden2.value.indexOf(","+linhasOcultas[0]) != -1) {
+                            hidden2.value = hidden2.value.replace(linhasOcultas[0]+",","");
+                    }else if (hidden2.indexOf(linhasOcultas[0]+",") == 0) {
+                            hidden2.value = hidden2.value.replace(linhasOcultas[0]+",","");
+                    }else{
+                            hidden2.value = "";
+                    }
+                    */
+                }
+            }
+        }
+
+        function RemoverCampos(id) {
+            //Criando ponteiro para hidden1:
+            var hidden1 = document.getElementById("hidden1");
+
+            //Pegar o valor do campo que será excluído:
+            var campoValor = document.getElementById("SE" + id).value;
+            //Se o campo não tiver nenhum valor, atribuir a string: vazio:
+            if (campoValor == "") {
+                campoValor = "vazio";
+            }
+
+            if (confirm("O campo que contém o valor:\n» " + campoValor + "\nserá excluído!\n\nDeseja prosseguir?")) {
+                document.getElementById("linha" + id).style.display = "none"; iCount--;
+
+                //Removendo o valor de hidden1:
+                if (hidden1.value.indexOf(",linha" + id) != -1) {
+                    hidden1.value = hidden1.value.replace(",linha" + id, "");
+                } else if (hidden1.value.indexOf("linha" + id + ",") == 0) {
+                    hidden1.value = hidden1.value.replace("linha" + id + ",", "");
+                } else {
+                    hidden1.value = "";
+                }
+            }
+        }
+    </script>
+
 </head>
 
 
@@ -25,7 +112,7 @@
     @*Abas para cada tipo de questão ...*@
     <br />
     <ul class="nav justify-content-center nav-pills nav-fill">
-        <li id="SE" class="nav-item active"><a class="borda" data-toggle="tab" href="#divSE">Simples-Escolha</a></li>
+        <li id="SE" class="nav-item"><a class="borda" data-toggle="tab" href="#divSE">Simples-Escolha</a></li>
         <li id="ME" class="nav-item"><a class="borda" data-toggle="tab" href="#divME">Multripla-Escolha</a></li>
         <li id="VF" class="nav-item"><a class="borda" data-toggle="tab" href="#divVF">Verdadeiro Ou Falso</a></li>
         <li id="DT" class="nav-item"><a class="borda" data-toggle="tab" href="#divDT">Dissertativa</a></li>
@@ -33,16 +120,25 @@
 
     @*Cada DIV terá um tipo de questão que irá ser apresentado em tela...*@
     <br />
-    <div id="divSE" class="tab-pane fade in active">
+    <div id="divSE" class="tab-pane fade active show">
         <h5>Tipo: Simples-Escolha</h5>
         <br />
-        <form>
+        <form name="form1" action="paginaPHPouASP" method="post">
             <div class="form-row">
                 <div class="col-md-4">
                     <label for="AssuntoSE">Assunto</label>
                     <input type="text" class="form-control" id="AssuntoSE">
                 </div>
+                <div class="col-md-4">
+                    <label for="Disciplinas">Disciplina</label>
+                    <select class="form-control" id="Disciplinas" name="Disciplinas">
+                        <option>Selecione</option>
+                        <option>Disciplina1</option>
+                        <option>Disciplina2</option>
+                    </select>
+                </div>
             </div>
+            <br />
             <div class="form-row">
                 <div class="col-md-8">
                     <label for="EnunciadoSE">Enunciado</label>
@@ -50,7 +146,7 @@
                 </div>
             </div>
             <br />
-            <div class="form-row">
+            @*<div class="form-row">
                 <div class="col-md-8">
                     <div class="row">
                         <div class="col-md-1" style="padding-right: 10px;">
@@ -98,14 +194,22 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div>*@
             <br />
-            <div class="form-row">
-                <div class="col-md-3 offset-1">
-                    @*tentativa de usar os glyphicons ... falha*@
-                    <button witdh="50" title="Remover" class="btn-default glyphicon glyphicon-minus" onclick="RemoveLinha()"> - </button>
-                    <button witdh="50" title="Adicionar" class="btn-default glyphicon glyphicon-plus" onclick="AddLinha()"> + </button>
-                </div>
+            @*</form>*@
+            <div id="DivAlternativas">
+                <script type="text/javascript">
+                        //Escrevendo o código-fonte HTML e ocultando os campos criados:
+                        for (iLoop = 1; iLoop <= totalCampos; iLoop++) {
+                            document.write("<div class='' id='linha" + iLoop + "' style='display:none'><input type='radio' id='SErd" + iLoop + 
+                            "' name='SEradio' /> <span id='linha' > " + iLoop + ") <input class='col-md-6' type='text' id='SE" + iLoop + "' name='SE" + iLoop + 
+                            "'> <input type='button' value='Remover' onclick='RemoverCampos(\"" + iLoop + "\")'></span></div>");
+                        }
+                </script>
+                <br />
+                <input type="button" value="Adicionar campos" onclick="AddCampos()">
+                <input type="text" name="hidden1" id="hidden1" hidden>
+                <input type="hidden" name="hidden2" id="hidden2">
             </div>
             <br />
             <div class="form-row">
@@ -127,7 +231,16 @@
                     <label for="AssuntoME">Assunto</label>
                     <input type="text" class="form-control" id="AssuntoME">
                 </div>
+                <div class="col-md-4">
+                    <label for="Disciplinas">Disciplina</label>
+                    <select class="form-control" id="Disciplinas" name="Disciplinas">
+                        <option>Selecione</option>
+                        <option>Disciplina1</option>
+                        <option>Disciplina2</option>
+                    </select>
+                </div>
             </div>
+            <br />
             <div class="form-row">
                 <div class="col-md-8">
                     <label for="EnunciadoME">Enunciado</label>
@@ -262,7 +375,16 @@
                     <label for="AssuntoVF">Assunto</label>
                     <input type="text" class="form-control" id="AssuntoVF">
                 </div>
+                <div class="col-md-4">
+                    <label for="Disciplinas">Disciplina</label>
+                    <select class="form-control" id="Disciplinas" name="Disciplinas">
+                        <option>Selecione</option>
+                        <option>Disciplina1</option>
+                        <option>Disciplina2</option>
+                    </select>
+                </div>
             </div>
+            <br />
             <div class="form-row">
                 <div class="col-md-8">
                     <label for="EnunciadoVF">Enunciado</label>
@@ -382,7 +504,16 @@
                     <label for="AssuntoDT">Assunto</label>
                     <input type="text" class="form-control" id="AssuntoDT">
                 </div>
+                <div class="col-md-4">
+                    <label for="Disciplinas">Disciplina</label>
+                    <select class="form-control" id="Disciplinas" name="Disciplinas">
+                        <option>Selecione</option>
+                        <option>Disciplina1</option>
+                        <option>Disciplina2</option>
+                    </select>
+                </div>
             </div>
+            <br />
             <div class="form-row">
                 <div class="col-md-8">
                     @*<label for="EnuncuadoDT">Enunciado</label>
@@ -396,7 +527,7 @@
                         @Html.ValidationMessageFor(m => m.PersonalDetails, "", new { @class = "error" })
                         <br /><br />
                         @*<input type="submit" value="Submit" />
-                        <br />*@
+                            <br />*@
                         <span>@Html.Raw(Model.PersonalDetails)</span>
                     }
                     @Scripts.Render("~/bundles/jquery")
@@ -423,13 +554,7 @@
     </div>
 </div>
 
-@*Cada botão, caixa de texto, e outros atributos da tela tem sua ID especifica, para salvar deverá ser resgatado os valores atraves dessas ID's*@
-
-@*<script>
-
-        function AddLinha() {
-
-        }
+<script>
 
         function SalvarSE() {
 
@@ -447,4 +572,4 @@
 
         }
 
-    </script>*@
+</script>
