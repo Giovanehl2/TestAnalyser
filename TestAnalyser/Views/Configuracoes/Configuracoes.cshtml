@@ -16,7 +16,6 @@
                     <label for="Instituicao">Instituição:</label>
                     <div class="row">
                         <div class="col-md-10">
-                            @*<input type="text" class="form-control" id="Instituição">*@
                             @Html.EditorFor(model => model.Instituicao, new { htmlAttributes = new { @class = "form-control" } })
                         </div>
                     </div>
@@ -24,7 +23,6 @@
                     <label for="Cnpj">CNPJ:</label>
                     <div class="row">
                         <div class="col-md-10">
-                            @*<input type="text" class="form-control" id="CNPJ">*@
                             @Html.EditorFor(model => model.Cnpj, new { htmlAttributes = new { @class = "form-control" } })
                         </div>
                     </div>
@@ -37,12 +35,8 @@
                     <label for="UrlApi">URL - WebService</label>
                     <div class="row">
                         <div class="col-md-8">
-                            @*<input type="text" class="form-control" id="UrlWeb">*@
                             @Html.EditorFor(model => model.UrlApi, new { htmlAttributes = new { @class = "form-control" } })
                         </div>
-                        @*<div class="col-md-2">
-                            <button witdh="50" title="Sinc" class="btn btn-default btn-sm" onclick="SincNow()">Sincronizar Agora</button>
-                        </div>*@
                     </div>
                 </div>
             </div>
@@ -53,15 +47,11 @@
                     <div class="row">
                         <div class="col-md-6">
                             <label for="sincAuto">Sincronização Automatica (Data)</label>
-                            @*<input type="date" class="form-control" id="sincAuto" placeholder="Dia do Mês">*@
                             <input id="sincAuto" class="form-control" name="sincAuto" type="date" value="" />
-                            @*@Html.EditorFor(model => model.sincAuto, new { htmlAttributes = new { @class = "form-control" } })*@
                         </div>
                         <div class="col-md-6">
                             <label for="HoraCorrecao">Horário de correção</label>
-                            @*<input type="time" class="form-control" id="HoraCorrecao">*@
                             <input id="HoraCorrecao" class="form-control" name="HoraCorrecao" type="time" value="" />
-                            @*@Html.EditorFor(model => model.HoraCorrecao, new { htmlAttributes = new { @class = "form-control" } })*@
                         </div>
                     </div>
                 </div>
@@ -73,7 +63,6 @@
                     <label for="ServidorEmail">Servidor de Email:</label>
                     <div class="row">
                         <div class="col-md-10">
-                            @*<input type="text" class="form-control" id="ServidorEmail">*@
                             @Html.EditorFor(model => model.ServidorEmail, new { htmlAttributes = new { @class = "form-control" } })
                         </div>
                     </div>
@@ -81,7 +70,6 @@
                     <label for="CaixaSaida">Caixa de Saida:</label>
                     <div class="row">
                         <div class="col-md-8">
-                            @*<input type="text" class="form-control" id="CaixaSaida">*@
                             @Html.EditorFor(model => model.CaixaSaida, new { htmlAttributes = new { @class = "form-control" } })
                         </div>
                     </div>
@@ -89,7 +77,6 @@
                     <label for="Senha">Senha:</label>
                     <div class="row">
                         <div class="col-md-6">
-                            @*<input type="text" class="form-control" id="Senha">*@
                             @Html.EditorFor(model => model.Senha, new { htmlAttributes = new { @class = "form-control" } })
                         </div>
                     </div>
@@ -104,7 +91,7 @@
     </div>
 </div>
 
-@* modal de OK *@
+
 <div class="modal fade" id="SincOK">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -122,7 +109,7 @@
     </div>
 </div>
 
-<script>
+<script type="text/javascript">
 
     function SincNow() {
         var url = document.getElementById('UrlApi').value;

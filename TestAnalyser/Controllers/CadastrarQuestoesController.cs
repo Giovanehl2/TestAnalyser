@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using TestAnalyser.DAL;
 using TestAnalyser.Model;
 
 namespace TestAnalyser.Controllers
@@ -24,9 +25,14 @@ namespace TestAnalyser.Controllers
 
         //Metodo para cadastrar a questão de tipo especifico no banco...
         [HttpPost]
-        public ActionResult CadastrarSE()
+        public ActionResult CadastrarSE(Questao questao)
         {
-            return View();
+            questao.TipoQuestao = 1;
+            questao.situacao = 1;
+            questao.RespostaDiscursiva = "";
+            //QuestaoDAO.CadastrarQuestao(questao);
+
+            return RedirectToAction("CadastrarQuestoes", "CadastrarQuestoes");
         }
 
         [HttpPost]

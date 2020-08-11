@@ -1,9 +1,13 @@
-﻿@model TestAnalyser.Model.Person
+﻿
+@model TestAnalyser.Model.Questao
+@using TestAnalyser.Model;
+@using System.Web.Mvc;
 
 @{
     ViewBag.Title = "Cadastrar Questões";
 }
 
+@* Script para o funcionamento de adicionar e remover alternativas *@
 <head>
     <meta name="viewport" content="width=device-width" />
     <title>Index</title>
@@ -50,9 +54,7 @@
                     }
                 }
                 //Quebrando a lista que foi armazenada em hidden2 em array:
-
                 linhasOcultas = hidden2.value.split(",");
-
 
                 if (linhasOcultas.length > 0) {
                     //Tornar visível o primeiro elemento de linhasOcultas:
@@ -64,16 +66,6 @@
                     } else {
                         hidden1.value += "," + linhasOcultas[0];
                     }
-
-                    /*Retirar a opção acima da lista de itens ocultos: <-------- OPCIONAL!!!
-                    if (hidden2.value.indexOf(","+linhasOcultas[0]) != -1) {
-                            hidden2.value = hidden2.value.replace(linhasOcultas[0]+",","");
-                    }else if (hidden2.indexOf(linhasOcultas[0]+",") == 0) {
-                            hidden2.value = hidden2.value.replace(linhasOcultas[0]+",","");
-                    }else{
-                            hidden2.value = "";
-                    }
-                    */
                 }
             }
         }
@@ -123,88 +115,41 @@
     <div id="divSE" class="tab-pane fade active show">
         <h5>Tipo: Simples-Escolha</h5>
         <br />
-        <form name="form1" action="paginaPHPouASP" method="post">
+        <form class="form-horizontal" name="form1" id="formCadSE" method="post" action="@Url.Action("CadastrarSE", "CadastrarQuestoes")">
+            @*<form name="form1" action="paginaPHPouASP" method="post">*@
             <div class="form-row">
                 <div class="col-md-4">
                     <label for="AssuntoSE">Assunto</label>
-                    <input type="text" class="form-control" id="AssuntoSE">
+                    <input type="text" class="form-control" id="Assunto" name="Assunto">
                 </div>
                 <div class="col-md-4">
                     <label for="Disciplinas">Disciplina</label>
-                    <select class="form-control" id="Disciplinas" name="Disciplinas">
-                        <option>Selecione</option>
-                        <option>Disciplina1</option>
-                        <option>Disciplina2</option>
-                    </select>
+                    @Html.DropDownListFor(x => Model.Disciplina.Nome,new SelectList(Model.Disciplina.Nome,"Value","Text"), 
+                   htmlAttributes: new { @class = "form-control" })
+                    @*<select class="form-control" id="Disciplina" name="Disciplina">
+                            <option>Selecione</option>
+                            <option>Disciplina1</option>
+                            <option>Disciplina2</option>
+                        </select>*@
                 </div>
             </div>
             <br />
             <div class="form-row">
                 <div class="col-md-8">
                     <label for="EnunciadoSE">Enunciado</label>
-                    <textarea class="form-control" id="EnunciadoSE"></textarea>
+                    <textarea class="form-control" id="Enunciado" name="Enunciado"></textarea>
                 </div>
             </div>
             <br />
-            @*<div class="form-row">
-                <div class="col-md-8">
-                    <div class="row">
-                        <div class="col-md-1" style="padding-right: 10px;">
-                            <input type="radio" id="SErdA" name="SEradio" />
-                            <label for="A">A)</label>
-                        </div>
-                        <div class="col-md-10">
-                            <input class="form-control" type="text" id="SEcampoA">
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-1" style="padding-right: 10px;">
-                            <input type="radio" id="SErdB" name="SEradio" />
-                            <label for="B">B)</label>
-                        </div>
-                        <div class="col-md-10">
-                            <input class="form-control" type="text" id="SEcampoB">
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-1" style="padding-right: 10px;">
-                            <input type="radio" id="SErdC" name="SEradio" />
-                            <label for="C">C)</label>
-                        </div>
-                        <div class="col-md-10">
-                            <input class="form-control" type="text" id="SEcampoC">
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-1" style="padding-right: 10px;">
-                            <input type="radio" id="SErdD" name="SEradio" />
-                            <label for="D">D)</label>
-                        </div>
-                        <div class="col-md-10">
-                            <input class="form-control" type="text" id="SEcampoD">
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-1" style="padding-right: 10px;">
-                            <input type="radio" id="SErdE" name="SEradio" />
-                            <label for="E">E)</label>
-                        </div>
-                        <div class="col-md-10">
-                            <input class="form-control" type="text" id="SEcampoE">
-                        </div>
-                    </div>
-                </div>
-            </div>*@
             <br />
-            @*</form>*@
             <div id="DivAlternativas">
                 <script type="text/javascript">
-                        //Escrevendo o código-fonte HTML e ocultando os campos criados:
-                        for (iLoop = 1; iLoop <= totalCampos; iLoop++) {
-                            document.write("<div class='' id='linha" + iLoop + "' style='display:none'><input type='radio' id='SErd" + iLoop + 
-                            "' name='SEradio' /> <span id='linha' > " + iLoop + ") <input class='col-md-6' type='text' id='SE" + iLoop + "' name='SE" + iLoop + 
+                    //Escrevendo o código-fonte HTML e ocultando os campos criados:
+                    for (iLoop = 1; iLoop <= totalCampos; iLoop++) {
+                        document.write("<div class='' id='Alternativas" + iLoop + "' style='display:none'><input type='radio' id='Alternativas" + iLoop +
+                            "' name='SEradio' /> <span id='Alternativas' > " + iLoop + ") <input class='col-md-6' type='text' id='Alternativas" + iLoop + "' name='Alternativas" + iLoop +
                             "'> <input type='button' value='Remover' onclick='RemoverCampos(\"" + iLoop + "\")'></span></div>");
-                        }
+                    }
                 </script>
                 <br />
                 <input type="button" value="Adicionar campos" onclick="AddCampos()">
@@ -213,7 +158,8 @@
             </div>
             <br />
             <div class="form-row">
-                <button witdh="50" title="Salvar" class="btn btn-primary btn-sm" onclick="SalvarSE()">Salvar</button>
+                <button witdh="50" id="btnSalvar" type="submit" class="btn btn-primary btn-sm">Salvar</button>
+                @*<button witdh="50" title="Salvar" class="btn btn-primary btn-sm" onclick="SalvarSE()">Salvar</button>*@
             </div>
         </form>
 
@@ -515,9 +461,9 @@
             </div>
             <br />
             <div class="form-row">
-                <div class="col-md-8">
+                @*<div class="col-md-8">
                     @*<label for="EnuncuadoDT">Enunciado</label>
-                        <textarea class="form-control" id="EnuncuadoDT"></textarea>*@
+                        <textarea class="form-control" id="EnuncuadoDT"></textarea>
 
                     @using (Html.BeginForm("Index", "Home", FormMethod.Post))
                     {
@@ -526,8 +472,6 @@
                         @Html.TextAreaFor(m => m.PersonalDetails)
                         @Html.ValidationMessageFor(m => m.PersonalDetails, "", new { @class = "error" })
                         <br /><br />
-                        @*<input type="submit" value="Submit" />
-                            <br />*@
                         <span>@Html.Raw(Model.PersonalDetails)</span>
                     }
                     @Scripts.Render("~/bundles/jquery")
@@ -536,7 +480,7 @@
                         tinymce.init({ selector: 'textarea', width: 500 });
                     </script>
 
-                </div>
+                </div>*@
             </div>
             <div class="form-row">
                 <div class="col-md-8">
@@ -556,20 +500,20 @@
 
 <script>
 
-        function SalvarSE() {
+    function SalvarSE() {
 
-        }
+    }
 
-        function SalvarME() {
+    function SalvarME() {
 
-        }
+    }
 
-        function SalvarVF() {
+    function SalvarVF() {
 
-        }
+    }
 
-        function SalvarDT() {
+    function SalvarDT() {
 
-        }
+    }
 
 </script>
