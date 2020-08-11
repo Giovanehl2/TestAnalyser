@@ -7,6 +7,7 @@
     ViewBag.Title = "Cadastrar Questões";
 }
 
+
 @* Script para o funcionamento de adicionar e remover alternativas *@
 <head>
     <meta name="viewport" content="width=device-width" />
@@ -123,14 +124,14 @@
                     <input type="text" class="form-control" id="Assunto" name="Assunto">
                 </div>
                 <div class="col-md-4">
-                    <label for="Disciplinas">Disciplina</label>
-                    @Html.DropDownListFor(x => Model.Disciplina.Nome,new SelectList(Model.Disciplina.Nome,"Value","Text"), 
-                   htmlAttributes: new { @class = "form-control" })
-                    @*<select class="form-control" id="Disciplina" name="Disciplina">
-                            <option>Selecione</option>
-                            <option>Disciplina1</option>
-                            <option>Disciplina2</option>
-                        </select>*@
+                    <label for="Disciplinas">Disciplinas</label>
+                    @Html.DropDownList("DisciplinaId", new SelectList(ViewBag.Disciplinas, "DisciplinaId", "Nome"))
+                    @*@Html.DropDownListFor(x => x.Disciplina.Nome, new SelectList(Model.Disciplina.Nome,"Value","Text"), htmlAttributes: new { @class = "form-control" })
+        <select class="form-control" id="Disciplina" name="Disciplina">
+            <option>Selecione</option>
+            <option>Disciplina1</option>
+            <option>Disciplina2</option>
+        </select>*@
                 </div>
             </div>
             <br />
