@@ -26,6 +26,31 @@ namespace TestAnalyser.DAL
 
         public static bool EditarUsuario(Usuario usr)
         {
+            switch (usr.TipoUsr)
+            {
+                case 1:
+                    if (usr.Aluno != null)
+                    {
+                        usr.Admin = null;
+                        usr.Professor = null;
+                    }
+
+                    break;
+                case 2:
+                    if (usr.Professor != null)
+                        usr.Admin = null;
+                        usr.Aluno = null;
+                    break;
+                case 3:
+                    if (usr.Admin != null)
+                    {
+                        usr.Aluno = null;
+                        usr.Professor = null;
+                    }
+
+                    break;
+            }
+
             usr.Senha = Utilitarios.HashPassword(usr.Senha);
             ctx.Entry(usr).State = System.Data.Entity.EntityState.Modified;
             ctx.SaveChanges();
@@ -65,7 +90,7 @@ namespace TestAnalyser.DAL
 
 
             Usuario usr = ctx.Usuarios.Include("Aluno").Include("Admin").Include("Professor").Where(x => x.Login.Equals(usuario.Login)).FirstOrDefault();
-            if(Utilitarios.ValidatePassword(usuario.Senha, usr.Senha))
+            if (Utilitarios.ValidatePassword(usuario.Senha, usr.Senha))
             {
                 return usr;
             }
