@@ -28,7 +28,7 @@ namespace TestAnalyser.Controllers
         [HttpPost]
         public ActionResult Login([Bind(Include = "Login,Senha")] Usuario usuario)
         {
-            ApiIntegracaoController.Importar();
+           // ApiIntegracaoController.Importar();
 
 
             //Validar o Login e Senha digitados na View
@@ -77,32 +77,14 @@ namespace TestAnalyser.Controllers
         {
 
 
-            var usuario = new Usuario();
-            usuario.Login = Login;
-            usuario.Senha = null;
-            usuario = UsuarioDAO.ValidaLogin(usuario);
+            Usuario usuario = new Usuario();
+            usuario = UsuarioDAO.ValidarPrimeiroAcesso(Login,CPF);
+            if (usuario != null)
+            {
+                usuario.Senha = Senha;
+                UsuarioDAO.EditarUsuario(usuario);
+            }
 
-            if (usuario.TipoUsr == 1)
-            {
-                if (usuario.Aluno.CPF.Equals(CPF))
-                {
-                    UsuarioDAO.SalvarNovoLogin(usuario, Senha);
-                }
-            } else if (usuario.TipoUsr == 2)
-            {
-                if (usuario.Professor.CPF.Equals(CPF))
-                {
-                    UsuarioDAO.SalvarNovoLogin(usuario, Senha);
-                }
-            }
-            else
-            {
-                if (usuario.Admin.CPF.Equals(CPF))
-                {
-                    UsuarioDAO.SalvarNovoLogin(usuario, Senha);
-                }
-            }
-            
             return RedirectToAction("Login", "Login");
         }
 

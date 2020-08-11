@@ -36,7 +36,30 @@ namespace TestAnalyser.DAL
         {
             return ctx.Usuarios.Find(id);
         }
+        public static Usuario ValidarPrimeiroAcesso(string login, string cpf)
+        {
+            Usuario usr = new Usuario();
 
+            usr = ctx.Usuarios.Include("Aluno").Include("Admin").Include("Professor").Where(x => x.Login.Equals(login) && x.Senha.Equals(null)).FirstOrDefault();
+
+            switch (usr.TipoUsr)
+            {
+                case 1:
+                    if (usr.Aluno != null && usr.Aluno.CPF.Equals(cpf))
+                        return usr;
+                    break;
+                case 2:
+                    if (usr.Professor != null && usr.Professor.CPF.Equals(cpf))
+                        return usr;
+                    break;
+                case 3:
+                    if (usr.Admin != null && usr.Admin.CPF.Equals(cpf))
+                        return usr;
+                    break;
+            }
+
+            return null;
+        }
         public static Usuario ValidaLogin(Usuario usuario)
         {
 
@@ -58,31 +81,31 @@ namespace TestAnalyser.DAL
             return ctx.Usuarios.Include("Aluno").Include("Admin").Include("Professor").Where(x => x.Login.Equals(login)).FirstOrDefault();
         }
 
-        public static bool SalvarNovoLogin(Usuario usuario, string Senha)
-        {
-            //Confirmar CPF e salvar a senha digitada na View.
-            usuario.Senha = Senha;
+        //public static bool SalvarNovoLogin(Usuario usuario, string Senha)
+        //{
+        //    //Confirmar CPF e salvar a senha digitada na View.
+        //    usuario.Senha = Senha;
 
-            if (usuario.TipoUsr == 1)
-            {
-                usuario.Professor = null;
-                usuario.Admin = null;
-            }
-            else if (usuario.TipoUsr == 2)
-            {
-                usuario.Aluno = null;
-                usuario.Admin = null;
-            }
-            else
-            {
-                usuario.Aluno = null;
-                usuario.Professor = null;
-            }
-            //fazer ajuste do hash
-            ctx.Entry(usuario).State = System.Data.Entity.EntityState.Modified;
-            ctx.SaveChanges();
-            return true;
-        }
+        //    if (usuario.TipoUsr == 1)
+        //    {
+        //        usuario.Professor = null;
+        //        usuario.Admin = null;
+        //    }
+        //    else if (usuario.TipoUsr == 2)
+        //    {
+        //        usuario.Aluno = null;
+        //        usuario.Admin = null;
+        //    }
+        //    else
+        //    {
+        //        usuario.Aluno = null;
+        //        usuario.Professor = null;
+        //    }
+        //    //fazer ajuste do hash
+        //    ctx.Entry(usuario).State = System.Data.Entity.EntityState.Modified;
+        //    ctx.SaveChanges();
+        //    return true;
+        //}
 
     }
 }

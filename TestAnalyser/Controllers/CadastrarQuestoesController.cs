@@ -14,13 +14,15 @@ namespace TestAnalyser.Controllers
         //ActionResult para apresetar a tela de cadastro de questões...
         public ActionResult CadastrarQuestoes()
         {
-            return View(new Person());
+            ViewBag.Disciplinas = DisciplinaDAO.ListarDisciplinas();
+            return View();
         }
 
         [HttpPost]
-        public ActionResult CadastrarQuestoes(Person person)
+        public ActionResult CadastrarQuestoes(Questao questao)
         {
-            return View(person);
+
+            return View(questao);
         }
 
         //Metodo para cadastrar a questão de tipo especifico no banco...

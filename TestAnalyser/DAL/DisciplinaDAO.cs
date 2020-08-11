@@ -26,6 +26,11 @@ namespace TestAnalyser.DAL
             return ctx.Disciplinas.Find(id);
         }
 
+        public static List<Disciplina> ListarDisciplinas()
+        {
+            return ctx.Disciplinas.ToList();
+        }
+
         public static bool EditarDisciplina(Disciplina disciplina)
         {
             ctx.Entry(disciplina).State = System.Data.Entity.EntityState.Modified;

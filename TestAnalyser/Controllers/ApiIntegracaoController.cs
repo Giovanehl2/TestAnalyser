@@ -1,8 +1,10 @@
-﻿using Newtonsoft.Json;
+﻿using iTextSharp.LGPLv2.Core.System.NetUtils;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using System.Text;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Script.Serialization;
@@ -235,10 +237,11 @@ namespace TestAnalyser.Controllers
             List<ObjApi> objApi = new List<ObjApi>();
 
 
-            using (var client = new WebClient())
+            using (var client = new WebClient { Encoding = System.Text.Encoding.UTF8 })
             {
                 String json = client.DownloadString("http://localhost:44351/api/values");
                 var serializer = new JavaScriptSerializer();
+
                 json = json.TrimStart('\"');
                 json = json.TrimEnd('\"');
                 json = json.Replace("\\", "");
