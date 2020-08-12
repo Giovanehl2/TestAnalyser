@@ -15,7 +15,8 @@ namespace TestAnalyser.Controllers
         public ActionResult CadastrarQuestoes()
         {
             ViewBag.Disciplinas = DisciplinaDAO.ListarDisciplinas();
-            return View();
+
+            return View(new Questao());
         }
 
         [HttpPost]
@@ -32,7 +33,7 @@ namespace TestAnalyser.Controllers
             questao.TipoQuestao = 1;
             questao.situacao = 1;
             questao.RespostaDiscursiva = "";
-            //QuestaoDAO.CadastrarQuestao(questao);
+            QuestaoDAO.CadastrarQuestao(questao);
 
             return RedirectToAction("CadastrarQuestoes", "CadastrarQuestoes");
         }

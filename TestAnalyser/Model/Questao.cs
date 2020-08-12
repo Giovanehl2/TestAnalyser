@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
+using System.Web.Mvc;
 
 namespace TestAnalyser.Model
 {
@@ -20,6 +21,9 @@ namespace TestAnalyser.Model
         [Key]
         public int QuestaoId { get; set; }
         public string Assunto { get; set; }
+
+        [AllowHtml]
+        [Column(TypeName = "varchar(MAX)")]
         public string Enunciado { get; set; }
 
         //1 = Simples Escolha, 2 = Multipla Escolha, 3 = Verdadeiro ou Falso, 4 = Discursiva.

@@ -243,9 +243,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202008091853310_teste.cs" />
-    <Compile Include="Migrations\202008091853310_teste.designer.cs">
-      <DependentUpon>202008091853310_teste.cs</DependentUpon>
+    <Compile Include="Migrations\202008112255490_teste.cs" />
+    <Compile Include="Migrations\202008112255490_teste.designer.cs">
+      <DependentUpon>202008112255490_teste.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Model\Admin.cs" />
@@ -318,8 +318,8 @@
     <Folder Include="Data\" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202008091853310_teste.resx">
-      <DependentUpon>202008091853310_teste.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202008112255490_teste.resx">
+      <DependentUpon>202008112255490_teste.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
