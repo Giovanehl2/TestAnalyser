@@ -5,6 +5,7 @@
 
 @{
     ViewBag.Title = "Cadastrar Questões";
+    Person person = ViewBag.Person;
 }
 
 
@@ -46,11 +47,11 @@
                 //Atualizando a lista dos campos que estão ocultos.
                 //Essa lista ficará armazenada temporiariamente em hidden2;
                 for (iLoop = 1; iLoop <= totalCampos; iLoop++) {
-                    if (document.getElementById("linha" + iLoop).style.display == "none") {
+                    if (document.getElementById("Alternativas" + iLoop).style.display == "none") {
                         if (hidden2.value == "") {
-                            hidden2.value = "linha" + iLoop;
+                            hidden2.value = "Alternativas" + iLoop;
                         } else {
-                            hidden2.value += ",linha" + iLoop;
+                            hidden2.value += ",Alternativas" + iLoop;
                         }
                     }
                 }
@@ -76,20 +77,20 @@
             var hidden1 = document.getElementById("hidden1");
 
             //Pegar o valor do campo que será excluído:
-            var campoValor = document.getElementById("SE" + id).value;
+            var campoValor = document.getElementById("Alternativas" + id).value;
             //Se o campo não tiver nenhum valor, atribuir a string: vazio:
             if (campoValor == "") {
                 campoValor = "vazio";
             }
 
             if (confirm("O campo que contém o valor:\n» " + campoValor + "\nserá excluído!\n\nDeseja prosseguir?")) {
-                document.getElementById("linha" + id).style.display = "none"; iCount--;
+                document.getElementById("Alternativas" + id).style.display = "none"; iCount--;
 
                 //Removendo o valor de hidden1:
-                if (hidden1.value.indexOf(",linha" + id) != -1) {
-                    hidden1.value = hidden1.value.replace(",linha" + id, "");
-                } else if (hidden1.value.indexOf("linha" + id + ",") == 0) {
-                    hidden1.value = hidden1.value.replace("linha" + id + ",", "");
+                if (hidden1.value.indexOf("Alternativas" + id) != -1) {
+                    hidden1.value = hidden1.value.replace("Alternativas" + id, "");
+                } else if (hidden1.value.indexOf("Alternativas" + id + ",") == 0) {
+                    hidden1.value = hidden1.value.replace("Alternativas" + id + ",", "");
                 } else {
                     hidden1.value = "";
                 }
@@ -125,7 +126,7 @@
                 </div>
                 <div class="col-md-4">
                     <label for="Disciplinas">Disciplinas</label>
-                    @Html.DropDownList("DisciplinaId", new SelectList(ViewBag.Disciplinas, "DisciplinaId", "Nome"))
+                    @Html.DropDownList("DisciplinaId", new SelectList(ViewBag.Disciplinas, "DisciplinaId", "Nome"), htmlAttributes: new { @class = "form-control" })
                 </div>
             </div>
             <br />
@@ -448,25 +449,25 @@
             </div>
             <br />
             <div class="form-row">
-                @Html.TextAreaFor(m => m.Enunciado, new { @class = "form-control" })
                 <div class="col-md-8">
-            <label for="EnuncuadoDT">Enunciado</label>
-                <textarea class="form-control" id="EnuncuadoDT"></textarea>
+                    <label for="EnuncuadoDT">Enunciado</label>
+                    <textarea class="form-control" id="EnuncuadoDT"></textarea>
 
-            @using (Html.BeginForm("Index", "Home", FormMethod.Post))
-            {
+                    @using (Html.BeginForm("Index", "Home", FormMethod.Post))
+                    {
+                        @*<label for="EnuncuadoDT">Enunciado</label>
+                        @Html.TextAreaFor(m => m.Enunciado, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(m => m.Enunciado, "", new { @class = "error" })*@
+                        <br /><br />
+                        @*<span>@Html.Raw(Model.Enunciado)</span>*@
+                    }
+                    @Scripts.Render("~/bundles/jquery")
+                    <script type="text/javascript" src="//tinymce.cachefly.net/4.0/tinymce.min.js"></script>
+                    <script type="text/javascript">
+                        tinymce.init({ selector: 'textarea', width: 500 });
+                    </script>
 
-                @Html.ValidationMessageFor(m => m.Enunciado, "", new { @class = "error" })
-                <br /><br />
-                <span>@Html.Raw(Model.Enunciado)</span>
-            }
-            @Scripts.Render("~/bundles/jquery")
-            <script type="text/javascript" src="//tinymce.cachefly.net/4.0/tinymce.min.js"></script>
-            <script type="text/javascript">
-                tinymce.init({ selector: 'textarea', width: 500 });
-            </script>
-
-        </div>
+                </div>
             </div>
             <div class="form-row">
                 <div class="col-md-8">
