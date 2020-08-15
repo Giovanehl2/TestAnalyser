@@ -1,8 +1,9 @@
 ﻿<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+@model TestAnalyser.Model.Prova
 
 @{
     ViewBag.Title = "GerarProva";
-
+    List<string> asssuntos = ViewBag.ListaAssuntos;
 }
 
 <head>
@@ -49,10 +50,10 @@
 
                     <div class="form-group col">
                         <label for="DisciplinaProva">Disciplina</label>
-                        <select class="form-control" id="Disciplinas" name="Disciplinas" size="1">
-                            <option>Selecione</option>
-                            <option>Disciplina1</option>
-                            <option>Disciplina2</option>
+                        <select class="form-control" id="idDisciplina" name="Disciplinas" size="1">
+                            <option>1</option>
+                            <option>2</option>
+                            <option>3</option>
                         </select>
                     </div>
 
@@ -66,12 +67,10 @@
 
                     </div>
                     <div class="form-group col">
-                        @*<label for="AssuntoProva">Assunto</label>
-                            <select class="form-control" id="Assuntos" name="Assuntos" size="1">
-                                <option>Selecione</option>
-                                <option>Assunto1</option>
-                                <option>Assunto2</option>
-                            </select>*@
+                        <label class="form-check-label" for="gridCheck">
+                            Assunto da Prova
+                        </label>
+
                     </div>
                 </div>
                 <br />
@@ -87,9 +86,22 @@
                         <br>
                         <div class="form-group col-md-6">
                             <select class="selectpicker" multiple>
-                                <option>Mustard</option>
-                                <option>Ketchup</option>
-                                <option>Relish</option>
+                                @{
+
+                                    if (asssuntos.Count() != 0)
+                                    {
+                                        foreach (string item in asssuntos)
+                                        {
+                                            <option>@item</option>
+                                        }
+                                    }
+                                    else
+                                    {
+                                        <option>vazio</option>
+                                    }
+
+                                }
+
                             </select>
                         </div>
 
@@ -119,7 +131,7 @@
                                             </div>
                                         </div>
                                         <div class="col">
-                                            <input class="form-control" id="AssuntoProva" type="number">
+                                            <input class="form-control" id="IdQtSimplesEscolha" type="number" value="@Model.QtSimplesEscolha">
                                         </div>
                                     </div>
                                     <div class="row">
@@ -134,7 +146,7 @@
                                             </div>
                                         </div>
                                         <div class="col">
-                                            <input class="form-control" id="AssuntoProva" type="number">
+                                            <input class="form-control" id="IdQtMultiplaEscolha" type="number" value="@Model.QtMultiplaEscolha">
                                         </div>
                                     </div>
                                     <div class="row">
@@ -149,7 +161,7 @@
                                             </div>
                                         </div>
                                         <div class="col">
-                                            <input class="form-control" id="AssuntoProva" type="number">
+                                            <input class="form-control" id="IdQtVerdadeirFalso" type="number" value="@Model.QtVerdadeirFalso">
                                         </div>
                                     </div>
                                     <div class="row">
@@ -165,7 +177,7 @@
                                             </div>
                                         </div>
                                         <div class="col">
-                                            <input class="form-control" id="AssuntoProva" type="number">
+                                            <input class="form-control" id="IdQtDissertativa" type="number" value="@Model.QtDissertativa">
                                         </div>
                                     </div>
                                 </div>
@@ -257,13 +269,32 @@
         var val = $('.selectpicker').val();
         $("#selectpicker_id .selectpicker").val();
     }
+
+
     function Salvarselectpicker() {
 
         var val = $('.selectpicker').val();
-        @{
-
-        }
 
     }
+</script>
+
+<script>
+    $(document).ready(function () {
+        $("#idDisciplina").on("change", function () {
+            var val = $('#idDisciplina').val();
+            var url = "/GerarProva/BuscarAssunto";
+            $.post(url, { id: val }, function (data) {
+            });
+        });
+    });
+
+    $(document).ready(function () {
+        $("#idDisciplina").on("change", function () {
+            var val = $('#idDisciplina').val();
+            var url = "/GerarProva/BuscarAssunto";
+            $.post(url, { id: val }, function (data) {
+            });
+        });
+    });
 </script>
 

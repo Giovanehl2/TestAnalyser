@@ -21,7 +21,19 @@ namespace TestAnalyser.Model
         [Key]
         public int ProvaId { get; set; }
 
-        public string  TituloProva { get; set; }
+        public string TituloProva { get; set; }
+
+        [NotMapped]
+        public List<string> Assuntos { get; set; }
+
+        [NotMapped]
+        public int QtSimplesEscolha { get; set; }
+        [NotMapped]
+        public int QtMultiplaEscolha { get; set; }
+        [NotMapped]
+        public int QtDissertativa { get; set; }
+        [NotMapped]
+        public int QtVerdadeirFalso { get; set; }
 
         public double ValorProva { get; set; }
 
@@ -41,6 +53,6 @@ namespace TestAnalyser.Model
 
         public List<RespostasAluno> RespostasAlunos { get; set; }
         public Professor Professor { get; set; }
-        public List<Aluno> Alunos  { get; set; }
+        public List<Aluno> Alunos { get; set; }
     }
 }

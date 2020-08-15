@@ -243,9 +243,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202008112255490_teste.cs" />
-    <Compile Include="Migrations\202008112255490_teste.designer.cs">
-      <DependentUpon>202008112255490_teste.cs</DependentUpon>
+    <Compile Include="Migrations\202008140124441_teste.cs" />
+    <Compile Include="Migrations\202008140124441_teste.designer.cs">
+      <DependentUpon>202008140124441_teste.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Model\Admin.cs" />
@@ -260,6 +260,7 @@
     <Compile Include="Model\CursoJson.cs" />
     <Compile Include="Model\Disciplina.cs" />
     <Compile Include="Model\DisciplinaJson.cs" />
+    <Compile Include="Model\MultiSelectValues.cs" />
     <Compile Include="Model\ObjApi.cs" />
     <Compile Include="Model\Opcao.cs" />
     <Compile Include="Model\Person.cs" />
@@ -318,8 +319,8 @@
     <Folder Include="Data\" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202008112255490_teste.resx">
-      <DependentUpon>202008112255490_teste.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202008140124441_teste.resx">
+      <DependentUpon>202008140124441_teste.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

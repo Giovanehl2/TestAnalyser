@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Web;
 using TestAnalyser.Model;
 using Context = TestAnalyser.Model.Context;
@@ -48,7 +49,7 @@ namespace TestAnalyser.DAL
 
         public static List<String> BuscarAssuntoPorDisciplina(int disciplina)
         {
-            return ctx.Questoes.Where(p => p.Disciplina.DisciplinaId == disciplina).Select(z => z.Assunto).Distinct().ToList();
+            return ctx.Questoes.Include(d => d.Disciplina).Select(z => z.Assunto).Distinct().ToList();
 
         }
         public static Questao BuscarQuestaoId(int id)
