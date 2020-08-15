@@ -5,6 +5,7 @@
 
 @{
     ViewBag.Title = "Cadastrar Questões";
+    Person person = ViewBag.Person;
 }
 
 
@@ -33,7 +34,7 @@
         var linhaAtual;
 
 
-        function AddCampos() {
+        function AddCampos(tipo = '') {
             var hidden1 = document.getElementById("hidden1");
             var hidden2 = document.getElementById("hidden2");
 
@@ -46,11 +47,11 @@
                 //Atualizando a lista dos campos que estão ocultos.
                 //Essa lista ficará armazenada temporiariamente em hidden2;
                 for (iLoop = 1; iLoop <= totalCampos; iLoop++) {
-                    if (document.getElementById("linha" + iLoop).style.display == "none") {
+                    if (document.getElementById(tipo + "Alternativas" + iLoop).style.display == "none") {
                         if (hidden2.value == "") {
-                            hidden2.value = "linha" + iLoop;
+                            hidden2.value = tipo + "Alternativas" + iLoop;
                         } else {
-                            hidden2.value += ",linha" + iLoop;
+                            hidden2.value += "," + tipo + "Alternativas" + iLoop;
                         }
                     }
                 }
@@ -71,25 +72,25 @@
             }
         }
 
-        function RemoverCampos(id) {
+        function RemoverCampos(id, tipo) {
             //Criando ponteiro para hidden1:
             var hidden1 = document.getElementById("hidden1");
 
             //Pegar o valor do campo que será excluído:
-            var campoValor = document.getElementById("SE" + id).value;
+            var campoValor = document.getElementById(tipo + "Campo" + id).value;
             //Se o campo não tiver nenhum valor, atribuir a string: vazio:
             if (campoValor == "") {
                 campoValor = "vazio";
             }
 
             if (confirm("O campo que contém o valor:\n» " + campoValor + "\nserá excluído!\n\nDeseja prosseguir?")) {
-                document.getElementById("linha" + id).style.display = "none"; iCount--;
+                document.getElementById(tipo + "Alternativas" + id).style.display = "none"; iCount--;
 
                 //Removendo o valor de hidden1:
-                if (hidden1.value.indexOf(",linha" + id) != -1) {
-                    hidden1.value = hidden1.value.replace(",linha" + id, "");
-                } else if (hidden1.value.indexOf("linha" + id + ",") == 0) {
-                    hidden1.value = hidden1.value.replace("linha" + id + ",", "");
+                if (hidden1.value.indexOf(tipo + "Alternativas" + id) != -1) {
+                    hidden1.value = hidden1.value.replace(tipo + "Alternativas" + id, "");
+                } else if (hidden1.value.indexOf(tipo + "Alternativas" + id + ",") == 0) {
+                    hidden1.value = hidden1.value.replace(tipo + "Alternativas" + id + ",", "");
                 } else {
                     hidden1.value = "";
                 }
@@ -125,7 +126,7 @@
                 </div>
                 <div class="col-md-4">
                     <label for="Disciplinas">Disciplinas</label>
-                    @Html.DropDownList("DisciplinaId", new SelectList(ViewBag.Disciplinas, "DisciplinaId", "Nome"))
+                    @Html.DropDownList("DisciplinaId", new SelectList(ViewBag.Disciplinas, "DisciplinaId", "Nome"), htmlAttributes: new { @class = "form-control" })
                 </div>
             </div>
             <br />
@@ -141,13 +142,13 @@
                 <script type="text/javascript">
                     //Escrevendo o código-fonte HTML e ocultando os campos criados:
                     for (iLoop = 1; iLoop <= totalCampos; iLoop++) {
-                        document.write("<div class='' id='Alternativas" + iLoop + "' style='display:none'><input type='radio' id='Alternativas" + iLoop +
-                            "' name='SEradio' /> <span id='Alternativas' > " + iLoop + ") <input class='col-md-6' type='text' id='Alternativas" + iLoop + "' name='Alternativas" + iLoop +
-                            "'> <input type='button' value='Remover' onclick='RemoverCampos(\"" + iLoop + "\")'></span></div>");
+                        document.write("<div class='' id='SEAlternativas" + iLoop + "' style='display:none'><input type='radio' id='Alternativas" + iLoop +
+                            "' name='SEradio' /> <span id='Alternativas' > " + iLoop + ") <input class='col-md-6' type='text' id='SECampo" + iLoop + "' name='Alternativas" + iLoop +
+                            "'> <input type='button' value='Remover' onclick='RemoverCampos(\"" + iLoop + "\",\"SE\")'></span></div>");
                     }
                 </script>
                 <br />
-                <input type="button" value="Adicionar campos" onclick="AddCampos()">
+                <input type="button" value="Adicionar campos" onclick="AddCampos('SE')">
                 <input type="text" name="hidden1" id="hidden1" hidden>
                 <input type="hidden" name="hidden2" id="hidden2">
             </div>
@@ -164,21 +165,15 @@
     <div id="divME" class="tab-pane fade">
         <h5>Tipo: Multipla-Escolha</h5>
         <br />
-        <br />
-
-        <form>
+        <form class="form-horizontal" name="form1" id="formCadME" method="post" action="@Url.Action("CadastrarME", "CadastrarQuestoes")">
             <div class="form-row">
                 <div class="col-md-4">
                     <label for="AssuntoME">Assunto</label>
                     <input type="text" class="form-control" id="AssuntoME">
                 </div>
                 <div class="col-md-4">
-                    <label for="Disciplinas">Disciplina</label>
-                    <select class="form-control" id="Disciplinas" name="Disciplinas">
-                        <option>Selecione</option>
-                        <option>Disciplina1</option>
-                        <option>Disciplina2</option>
-                    </select>
+                    <label for="Disciplinas">Disciplinas</label>
+                    @Html.DropDownList("DisciplinaId", new SelectList(ViewBag.Disciplinas, "DisciplinaId", "Nome"), htmlAttributes: new { @class = "form-control" })
                 </div>
             </div>
             <br />
@@ -240,57 +235,20 @@
                     <button witdh="50" title="Adicionar Alternativa" class="btn-default" onclick="AddLinha()"> + </button>
                 </div>
             </div>
-
-
             <br />
-            <div class="form-row">
-                <div class="col-md-8">
-                    <div class="row">
-                        <div class="col-md-1" style="padding-right: 10px;">
-                            <input type="checkbox" id="MEcbA" />
-                            <label for="A">A)</label>
-                        </div>
-                        <div class="col-md-10">
-                            <input class="form-control" type="text" id="MEcampoA">
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-1" style="padding-right: 10px;">
-                            <input type="checkbox" id="MEcbB" />
-                            <label for="B">B)</label>
-                        </div>
-                        <div class="col-md-10">
-                            <input class="form-control" type="text" id="MEcampoB">
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-1" style="padding-right: 10px;">
-                            <input type="checkbox" id="MEcb " />
-                            <label for="C">C)</label>
-                        </div>
-                        <div class="col-md-10">
-                            <input class="form-control" type="text" id="MEcampoC">
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-1" style="padding-right: 10px;">
-                            <input type="checkbox" id="MEcbD" />
-                            <label for="D">D)</label>
-                        </div>
-                        <div class="col-md-10">
-                            <input class="form-control" type="text" id="MEcampoD">
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-1" style="padding-right: 10px;">
-                            <input type="checkbox" id="MEcbE" />
-                            <label for="E">E)</label>
-                        </div>
-                        <div class="col-md-10">
-                            <input class="form-control" type="text" id="MEcampoE">
-                        </div>
-                    </div>
-                </div>
+            <div id="DivAlternativas">
+                <script type="text/javascript">
+                    //Escrevendo o código-fonte HTML e ocultando os campos criados:
+                    for (iLoop = 1; iLoop <= totalCampos; iLoop++) {
+                        document.write("<div class='' id='MEAlternativas" + iLoop + "' style='display:none'><input type='checkbox' id='Alternativas" + iLoop +
+                            "' name='MEchbx' /> <span id='Alternativas' > " + iLoop + ") <input class='col-md-6' type='text' id='MECampo" + iLoop + "' name='Alternativas" + iLoop +
+                            "'> <input type='button' value='Remover' onclick='RemoverCampos(\"" + iLoop + "\",\"ME\")'></span></div>");
+                    }
+                </script>
+                <br />
+                <input type="button" value="Adicionar campos" onclick="AddCampos('ME')">
+                <input type="text" name="hidden1" id="hidden1" hidden>
+                <input type="hidden" name="hidden2" id="hidden2">
             </div>
             <br />
             <div class="form-row">
@@ -310,15 +268,15 @@
     <div id="divVF" class="tab-pane fade">
         <h5>Tipo: Verdadeiro ou Falso</h5>
         <br />
-        <form>
+        <form class="form-horizontal" name="form1" id="formCadVF" method="post" action="@Url.Action("CadastrarVF", "CadastrarQuestoes")">
             <div class="form-row">
                 <div class="col-md-4">
                     <label for="AssuntoVF">Assunto</label>
                     <input type="text" class="form-control" id="AssuntoVF">
                 </div>
                 <div class="col-md-4">
-                    <label for="Disciplinas">Disciplina</label>
-                    @Html.DropDownList("DisciplinaId", new SelectList(ViewBag.Disciplinas, "DisciplinaId", "Nome"))
+                    <label for="Disciplinas">Disciplinas</label>
+                    @Html.DropDownList("DisciplinaId", new SelectList(ViewBag.Disciplinas, "DisciplinaId", "Nome"), htmlAttributes: new { @class = "form-control" })
                 </div>
             </div>
             <br />
@@ -373,49 +331,20 @@
                     <button witdh="50" title="Adicionar Alternativa" class="btn-default" onclick="AddLinha()"> + </button>
                 </div>
             </div>
-
-
             <br />
-            <div class="form-row">
-                <div class="col-md-8">
-                    <div class="row">
-                        <div class="col-md-1" style="padding-right: 10px;">
-                            <input type="radio" id="VFrdA" name="VFradio" />
-                            <label for="A">A)</label>
-                        </div>
-                        <div class="col-md-10">
-                            <input class="form-control" type="text" id="VFcampoA">
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-1" style="padding-right: 10px;">
-                            <input type="radio" id="VFrdB" name="VFradio" />
-                            <label for="B">B)</label>
-                        </div>
-                        <div class="col-md-10">
-                            <input class="form-control" type="text" id="VFcampoB">
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-1" style="padding-right: 10px;">
-                            <input type="radio" id="VFrdC" name="VFradio" />
-                            <label for="C">C)</label>
-                        </div>
-                        <div class="col-md-10">
-                            <input class="form-control" type="text" id="VFcampoC">
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-1" style="padding-right: 10px;">
-                            <input type="radio" id="VFrdD" name="VFradio" />
-                            <label for="D">D)</label>
-                        </div>
-                        <div class="col-md-10">
-                            <input class="form-control" type="text" id="VFcampoD">
-                        </div>
-                    </div>
-
-                </div>
+            <div id="DivAlternativas">
+                <script type="text/javascript">
+                    //Escrevendo o código-fonte HTML e ocultando os campos criados:
+                    for (iLoop = 1; iLoop <= totalCampos; iLoop++) {
+                        document.write("<div class='' id='VFAlternativas" + iLoop + "' style='display:none'><input type='radio' id='Alternativas" + iLoop +
+                            "' name='VFradio' /> <span id='Alternativas' > " + iLoop + ") <input class='col-md-6' type='text' id='VFCampo" + iLoop + "' name='Alternativas" + iLoop +
+                            "'> <input type='button' value='Remover' onclick='RemoverCampos(\"" + iLoop + "\",\"VF\")'></span></div>");
+                    }
+                </script>
+                <br />
+                <input type="button" value="Adicionar campos" onclick="AddCampos('VF')">
+                <input type="text" name="hidden1" id="hidden1" hidden>
+                <input type="hidden" name="hidden2" id="hidden2">
             </div>
             <br />
             <div class="form-row">
@@ -435,38 +364,38 @@
     <div id="divDT" class="tab-pane fade">
         <h5>Tipo: Dissertativa</h5>
         <br />
-        <form>
+        <form class="form-horizontal" name="form1" id="formCadVF" method="post" action="@Url.Action("CadastrarVF", "CadastrarQuestoes")">
             <div class="form-row">
                 <div class="col-md-4">
                     <label for="AssuntoDT">Assunto</label>
                     <input type="text" class="form-control" id="AssuntoDT">
                 </div>
                 <div class="col-md-4">
-                    <label for="Disciplinas">Disciplina</label>
-                    @Html.DropDownList("DisciplinaId", new SelectList(ViewBag.Disciplinas, "DisciplinaId", "Nome"))
+                    <label for="Disciplinas">Disciplinas</label>
+                    @Html.DropDownList("DisciplinaId", new SelectList(ViewBag.Disciplinas, "DisciplinaId", "Nome"), htmlAttributes: new { @class = "form-control" })
                 </div>
             </div>
             <br />
             <div class="form-row">
-                @Html.TextAreaFor(m => m.Enunciado, new { @class = "form-control" })
                 <div class="col-md-8">
-            <label for="EnuncuadoDT">Enunciado</label>
-                <textarea class="form-control" id="EnuncuadoDT"></textarea>
+                    <label for="EnuncuadoDT">Enunciado</label>
+                    <textarea class="form-control" id="EnuncuadoDT"></textarea>
 
-            @using (Html.BeginForm("Index", "Home", FormMethod.Post))
-            {
+                    @using (Html.BeginForm("Index", "Home", FormMethod.Post))
+                    {
+                        @*<label for="EnuncuadoDT">Enunciado</label>
+                            @Html.TextAreaFor(m => m.Enunciado, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(m => m.Enunciado, "", new { @class = "error" })*@
+                        <br /><br />
+                        @*<span>@Html.Raw(Model.Enunciado)</span>*@
+                    }
+                    @Scripts.Render("~/bundles/jquery")
+                    <script type="text/javascript" src="//tinymce.cachefly.net/4.0/tinymce.min.js"></script>
+                    <script type="text/javascript">
+                        tinymce.init({ selector: 'textarea', width: 500 });
+                    </script>
 
-                @Html.ValidationMessageFor(m => m.Enunciado, "", new { @class = "error" })
-                <br /><br />
-                <span>@Html.Raw(Model.Enunciado)</span>
-            }
-            @Scripts.Render("~/bundles/jquery")
-            <script type="text/javascript" src="//tinymce.cachefly.net/4.0/tinymce.min.js"></script>
-            <script type="text/javascript">
-                tinymce.init({ selector: 'textarea', width: 500 });
-            </script>
-
-        </div>
+                </div>
             </div>
             <div class="form-row">
                 <div class="col-md-8">
