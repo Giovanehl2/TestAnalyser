@@ -77,13 +77,14 @@
             var hidden1 = document.getElementById("hidden1");
 
             //Pegar o valor do campo que será excluído:
-            var campoValor = document.getElementById(tipo + "Campo" + id).value;
-            //Se o campo não tiver nenhum valor, atribuir a string: vazio:
-            if (campoValor == "") {
-                campoValor = "vazio";
-            }
+            //var campoValor = document.getElementById(tipo + "Campo" + id).value;
 
-            if (confirm("O campo que contém o valor:\n» " + campoValor + "\nserá excluído!\n\nDeseja prosseguir?")) {
+            //Se o campo não tiver nenhum valor, atribuir a string: vazio:
+            //if (campoValor == "") {
+            //    campoValor = "vazio";
+            //}
+
+            if (confirm("O Campo de Alternativa será excluído!\nDeseja prosseguir?")) {
                 document.getElementById(tipo + "Alternativas" + id).style.display = "none"; iCount--;
 
                 //Removendo o valor de hidden1:
@@ -107,7 +108,7 @@
     <br />
     <ul class="nav justify-content-center nav-pills nav-fill">
         <li id="SE" class="nav-item"><a class="borda" data-toggle="tab" href="#divSE">Simples-Escolha</a></li>
-        <li id="ME" class="nav-item"><a class="borda" data-toggle="tab" href="#divME">Multripla-Escolha</a></li>
+        <li id="ME" class="nav-item"><a class="borda" data-toggle="tab" href="#divME">Multipla-Escolha</a></li>
         <li id="VF" class="nav-item"><a class="borda" data-toggle="tab" href="#divVF">Verdadeiro Ou Falso</a></li>
         <li id="DT" class="nav-item"><a class="borda" data-toggle="tab" href="#divDT">Dissertativa</a></li>
     </ul>
@@ -138,17 +139,23 @@
             </div>
             <br />
             <br />
+            <div class="form-row">
+                <div class="col-md-3">
+                    <label for="">Alternativas:</label>
+                </div>
+            </div>
+            <br />
             <div id="DivAlternativas">
                 <script type="text/javascript">
                     //Escrevendo o código-fonte HTML e ocultando os campos criados:
                     for (iLoop = 1; iLoop <= totalCampos; iLoop++) {
                         document.write("<div class='' id='SEAlternativas" + iLoop + "' style='display:none'><input type='radio' id='Alternativas" + iLoop +
-                            "' name='SEradio' /> <span id='Alternativas' > " + iLoop + ") <input class='col-md-6' type='text' id='SECampo" + iLoop + "' name='Alternativas" + iLoop +
+                            "' name='SEradio' /> <span id='Alternativas' > " + iLoop + ") <input class='col-md-6' type='text' id='Alternativas' name='Alternativas" +
                             "'> <input type='button' value='Remover' onclick='RemoverCampos(\"" + iLoop + "\",\"SE\")'></span></div>");
                     }
                 </script>
                 <br />
-                <input type="button" value="Adicionar campos" onclick="AddCampos('SE')">
+                <input type="button" value="Adicionar Alternativas" onclick="AddCampos('SE')">
                 <input type="text" name="hidden1" id="hidden1" hidden>
                 <input type="hidden" name="hidden2" id="hidden2">
             </div>
@@ -229,10 +236,10 @@
                 </div>
             </div>
             <br />
+            <br />
             <div class="form-row">
-                <div class="col-md-3 offset-1">
-                    <button witdh="50" title="Remover Alternativa" class="btn-default" onclick="RemoveLinha()"> - </button>
-                    <button witdh="50" title="Adicionar Alternativa" class="btn-default" onclick="AddLinha()"> + </button>
+                <div class="col-md-3">
+                    <label for="">Alternativas:</label>
                 </div>
             </div>
             <br />
@@ -241,12 +248,12 @@
                     //Escrevendo o código-fonte HTML e ocultando os campos criados:
                     for (iLoop = 1; iLoop <= totalCampos; iLoop++) {
                         document.write("<div class='' id='MEAlternativas" + iLoop + "' style='display:none'><input type='checkbox' id='Alternativas" + iLoop +
-                            "' name='MEchbx' /> <span id='Alternativas' > " + iLoop + ") <input class='col-md-6' type='text' id='MECampo" + iLoop + "' name='Alternativas" + iLoop +
+                            "' name='MEchbx' /> <span id='Alternativas' > " + iLoop + ") <input class='col-md-6' type='text' id='Alternativas' name='Alternativas" +
                             "'> <input type='button' value='Remover' onclick='RemoverCampos(\"" + iLoop + "\",\"ME\")'></span></div>");
                     }
                 </script>
                 <br />
-                <input type="button" value="Adicionar campos" onclick="AddCampos('ME')">
+                <input type="button" value="Adicionar Alternativas" onclick="AddCampos('ME')">
                 <input type="text" name="hidden1" id="hidden1" hidden>
                 <input type="hidden" name="hidden2" id="hidden2">
             </div>
@@ -318,10 +325,10 @@
                 </div>
             </div>
             <br />
+            <br />
             <div class="form-row">
-                <div class="col-md-3 offset-1">
-                    <button witdh="50" title="Remover Alternativa" class="btn-default" onclick="RemoveLinha()"> - </button>
-                    <button witdh="50" title="Adicionar Alternativa" class="btn-default" onclick="AddLinha()"> + </button>
+                <div class="col-md-3">
+                    <label for="">Alternativas:</label>
                 </div>
             </div>
             <br />
@@ -330,12 +337,12 @@
                     //Escrevendo o código-fonte HTML e ocultando os campos criados:
                     for (iLoop = 1; iLoop <= totalCampos; iLoop++) {
                         document.write("<div class='' id='VFAlternativas" + iLoop + "' style='display:none'><input type='radio' id='Alternativas" + iLoop +
-                            "' name='VFradio' /> <span id='Alternativas' > " + iLoop + ") <input class='col-md-6' type='text' id='VFCampo" + iLoop + "' name='Alternativas" + iLoop +
+                            "' name='VFradio' /> <span id='Alternativas' > " + iLoop + ") <input class='col-md-6' type='text' id='Alternativas' name='Alternativas" +
                             "'> <input type='button' value='Remover' onclick='RemoverCampos(\"" + iLoop + "\",\"VF\")'></span></div>");
                     }
                 </script>
                 <br />
-                <input type="button" value="Adicionar campos" onclick="AddCampos('VF')">
+                <input type="button" value="Adicionar Alternativas" onclick="AddCampos('VF')">
                 <input type="text" name="hidden1" id="hidden1" hidden>
                 <input type="hidden" name="hidden2" id="hidden2">
             </div>
@@ -358,7 +365,14 @@
                 </div>
                 <div class="col-md-4">
                     <label for="Disciplinas">Disciplinas</label>
-                    @Html.DropDownList("DisciplinaId", new SelectList(ViewBag.Disciplinas, "DisciplinaId", "Nome", "select"), htmlAttributes: new { @class = "form-control" })
+                    @Html.DropDownList("DisciplinaId", new SelectList(ViewBag.Disciplinas, "DisciplinaId", "Nome"), htmlAttributes: new { @class = "form-control" })
+
+                    @Scripts.Render("~/bundles/jquery")
+                    <script type="text/javascript" src="//tinymce.cachefly.net/4.0/tinymce.min.js"></script>
+                    <script type="text/javascript">
+                        tinymce.init({ selector: 'textarea', width: 500 });
+                    </script>
+
                 </div>
             </div>
             <br />
@@ -367,11 +381,7 @@
                     <label for="EnuncuadoDT">Enunciado</label>
                     <textarea class="form-control" id="EnunciadoDT" name="Enunciado"></textarea>
 
-                    @Scripts.Render("~/bundles/jquery")
-                    <script type="text/javascript" src="//tinymce.cachefly.net/4.0/tinymce.min.js"></script>
-                    <script type="text/javascript">
-                        tinymce.init({ selector: 'textarea', width: 500 });
-                    </script>
+                    
 
                 </div>
             </div>

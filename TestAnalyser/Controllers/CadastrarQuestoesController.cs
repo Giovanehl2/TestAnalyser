@@ -28,7 +28,7 @@ namespace TestAnalyser.Controllers
 
         //Metodo para cadastrar a questão de tipo especifico no banco...
         [HttpPost]
-        public ActionResult CadastrarSE(Questao questao, string DisciplinaId)
+        public ActionResult CadastrarSE(Questao questao, string DisciplinaId, List<string>Alternativas)
         {
             //Salva o tipo de questão, deixa-o ativo e mantem a RespostaDiscursiva vazia...
             questao.TipoQuestao = 1;
@@ -39,13 +39,28 @@ namespace TestAnalyser.Controllers
             var x = DisciplinaDAO.BuscarDisciplinaId(Convert.ToInt32(DisciplinaId));
             questao.Disciplina = x;
 
-            QuestaoDAO.CadastrarQuestao(questao);
+            //Salva a questão e rotorna ela com o ID...
+            var QuestaoID = QuestaoDAO.CadastrarQuestao(questao);
 
+            //Pega todas as alterativas preenchidas e salva.
+            foreach (var item in Alternativas)
+            {
+                if(item != "")
+                {
+                    Alternativa alt = new Alternativa();
+                    alt.DescAlternativa = item;
+                    alt.correto = 0;
+                    alt.Questao = QuestaoID;
+                    AlternativaDAO.CadastrarAlternativa(alt);
+                }
+            }
+
+            //Podemos dar uma mensagem antes de retornar a view.
             return RedirectToAction("CadastrarQuestoes", "CadastrarQuestoes");
         }
 
         [HttpPost]
-        public ActionResult CadastrarME(Questao questao, string DisciplinaId)
+        public ActionResult CadastrarME(Questao questao, string DisciplinaId, List<string> Alternativas)
         {
             questao.TipoQuestao = 2;
             questao.situacao = 1;
@@ -54,13 +69,25 @@ namespace TestAnalyser.Controllers
             var x = DisciplinaDAO.BuscarDisciplinaId(Convert.ToInt32(DisciplinaId));
             questao.Disciplina = x;
 
-            QuestaoDAO.CadastrarQuestao(questao);
+            var QuestaoID = QuestaoDAO.CadastrarQuestao(questao);
+
+            foreach (var item in Alternativas)
+            {
+                if (item != "")
+                {
+                    Alternativa alt = new Alternativa();
+                    alt.DescAlternativa = item;
+                    alt.correto = 0;
+                    alt.Questao = QuestaoID;
+                    AlternativaDAO.CadastrarAlternativa(alt);
+                }
+            }
 
             return RedirectToAction("CadastrarQuestoes", "CadastrarQuestoes");
         }
 
         [HttpPost]
-        public ActionResult CadastrarVF(Questao questao, string DisciplinaId)
+        public ActionResult CadastrarVF(Questao questao, string DisciplinaId, List<string> Alternativas)
         {
             questao.TipoQuestao = 3;
             questao.situacao = 1;
@@ -69,7 +96,19 @@ namespace TestAnalyser.Controllers
             var x = DisciplinaDAO.BuscarDisciplinaId(Convert.ToInt32(DisciplinaId));
             questao.Disciplina = x;
 
-            QuestaoDAO.CadastrarQuestao(questao);
+            var QuestaoID = QuestaoDAO.CadastrarQuestao(questao);
+
+            foreach (var item in Alternativas)
+            {
+                if (item != "")
+                {
+                    Alternativa alt = new Alternativa();
+                    alt.DescAlternativa = item;
+                    alt.correto = 0;
+                    alt.Questao = QuestaoID;
+                    AlternativaDAO.CadastrarAlternativa(alt);
+                }
+            }
 
             return RedirectToAction("CadastrarQuestoes", "CadastrarQuestoes");
         }
@@ -89,3 +128,9 @@ namespace TestAnalyser.Controllers
         }
     }
 }
+
+
+//pendencias do gabriel:
+//Salvar as opções...
+//pegar a alternativa correta...
+//remover o campo textarea html da resposta dissertativa...
