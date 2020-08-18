@@ -16,7 +16,7 @@ namespace TestAnalyser.Model
             Disciplina = new Disciplina();
             Opcoes = new List<Opcao>();
             Alternativas = new List<Alternativa>();
-
+            Provas = new List<Prova>();
         }
         [Key]
         public int QuestaoId { get; set; }
@@ -31,6 +31,9 @@ namespace TestAnalyser.Model
 
         /* ativa = 1, inativa = 0*/
         public int situacao { get; set; }
+
+        [AllowHtml]
+        [Column(TypeName = "varchar(MAX)")]
         public string RespostaDiscursiva { get; set; }
 
         public Disciplina Disciplina { get; set; }
@@ -38,6 +41,8 @@ namespace TestAnalyser.Model
         public List<Opcao> Opcoes { get; set; }
 
         public List<Alternativa> Alternativas { get; set; }
+
+        public List<Prova> Provas { get; set; }
 
 
     }

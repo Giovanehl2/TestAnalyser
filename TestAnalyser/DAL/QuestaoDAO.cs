@@ -13,17 +13,20 @@ namespace TestAnalyser.DAL
     public class QuestaoDAO
     {
         private static Context ctx = SingletonContext.GetInstance();
-        public static bool CadastrarQuestao(Questao questao)
+        public static Questao CadastrarQuestao(Questao questao)
         {
+            //var id = "0";
+            var obj = new Questao();
             /*não estou incluindo regras e nem validações no momento*/
             if (questao.Opcoes != null)
             { 
-
                 ctx.Questoes.Add(questao);
                 ctx.SaveChanges();
-                return true;
+                obj = questao;
+                //id = Convert.ToString(questao.QuestaoId);
+                return obj;
             }
-            return false;
+            return obj;
         }
         public static void RemoverQuestao(Questao questao)
         {
