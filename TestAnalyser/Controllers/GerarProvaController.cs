@@ -1,4 +1,5 @@
 ﻿using Microsoft.Ajax.Utilities;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,23 +17,29 @@ namespace TestAnalyser.Controllers
         public ActionResult GerarProva()
         {
             List<string> assuntos = new List<string>();
-            assuntos.Add("");
-            ViewBag.ListaAssuntos = new List<string>();
+            ViewBag.Lista = assuntos;
 
             ViewBag.AssuntosSelecionados = new List<string>();
             ViewBag.Disciplina = null;
-            return View();
+            return View(new Prova());
         }
-        [HttpPost]
-        public void BuscarAssunto(int id)
+
+        public JsonResult BuscarAssunto(int id)
         {
-            ViewBag.ListaAssuntos = QuestaoDAO.BuscarAssuntoPorDisciplina(Convert.ToInt32(ViewBag.Disciplina));
-            ViewBag.AssuntosSelecionados = new List<string>();
+            List<string> assuntos = QuestaoDAO.BuscarAssuntoPorDisciplina(Convert.ToInt32(ViewBag.Disciplina));
+
+            return Json(assuntos);
         }
 
         public ActionResult AdicionarQuestoesNaProva()
         {
             return View();
         }
+
+        public ActionResult SalvarProva(Prova prova)
+        {
+            return View();
+        }
+
     }
 }

@@ -76,7 +76,6 @@ namespace TestAnalyser.Controllers
         public ActionResult ConfirmarLogin(string CPF, string Login, string Senha)
         {
 
-
             Usuario usuario = new Usuario();
             usuario = UsuarioDAO.ValidarPrimeiroAcesso(Login,CPF);
             if (usuario != null)

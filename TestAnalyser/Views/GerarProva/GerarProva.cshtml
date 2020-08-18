@@ -3,7 +3,7 @@
 
 @{
     ViewBag.Title = "GerarProva";
-    List<string> asssuntos = ViewBag.ListaAssuntos;
+
 }
 
 <head>
@@ -18,13 +18,12 @@
 <div class="container">
     <div class="row">
         <div class="col-md-12">
-            <form>
+            <form name="form1" id="formCadSE" method="post" action="@Url.Action("SalvarProva", "GerarProva")">
                 <div class="form-row">
                     <div class="form-group col-md-6">
 
                         <label for="TituloProva">Titulo da prova</label>
-                        <input class="form-control" id="TituloProva" type="text">
-
+                        @Html.TextBoxFor(model => model.TituloProva, new { @class = "form-control", @placeholder = "Digite o Titulo" })
                     </div>
 
                     <div class="form-group col-md-6">
@@ -36,9 +35,15 @@
                         </div>
 
                         <div class="row">
-                            <div class="col-md-4"><input class="form-control" id="DataProva" type="date"></div>
-                            <div class="col-md-4"><input class="form-control" id="HoraProvaInicio" type="time"></div>
-                            <div class="col-md-4"><input class="form-control" id="HoraProvaFinal" type="time"></div>
+                            <div class="col-md-4">
+                                <input class="form-control" id="DataProva" type="date">
+                            </div>
+                            <div class="col-md-4">
+                                <input class="form-control" id="HoraProvaInicio" type="time">
+                            </div>
+                            <div class="col-md-4">
+                                <input class="form-control" id="HoraProvaFinal" type="time" name="HoraFim">
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -51,9 +56,9 @@
                     <div class="form-group col">
                         <label for="DisciplinaProva">Disciplina</label>
                         <select class="form-control" id="idDisciplina" name="Disciplinas" size="1">
+                            <option> </option>
                             <option>1</option>
                             <option>2</option>
-                            <option>3</option>
                         </select>
                     </div>
 
@@ -84,25 +89,33 @@
                             </label>
                         </div>
                         <br>
-                        <div class="form-group col-md-6">
-                            <select class="selectpicker" multiple>
-                                @{
+                        <div class="form-group col-md-6" id="mydiv">
 
-                                    if (asssuntos.Count() != 0)
-                                    {
-                                        foreach (string item in asssuntos)
-                                        {
-                                            <option>@item</option>
-                                        }
+                            <script type="text/javascript">
+
+                                function test(data) {
+                                    var lista = data
+                                    document.writeln("<select class='selectpicker' multiple name='Assuntos' id='idAssuntoProva'>");
+                                    for (i = 0; i < lista.length; i++) {
+                                        document.write("<option>" + lista[i] + "</option >");
                                     }
-                                    else
-                                    {
-                                        <option>vazio</option>
-                                    }
+                                    document.writeln("</select>");
+                                };
 
-                                }
+                            </script>
 
-                            </select>
+                            @*    <select class="selectpicker" multiple name="Assuntos" id="idAssuntoProva">
+            @{
+
+                foreach (string item in Model.Assuntos)
+                {
+                    <option>@item</option>
+                }
+
+            }
+
+        </select>
+                            *@
                         </div>
 
                     </div>
@@ -243,8 +256,8 @@
                         </div>
                     </div>
                 </div>
+                <input id="btnConfirmar" type="submit" value="Criar" class="btn btn-default" />
             </form>
-            <button class="btn btn-primary" witdh="50" title="Criar" onclick="AdicionarQuestoesNaProva()">Criar</button>
         </div>
     </div>
 
@@ -255,10 +268,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.2/js/bootstrap-select.min.js"></script>
 
 
-<script type="text/javascript">
-    // run pre selected options
-    $('#pre-selected-options').multiSelect();
-</script>
+
 
 <script>
     $('.selectpicker').selectpicker();
@@ -270,7 +280,6 @@
         $("#selectpicker_id .selectpicker").val();
     }
 
-
     function Salvarselectpicker() {
 
         var val = $('.selectpicker').val();
@@ -279,22 +288,35 @@
 </script>
 
 <script>
-    $(document).ready(function () {
-        $("#idDisciplina").on("change", function () {
-            var val = $('#idDisciplina').val();
-            var url = "/GerarProva/BuscarAssunto";
-            $.post(url, { id: val }, function (data) {
-            });
-        });
-    });
 
-    $(document).ready(function () {
-        $("#idDisciplina").on("change", function () {
-            var val = $('#idDisciplina').val();
-            var url = "/GerarProva/BuscarAssunto";
-            $.post(url, { id: val }, function (data) {
+
+
+        $(document).ready(function () {
+            $("#idDisciplina").on("change", function () {
+
+                var val = $('#idDisciplina').val();
+                var Paramters = "{id:'" + val + "'}";
+
+                $.ajax({
+
+                    type: "POST",
+
+                    url: "/GerarProva/BuscarAssunto",
+
+                    contentType: "application/json",
+
+                    data: Paramters,
+
+                    success: function (data) {
+
+                        test(data);
+
+                    }
+
+                });
             });
+
         });
-    });
+
+
 </script>
-
