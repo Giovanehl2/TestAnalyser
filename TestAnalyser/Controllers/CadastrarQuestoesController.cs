@@ -60,7 +60,7 @@ namespace TestAnalyser.Controllers
         }
 
         [HttpPost]
-        public ActionResult CadastrarME(Questao questao, string DisciplinaId, List<string> Alternativas)
+        public ActionResult CadastrarME(Questao questao, string DisciplinaId, List<string> Alternativas, List<string> Opcoes)
         {
             questao.TipoQuestao = 2;
             questao.situacao = 1;
@@ -70,6 +70,17 @@ namespace TestAnalyser.Controllers
             questao.Disciplina = x;
 
             var QuestaoID = QuestaoDAO.CadastrarQuestao(questao);
+
+            foreach (var item in Opcoes)
+            {
+                if (item != "")
+                {
+                    Opcao opt = new Opcao();
+                    opt.descricao = item;
+                    opt.Questao = QuestaoID;
+                    OpcaoDAO.CadastrarOpcao(opt);
+                }
+            }
 
             foreach (var item in Alternativas)
             {
@@ -87,7 +98,7 @@ namespace TestAnalyser.Controllers
         }
 
         [HttpPost]
-        public ActionResult CadastrarVF(Questao questao, string DisciplinaId, List<string> Alternativas)
+        public ActionResult CadastrarVF(Questao questao, string DisciplinaId, List<string> Alternativas, List<string> Opcoes)
         {
             questao.TipoQuestao = 3;
             questao.situacao = 1;
@@ -97,6 +108,17 @@ namespace TestAnalyser.Controllers
             questao.Disciplina = x;
 
             var QuestaoID = QuestaoDAO.CadastrarQuestao(questao);
+
+            foreach (var item in Opcoes)
+            {
+                if (item != "")
+                {
+                    Opcao opt = new Opcao();
+                    opt.descricao = item;
+                    opt.Questao = QuestaoID;
+                    OpcaoDAO.CadastrarOpcao(opt);
+                }
+            }
 
             foreach (var item in Alternativas)
             {
@@ -131,6 +153,5 @@ namespace TestAnalyser.Controllers
 
 
 //pendencias do gabriel:
-//Salvar as opções...
 //pegar a alternativa correta...
 //remover o campo textarea html da resposta dissertativa...
