@@ -10,6 +10,7 @@
     <meta charset="UTF-8">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.2/css/bootstrap-select.min.css">
+
 </head>
 <h2>Gerar Prova</h2>
 <br />
@@ -91,31 +92,12 @@
                         <br>
                         <div class="form-group col-md-6" id="mydiv">
 
-                            <script type="text/javascript">
 
-                                function test(data) {
-                                    var lista = data
-                                    document.writeln("<select class='selectpicker' multiple name='Assuntos' id='idAssuntoProva'>");
-                                    for (i = 0; i < lista.length; i++) {
-                                        document.write("<option>" + lista[i] + "</option >");
-                                    }
-                                    document.writeln("</select>");
-                                };
+                            <select class="selectpicker" multiple name="Assuntos" id="idAssuntoProva" style="width:250px;" tabindex="2">
+                                <option> </option>
 
-                            </script>
+                            </select>
 
-                            @*    <select class="selectpicker" multiple name="Assuntos" id="idAssuntoProva">
-            @{
-
-                foreach (string item in Model.Assuntos)
-                {
-                    <option>@item</option>
-                }
-
-            }
-
-        </select>
-                            *@
                         </div>
 
                     </div>
@@ -262,13 +244,12 @@
     </div>
 
 </div>
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.2/js/bootstrap-select.min.js"></script>
 
 
-
+@*https://www.c-sharpcorner.com/UploadFile/4b0136/working-with-dropdownlist-in-mvc-5/*@
 
 <script>
     $('.selectpicker').selectpicker();
@@ -285,38 +266,39 @@
         var val = $('.selectpicker').val();
 
     }
+
 </script>
 
 <script>
+    $('.selectpicker').selectpicker();
 
+    $(document).ready(function () {
+        $("#idDisciplina").on("change", function () {
 
+            var val = $('#idDisciplina').val();
+            var Paramters = "{id:'" + val + "'}";
 
-        $(document).ready(function () {
-            $("#idDisciplina").on("change", function () {
+            $.ajax({
 
-                var val = $('#idDisciplina').val();
-                var Paramters = "{id:'" + val + "'}";
+                type: "POST",
 
-                $.ajax({
+                url: "/GerarProva/BuscarAssunto",
 
-                    type: "POST",
+                contentType: "application/json",
 
-                    url: "/GerarProva/BuscarAssunto",
+                data: Paramters,
 
-                    contentType: "application/json",
+                success: function (data) {
 
-                    data: Paramters,
+                    $.each(data, function (index, value) {
+                        $('<option>').text(value).appendTo("#idAssuntoProva");
+                        $('.selectpicker').selectpicker('refresh');
+                    })
+                }
 
-                    success: function (data) {
-
-                        test(data);
-
-                    }
-
-                });
             });
-
         });
 
+    });
 
 </script>

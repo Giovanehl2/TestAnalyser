@@ -51,7 +51,7 @@ namespace TestAnalyser.Controllers
                     alt.DescAlternativa = item;
                     alt.correto = 0;
                     alt.Questao = QuestaoID;
-                    AlternativaDAO.CadastrarAlternativa(alt);
+                    //AlternativaDAO.CadastrarAlternativa(alt);
                 }
             }
 
@@ -79,7 +79,7 @@ namespace TestAnalyser.Controllers
                     alt.DescAlternativa = item;
                     alt.correto = 0;
                     alt.Questao = QuestaoID;
-                    AlternativaDAO.CadastrarAlternativa(alt);
+                   // AlternativaDAO.CadastrarAlternativa(alt);
                 }
             }
 
@@ -106,7 +106,7 @@ namespace TestAnalyser.Controllers
                     alt.DescAlternativa = item;
                     alt.correto = 0;
                     alt.Questao = QuestaoID;
-                    AlternativaDAO.CadastrarAlternativa(alt);
+                    //AlternativaDAO.CadastrarAlternativa(alt);
                 }
             }
 

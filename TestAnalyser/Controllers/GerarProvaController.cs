@@ -13,6 +13,7 @@ namespace TestAnalyser.Controllers
     [Authorize]
     public class GerarProvaController : Controller
     {
+        public static List<string> assuntos = new List<string>();
         // GET: GerarProva
         public ActionResult GerarProva()
         {
@@ -26,8 +27,8 @@ namespace TestAnalyser.Controllers
 
         public JsonResult BuscarAssunto(int id)
         {
-            List<string> assuntos = QuestaoDAO.BuscarAssuntoPorDisciplina(Convert.ToInt32(ViewBag.Disciplina));
-
+             assuntos.Clear();
+             assuntos = QuestaoDAO.BuscarAssuntoPorDisciplina(Convert.ToInt32(ViewBag.Disciplina));
             return Json(assuntos);
         }
 
@@ -39,6 +40,11 @@ namespace TestAnalyser.Controllers
         public ActionResult SalvarProva(Prova prova)
         {
             return View();
+        }
+
+        public JsonResult ListaAssuntos()
+        { 
+            return Json(assuntos, JsonRequestBehavior.AllowGet);
         }
 
     }
