@@ -78,7 +78,7 @@ namespace TestAnalyser.Controllers
                     Opcao opt = new Opcao();
                     opt.descricao = item;
                     opt.Questao = QuestaoID;
-                    OpcaoDAO.CadastrarOpcao(opt);
+                   // OpcaoDAO.CadastrarOpcao(opt);
                 }
             }
 
@@ -116,7 +116,7 @@ namespace TestAnalyser.Controllers
                     Opcao opt = new Opcao();
                     opt.descricao = item;
                     opt.Questao = QuestaoID;
-                    OpcaoDAO.CadastrarOpcao(opt);
+                 //   OpcaoDAO.CadastrarOpcao(opt);
                 }
             }
 

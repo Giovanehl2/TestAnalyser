@@ -231,6 +231,7 @@
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\TelaInicialController.cs" />
     <Compile Include="DAL\AdminDAO.cs" />
+    <Compile Include="DAL\AlternativaDAO.cs" />
     <Compile Include="DAL\ProvaDAO.cs" />
     <Compile Include="DAL\QuestaoDAO.cs" />
     <Compile Include="DAL\SingletonContext.cs" />
@@ -250,6 +251,10 @@
     <Compile Include="Migrations\202008190002239_teste1.cs" />
     <Compile Include="Migrations\202008190002239_teste1.designer.cs">
       <DependentUpon>202008190002239_teste1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202008220023172_teste2.cs" />
+    <Compile Include="Migrations\202008220023172_teste2.designer.cs">
+      <DependentUpon>202008220023172_teste2.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Model\Admin.cs" />
@@ -328,6 +333,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202008190002239_teste1.resx">
       <DependentUpon>202008190002239_teste1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202008220023172_teste2.resx">
+      <DependentUpon>202008220023172_teste2.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

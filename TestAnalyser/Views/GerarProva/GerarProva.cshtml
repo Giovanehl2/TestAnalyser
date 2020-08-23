@@ -8,7 +8,6 @@
 
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.2/css/bootstrap-select.min.css">
 
 </head>
@@ -37,10 +36,10 @@
 
                         <div class="row">
                             <div class="col-md-4">
-                                <input class="form-control" id="DataProva" type="date">
+                                <input class="form-control" id="DataProva" type="date" name="DataProva">
                             </div>
                             <div class="col-md-4">
-                                <input class="form-control" id="HoraProvaInicio" type="time">
+                                <input class="form-control" id="HoraProvaInicio" type="time" name="HoraInicio">
                             </div>
                             <div class="col-md-4">
                                 <input class="form-control" id="HoraProvaFinal" type="time" name="HoraFim">
@@ -53,54 +52,44 @@
                         <label for="NotaMax">Nota máxima</label>
                         <input class="form-control " id="NotaMax" type="number">
                     </div>
-
+                    <div class="form-group col">
+                        <label for="DisciplinaProva">Curso</label>
+                        <select class="form-control" id="idCurso" name="Curso" size="1">
+                            @{
+                                <option value="0"> </option>
+                                foreach (var item in ViewBag.Cursos)
+                                {
+                                  <option value="@item.CursoId">@item.Descricao</option>
+                                }
+                            }
+                        </select>
+                    </div>
                     <div class="form-group col">
                         <label for="DisciplinaProva">Disciplina</label>
                         <select class="form-control" id="idDisciplina" name="Disciplinas" size="1">
                             <option> </option>
-                            <option>1</option>
-                            <option>2</option>
                         </select>
                     </div>
 
                     <div class="form-group col">
                         <label for="TurmaProva">Turma</label>
-                        <select class="form-control" id="Turmas" name="Turmas" size="1">
-                            <option>Selecione</option>
-                            <option>Turma1</option>
-                            <option>Turma2</option>
+                        <select class="form-control" id="idTurma" name="Turmas" size="1">
+                            <option> </option>
                         </select>
-
-                    </div>
-                    <div class="form-group col">
-                        <label class="form-check-label" for="gridCheck">
-                            Assunto da Prova
-                        </label>
 
                     </div>
                 </div>
                 <br />
                 <br />
                 <div class="form-row">
-                    <div class="form-group col-md-6" id="selectpicker_id">
-                        <div class="row">
-                            <div class="col-md-6"></div>
-                            <label class="form-check-label" for="gridCheck">
-                                Assunto da Prova
-                            </label>
-                        </div>
-                        <br>
                         <div class="form-group col-md-6" id="mydiv">
-
-
+                            <label for="AssuntoProva">Turma</label>
                             <select class="selectpicker" multiple name="Assuntos" id="idAssuntoProva" style="width:250px;" tabindex="2">
                                 <option> </option>
 
                             </select>
 
                         </div>
-
-                    </div>
 
 
                     <div class="form-group col-md-6">
@@ -117,22 +106,16 @@
                                     </div>
                                     <br />
                                     <div class="row">
-                                        <div class="col-md-1">
-                                            <input class="form-check-input" type="checkbox" id="gridCheck">
-                                        </div>
                                         <div class="col">
                                             <div class="form-check">
                                                 <label class="form-check-label" for="gridCheck">Simples escolha</label>
                                             </div>
                                         </div>
                                         <div class="col">
-                                            <input class="form-control" id="IdQtSimplesEscolha" type="number" value="@Model.QtSimplesEscolha">
+                                            <input class="form-control" id="IdQtSimplesEscolha" type="number" name="QtSimplesEscolha">
                                         </div>
                                     </div>
                                     <div class="row">
-                                        <div class="col-md-1">
-                                            <input class="form-check-input" type="checkbox" id="gridCheck">
-                                        </div>
                                         <div class="col">
                                             <div class="form-check">
                                                 <label class="form-check-label" for="gridCheck">
@@ -141,13 +124,10 @@
                                             </div>
                                         </div>
                                         <div class="col">
-                                            <input class="form-control" id="IdQtMultiplaEscolha" type="number" value="@Model.QtMultiplaEscolha">
+                                            <input class="form-control" id="IdQtMultiplaEscolha" type="number" name="QtMultiplaEscolha">
                                         </div>
                                     </div>
                                     <div class="row">
-                                        <div class="col-md-1">
-                                            <input class="form-check-input" type="checkbox" id="gridCheck">
-                                        </div>
                                         <div class="col">
                                             <div class="form-check">
                                                 <label class="form-check-label" for="gridCheck">
@@ -156,13 +136,10 @@
                                             </div>
                                         </div>
                                         <div class="col">
-                                            <input class="form-control" id="IdQtVerdadeirFalso" type="number" value="@Model.QtVerdadeirFalso">
+                                            <input class="form-control" id="IdQtVerdadeirFalso" type="number" name="QtVerdadeirFalso">
                                         </div>
                                     </div>
                                     <div class="row">
-                                        <div class="col-md-1">
-                                            <input class="form-check-input" type="checkbox" id="gridCheck">
-                                        </div>
                                         <div class="col">
                                             <div class="form-check">
 
@@ -172,7 +149,7 @@
                                             </div>
                                         </div>
                                         <div class="col">
-                                            <input class="form-control" id="IdQtDissertativa" type="number" value="@Model.QtDissertativa">
+                                            <input class="form-control" id="IdQtDissertativa" type="number" name="QtDissertativa">
                                         </div>
                                     </div>
                                 </div>
@@ -272,6 +249,56 @@
 <script>
     $('.selectpicker').selectpicker();
 
+
+    $(document).ready(function () {
+        $("#idCurso").on("change", function () {
+
+            var val = $('#idCurso').val();
+            var Paramters = "{id:'" + val + "'}";
+
+            $.ajax({
+
+                type: "POST",
+
+                url: "/GerarProva/BuscarDisciplina",
+
+                contentType: "application/json",
+
+                data: Paramters,
+
+                success: function (data) {
+
+                    $.each(data, function (index, value) {
+                        $('<option>').text(value).appendTo("#idDisciplina");
+                        $('.form - control').selectpicker('refresh');
+                    })
+                }
+
+            });
+
+            $.ajax({
+
+                type: "POST",
+
+                url: "/GerarProva/BuscarTurma",
+
+                contentType: "application/json",
+
+                data: Paramters,
+
+                success: function (data) {
+
+                    $.each(data, function (index, value) {
+                        $('<option>').text(value).appendTo("#idTurma");
+                        $('.selectpicker').selectpicker('refresh');
+                    })
+                }
+
+            });
+        });
+
+    });
+
     $(document).ready(function () {
         $("#idDisciplina").on("change", function () {
 
@@ -300,5 +327,7 @@
         });
 
     });
+
+
 
 </script>

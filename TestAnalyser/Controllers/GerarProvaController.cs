@@ -13,25 +13,89 @@ namespace TestAnalyser.Controllers
     [Authorize]
     public class GerarProvaController : Controller
     {
-        public static List<string> assuntos = new List<string>();
+        public static List<Disciplina> disciplinas = new List<Disciplina>();
         // GET: GerarProva
         public ActionResult GerarProva()
         {
-            List<string> assuntos = new List<string>();
-            ViewBag.Lista = assuntos;
+            Prova prova = new Prova();
 
-            ViewBag.AssuntosSelecionados = new List<string>();
-            ViewBag.Disciplina = null;
+            List<string> assuntos = new List<string>();
+            int id = Convert.ToInt32(Session["IdUsr"]);
+
+            List<Curso> cursos = new List<Curso>();
+            Curso curso;
+            disciplinas = DisciplinaDAO.BuscarPorProfessor(id);
+            foreach (Disciplina item in disciplinas)
+            {
+                foreach (Curso objCurso in item.Cursos)
+                {
+                    curso = new Curso();
+                    curso.CursoId = objCurso.CursoId;
+                    curso.Descricao = objCurso.Descricao;
+                    cursos.Add(curso);
+                }
+
+            }
+            ViewBag.Cursos = cursos;
             return View(new Prova());
         }
-
-        public JsonResult BuscarAssunto(int id)
+        public JsonResult BuscarDisciplina(int id)
         {
-             assuntos.Clear();
-             assuntos = QuestaoDAO.BuscarAssuntoPorDisciplina(Convert.ToInt32(ViewBag.Disciplina));
-            return Json(assuntos);
+            List<string> listagem = new List<string>();
+
+            foreach (var item in disciplinas)
+            {
+                foreach (var curso in item.Cursos)
+                {
+                    if (curso.CursoId == id)
+                    {
+                        listagem.Add(item.Nome);
+                    }
+
+                }
+
+
+            }
+
+            return Json(listagem);
         }
 
+        public JsonResult BuscarTurma(int id)
+        {
+            List<string> listagem = new List<string>();
+
+            foreach (var item in disciplinas)
+            {
+                foreach (var curso in item.Cursos)
+                {
+                    if (curso.CursoId == id)
+                    {
+                        foreach (Turma turma in curso.Turmas)
+                        {
+                            listagem.Add(turma.NomeTurma);
+                        }
+                    
+                    }
+
+                }
+
+
+            }
+
+            return Json(listagem);
+        }
+        public JsonResult BuscarAssunto(string id)
+        {
+
+            var temp = QuestaoDAO.BuscarAssuntos(id);
+            return Json(temp.Distinct());
+        }
+
+        public JsonResult BuscarTurmas(string id)
+        {
+            var temp = QuestaoDAO.BuscarAssuntos(id);
+            return Json(temp.Distinct());
+        }
         public ActionResult AdicionarQuestoesNaProva()
         {
             return View();
@@ -39,12 +103,7 @@ namespace TestAnalyser.Controllers
 
         public ActionResult SalvarProva(Prova prova)
         {
-            return View();
-        }
-
-        public JsonResult ListaAssuntos()
-        { 
-            return Json(assuntos, JsonRequestBehavior.AllowGet);
+            return RedirectToAction("Index", "Investimento");
         }
 
     }

@@ -23,7 +23,7 @@ namespace TestAnalyser.Model
         public string Descricao { get; set; }
         public List<Turma> Turmas { get; set; }
         public List<Professor> Professores { get; set; }
-
-         public List<Curso> Cursos { get; set; }
+        public List<Prova> Provas { get; set; }
+        public List<Curso> Cursos { get; set; }
     }
 }

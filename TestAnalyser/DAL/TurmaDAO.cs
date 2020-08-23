@@ -31,8 +31,6 @@ namespace TestAnalyser.DAL
         {
             return ctx.Turmas.Find(id);
         }
-
-
         public static Turma BuscarTurmaNome(string nome)
         {
             return ctx.Turmas.Include("Disciplinas").Include("Alunos").Include("Curso").Where(p => p.NomeTurma.Equals(nome)).FirstOrDefault();

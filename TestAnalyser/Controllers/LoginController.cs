@@ -48,22 +48,29 @@ namespace TestAnalyser.Controllers
 
                 int NA = 0;
                 string NomeUser = "";
+                int IdUsr = 0;
                 if (result.TipoUsr == 1)
                 {
                     NA = 1;
                     NomeUser = result.Aluno.Nome;
-                }else if (result.TipoUsr == 2)
+                    IdUsr = result.Aluno.AlunoId;
+                }
+                else if (result.TipoUsr == 2)
                 {
                     NA = 2;
                     NomeUser = result.Professor.Nome;
-                }else if (result.TipoUsr == 3)
+                    IdUsr = result.Professor.ProfessorId;
+                }
+                else if (result.TipoUsr == 3)
                 {
                     NA = 3;
                     NomeUser = result.Admin.Nome;
+                    IdUsr = result.Admin.AdminId;
                 }
 
                 Session["NivelAcesso"] = NA;
                 Session["NomeUsuario"] = NomeUser;
+                Session["IdUsr"] = IdUsr;
                 return RedirectToAction("TelaInicial", "TelaInicial");
             }
             else

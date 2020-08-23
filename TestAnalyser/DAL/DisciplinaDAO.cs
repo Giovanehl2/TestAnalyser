@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using TestAnalyser.Model;
@@ -37,8 +38,13 @@ namespace TestAnalyser.DAL
             ctx.SaveChanges();
             return true;
         }
+        public static List<Disciplina> BuscarPorProfessor(int id)
+        {
 
+            var listaDisciplinas = ctx.Disciplinas.Include("Turmas").Include("Professores").Include("Cursos").Where(x => x.Professores.Any(y => y.ProfessorId == id)).ToList();
 
+            return listaDisciplinas;
+        }
         public static Disciplina BuscarPorNome(string nome)
         {
             return ctx.Disciplinas.Include("Turmas").Include("Professores").Include("Cursos").Where(p => p.Nome.Equals(nome)).FirstOrDefault();

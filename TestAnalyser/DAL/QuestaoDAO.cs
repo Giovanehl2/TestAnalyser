@@ -50,9 +50,20 @@ namespace TestAnalyser.DAL
             ctx.SaveChanges();
         }
 
-        public static List<String> BuscarAssuntoPorDisciplina(int disciplina)
+        public static List<String> BuscarAssuntos(string disc)
         {
-            return ctx.Questoes.Include(d => d.Disciplina).Select(z => z.Assunto).Distinct().ToList();
+            List<String> assuntos = new List<String>();
+            List<Questao> questao = new List<Questao>();
+            
+                questao = ctx.Questoes.Include("Disciplina").Where(x => x.Disciplina.Nome == disc).ToList();
+            foreach (Questao item in questao)
+            {
+                assuntos.Add(item.Assunto);
+
+            }
+            //ctx.Questoes.Include(d => d.Disciplina).Where(x => x.Disciplina.DisciplinaId == disc).Select(z => z.Assunto).Distinct().ToList();
+
+                return assuntos;
 
         }
         public static Questao BuscarQuestaoId(int id)
