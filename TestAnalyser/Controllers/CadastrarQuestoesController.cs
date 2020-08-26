@@ -28,7 +28,7 @@ namespace TestAnalyser.Controllers
 
         //Metodo para cadastrar a questão de tipo especifico no banco...
         [HttpPost]
-        public ActionResult CadastrarSE(Questao questao, string DisciplinaId, List<string>Alternativas)
+        public ActionResult CadastrarSE(Questao questao, string DisciplinaId, List<string>Alternativas, int? SEradio)
         {
             //Salva o tipo de questão, deixa-o ativo e mantem a RespostaDiscursiva vazia...
             questao.TipoQuestao = 1;
@@ -43,16 +43,22 @@ namespace TestAnalyser.Controllers
             var QuestaoID = QuestaoDAO.CadastrarQuestao(questao);
 
             //Pega todas as alterativas preenchidas e salva.
+            int count = 1;
             foreach (var item in Alternativas)
             {
                 if(item != "")
                 {
                     Alternativa alt = new Alternativa();
                     alt.DescAlternativa = item;
-                    alt.correto = 0;
+                    if (count == SEradio) { 
+                        alt.correto = 1; 
+                    } else { 
+                        alt.correto = 0; 
+                    }
                     alt.Questao = QuestaoID;
-                    //AlternativaDAO.CadastrarAlternativa(alt);
+                    AlternativaDAO.CadastrarAlternativa(alt);
                 }
+                count++;
             }
 
             //Podemos dar uma mensagem antes de retornar a view.
@@ -60,7 +66,7 @@ namespace TestAnalyser.Controllers
         }
 
         [HttpPost]
-        public ActionResult CadastrarME(Questao questao, string DisciplinaId, List<string> Alternativas, List<string> Opcoes)
+        public ActionResult CadastrarME(Questao questao, string DisciplinaId, List<string> Alternativas, List<string> Opcoes, List<int?>MEchbx)
         {
             questao.TipoQuestao = 2;
             questao.situacao = 1;
@@ -78,27 +84,33 @@ namespace TestAnalyser.Controllers
                     Opcao opt = new Opcao();
                     opt.descricao = item;
                     opt.Questao = QuestaoID;
-                   // OpcaoDAO.CadastrarOpcao(opt);
+                    OpcaoDAO.CadastrarOpcao(opt);
                 }
             }
 
+            int count = 1;
             foreach (var item in Alternativas)
             {
                 if (item != "")
                 {
                     Alternativa alt = new Alternativa();
                     alt.DescAlternativa = item;
-                    alt.correto = 0;
+                    if (MEchbx.Contains(count)) {
+                        alt.correto = 1;
+                    } else {
+                        alt.correto = 0;
+                    }
                     alt.Questao = QuestaoID;
-                   // AlternativaDAO.CadastrarAlternativa(alt);
+                    AlternativaDAO.CadastrarAlternativa(alt);
                 }
+                count++;
             }
 
             return RedirectToAction("CadastrarQuestoes", "CadastrarQuestoes");
         }
 
         [HttpPost]
-        public ActionResult CadastrarVF(Questao questao, string DisciplinaId, List<string> Alternativas, List<string> Opcoes)
+        public ActionResult CadastrarVF(Questao questao, string DisciplinaId, List<string> Alternativas, List<string> Opcoes, int? VFradio)
         {
             questao.TipoQuestao = 3;
             questao.situacao = 1;
@@ -116,20 +128,26 @@ namespace TestAnalyser.Controllers
                     Opcao opt = new Opcao();
                     opt.descricao = item;
                     opt.Questao = QuestaoID;
-                 //   OpcaoDAO.CadastrarOpcao(opt);
+                    OpcaoDAO.CadastrarOpcao(opt);
                 }
             }
 
+            int count = 1;
             foreach (var item in Alternativas)
             {
                 if (item != "")
                 {
                     Alternativa alt = new Alternativa();
                     alt.DescAlternativa = item;
-                    alt.correto = 0;
+                    if (count == VFradio) {
+                        alt.correto = 1;
+                    } else {
+                        alt.correto = 0;
+                    }
                     alt.Questao = QuestaoID;
-                    //AlternativaDAO.CadastrarAlternativa(alt);
+                    AlternativaDAO.CadastrarAlternativa(alt);
                 }
+                count++;
             }
 
             return RedirectToAction("CadastrarQuestoes", "CadastrarQuestoes");
@@ -153,5 +171,4 @@ namespace TestAnalyser.Controllers
 
 
 //pendencias do gabriel:
-//pegar a alternativa correta...
 //remover o campo textarea html da resposta dissertativa...

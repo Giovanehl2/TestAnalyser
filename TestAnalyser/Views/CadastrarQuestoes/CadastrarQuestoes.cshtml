@@ -1,4 +1,4 @@
-﻿
+
 @model TestAnalyser.Model.Questao
 @using TestAnalyser.Model;
 @using System.Web.Mvc;
@@ -149,8 +149,8 @@
                 <script type="text/javascript">
                     //Escrevendo o código-fonte HTML e ocultando os campos criados:
                     for (iLoop = 1; iLoop <= totalCampos; iLoop++) {
-                        document.write("<div class='' id='SEAlternativas" + iLoop + "' style='display:none'><input type='radio' id='Alternativas" + iLoop +
-                            "' name='SEradio' /> <span id='Alternativas' > " + iLoop + ") <input class='col-md-6' type='text' id='Alternativas' name='Alternativas" +
+                        document.write("<div class='' id='SEAlternativas" + iLoop + "' style='display:none'><input type='radio' id='SEradio" +
+                            "' name='SEradio' value='" + iLoop +"' /> <span id='Alternativas' > " + iLoop + ") <input class='col-md-6' type='text' id='Alternativas' name='Alternativas" +
                             "'> <input type='button' value='Remover' onclick='RemoverCampos(\"" + iLoop + "\",\"SE\")'></span></div>");
                     }
                 </script>
@@ -247,8 +247,8 @@
                 <script type="text/javascript">
                     //Escrevendo o código-fonte HTML e ocultando os campos criados:
                     for (iLoop = 1; iLoop <= totalCampos; iLoop++) {
-                        document.write("<div class='' id='MEAlternativas" + iLoop + "' style='display:none'><input type='checkbox' id='Alternativas" + iLoop +
-                            "' name='MEchbx' /> <span id='Alternativas' > " + iLoop + ") <input class='col-md-6' type='text' id='Alternativas' name='Alternativas" +
+                        document.write("<div class='' id='MEAlternativas" + iLoop + "' style='display:none'><input type='checkbox' id='MEchbx" +
+                            "' name='MEchbx' value='" + iLoop +"' /> <span id='Alternativas' > " + iLoop + ") <input class='col-md-6' type='text' id='Alternativas' name='Alternativas" +
                             "'> <input type='button' value='Remover' onclick='RemoverCampos(\"" + iLoop + "\",\"ME\")'></span></div>");
                     }
                 </script>
@@ -344,8 +344,8 @@
                 <script type="text/javascript">
                     //Escrevendo o código-fonte HTML e ocultando os campos criados:
                     for (iLoop = 1; iLoop <= totalCampos; iLoop++) {
-                        document.write("<div class='' id='VFAlternativas" + iLoop + "' style='display:none'><input type='radio' id='Alternativas" + iLoop +
-                            "' name='VFradio' /> <span id='Alternativas' > " + iLoop + ") <input class='col-md-6' type='text' id='Alternativas' name='Alternativas" +
+                        document.write("<div class='' id='VFAlternativas" + iLoop + "' style='display:none'><input type='radio' id='VFradio" +
+                            "' name='VFradio' value='" + iLoop +"' /> <span id='Alternativas' > " + iLoop + ") <input class='col-md-6' type='text' id='Alternativas' name='Alternativas" +
                             "'> <input type='button' value='Remover' onclick='RemoverCampos(\"" + iLoop + "\",\"VF\")'></span></div>");
                     }
                 </script>
@@ -389,7 +389,7 @@
                     <label for="EnuncuadoDT">Enunciado</label>
                     <textarea class="form-control" id="EnunciadoDT" name="Enunciado"></textarea>
 
-                    
+
 
                 </div>
             </div>
