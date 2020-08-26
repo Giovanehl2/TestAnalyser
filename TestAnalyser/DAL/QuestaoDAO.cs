@@ -19,7 +19,7 @@ namespace TestAnalyser.DAL
             var obj = new Questao();
             /*não estou incluindo regras e nem validações no momento*/
             if (questao.Opcoes != null)
-            { 
+            {
                 ctx.Questoes.Add(questao);
                 ctx.SaveChanges();
                 obj = questao;
@@ -54,8 +54,8 @@ namespace TestAnalyser.DAL
         {
             List<String> assuntos = new List<String>();
             List<Questao> questao = new List<Questao>();
-            
-                questao = ctx.Questoes.Include("Disciplina").Where(x => x.Disciplina.Nome == disc).ToList();
+
+            questao = ctx.Questoes.Include("Disciplina").Where(x => x.Disciplina.Nome == disc).ToList();
             foreach (Questao item in questao)
             {
                 assuntos.Add(item.Assunto);
@@ -63,7 +63,7 @@ namespace TestAnalyser.DAL
             }
             //ctx.Questoes.Include(d => d.Disciplina).Where(x => x.Disciplina.DisciplinaId == disc).Select(z => z.Assunto).Distinct().ToList();
 
-                return assuntos;
+            return assuntos;
 
         }
         public static Questao BuscarQuestaoId(int id)
@@ -73,7 +73,8 @@ namespace TestAnalyser.DAL
 
         public static List<Questao> BuscarPorAssunto(string assunto)
         {
-            return ctx.Questoes.Where(p => p.Assunto.Equals(assunto)).ToList(); 
+            return ctx.Questoes.Include("Opcoes").Include("Alternativas").Where(p => p.Assunto.Equals(assunto) && p.situacao == 1).ToList();
+
         }
         public static List<Questao> BuscarPorTpQuestao(int tpPerg)
         {

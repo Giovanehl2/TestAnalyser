@@ -261,6 +261,7 @@
     <Compile Include="Model\Alternativa.cs" />
     <Compile Include="Model\Aluno.cs" />
     <Compile Include="Model\AlunoJson .cs" />
+    <Compile Include="Model\AlunoNota.cs" />
     <Compile Include="Model\CargaDados.cs" />
     <Compile Include="Model\ConfigPln.cs" />
     <Compile Include="Model\Configuracao.cs" />
@@ -270,6 +271,7 @@
     <Compile Include="Model\Disciplina.cs" />
     <Compile Include="Model\DisciplinaJson.cs" />
     <Compile Include="Model\MultiSelectValues.cs" />
+    <Compile Include="Model\NotaQuestao.cs" />
     <Compile Include="Model\ObjApi.cs" />
     <Compile Include="Model\Opcao.cs" />
     <Compile Include="Model\Person.cs" />

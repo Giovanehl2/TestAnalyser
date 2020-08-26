@@ -14,8 +14,7 @@ namespace TestAnalyser.Model
         {
             RespostasAlunos = new List<RespostasAluno>();
             Professor = new Professor();
-            Alunos = new List<Aluno>();
-            Questoes = new List<Questao>();
+            NotaQuestoes = new List<NotaQuestao>();
             ConfigPln = new ConfigPln();
             Assuntos = new List<string>();
         }
@@ -24,18 +23,18 @@ namespace TestAnalyser.Model
 
         public string TituloProva { get; set; }
 
-        [NotMapped]
         public List<string> Assuntos { get; set; }
 
-        [NotMapped]
         public int QtSimplesEscolha { get; set; }
-        [NotMapped]
         public int QtMultiplaEscolha { get; set; }
-        [NotMapped]
         public int QtDissertativa { get; set; }
-        [NotMapped]
         public int QtVerdadeirFalso { get; set; }
 
+        [NotMapped]
+        public string NomeDisciplina { get; set; }
+        [NotMapped]
+        public string NomeTurma { get; set; }
+        
         public double ValorProva { get; set; }
 
         public double NotaProva { get; set; }
@@ -49,11 +48,9 @@ namespace TestAnalyser.Model
         public DateTime HoraFim { get; set; }
 
         public ConfigPln ConfigPln { get; set; }
-
-        public List<Questao> Questoes { get; set; }
+        public List<NotaQuestao> NotaQuestoes { get; set; }
         public Disciplina Disciplina { get; set; }
         public List<RespostasAluno> RespostasAlunos { get; set; }
         public Professor Professor { get; set; }
-        public List<Aluno> Alunos { get; set; }
     }
 }

@@ -16,7 +16,6 @@ namespace TestAnalyser.Model
             Disciplina = new Disciplina();
             Opcoes = new List<Opcao>();
             Alternativas = new List<Alternativa>();
-            Provas = new List<Prova>();
         }
         [Key]
         public int QuestaoId { get; set; }
@@ -41,8 +40,6 @@ namespace TestAnalyser.Model
         public List<Opcao> Opcoes { get; set; }
 
         public List<Alternativa> Alternativas { get; set; }
-
-        public List<Prova> Provas { get; set; }
 
 
     }

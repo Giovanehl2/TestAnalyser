@@ -24,7 +24,12 @@ namespace TestAnalyser.DAL
             ctx.SaveChanges();
             return true;
         }
+        public static Professor BuscarProfessorPorId(int id)
+        {
+            return ctx.Professores.Include("Disciplinas").Include("Provas").Where(x => x.ProfessorId == id).FirstOrDefault();
 
+
+        }
         public static Professor BuscarProfessorMatricula(int matricula)
         {
             return ctx.Professores.Include("Disciplinas").Include("Provas").Where(x => x.Matricula.Equals(matricula)).FirstOrDefault();
