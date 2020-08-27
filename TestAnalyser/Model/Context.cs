@@ -20,6 +20,8 @@ namespace TestAnalyser.Model
         public DbSet<Opcao> Opcoes { get; set; }
         public DbSet<RespostasAluno> RespostaAlunos { get; set; }
         public DbSet<Usuario> Usuarios { get; set; }
+        public DbSet<NotaQuestao> NotasQuestoes { get; set; }
+        public DbSet<AlunoNota> AlunoNotas { get; set; }
         public DbSet<Admin> Admins { get; set; }
         public DbSet<ConfigPln> ConfigsPln { get; set; }
         public DbSet<Configuracao> Configuracoes { get; set; }

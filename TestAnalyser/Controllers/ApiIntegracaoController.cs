@@ -143,7 +143,7 @@ namespace TestAnalyser.Controllers
                     aluno.Nome = objAluno.Nome;
                     aluno.Email = objAluno.Email;
                     aluno.Matricula = objAluno.Matricula;
-                    aluno.Provas = null;
+                    //aluno.Provas = null;
                     aluno.Turmas = null;
 
                     usr.Login = Convert.ToString(aluno.Matricula);

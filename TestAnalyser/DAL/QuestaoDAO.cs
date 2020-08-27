@@ -28,21 +28,21 @@ namespace TestAnalyser.DAL
             }
             return obj;
         }
-        public static void RemoverQuestao(Questao questao)
-        {
-            /*verifica se a questão não esta atrelada a alguma prova, caso contrario apenas desabilita a utilização desta questão*/
-            if (ProvaDAO.VerificarQuestaoCadastrada(questao.QuestaoId) == null)
-            {
-                ctx.Questoes.Remove(questao);
-                ctx.SaveChanges();
-            }
-            else
-            {
-                questao.situacao = 0;
-                AlterarQuestao(questao);
-            }
+        //public static void RemoverQuestao(Questao questao)
+        //{
+        //    /*verifica se a questão não esta atrelada a alguma prova, caso contrario apenas desabilita a utilização desta questão*/
+        //    if (ProvaDAO.VerificarQuestaoCadastrada(questao.QuestaoId) == null)
+        //    {
+        //        ctx.Questoes.Remove(questao);
+        //        ctx.SaveChanges();
+        //    }
+        //    else
+        //    {
+        //        questao.situacao = 0;
+        //        AlterarQuestao(questao);
+        //    }
 
-        }
+        //}
 
         public static void AlterarQuestao(Questao questao)
         {

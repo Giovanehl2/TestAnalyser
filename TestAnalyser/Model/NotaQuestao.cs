@@ -7,7 +7,7 @@ using System.Web;
 
 namespace TestAnalyser.Model
 {
-    [Table("Questoes")]
+    [Table("NotasQuestoes")]
     public class NotaQuestao
     {
         public NotaQuestao()

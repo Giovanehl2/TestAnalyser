@@ -25,7 +25,7 @@ namespace TestAnalyser.Model
         public Prova Prova { get; set; }
         public Aluno Aluno { get; set; }
 
-        // 1 = correto 2= parcial 3 = incorreto
+        // 0 = não corrigido, 1 = correto, 2= parcial ,3 = incorreto , 4 correção manual
         public int SituacaoCorrecao { get; set; }
 
     }

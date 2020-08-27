@@ -106,7 +106,7 @@ namespace TestAnalyser.Controllers
             Disciplina disc = DisciplinaDAO.BuscarPorNome(prova.NomeDisciplina);
             Turma turma = TurmaDAO.BuscarTurmaNome(prova.NomeTurma);
 
-            prova.Alunos = turma.Alunos;
+            //prova.Alunos = turma.Alunos;
             prova.Disciplina = disc;
 
             int id = Convert.ToInt32(Session["IdUsr"]);
