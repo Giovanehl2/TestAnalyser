@@ -245,21 +245,13 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202008140124441_teste.cs" />
-    <Compile Include="Migrations\202008140124441_teste.designer.cs">
-      <DependentUpon>202008140124441_teste.cs</DependentUpon>
+    <Compile Include="Migrations\202009032204188_teste.cs" />
+    <Compile Include="Migrations\202009032204188_teste.designer.cs">
+      <DependentUpon>202009032204188_teste.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202008190002239_teste1.cs" />
-    <Compile Include="Migrations\202008190002239_teste1.designer.cs">
-      <DependentUpon>202008190002239_teste1.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202008220023172_teste2.cs" />
-    <Compile Include="Migrations\202008220023172_teste2.designer.cs">
-      <DependentUpon>202008220023172_teste2.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202008270015273_teste222.cs" />
-    <Compile Include="Migrations\202008270015273_teste222.designer.cs">
-      <DependentUpon>202008270015273_teste222.cs</DependentUpon>
+    <Compile Include="Migrations\202009032321265_teste22.cs" />
+    <Compile Include="Migrations\202009032321265_teste22.designer.cs">
+      <DependentUpon>202009032321265_teste22.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Model\Admin.cs" />
@@ -335,17 +327,11 @@
     <Folder Include="Data\" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202008140124441_teste.resx">
-      <DependentUpon>202008140124441_teste.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202009032204188_teste.resx">
+      <DependentUpon>202009032204188_teste.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202008190002239_teste1.resx">
-      <DependentUpon>202008190002239_teste1.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202008220023172_teste2.resx">
-      <DependentUpon>202008220023172_teste2.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202008270015273_teste222.resx">
-      <DependentUpon>202008270015273_teste222.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202009032321265_teste22.resx">
+      <DependentUpon>202009032321265_teste22.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

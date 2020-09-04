@@ -13,12 +13,12 @@ namespace TestAnalyser.Model
         public NotaQuestao()
         {
             Questao = new Questao();
-            Prova = new Prova();
+            //Prova = new Prova();
     }
         [Key]
         public int NotaQuestaoId { get; set; }
         public Questao Questao { get; set; }
         public double ValorQuestao { get; set; }
-        public Prova Prova { get; set; }
+        //public Prova Prova { get; set; }
     }
 }

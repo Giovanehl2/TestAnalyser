@@ -14,7 +14,8 @@ namespace TestAnalyser.Model
         {
             Questao = new Questao();
             Alternativas = new List<Alternativa>();
-            Prova = new Prova();
+            //Prova = new Prova();
+            Aluno = new Aluno();
         }
         [Key]
         public int RespostasAlunoId { get; set; }
@@ -22,11 +23,13 @@ namespace TestAnalyser.Model
         public Questao Questao { get; set; }
         public List<Alternativa> Alternativas  { get; set; }
         public double NotaAluno { get; set; }
-        public Prova Prova { get; set; }
+        //public Prova Prova { get; set; }
         public Aluno Aluno { get; set; }
 
         // 0 = não corrigido, 1 = correto, 2= parcial ,3 = incorreto , 4 correção manual
         public int SituacaoCorrecao { get; set; }
+        public DateTime? DataHoraInicio { get; set; }
+        public DateTime? DataHoraFim { get; set; }
 
     }
 }

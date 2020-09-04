@@ -15,18 +15,29 @@ namespace TestAnalyser.DAL
         public static bool CadastrarProva(Prova prova)
         {
             /*não estou incluindo regras e nem validações no momento*/
-            if (BuscarProvaId(prova.ProvaId) == null)
+            if (BuscarProvaDuplicada(prova.TituloProva) == null)
             {
                 ctx.Provas.Add(prova);
                 ctx.SaveChanges();
+                ctx.Entry(prova).State = System.Data.Entity.EntityState.Detached;
                 return true;
             }
             return false;
         }
-
+        public static bool EditarProva(Prova prova)
+        {
+            ctx.Entry(prova).State = System.Data.Entity.EntityState.Modified;
+            ctx.SaveChanges();
+            return true;
+        }
         public static Prova BuscarProvaId(int id)
         {
             return ctx.Provas.Find(id);
+        }
+        public static Prova BuscarProvaDuplicada(string titulo)
+        {
+            return ctx.Provas.Where(p => p.TituloProva.Equals(titulo)).FirstOrDefault();
+
         }
         public static Prova BuscarPorTituloProva(string titulo)
         {

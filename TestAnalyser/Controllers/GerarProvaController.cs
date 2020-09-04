@@ -56,8 +56,6 @@ namespace TestAnalyser.Controllers
                     }
 
                 }
-
-
             }
 
             return Json(listagem);
@@ -82,7 +80,6 @@ namespace TestAnalyser.Controllers
 
                 }
 
-
             }
 
             return Json(listagem);
@@ -100,29 +97,109 @@ namespace TestAnalyser.Controllers
             return Json(temp.Distinct());
         }
 
-        public ActionResult SalvarProva(Prova prova)
+        public ActionResult SalvarProvaQuestoes(List<int> idquestao, List<double> notas)
         {
-            List<Aluno> alunos = new List<Aluno>();
-            Disciplina disc = DisciplinaDAO.BuscarPorNome(prova.NomeDisciplina);
-            Turma turma = TurmaDAO.BuscarTurmaNome(prova.NomeTurma);
+                for (int i = 0; i < provaFixa.NotasQuestoes.Count; i++)
+                {
+                   if( provaFixa.NotasQuestoes[i].Questao.QuestaoId == idquestao[i])
+                    {
+                    provaFixa.NotasQuestoes[i].ValorQuestao = notas[i];
+                    }
+                }
+                //adiciona o gabarito de todos os alunosk
+                GerarGabaritoAluno();
 
-            //prova.Alunos = turma.Alunos;
-            prova.Disciplina = disc;
+            if (ProvaDAO.CadastrarProva(provaFixa))
+            {
 
-            int id = Convert.ToInt32(Session["IdUsr"]);
-            Professor professor= ProfessorDAO.BuscarProfessorPorId(id);
+                return RedirectToAction("GerarProva", "GerarProva");
+            }
 
-            provaFixa = prova;
+            return RedirectToAction("AdicionarQuestoesNaProva", "GerarProva", provaFixa);
+        }
+        private void GerarGabaritoAluno()
+        {
+            Turma turma = TurmaDAO.BuscarTurmaId(provaFixa.Disciplina.DisciplinaId);
+            RespostasAluno respostaAluno;
+            List<RespostasAluno> listaRespostaAluno = new List<RespostasAluno>();
+            List<Aluno> alunos = turma.Alunos;
+            foreach (Aluno aluno in alunos)
+            {
+
+                foreach (var item in provaFixa.NotasQuestoes)
+                {
+                    respostaAluno = new RespostasAluno();
+                    respostaAluno.Aluno = aluno;
+                    respostaAluno.Questao = item.Questao;
+                    respostaAluno.Alternativas = new List<Alternativa>();
+                    respostaAluno.DataHoraInicio = null;
+                    respostaAluno.DataHoraFim = null;
+                    listaRespostaAluno.Add(respostaAluno);
+                }
+            }
+            provaFixa.RespostasAlunos.AddRange(listaRespostaAluno);
+
+
+        }
+
+        public ActionResult CadastrarQuestoesProva(Prova prova)
+        {
+            if (ModelState.IsValid)
+            {
+                Disciplina disc = DisciplinaDAO.BuscarPorNome(prova.NomeDisciplina);
+                List<RespostasAluno> respostaAluno = new List<RespostasAluno>();
+                prova.RespostasAlunos = respostaAluno;
+                prova.Disciplina = disc;
+
+                int id = Convert.ToInt32(Session["IdUsr"]);
+                prova.Professor = ProfessorDAO.BuscarProfessorPorId(id);
+                provaFixa = prova;
+                GerarQuestoesProva();
+
+                if (ProvaDAO.BuscarPorTituloProva(prova.TituloProva) == null)
+                {
+                    
+                    return RedirectToAction("AdicionarQuestoesNaProva", "GerarProva", provaFixa);
+
+                }
+
+            }
+            ModelState.AddModelError("", "Não foi possivel realizar o cadastro, por favor preencha todos os campos!");
+            return RedirectToAction("GerarProva", "GerarProva", provaFixa);
 
 
 
-            return RedirectToAction("AdicionarQuestoesNaProva", "GerarProva");
+        }
+        private void GerarQuestoesProva()
+        {
+            NotaQuestao notaquestao;
+            List<Questao> questoesProva = new List<Questao>();
+            questoesProva.AddRange(gerarQuestões());
+            double nota = provaFixa.ValorProva / questoesProva.Count();
+            List<NotaQuestao> ListanotaQuestao = new List<NotaQuestao>();
+            foreach (Questao item in questoesProva)
+            {
+                notaquestao = new NotaQuestao();
+                notaquestao.Questao = item;
+                notaquestao.ValorQuestao = nota;
+                ListanotaQuestao.Add(notaquestao);
+
+            }
+            provaFixa.NotasQuestoes = ListanotaQuestao;
         }
 
         public ActionResult AdicionarQuestoesNaProva()
         {
-
+            ViewBag.NotasQuestoes = provaFixa.NotasQuestoes;
+            TempData["Prova"] = provaFixa;
             return View(provaFixa);
+        }
+
+        public ActionResult RegerarQuestoes()
+        {
+            provaFixa.NotasQuestoes = new List<NotaQuestao>();
+            GerarQuestoesProva();
+            return RedirectToAction("AdicionarQuestoesNaProva", "GerarProva", provaFixa);
         }
 
         private List<Questao> gerarQuestões()
@@ -175,10 +252,11 @@ namespace TestAnalyser.Controllers
 
 
             }
+            //----------------------------------------------//
             //gera as sequencias aleatorias de acordo com cada tipo de questão
             for (int i = 0; i < provaFixa.QtSimplesEscolha; i++)
             {
-                QtSimplesEscolha.Add(rnd.Next(simplesEscolha.Count));
+                QtSimplesEscolha.Add(rnd.Next(0, simplesEscolha.Count));
 
             }
             //adiciona as questões na lista final
@@ -187,42 +265,42 @@ namespace TestAnalyser.Controllers
                 questoesFinal.Add(simplesEscolha[item]);
             }
 
-
+            //----------------------------------------------//
             for (int i = 0; i < provaFixa.QtMultiplaEscolha; i++)
             {
-                QtSimplesEscolha.Add(rnd.Next(multiplaEscolha.Count));
+                QtMultiplaEscolha.Add(rnd.Next(0, multiplaEscolha.Count));
 
             }
             //adiciona as questões na lista final
-            foreach (int item in QtSimplesEscolha)
+            foreach (int item in QtMultiplaEscolha)
             {
                 questoesFinal.Add(multiplaEscolha[item]);
             }
 
-
+            //----------------------------------------------//
             for (int i = 0; i < provaFixa.QtVerdadeirFalso; i++)
             {
-                QtSimplesEscolha.Add(rnd.Next(verdadeirFalso.Count));
+                QtVerdadeirFalso.Add(rnd.Next(0, verdadeirFalso.Count));
 
             }
             //adiciona as questões na lista final
-            foreach (int item in QtSimplesEscolha)
+            foreach (int item in QtVerdadeirFalso)
             {
                 questoesFinal.Add(verdadeirFalso[item]);
             }
 
-
+            //----------------------------------------------//
             for (int i = 0; i < provaFixa.QtDissertativa; i++)
             {
-                QtSimplesEscolha.Add(rnd.Next(dissertativa.Count));
+                QtDissertativa.Add(rnd.Next(0, dissertativa.Count));
 
             }
             //adiciona as questões na lista final
-            foreach (int item in QtSimplesEscolha)
+            foreach (int item in QtDissertativa)
             {
                 questoesFinal.Add(dissertativa[item]);
             }
-
+            //----------------------------------------------//
             return questoesFinal;
 
         }
