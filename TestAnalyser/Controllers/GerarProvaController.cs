@@ -191,7 +191,6 @@ namespace TestAnalyser.Controllers
         public ActionResult AdicionarQuestoesNaProva()
         {
             ViewBag.NotasQuestoes = provaFixa.NotasQuestoes;
-            TempData["Prova"] = provaFixa;
             return View(provaFixa);
         }
 

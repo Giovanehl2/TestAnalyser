@@ -2,20 +2,28 @@
 @{
     ViewBag.Title = "ConsultarProvaPr";
 }
+@{
+    var provas = ViewBag.Provas;
+}
+@model TestAnalyser.Model.Prova
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.2/css/bootstrap-select.min.css">
 
+</head>
 <h2>Consultar Provas</h2>
 <br />
-<div class="container">
-    <div class="row">
-        <div class="col-md-12">
 
-            <form action="#">
+<div class="container">
+    <form name="formConsultarProva" id="formConsultaProva" method="post" action="@Url.Action("ConsultarProva", "ConsultarProvaPr")">
+        <div class="row">
+            <div class="col-md-12">
                 <div class="form-row">
 
                     <div class="col-md-1">
                         <div class="row">
                             <div class="col">
-                                <label for="AssuntoSE">Pend</label>
+                                <label for="AssuntoSE">Pendente</label>
                             </div>
                         </div>
 
@@ -43,16 +51,20 @@
                     <div class="col-md-2">
                         <div class="row">
                             <div class="col">
-                                <label for="AssuntoSE">Disciplina</label>
+                                <label for="AssuntoSE">Curso</label>
                             </div>
                         </div>
 
                         <div class="row">
                             <div class="col">
-                                <select class="form-control" id="Disciplina" name="Disciplina">
-                                    <option>Selecionar</option>
-                                    <option>Seila1</option>
-                                    <option>Seila2</option>
+                                <select class="form-control" id="CursoId" name="Curso">
+                                    @{
+                                        <option value="0"> </option>
+                                        foreach (var item in ViewBag.Cursos)
+                                        {
+                                            <option value="@item.CursoId">@item.Descricao</option>
+                                        }
+                                    }
                                 </select>
                             </div>
                         </div>
@@ -61,44 +73,42 @@
                     <div class="col-md-2">
                         <div class="row">
                             <div class="col">
-                                <label for="AssuntoSE">Turma</label>
+                                <label for="AssuntoSE">Disciplina</label>
                             </div>
                         </div>
 
                         <div class="row">
                             <div class="col">
-                                <select class="form-control" id="Turma" name="Turma">
+                                <select class="form-control" id="DisciplinaId" name="Disciplina">
                                     <option>Selecionar</option>
-                                    <option>Turma1</option>
-                                    <option>Turma2</option>
                                 </select>
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-4">
-                        <div class="row">
-                            <div class="col">
-                                <label for="AssuntoSE">Prova</label>
-                            </div>
-                        </div>
 
-                        <div class="row">
-                            <div class="col">
-                                <select class="form-control" id="Prova" name="Prova">
-                                    <option>Selecionar</option>
-                                    <option>Prova1</option>
-                                    <option>Prova2</option>
-                                </select>
-                            </div>
-                            <div class="col">
-                                <button id="btnConsult" witdh="50" title="Consultar" class="btn btn-default btn-sm btn-toggle" @*onclick="ConsultarProvasPend()"*@>Consultar</button>
-                            </div>
-                        </div>
-                    </div>
                 </div>
-            </form>
+                <div class="col-md-3">
+                    <div class="row">
+                        <div class="col">
+                            <label for="AssuntoSE">Turma</label>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col">
+                            <select class="form-control" id="TurmaId" name="Turma">
+                                <option>Selecionar</option>
+                            </select>
+                        </div>
+                        <input id="btnConsultar" type="submit" value="Consultar" class="btn btn-default" />
+                    </div>
+
+                </div>
+
+            </div>
+
         </div>
-    </div>
+    </form>
     <br />
     <br />
     <div class="row">
@@ -115,40 +125,32 @@
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td>21/02/2020</td>
-                    <td>Gestão de T.I</td>
-                    <td>3° A</td>
-                    <td>Gerenciamento de riscos</td>
-                    <td>
-                        <div id="divGridConsultaPr1">
-                            <button witdh="50" title="Visualizar" class="btn btn-primary btn-sm" onclick="VisualisarTodasAsProvas()"> Visualizar</button>
-                            <button witdh="50" title="Corrigir" class="btn btn-primary btn-sm" onclick="CorrigirProvaAlunoEspecifico()">Corrigir</button>
-                        </div>
-                        <div id="divGridConsultaProvaPend1" style="display:none">
-                            <button witdh="50" title="Editar" class="btn btn-primary btn-sm" onclick="EditarProva()">Editar</button>
-                            <button witdh="50" title="Excluir" class="btn btn-primary btn-sm" onclick="ExcluirProvaModal()">Excluir</button>
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td>04/03/2020</td>
-                    <td>Sistemas operacionais</td>
-                    <td>2° C</td>
-                    <td>Segurança</td>
-                    <td>
-                        <div id="divGridConsultaPr2">
-                            <button witdh="50" title="Visualizar" class="btn btn-primary btn-sm" onclick="VisualisarTodasAsProvas()"> Visualizar</button>
-                            <button witdh="50" title="Corrigir" class="btn btn-primary btn-sm" onclick="CorrigirProvaAlunoEspecifico()">Corrigir</button>
-                        </div>
-                        <div id="divGridConsultaProvaPend2" style="display:none">
-                            <button witdh="50" title="Editar" class="btn btn-primary btn-sm" onclick="EditarProva()">Editar</button>
-                            <button witdh="50" title="Excluir" class="btn btn-primary btn-sm" onclick="ExcluirProvaModal()">Excluir</button>
-                        </div>
-                    </td>
+                @{
+                    if (provas != null)
+                    {
+                        foreach (var item in provas)
+                        {
+                            <tr>
+                                <td>@item.DataProva</td>
+                                <td>@item.Disciplina.Nome</td>
+                                <td>@item.NomeTurma</td>
+                                <td>@item.TituloProva</td>
+                                <td>
+                                    <div id="divGridConsultaPr1">
+                                        @Html.ActionLink("Visualizar", "Visualizar", new { id = item.ProvaId }) |
+                                        @Html.ActionLink("Corrigir", "Corrigir", new { id = item.ProvaId }) |
+                                    </div>
+                                    <div id="divGridConsultaProvaPend1" style="display:none">
+                                        @Html.ActionLink("Editar", "Editar", new { id = item.ProvaId }) |
+                                        @Html.ActionLink("Excluir", "Excluir", new { id = item.ProvaId })
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+                    }
 
+                }
 
-                </tr>
             </tbody>
 
         </table>
@@ -179,6 +181,10 @@
     </div>
 </div>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.2/js/bootstrap-select.min.js"></script>
+
 <script>
     function ExcluirProvaModal() {
         $('#ExcluirProva').modal('show');
@@ -203,8 +209,8 @@
 
     var div1 = document.getElementById('divGridConsultaPr1'),
         div2 = document.getElementById('divGridConsultaPr2');
-        div3 = document.getElementById('divGridConsultaProvaPend1');
-        div4 = document.getElementById('divGridConsultaProvaPend2');
+    div3 = document.getElementById('divGridConsultaProvaPend1');
+    div4 = document.getElementById('divGridConsultaProvaPend2');
     function switchVisible() {
         if (!div1) return;
         if (getComputedStyle(div1).display == 'block') {
@@ -220,5 +226,74 @@
         }
     }
     document.getElementById('btnConsult').addEventListener('click', switchVisible);
+
+</script>
+
+<script>
+    $('.selectpicker').selectpicker();
+
+
+    $(document).ready(function () {
+        $("#CursoId").on("change", function () {
+
+            var val = $('#CursoId').val();
+            var Paramters = "{id:'" + val + "'}";
+
+            $.ajax({
+
+                type: "POST",
+
+                url: "/ConsultarProvaPr/ConsultarDisciplina",
+
+                contentType: "application/json",
+
+                data: Paramters,
+
+                success: function (data) {
+                    var obj = JSON.parse(data);
+                    $.each(obj, function (key, value) {
+                        $('<option>').val(key).text(value).appendTo("#DisciplinaId");
+                        $('.form - control').selectpicker('refresh');
+                    })
+                }
+
+            });
+
+        });
+
+    });
+
+    $(document).ready(function () {
+        $("#DisciplinaId").on("change", function () {
+
+            var val = $('#DisciplinaId').val();
+            var Paramters = "{id:'" + val + "'}";
+
+            $.ajax({
+
+                type: "POST",
+
+                url: "/ConsultarProvaPr/BuscarTurmas",
+
+                contentType: "application/json",
+
+                data: Paramters,
+
+                success: function (data) {
+                    var obj = JSON.parse(data);
+                    $.each(obj, function (key, value) {
+                        $('<option>').val(key).text(value).appendTo("#TurmaId");
+                        $('.selectpicker').selectpicker('refresh');
+                    })
+                }
+
+            });
+        });
+
+    });
+
+
+
+
 
 </script>
