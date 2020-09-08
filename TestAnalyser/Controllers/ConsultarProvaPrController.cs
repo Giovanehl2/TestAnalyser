@@ -32,7 +32,8 @@ namespace TestAnalyser.Controllers
 
             }
             ViewBag.Cursos = cursos.Distinct();
-            ViewBag.Provas = provas;
+            ViewBag.Provas = TempData["provas"];
+            TempData.Keep();
             return View(new Prova());
         }
 
@@ -80,7 +81,7 @@ namespace TestAnalyser.Controllers
             return null;
         }
 
-        public void ConsultarProva( int? Pendentes,  DateTime DataProva, int Curso, int Disciplina, int Turma)
+        public ActionResult ConsultarProva( int? Pendentes,  DateTime DataProva, int Curso, int Disciplina, int Turma)
         {
             int Pendente = 0;
             if (Pendentes == null)
@@ -90,8 +91,9 @@ namespace TestAnalyser.Controllers
                 Pendente = 1;
             }
             
-           List<Prova> provas = ProvaDAO.BuscarProvasPesquisa(Convert.ToInt32(Session["IdUsr"]), Pendente, DataProva, Curso, Disciplina, Turma);
-            RedirectToAction("ConsultarProvaPr", "ConsultarProvaPr", provas);
+            List<Prova> provas = ProvaDAO.BuscarProvasPesquisa(Convert.ToInt32(Session["IdUsr"]), Pendente, DataProva, Curso, Disciplina, Turma);
+            TempData["provas"] = provas;
+            return RedirectToAction("ConsultarProvaPr", "ConsultarProvaPr");
         }
 
         public ActionResult CorrigirProvaAlunoEspecifico()

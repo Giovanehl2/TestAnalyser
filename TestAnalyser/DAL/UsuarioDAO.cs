@@ -105,32 +105,5 @@ namespace TestAnalyser.DAL
         {
             return ctx.Usuarios.Include("Aluno").Include("Admin").Include("Professor").Where(x => x.Login.Equals(login)).FirstOrDefault();
         }
-
-        //public static bool SalvarNovoLogin(Usuario usuario, string Senha)
-        //{
-        //    //Confirmar CPF e salvar a senha digitada na View.
-        //    usuario.Senha = Senha;
-
-        //    if (usuario.TipoUsr == 1)
-        //    {
-        //        usuario.Professor = null;
-        //        usuario.Admin = null;
-        //    }
-        //    else if (usuario.TipoUsr == 2)
-        //    {
-        //        usuario.Aluno = null;
-        //        usuario.Admin = null;
-        //    }
-        //    else
-        //    {
-        //        usuario.Aluno = null;
-        //        usuario.Professor = null;
-        //    }
-        //    //fazer ajuste do hash
-        //    ctx.Entry(usuario).State = System.Data.Entity.EntityState.Modified;
-        //    ctx.SaveChanges();
-        //    return true;
-        //}
-
     }
 }

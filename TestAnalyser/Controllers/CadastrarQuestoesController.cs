@@ -10,12 +10,11 @@ namespace TestAnalyser.Controllers
 {
     public class CadastrarQuestoesController : Controller
     {
-        // GET: CadastrarQuestoes
+        //GET: CadastrarQuestoes
         //ActionResult para apresetar a tela de cadastro de questões...
         public ActionResult CadastrarQuestoes()
         {
             ViewBag.Disciplinas = DisciplinaDAO.ListarDisciplinas();
-            //ViewBag.Person = new Person();
             return View();
         }
 
@@ -168,7 +167,3 @@ namespace TestAnalyser.Controllers
         }
     }
 }
-
-
-//pendencias do gabriel:
-//remover o campo textarea html da resposta dissertativa...

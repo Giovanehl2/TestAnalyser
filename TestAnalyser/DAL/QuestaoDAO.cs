@@ -23,11 +23,11 @@ namespace TestAnalyser.DAL
                 ctx.Questoes.Add(questao);
                 ctx.SaveChanges();
                 obj = questao;
-                //id = Convert.ToString(questao.QuestaoId);
                 return obj;
             }
             return obj;
         }
+
         //public static void RemoverQuestao(Questao questao)
         //{
         //    /*verifica se a questão não esta atrelada a alguma prova, caso contrario apenas desabilita a utilização desta questão*/
@@ -41,7 +41,6 @@ namespace TestAnalyser.DAL
         //        questao.situacao = 0;
         //        AlterarQuestao(questao);
         //    }
-
         //}
 
         public static void AlterarQuestao(Questao questao)
@@ -66,6 +65,7 @@ namespace TestAnalyser.DAL
             return assuntos;
 
         }
+
         public static Questao BuscarQuestaoId(int id)
         {
             return ctx.Questoes.Find(id);
@@ -76,6 +76,7 @@ namespace TestAnalyser.DAL
             return ctx.Questoes.Include("Opcoes").Include("Alternativas").Where(p => p.Assunto.Equals(assunto) && p.situacao == 1).ToList();
 
         }
+
         public static List<Questao> BuscarPorTpQuestao(int tpPerg)
         {
             return ctx.Questoes.Where(p => p.TipoQuestao.Equals(tpPerg)).ToList();
