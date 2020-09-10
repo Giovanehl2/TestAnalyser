@@ -77,6 +77,12 @@ namespace TestAnalyser.DAL
 
         }
 
+        public static List<Questao> BuscarPorDisciplina(string disciplina)
+        {
+            Disciplina disc = DisciplinaDAO.BuscarPorNome(disciplina);
+            return ctx.Questoes.Include("Opcoes").Include("Alternativas").Where(p => p.Disciplina.DisciplinaId.Equals(disc.DisciplinaId)).ToList();
+        }
+
         public static List<Questao> BuscarPorTpQuestao(int tpPerg)
         {
             return ctx.Questoes.Where(p => p.TipoQuestao.Equals(tpPerg)).ToList();
