@@ -28,20 +28,21 @@ namespace TestAnalyser.DAL
             return obj;
         }
 
-        //public static void RemoverQuestao(Questao questao)
-        //{
-        //    /*verifica se a questão não esta atrelada a alguma prova, caso contrario apenas desabilita a utilização desta questão*/
-        //    if (ProvaDAO.VerificarQuestaoCadastrada(questao.QuestaoId) == null)
-        //    {
-        //        ctx.Questoes.Remove(questao);
-        //        ctx.SaveChanges();
-        //    }
-        //    else
-        //    {
-        //        questao.situacao = 0;
-        //        AlterarQuestao(questao);
-        //    }
-        //}
+        public static void ExcDesQuestao(int id)
+        {
+            Questao q = BuscarQuestaoId(id);
+            if(q.situacao == 1)
+            {
+                q.situacao = 0;
+                AlterarQuestao(q);
+            }
+            else
+            {
+                ctx.Entry(q).State = System.Data.Entity.EntityState.Deleted;
+                ctx.SaveChanges();
+            }
+
+        }
 
         public static void AlterarQuestao(Questao questao)
         {
@@ -54,13 +55,12 @@ namespace TestAnalyser.DAL
             List<String> assuntos = new List<String>();
             List<Questao> questao = new List<Questao>();
 
-            questao = ctx.Questoes.Include("Disciplina").Where(x => x.Disciplina.Nome == disc).ToList();
+            questao = ctx.Questoes.Include("Disciplina").Where(x => x.Disciplina.Nome == disc && x.situacao == 1).ToList();
             foreach (Questao item in questao)
             {
                 assuntos.Add(item.Assunto);
 
             }
-            //ctx.Questoes.Include(d => d.Disciplina).Where(x => x.Disciplina.DisciplinaId == disc).Select(z => z.Assunto).Distinct().ToList();
 
             return assuntos;
 
@@ -77,10 +77,21 @@ namespace TestAnalyser.DAL
 
         }
 
-        public static List<Questao> BuscarPorDisciplina(string disciplina)
+        public static List<Questao> BuscarPorDisciplina(string disciplina, int? Des)
         {
-            Disciplina disc = DisciplinaDAO.BuscarPorNome(disciplina);
-            return ctx.Questoes.Include("Opcoes").Include("Alternativas").Where(p => p.Disciplina.DisciplinaId.Equals(disc.DisciplinaId)).ToList();
+            if(Des != null)
+            {
+                Disciplina disc = DisciplinaDAO.BuscarPorNome(disciplina);
+                return ctx.Questoes.Include("Opcoes").Include("Alternativas").Where(
+                    p => p.Disciplina.DisciplinaId.Equals(disc.DisciplinaId) && p.situacao == 0).ToList();
+            }
+            else
+            {
+                Disciplina disc = DisciplinaDAO.BuscarPorNome(disciplina);
+                return ctx.Questoes.Include("Opcoes").Include("Alternativas").Where(
+                    p => p.Disciplina.DisciplinaId.Equals(disc.DisciplinaId) && p.situacao == 1).ToList();
+            }
+            
         }
 
         public static List<Questao> BuscarPorTpQuestao(int tpPerg)

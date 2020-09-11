@@ -12,25 +12,28 @@ namespace TestAnalyser.Controllers
     public class ConsultarQuestoesController : Controller
     {
         private static int cursoId = 0;
-        private static int disciplinaId = 0;
+        //private static int disciplinaId = 0;
         // GET: ConsultarQuestoes
         public ActionResult ConsultarQuestoes()
         {
-            List<Curso> cursos = new List<Curso>();
-            Curso curso;
             int id = Convert.ToInt32(Session["IdUsr"]);
-            foreach (Disciplina item in DisciplinaDAO.BuscarPorProfessor(id))
-            {
-                foreach (Curso objCurso in item.Cursos)
-                {
-                    curso = new Curso();
-                    curso.CursoId = objCurso.CursoId;
-                    curso.Descricao = objCurso.Descricao;
-                    cursos.Add(curso);
-                }
-            }
+            List<Curso> cursos = CursoDAO.BuscarPorProfessor(id);
 
-            ViewBag.Cursos = cursos.Distinct();
+            //foreach (Disciplina item in DisciplinaDAO.BuscarPorProfessor(id))
+            //{
+            //    foreach (Curso objCurso in item.Cursos)
+            //    {
+            //        if (!cursos.Contains(objCurso))
+            //        {
+            //            curso = new Curso();
+            //            curso.CursoId = objCurso.CursoId;
+            //            curso.Descricao = objCurso.Descricao;
+            //            cursos.Add(curso);
+            //        }
+            //    }
+            //}
+
+            ViewBag.Cursos = cursos;
             ViewBag.Questoes = TempData["questoes"];
             TempData.Keep();
             return View(new Questao());
@@ -57,24 +60,18 @@ namespace TestAnalyser.Controllers
             return output;
         }
 
-        public JsonResult BuscarAssuntos(string id)
+        public JsonResult ConsultarAssuntos(string id)
         {
             var temp = QuestaoDAO.BuscarAssuntos(id);
             return Json(temp.Distinct());
         }
 
-        public ActionResult ConsultarQuestoesBtn(int Curso, string Disciplina, string Assunto)
+        public ActionResult ConsultarQuestoesBtn(string Disciplina, string Assunto, int? Desativado)
         {
             List<Questao> questoes = new List<Questao>();
-            //if (Disciplina.Equals("Selecionar"))
-            //{
-            //    questoes = QuestaoDAO.BuscarPorCurso(Curso);
-            //    TempData["questoes"] = questoes;
-            //}
-            //else 
             if (Assunto.Equals("Selecionar"))
             {
-                questoes = QuestaoDAO.BuscarPorDisciplina(Disciplina);
+                questoes = QuestaoDAO.BuscarPorDisciplina(Disciplina, Desativado);
                 TempData["questoes"] = questoes;
             }
             else
@@ -86,6 +83,10 @@ namespace TestAnalyser.Controllers
             return RedirectToAction("ConsultarQuestoes", "ConsultarQuestoes");
         }
 
-
+        public ActionResult ExcluirQuestao(int questaoID)
+        {
+            QuestaoDAO.ExcDesQuestao(questaoID);
+            return RedirectToAction("ConsultarQuestoes", "ConsultarQuestoes");
+        }
     }
 }

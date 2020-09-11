@@ -76,13 +76,6 @@ namespace TestAnalyser.DAL
 
         }
 
-        //public static Prova VerificarQuestaoCadastrada(int id)
-        //{
-        //    /*procura nas provas se existe alguma questão com o id pesquisado*/
-        //    return ctx.Provas.Include(x => x.Questoes).Where(y => y.Questoes.Any(z => z.QuestaoId == id)).FirstOrDefault();
-
-        //}
-
         public static List<Prova> BuscarPorStatus(int status)
         {
             return ctx.Provas.Where(p => p.StatusProva.Equals(status)).ToList();
