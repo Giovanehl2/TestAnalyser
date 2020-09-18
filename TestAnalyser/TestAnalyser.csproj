@@ -1,4 +1,4 @@
-﻿<Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="..\packages\EntityFramework.6.4.4\build\EntityFramework.props" Condition="Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.props')" />
   <Import Project="..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props" Condition="Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" />
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
@@ -251,6 +251,7 @@
     <Compile Include="Controllers\ConsultarProvaAlController.cs" />
     <Compile Include="Controllers\ConsultarProvaPrController.cs" />
     <Compile Include="Controllers\ConsultarQuestoesController.cs" />
+    <Compile Include="Controllers\EditarQuestoesController.cs" />
     <Compile Include="Controllers\GerarProvaController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\TelaInicialController.cs" />
@@ -339,6 +340,10 @@
     <Content Include="Views\Shared\_Login.cshtml" />
     <Content Include="Views\TelaInicial\TelaInicial.cshtml" />
     <Content Include="Views\Login\ConfirmarLogin.cshtml" />
+    <Content Include="Views\EditarQuestoes\SimplesEscolha.cshtml" />
+    <Content Include="Views\EditarQuestoes\MultiplaEscolha.cshtml" />
+    <Content Include="Views\EditarQuestoes\VerdadeiroFalso.cshtml" />
+    <Content Include="Views\EditarQuestoes\Dissertativa.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

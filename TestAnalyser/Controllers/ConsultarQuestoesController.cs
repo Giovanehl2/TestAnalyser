@@ -19,20 +19,6 @@ namespace TestAnalyser.Controllers
             int id = Convert.ToInt32(Session["IdUsr"]);
             List<Curso> cursos = CursoDAO.BuscarPorProfessor(id);
 
-            //foreach (Disciplina item in DisciplinaDAO.BuscarPorProfessor(id))
-            //{
-            //    foreach (Curso objCurso in item.Cursos)
-            //    {
-            //        if (!cursos.Contains(objCurso))
-            //        {
-            //            curso = new Curso();
-            //            curso.CursoId = objCurso.CursoId;
-            //            curso.Descricao = objCurso.Descricao;
-            //            cursos.Add(curso);
-            //        }
-            //    }
-            //}
-
             ViewBag.Cursos = cursos;
             ViewBag.Questoes = TempData["questoes"];
             TempData.Keep();
@@ -87,6 +73,13 @@ namespace TestAnalyser.Controllers
         {
             QuestaoDAO.ExcDesQuestao(questaoID);
             return RedirectToAction("ConsultarQuestoes", "ConsultarQuestoes");
+        }
+
+        public ActionResult EditarQuestao(int questaoID)
+        {
+            Questao OBJ = QuestaoDAO.BuscarQuestaoId(questaoID);
+            TempData["objquestao"] = OBJ;
+            return RedirectToAction("Dissertativa", "EditarQuestoes");
         }
     }
 }

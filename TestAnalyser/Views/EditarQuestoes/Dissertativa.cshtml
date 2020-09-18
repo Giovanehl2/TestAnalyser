@@ -1,0 +1,65 @@
+﻿@model TestAnalyser.Model.Questao
+@using TestAnalyser.Model;
+@using System.Web.Mvc;
+@{
+    ViewBag.Title = "Dissertativa";
+}
+
+@*Questão Dissertativa*@
+<script src="ckeditor/ckeditor.js"></script>
+<div id="divDT" class="">
+    <h5>Tipo: Dissertativa</h5>
+    <br />
+    <form class="form-horizontal" name="form1" id="formCadDT" method="post" action="@Url.Action("SalvarDissertativa", "EditarQuestoes")">
+        @if (TempData["$AlertMessage$"] != null)
+        {
+            <div id="alerta" style="color: red; text-align: center;">@TempData["$AlertMessage$"]</div>
+        }
+        <div class="form-row">
+            <div class="col-md-4">
+                <label for="AssuntoDT">Assunto</label>
+                @Html.EditorFor(model => model.Assunto, new { htmlAttributes = new { @class = "form-control" } })
+            </div>
+            <div class="col-md-4">
+                <label for="Disciplinas">Disciplina</label>
+                @Html.EditorFor(model => model.Disciplina.Nome, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+
+                @Scripts.Render("~/bundles/jquery")
+                <script type="text/javascript" src="//tinymce.cachefly.net/4.0/tinymce.min.js"></script>
+                <script type="text/javascript">
+                    tinymce.init({ selector: 'textarea', width: 500 });
+                </script>
+
+            </div>
+            <div class="col-md-2">
+                @Html.HiddenFor(model => model.QuestaoId)
+            </div>
+        </div>
+        <br />
+        <div class="form-row">
+            <div class="col-md-8">
+                <label for="EnuncuadoDT">Enunciado</label>
+                @Html.TextAreaFor(model => model.Enunciado, new { htmlAttributes = new { @class = "form-control" } })
+            </div>
+        </div>
+        <br />
+        <div class="form-row">
+            <div class="col-md-8">
+                <label for="RespostaDT">Resposta correta</label>
+                @Html.TextAreaFor(model => model.RespostaDiscursiva, new { htmlAttributes = new { @class = "form-control" } })
+            </div>
+        </div>
+        <br />
+        <div class="form-row">
+            <button witdh="50" id="btnSalvar" type="submit" class="btn btn-primary btn-sm">Salvar</button>
+        </div>
+    </form>
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        setTimeout(function () {
+            $('#alerta').fadeOut(1000);
+        }, 2500);
+    });
+</script>

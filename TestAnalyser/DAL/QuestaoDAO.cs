@@ -50,6 +50,13 @@ namespace TestAnalyser.DAL
             ctx.SaveChanges();
         }
 
+        public static void SalvarQuestao(Questao questao)
+        {
+            Questao Q = ctx.Questoes.First(i => i.QuestaoId == questao.QuestaoId);
+            ctx.Entry(Q).CurrentValues.SetValues(questao);
+            ctx.SaveChanges();
+        }
+
         public static List<String> BuscarAssuntos(string disc)
         {
             List<String> assuntos = new List<String>();
