@@ -96,6 +96,7 @@
                     <th scope="col">Disciplina</th>
                     <th scope="col">Assunto</th>
                     <th scope="col">Enunciado</th>
+                    <th scope="col">Tipo</th>
                     <th>Ações</th>
                 </tr>
             </thead>
@@ -109,6 +110,7 @@
                                 <td>@item.Disciplina.Nome</td>
                                 <td>@item.Assunto</td>
                                 <td>@Html.Raw(item.Enunciado)</td>
+                                <td>@item.TipoQuestao</td>
                                 <td>
                                     <div id="Acoes">
                                         @Html.ActionLink("Editar", "EditarQuestao", "ConsultarQuestoes", new { questaoID = item.QuestaoId }, null) |
@@ -117,8 +119,8 @@
                                 </td>
                             </tr>
                         }
-                                            }
-                                        }
+                    }
+                }
             </tbody>
         </table>
     </div>
@@ -151,7 +153,7 @@
             $('#ConfirmaExcluir').modal('hide');
         }
 
-     
+
 
 
 

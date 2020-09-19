@@ -1,7 +1,76 @@
-﻿
+﻿@model TestAnalyser.Model.Questao
+@using TestAnalyser.Model;
+@using System.Web.Mvc;
 @{
-    ViewBag.Title = "SimplesEscolha";
+    ViewBag.Title = "Editar Simples Escolha";
 }
+<script src="ckeditor/ckeditor.js"></script>
+<div id="divSE" class="">
+    <h5>Tipo: Simples-Escolha</h5>
+    <br />
+    <form class="form-horizontal" name="form1" id="formCadSE" method="post" action="@Url.Action("SalvarQuestaoEdit", "EditarQuestoes")">
+        @if (TempData["$AlertMessage$"] != null)
+        {
+            <div id="alerta" style="color: red; text-align: center;">@TempData["$AlertMessage$"]</div>
+        }
+        <div class="form-row">
+            <div class="col-md-4">
+                <label for="AssuntoSE">Assunto</label>
+                @Html.EditorFor(model => model.Assunto, new { htmlAttributes = new { @class = "form-control" } })
+            </div>
+            <div class="col-md-4">
+                <label for="Disciplinas">Disciplinas</label>
+                @Html.EditorFor(model => model.Disciplina.Nome, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+            </div>
+        </div>
+        <br />
+        <div class="form-row">
+            <div class="col-md-8">
+                <label for="EnunciadoSE">Enunciado</label>
+                @Html.TextAreaFor(model => model.Enunciado, new { htmlAttributes = new { @class = "form-control" } })
+            </div>
+        </div>
+        <div class="col-md-2">
+            @Html.HiddenFor(model => model.QuestaoId)
+            @Html.HiddenFor(model => model.TipoQuestao)
+        </div>
+        <br />
+        <br />
+        <div class="form-row">
+            <div class="col-md-3">
+                <label for="">Alternativas:</label>
+            </div>
+        </div>
+        <br />
+        <div id="DivAlternativas">
+            @for (int i = 0; i < Model.Alternativas.Count; i++)
+            {
+                @Html.HiddenFor(model => model.Alternativas[i].AlternativaId)
+                @Html.HiddenFor(model => model.Alternativas[i].correto)
+                <div class="form-row">
+                    <label for="">@(i+1)) </label>
+                    @Html.EditorFor(model => model.Alternativas[i].DescAlternativa, new { htmlAttributes = new { @class = "form-control col-md-6" } })
+                </div>
+            }
+        </div>
+        <br />
+        <div class="form-row">
+            <button witdh="50" id="btnSalvar" type="submit" class="btn btn-primary btn-sm">Salvar</button>
+        </div>
+    </form>
+</div>
 
-<h2>SimplesEscolha</h2>
+@Scripts.Render("~/bundles/jquery")
+<script type="text/javascript" src="//tinymce.cachefly.net/4.0/tinymce.min.js"></script>
+<script type="text/javascript">
+    tinymce.init({ selector: 'textarea', width: 500 });
+</script>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        setTimeout(function () {
+            $('#alerta').fadeOut(1000);
+        }, 2500);
+    });
+</script>
 

@@ -36,11 +36,11 @@ namespace TestAnalyser.DAL
                 q.situacao = 0;
                 AlterarQuestao(q);
             }
-            else
-            {
-                ctx.Entry(q).State = System.Data.Entity.EntityState.Deleted;
-                ctx.SaveChanges();
-            }
+            //else
+            //{
+            //    ctx.Entry(q).State = System.Data.Entity.EntityState.Deleted;
+            //    ctx.SaveChanges();
+            //}
 
         }
 
@@ -52,8 +52,17 @@ namespace TestAnalyser.DAL
 
         public static void SalvarQuestao(Questao questao)
         {
-            Questao Q = ctx.Questoes.First(i => i.QuestaoId == questao.QuestaoId);
+            Questao Q = ctx.Questoes.Include("Opcoes").Include("Alternativas").First(i => i.QuestaoId == questao.QuestaoId);
             ctx.Entry(Q).CurrentValues.SetValues(questao);
+            for (int i = 0; i < questao.Alternativas.Count; i++)
+            {
+                Q.Alternativas[i].DescAlternativa = questao.Alternativas[i].DescAlternativa;
+            }
+            for (int h = 0; h < questao.Opcoes.Count; h++)
+            {
+                Q.Opcoes[h].descricao = questao.Opcoes[h].descricao;
+            }
+
             ctx.SaveChanges();
         }
 
@@ -75,7 +84,7 @@ namespace TestAnalyser.DAL
 
         public static Questao BuscarQuestaoId(int id)
         {
-            return ctx.Questoes.Find(id);
+            return ctx.Questoes.Include("Opcoes").Include("Alternativas").Where(q => q.QuestaoId == id).FirstOrDefault();
         }
 
         public static List<Questao> BuscarPorAssunto(string assunto)

@@ -79,7 +79,20 @@ namespace TestAnalyser.Controllers
         {
             Questao OBJ = QuestaoDAO.BuscarQuestaoId(questaoID);
             TempData["objquestao"] = OBJ;
-            return RedirectToAction("Dissertativa", "EditarQuestoes");
+            switch (OBJ.TipoQuestao)
+            {
+                case 1:
+                    return RedirectToAction("SimplesEscolha", "EditarQuestoes");
+                case 2:
+                    return RedirectToAction("MultiplaEscolha", "EditarQuestoes");
+                case 3:
+                    return RedirectToAction("VerdadeiroFalso", "EditarQuestoes");
+                case 4:
+                    return RedirectToAction("Dissertativa", "EditarQuestoes");
+                default:
+                    break;
+            }
+            return RedirectToAction("", "");
         }
     }
 }
