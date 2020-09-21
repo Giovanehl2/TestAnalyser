@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
+using System.Runtime.Remoting.Messaging;
 using System.Web;
 using TestAnalyser.Model;
 
@@ -80,5 +81,22 @@ namespace TestAnalyser.DAL
         {
             return ctx.Provas.Where(p => p.StatusProva.Equals(status)).ToList();
         }
+        public static Prova BuscarRespostasPorAluno(int idAluno, int idProva)
+        {
+
+            Prova prova = ctx.Provas.Include("RespostasAlunos").Where(p => p.ProvaId == idProva).FirstOrDefault();
+            List<RespostasAluno> result = new List<RespostasAluno>();
+            foreach (RespostasAluno item in prova.RespostasAlunos)
+            {
+                if (item.Aluno.AlunoId == idAluno)
+                    result.Add(item);
+            }
+            prova.RespostasAlunos.Clear();
+            prova.RespostasAlunos.AddRange(result);
+
+            return prova;
+        }
+
+
     }
 }

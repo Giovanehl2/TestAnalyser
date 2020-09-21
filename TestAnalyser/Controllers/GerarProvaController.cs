@@ -22,24 +22,8 @@ namespace TestAnalyser.Controllers
             Prova prova = new Prova();
 
             List<string> assuntos = new List<string>();
-
-
-            List<Curso> cursos = new List<Curso>();
-            Curso curso;
-            int id = Convert.ToInt32(Session["IdUsr"]);
-            disciplinas = DisciplinaDAO.BuscarPorProfessor(id);
-            foreach (Disciplina item in disciplinas)
-            {
-                foreach (Curso objCurso in item.Cursos)
-                {
-                    curso = new Curso();
-                    curso.CursoId = objCurso.CursoId;
-                    curso.Descricao = objCurso.Descricao;
-                    cursos.Add(curso);
-                }
-
-            }
-            ViewBag.Cursos = cursos;
+            //localiza os cursos de acordo com o id do professor
+            ViewBag.Cursos = CursoDAO.listarCursosPorProfessor(Convert.ToInt32(Session["IdUsr"])); ;
             return View(new Prova());
         }
         public JsonResult BuscarDisciplina(int id)

@@ -43,6 +43,8 @@ namespace TestAnalyser.DAL
 
             var listaDisciplinas = ctx.Disciplinas.Include("Turmas").Include("Professores").Include("Cursos").Where(x => x.Professores.Any(y => y.ProfessorId == id)).ToList();
 
+
+
             return listaDisciplinas;
         }
         public static Disciplina BuscarPorNome(string nome)

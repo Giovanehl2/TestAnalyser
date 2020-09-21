@@ -31,7 +31,7 @@ namespace TestAnalyser.DAL
 
         public static Aluno BuscarAlunoPorMatricula(int matricula)
         {
-            return ctx.Alunos.Include("Turmas").Include("Provas").Where(x => x.Matricula == matricula).FirstOrDefault();
+            return ctx.Alunos.Include("Turmas").Where(x => x.Matricula == matricula).FirstOrDefault();
         }
 
     }

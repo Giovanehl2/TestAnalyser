@@ -12,26 +12,17 @@ namespace TestAnalyser.Controllers
     public class ConsultarProvaPrController : Controller
     {
         private static int cursoId = 0;
+        private static int ProvaId = 0;
         private static int disciplinaId = 0;
+        private static Prova prova = new Prova();
+
         // GET: ConsultarProvaPr
-        public ActionResult ConsultarProvaPr(List<Prova> provas)
+
+        // tela para consulta de provas 
+        public ActionResult ConsultarProvaPr()
         {
-
-            List<Curso> cursos = new List<Curso>();
-            Curso curso;
-            int id = Convert.ToInt32(Session["IdUsr"]);
-            foreach (Disciplina item in DisciplinaDAO.BuscarPorProfessor(id))
-            {
-                foreach (Curso objCurso in item.Cursos)
-                {
-                    curso = new Curso();
-                    curso.CursoId = objCurso.CursoId;
-                    curso.Descricao = objCurso.Descricao;
-                    cursos.Add(curso);
-                }
-
-            }
-            ViewBag.Cursos = cursos.Distinct();
+        
+            ViewBag.Cursos = ViewBag.Cursos = CursoDAO.listarCursosPorProfessor(Convert.ToInt32(Session["IdUsr"])); ;
             ViewBag.Provas = TempData["provas"];
             TempData.Keep();
             return View(new Prova());
@@ -96,19 +87,76 @@ namespace TestAnalyser.Controllers
             return RedirectToAction("ConsultarProvaPr", "ConsultarProvaPr");
         }
 
-        public ActionResult CorrigirProvaAlunoEspecifico()
+        //tela para filtrar as provas a serem corrigidas
+        public ActionResult OpcoesCorrecao(int? idProva)
         {
+            if(idProva != null)
+            ProvaId = Convert.ToInt32(idProva);
+
+            ViewBag.RespostasAluno = TempData["respostasFiltradas"];
+            return View(ProvaDAO.BuscarProvaId(ProvaId));
+        }
+        // tela corrigir prova aluno especifico
+        public ActionResult CorrigirRespostastoAluno(int idAluno)
+        {
+            ViewBag.Provas = new Prova();
+            ViewBag.RespostasAluno = new List<RespostasAluno>();
+            TempData["ListaRespostasAlunos"] = null;
             return View();
         }
-        public ActionResult GerarProva()
+        public ActionResult FiltrarConsulta(int Situacao, int matriculaAluno)
         {
+            List<RespostasAluno> respostasFiltradas = new List<RespostasAluno>();
+            Aluno aluno = AlunoDAO.BuscarAlunoPorMatricula(matriculaAluno);
+            //adiciona apenas do aluno especifico
+            if (aluno != null)
+            {
+                  respostasFiltradas.AddRange(RespostasAlunoDAO.PerguntasParaCorrigir(aluno.AlunoId, Situacao));
+            }
+            else
+            {
+                //adiciona todos os alunos
+                respostasFiltradas.AddRange(RespostasAlunoDAO.PerguntasParaCorrigir(Situacao));
+            }
+            TempData["respostasFiltradas"] = respostasFiltradas;
 
-            return View();
+            return RedirectToAction("OpcoesCorrecao", "ConsultarProvaPr");
         }
 
+        public ActionResult CorrigirProvaAlunoEspecifico(int id, int idProva)
+        {
+            prova = new Prova();
+            prova = ProvaDAO.BuscarRespostasPorAluno(id, idProva);
+
+            ViewBag.RespostasAluno = prova.RespostasAlunos; 
+
+            return View(prova);
+        }
         public static List<Disciplina> Consultar ()
         {
             return null;
+        }
+
+        public ActionResult SalvarCorrecaoProva(List<int> idquestao, List<double> notas, List<int> idSituacao)
+        {
+
+            foreach (RespostasAluno obj in prova.RespostasAlunos)
+            {
+                for (int i = 0; i < idquestao.Count; i++)
+                {
+                    if (obj.Questao.QuestaoId == idquestao[i])
+                    {
+                        obj.SituacaoCorrecao = idSituacao[i];
+                        obj.NotaAluno = notas[i];
+                        //altera item por item
+                        
+                    }
+                    RespostasAlunoDAO.Editar(obj);
+                }
+            }
+
+
+            return RedirectToAction("OpcoesCorrecao", "ConsultarProvaPr");
         }
 
 

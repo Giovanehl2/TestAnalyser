@@ -260,6 +260,7 @@
     <Compile Include="DAL\OpcaoDAO.cs" />
     <Compile Include="DAL\ProvaDAO.cs" />
     <Compile Include="DAL\QuestaoDAO.cs" />
+    <Compile Include="DAL\RespostasAlunoDAO.cs" />
     <Compile Include="DAL\SingletonContext.cs" />
     <Compile Include="DAL\DisciplinaDAO.cs" />
     <Compile Include="DAL\CursoDAO.cs" />
@@ -330,7 +331,7 @@
     <Content Include="Views\ConsultarProvaAl\ConsultarProvaAl.cshtml" />
     <Content Include="Views\ConsultarProvaAl\RealizarProva.cshtml" />
     <Content Include="Views\ConsultarProvaPr\ConsultarProvaPr.cshtml" />
-    <Content Include="Views\ConsultarProvaPr\CorrigirProva.cshtml" />
+    <Content Include="Views\ConsultarProvaPr\CorrigirProvas.cshtml" />
     <Content Include="Views\ConsultarProvaPr\CorrigirProvaAlunoEspecifico.cshtml" />
     <Content Include="Views\ConsultarProvaPr\VisualizarTodasAsProvas.cshtml" />
     <Content Include="Views\ConsultarQuestoes\ConsultarQuestoes.cshtml" />
@@ -344,6 +345,8 @@
     <Content Include="Views\EditarQuestoes\MultiplaEscolha.cshtml" />
     <Content Include="Views\EditarQuestoes\VerdadeiroFalso.cshtml" />
     <Content Include="Views\EditarQuestoes\Dissertativa.cshtml" />
+    <Content Include="Views\ConsultarProvaPr\VisualizarProva.cshtml" />
+    <Content Include="Views\ConsultarProvaPr\OpcoesCorrecao.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

@@ -100,7 +100,7 @@
                                 <option>Selecionar</option>
                             </select>
                         </div>
-                        <input id="btnConsultar" type="submit" value="Consultar" class="btn btn-default" />
+                        <input id="btnPesquisar" autofocus   type="submit" value="Consultar" class="btn btn-default" />
                     </div>
 
                 </div>
@@ -137,8 +137,8 @@
                                 <td>@item.TituloProva</td>
                                 <td>
                                     <div id="divGridConsultaPr1">
-                                        @Html.ActionLink("Visualizar", "Visualizar", new { id = item.ProvaId }) |
-                                        @Html.ActionLink("Corrigir", "Corrigir", new { id = item.ProvaId }) |
+                                        @Html.ActionLink("Visualizar", "Visualizar", "ConsultarProvaPr", new { idProva = item.ProvaId },null) |
+                                        @Html.ActionLink("Corrigir", "OpcoesCorrecao", "ConsultarProvaPr", new { idProva = item.ProvaId },null) |
                                     </div>
                                     <div id="divGridConsultaProvaPend1" style="display:none">
                                         @Html.ActionLink("Editar", "Editar", new { id = item.ProvaId }) |
@@ -292,7 +292,10 @@
 
     });
 
-
+    function CarregarPagina() {
+        btnPesquisar
+        location.reload();
+    }
 
 
 

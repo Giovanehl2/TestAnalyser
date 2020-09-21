@@ -1,5 +1,9 @@
-﻿@{
-    ViewBag.Title = "Corrigir Prova";
+﻿
+@using TestAnalyser.Model
+@{
+    ViewBag.Title = "Corrigir Prova Aluno";
+    Prova provas = ViewBag.Provas;
+    List<RespostasAluno> respostaAluno = ViewBag.RespostasAluno;
 }
 
 <h2>Corrigir Prova</h2>
@@ -8,95 +12,77 @@
     <div class="container">
         <br />
 
-        <form>
-            
+        <form name="form1" id="formCadSE" method="post" action="@Url.Action("SalvarCorrecaoProva", "ConsultarProvaPr")">
+
             <br />
             <br />
+            @{
+                int aux = 1;
+                string status = "";
+                foreach (var item in respostaAluno)
+                {
+                    if (item.Questao.TipoQuestao == 4)
+                    {
+                        if (item.SituacaoCorrecao == 1)
+                        {
+                            status = "correta";
+                        }
 
-            <div class="form-row">
-                <div class="form-group col-md-8 offset-md-1">
-                    <h5>Aluno: Jeferson da Cruz</h5>
-                </div>
-            </div>
-            <div class="form-row">
-                <div class="form-group col-md-8 offset-md-1">
-                    <h5>Questão 1</h5>
-                    <input class="form-control" id="questao1" type="text" value="Quanto é 1 + 1" disabled>
-                </div>
-                <div class="col-md-2">
-                    <h5>Status</h5>
-                    <select class="form-control" id="Prova" name="Prova">
-                        <option>Correto</option>
-                        <option>Parcial</option>
-                        <option>Incorreto</option>
-                    </select>
-                </div>
-            </div>
-            <div class="form-row">
-                <div class="form-group col-md-8 offset-md-1">
-                    <h5>Resposta 1</h5>
-                    <textarea class="form-control" id="resposta1" disabled>42</textarea>
-                </div>
-                <div class="col-md-2">
-                    <h5>Nota</h5>
-                    <input class="form-control" id="notaq1" type="text" value="1,0">
-                </div>
-            </div>
-            <div class="form-row">
-                <div class="form-group col-md-8 offset-md-1">
-                    <h5>Observações</h5>
-                    <textarea class="form-control" id="Observacoes">Acertou misseravi.</textarea>
-                </div>
-                <div class="col-md-2">
-                    <br /><br />
-                    <button witdh="50" title="Fechar" class="btn btn-primary" data-dismiss="modal">Salvar</button>
-                </div>
-            </div>
+                        else if (item.SituacaoCorrecao == 2)
+                        {
+                            status = "parcialmente correta";
+                        }
 
-            <br /><br />
-            <div class="form-row">
-            </div>
-            <div class="form-row">
-                <div class="form-group col-md-8 offset-md-1">
-                    <h5>Questão 2</h5>
-                    <input class="form-control" id="questao2" type="text" value="Quanto é 2 * 2" disabled>
-                </div>
-                <div class="col-md-2">
-                    <h5>Status</h5>
-                    <select class="form-control" id="Prova" name="Prova">
-                        <option>Correto</option>
-                        <option>Parcial</option>
-                        <option>Incorreto</option>
-                    </select>
-                </div>
-            </div>
-            <div class="form-row">
-                <div class="form-group col-md-8 offset-md-1">
-                    <h5>Resposta 1</h5>
-                    <textarea class="form-control" id="resposta1" disabled>4</textarea>
-                </div>
-                <div class="col-md-2">
-                    <h5>Nota</h5>
-                    <input class="form-control" id="notaq2" type="text" value="1,0">
-                </div>
-            </div>
-            <div class="form-row">
-                <div class="form-group col-md-8 offset-md-1">
-                    <h5>Observações</h5>
-                    <textarea class="form-control" id="Observacoes"></textarea>
-                </div>
-                <div class="col-md-2">
-                    <br /><br />
-                    <button witdh="50" title="Fechar" class="btn btn-primary" data-dismiss="modal">Salvar</button>
-                </div>
-            </div>
-            <div class="form-row">
-                <div class="col-md-10 offset-md-1">
-                    <button witdh="50" title="Fechar" class="btn btn-primary" data-dismiss="modal">Finalizar</button>
+                        else if (item.SituacaoCorrecao == 3)
+                        {
+                            status = "incorreta";
+                        }
 
-                </div>
-            </div>
-            <br />
+                        else if (item.SituacaoCorrecao == 0)
+                        {
+                            status = "não processada";
+                        }
+                        <div class="form-row">
+                            <div class="form-group col-md-8 offset-md-1">
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group col-md-8 offset-md-1">
+                                <h5>Questão @aux</h5>
+                                <br />
+                                <br />
+                                <input class="form-control" type="hidden" id="idquestao" name="idquestao" value="@item.Questao.QuestaoId" />
+                                @Html.Raw(item.Questao.Enunciado)
+                            </div>
+                            <div class="col-md-2">
+                                <h5>Status</h5>
+                                <h7 style="color:red;"> @status </h7>
+                                <select class="form-control" id="idSituacao" name="idSituacao">
+                                    <option value="1">Correta</option>
+                                    <option value="2">Parcial</option>
+                                    <option value="3">Incorreta</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-8 offset-md-1">
+                                <h5>Resposta </h5>
+                                <textarea class="form-control" id="resposta1" disabled>@item.RespostaDiscursiva</textarea>
+                            </div>
+                            <div class="col-md-2">
+                                <h5>Nota</h5>
+                                <input class="form-control" id="notas" type="text" name="notas" value="@item.NotaAluno">
+                            </div>
+                        </div>
+                        <br />
+                        <br />
+                    }
+
+                aux++;
+                }
+            }
+            <button witdh="50" title="Salvar" type="submit" class="btn btn-primary">Salvar</button>
         </form>
     </div>
 </div>

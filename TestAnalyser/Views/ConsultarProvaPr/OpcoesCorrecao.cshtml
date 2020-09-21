@@ -1,0 +1,122 @@
+﻿
+@model TestAnalyser.Model.Prova
+
+@using TestAnalyser.Model
+@{
+    ViewBag.Title = "Corrigir Prova Aluno";
+    List<RespostasAluno> respostaAluno = ViewBag.RespostasAluno;
+}
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.2/css/bootstrap-select.min.css">
+
+</head>
+<h2>Consultar Provas</h2>
+<br />
+
+<div class="container">
+    <form name="formConsultarProva" id="formConsultaProva" method="post" action="@Url.Action("FiltrarConsulta", "ConsultarProvaPr")">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form-row">
+
+                    <div class="col-md-2">
+                        <div class="row">
+                            <div class="col">
+                                <label for="situacao">Status </label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <select class="form-control" id="Prova" name="Situacao">
+                                <option value="">Todos</option>
+                                <option value="0">não corrigidas</option>
+                                <option value="1">Corretas</option>
+                                <option value="2">Parciais</option>
+                                <option value="3">Incorretas</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="col-md-2">
+                        <div class="row">
+                            <div class="col">
+                                <label for="matricula">Matricula aluno</label>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col">
+                                <input class="form-control" type="text" name="matriculaAluno" id="AlunoProva" />
+                            </div>
+                            <input id="btnPesquisar" autofocus type="submit" value="Filtrar" class="btn btn-default" />
+                        </div>
+
+
+                    </div>
+
+            </div>
+
+        </div>
+    </form>
+    <br />
+    <br />
+    <div class="row">
+        <h3>Provas</h3>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">Nome</th>
+                    <th scope="col">Matrícula</th>
+                    <th>Ações</th>
+
+                </tr>
+            </thead>
+            <tbody>
+                @{
+                    if (respostaAluno != null)
+                    {
+                        foreach (var item in respostaAluno)
+                        {
+
+                            <tr>
+                                <td>@item.Aluno.Nome</td>
+                                <td>@item.Aluno.Matricula</td>
+                                <td>
+                                    <div id="divGridConsultaPr1">
+                                        @Html.ActionLink("Corrigir", "CorrigirProvaAlunoEspecifico", "ConsultarProvaPr", new { id = item.Aluno.AlunoId, idProva = Model.ProvaId },null) |
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+                    }
+
+                }
+
+            </tbody>
+
+        </table>
+
+
+    </div>
+</div>
+
+<br />
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.2/js/bootstrap-select.min.js"></script>
+
+
+<script>
+    $('.selectpicker').selectpicker();
+
+
+
+    function CarregarPagina() {
+        btnPesquisar
+        location.reload();
+    }
+
+
+
+</script>
