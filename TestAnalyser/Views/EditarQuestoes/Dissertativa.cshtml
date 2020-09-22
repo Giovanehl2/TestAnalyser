@@ -27,7 +27,7 @@
                 @Scripts.Render("~/bundles/jquery")
                 <script type="text/javascript" src="//tinymce.cachefly.net/4.0/tinymce.min.js"></script>
                 <script type="text/javascript">
-                    tinymce.init({ selector: 'textarea', width: 500 });
+                    tinymce.init({ selector: 'textarea#Enunciado', width: 500 });
                 </script>
 
             </div>
@@ -46,7 +46,7 @@
         <div class="form-row">
             <div class="col-md-8">
                 <label for="RespostaDT">Resposta correta</label>
-                @Html.TextAreaFor(model => model.RespostaDiscursiva, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.TextAreaFor(model => model.RespostaDiscursiva, new { @class = "form-control" })
             </div>
         </div>
         <br />

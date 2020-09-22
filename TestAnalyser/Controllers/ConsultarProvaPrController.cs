@@ -17,8 +17,6 @@ namespace TestAnalyser.Controllers
         private static Prova prova = new Prova();
 
         // GET: ConsultarProvaPr
-
-        // tela para consulta de provas 
         public ActionResult ConsultarProvaPr()
         {
         
@@ -36,7 +34,7 @@ namespace TestAnalyser.Controllers
         public string ConsultarDisciplina(int id)
         {
             cursoId = id;
-            var dict = new Dictionary<int, string>();
+            var dict = new List<string>(); //Dictionary<int, string>();
 
             foreach (var item in DisciplinaDAO.BuscarPorProfessor(Convert.ToInt32(Session["IdUsr"])))
             {
@@ -44,7 +42,7 @@ namespace TestAnalyser.Controllers
                 {
                     if (curso.CursoId == id)
                     {
-                        dict.Add(item.DisciplinaId, item.Nome);
+                        dict.Add(item.Nome);
                     }
                 }
             }
@@ -53,26 +51,20 @@ namespace TestAnalyser.Controllers
 
             return output;
         }
-        public string BuscarTurmas(int id)
+        public string BuscarTurmas(string nome)
         {
-            disciplinaId = id;
             var dict = new Dictionary<int, string>();
-            Curso curso = CursoDAO.BuscarCursoId(id);
-            if(curso != null)
+            List<Turma> turmas = TurmaDAO.BuscarTurmaDisciplinaNome(nome);
+            foreach (var item in turmas)
             {
-                foreach (var turma in curso.Turmas)
-                {
-                    dict.Add(turma.TurmaId, turma.NomeTurma);
-                }
-
-                var output = Newtonsoft.Json.JsonConvert.SerializeObject(dict);
-                return output;
+                dict.Add(item.TurmaId, item.NomeTurma);
             }
 
-            return null;
+            var output = Newtonsoft.Json.JsonConvert.SerializeObject(dict);
+            return output;
         }
 
-        public ActionResult ConsultarProva( int? Pendentes,  DateTime DataProva, int Curso, int Disciplina, int Turma)
+        public ActionResult ConsultarProva( int? Pendentes,  DateTime DataProva, int Curso, string Disciplina, int Turma)
         {
             int Pendente = 0;
             if (Pendentes == null)
@@ -81,8 +73,8 @@ namespace TestAnalyser.Controllers
             } else {
                 Pendente = 1;
             }
-            
-            List<Prova> provas = ProvaDAO.BuscarProvasPesquisa(Convert.ToInt32(Session["IdUsr"]), Pendente, DataProva, Curso, Disciplina, Turma);
+            var disciplinaId = DisciplinaDAO.BuscarPorNome(Disciplina).DisciplinaId;
+            List<Prova> provas = ProvaDAO.BuscarProvasPesquisa(Convert.ToInt32(Session["IdUsr"]), Pendente, DataProva, Curso, disciplinaId, Turma);
             TempData["provas"] = provas;
             return RedirectToAction("ConsultarProvaPr", "ConsultarProvaPr");
         }

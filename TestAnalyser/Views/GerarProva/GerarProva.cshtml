@@ -176,11 +176,11 @@
 
                                 <div class="row">
                                     <div class="col-md-5">
-                                        <input class="form-control" id="Incorreto1" type="text" value="0">
+                                        <input class="form-control" id="IncorretoInicio" name="InIni" type="number" value="0">
                                     </div>
                                     à
                                     <div class="col-md-5">
-                                        <input class="form-control" id="Incorreto2" type="text" value="35">
+                                        <input class="form-control" id="IncorretoFim" name="InFim" type="number" value="35">
                                     </div>
                                 </div>
                             </div>
@@ -190,11 +190,11 @@
 
                                 <div class="row">
                                     <div class="col-md-5">
-                                        <input class="form-control" id="Revisar1" type="text" value="36">
+                                        <input class="form-control" id="RevisarInicio" name="ParIni" type="number" value="36">
                                     </div>
                                     à
                                     <div class="col-md-5">
-                                        <input class="form-control" id="Revisar2" type="text" value="70">
+                                        <input class="form-control" id="RevisarFim" name="ParFim" type="number" value="70">
                                     </div>
                                 </div>
                             </div>
@@ -204,11 +204,11 @@
 
                                 <div class="row">
                                     <div class="col-md-5">
-                                        <input class="form-control" id="Correto1" type="text" value="71">
+                                        <input class="form-control" id="CorretoInicio" name="CoIni" type="number" value="71">
                                     </div>
                                     à
                                     <div class="col-md-5">
-                                        <input class="form-control" id="Correto2" type="text" value="100">
+                                        <input class="form-control" id="CorretoFim" name="CoFim" type="number" value="100">
                                     </div>
                                 </div>
                             </div>
@@ -279,6 +279,16 @@
 
             });
 
+            
+        });
+
+    });
+
+        $("#idDisciplina").on("change", function () {
+
+            var val = $('#idDisciplina').val();
+            var Paramters = "{nome:'" + val + "'}";
+
             $.ajax({
 
                 type: "POST",
@@ -298,15 +308,6 @@
                 }
 
             });
-        });
-
-    });
-
-    $(document).ready(function () {
-        $("#idDisciplina").on("change", function () {
-
-            var val = $('#idDisciplina').val();
-            var Paramters = "{id:'" + val + "'}";
 
             $.ajax({
 
@@ -329,7 +330,6 @@
             });
         });
 
-    });
 
 
 

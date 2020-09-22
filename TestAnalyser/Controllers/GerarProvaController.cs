@@ -16,6 +16,7 @@ namespace TestAnalyser.Controllers
         public static Prova provaFixa = new Prova();
 
         public static List<Disciplina> disciplinas = new List<Disciplina>();
+        public static List<Turma> turmas = new List<Turma>();
         // GET: GerarProva
         public ActionResult GerarProva()
         {
@@ -29,6 +30,7 @@ namespace TestAnalyser.Controllers
         public JsonResult BuscarDisciplina(int id)
         {
             List<string> listagem = new List<string>();
+            disciplinas = DisciplinaDAO.ListarDisciplinas();
 
             foreach (var item in disciplinas)
             {
@@ -45,33 +47,20 @@ namespace TestAnalyser.Controllers
             return Json(listagem);
         }
 
-        public JsonResult BuscarTurma(int id)
+        public JsonResult BuscarTurma(string nome)
         {
             List<string> listagem = new List<string>();
-
-            foreach (var item in disciplinas)
+            turmas = TurmaDAO.BuscarTurmaDisciplinaNome(nome);
+            foreach (var item in turmas)
             {
-                foreach (var curso in item.Cursos)
-                {
-                    if (curso.CursoId == id)
-                    {
-                        foreach (Turma turma in curso.Turmas)
-                        {
-                            listagem.Add(turma.NomeTurma);
-                        }
-
-                    }
-
-                }
-
+                listagem.Add(item.NomeTurma);
             }
 
             return Json(listagem);
         }
-        public JsonResult BuscarAssunto(string id)
+        public JsonResult BuscarAssunto(string nome)
         {
-
-            var temp = QuestaoDAO.BuscarAssuntos(id);
+            var temp = QuestaoDAO.BuscarAssuntos(nome);
             return Json(temp.Distinct());
         }
 
@@ -134,6 +123,14 @@ namespace TestAnalyser.Controllers
                 List<RespostasAluno> respostaAluno = new List<RespostasAluno>();
                 prova.RespostasAlunos = respostaAluno;
                 prova.Disciplina = disc;
+
+                //Aplicando os valores da Faixa de correção (gambs)
+                prova.ConfigPln.IncorretoInicio = prova.InIni;
+                prova.ConfigPln.IncorretoFim = prova.InFim;
+                prova.ConfigPln.RevisarInicio = prova.ParIni;
+                prova.ConfigPln.RevisarFim = prova.ParFim;
+                prova.ConfigPln.CorretoInicio = prova.CoIni;
+                prova.ConfigPln.CorretoFim = prova.CoFim;
 
                 int id = Convert.ToInt32(Session["IdUsr"]);
                 prova.Professor = ProfessorDAO.BuscarProfessorPorId(id);

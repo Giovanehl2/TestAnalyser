@@ -16,7 +16,6 @@ namespace TestAnalyser.Controllers
             var QQ = TempData["objquestao"];
             return View(QQ);
         }
-
         public ActionResult SimplesEscolha()
         {
             var QQ = TempData["objquestao"];

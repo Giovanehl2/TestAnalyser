@@ -374,7 +374,10 @@
                     @Scripts.Render("~/bundles/jquery")
                     <script type="text/javascript" src="//tinymce.cachefly.net/4.0/tinymce.min.js"></script>
                     <script type="text/javascript">
-                        tinymce.init({ selector: 'textarea', width: 500 });
+                        tinymce.init({ selector: 'textarea#EnunciadoDT', width: 500 });
+                        tinymce.init({ selector: 'textarea#EnunciadoVF', width: 500 });
+                        tinymce.init({ selector: 'textarea#EnunciadoME', width: 500 });
+                        tinymce.init({ selector: 'textarea#Enunciado', width: 500 });
                     </script>
 
                 </div>

@@ -252,7 +252,7 @@
                 success: function (data) {
                     var obj = JSON.parse(data);
                     $.each(obj, function (key, value) {
-                        $('<option>').val(key).text(value).appendTo("#DisciplinaId");
+                        $('<option>').text(value).appendTo("#DisciplinaId");
                         $('.form - control').selectpicker('refresh');
                     })
                 }
@@ -267,7 +267,7 @@
         $("#DisciplinaId").on("change", function () {
 
             var val = $('#DisciplinaId').val();
-            var Paramters = "{id:'" + val + "'}";
+            var Paramters = "{nome:'" + val + "'}";
 
             $.ajax({
 

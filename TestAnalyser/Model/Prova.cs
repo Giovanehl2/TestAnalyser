@@ -63,6 +63,20 @@ namespace TestAnalyser.Model
         [Required(ErrorMessage = "Campo horario termino da prova é obrigatório!")]
         public DateTime HoraFim { get; set; }
 
+        //Para incluir corretamente os valores da faixa de correção, esses caras não saão mapeados...
+        [NotMapped]
+        public int InIni { get; set; }
+        [NotMapped]
+        public int InFim { get; set; }
+        [NotMapped]
+        public int ParIni { get; set; }
+        [NotMapped]
+        public int ParFim { get; set; }
+        [NotMapped]
+        public int CoIni { get; set; }
+        [NotMapped]
+        public int CoFim { get; set; }
+
         public ConfigPln ConfigPln { get; set; }
         public List<NotaQuestao> NotasQuestoes { get; set; }
         public Disciplina Disciplina { get; set; }

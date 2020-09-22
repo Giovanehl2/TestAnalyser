@@ -35,5 +35,9 @@ namespace TestAnalyser.DAL
         {
             return ctx.Turmas.Include("Disciplinas").Include("Alunos").Include("Curso").Where(p => p.NomeTurma.Equals(nome)).FirstOrDefault();
         }
+        public static List<Turma> BuscarTurmaDisciplinaNome(string nome)
+        {
+            return ctx.Turmas.Include("Disciplinas").Include("Alunos").Include("Curso").Where(p => p.Disciplinas.Any(q => q.Nome.Equals(nome))).ToList();
+        }
     }
 }
