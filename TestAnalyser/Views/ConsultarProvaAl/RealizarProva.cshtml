@@ -1,59 +1,62 @@
-﻿
+﻿@model TestAnalyser.Model.Prova
+@using TestAnalyser.Model;
+@using System.Web.Mvc;
 @{
-    ViewBag.Title = "RealizarProva";
+    ViewBag.Title = "Editar Simples Escolha";
+    var count = 1;
 }
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script> @*//remover*@
+<script src="ckeditor/ckeditor.js"></script>
+<div id="divSE" class="">
+    <h5>Tipo: Simples-Escolha</h5>
+    <br />
+    <form class="form-horizontal" name="form1" id="form" method="post" action="@Url.Action("SalvarProva", "ConsultarProvaAl")">
+        @foreach (var x in Model.NotasQuestoes.Where(y => y.Questao.TipoQuestao == 1).ToList())
+        {
+            <div class="form-row">
+                <div class="col-md-4">
+                    <h6>Questão @count</h6>
+                </div>
+                @*<div class="form-row">
+                    <button witdh="50" id="btnSalvar" type="submit" class="btn btn-primary btn-sm">Salvar</button>
+                </div>*@
+            </div>
+            <br />
+            <div class="form-row">
+                <div class="col-md-8">
+                    <label for="EnunciadoSE">Enunciado</label>
+                    @Html.TextArea("Enunciado", x.Questao.Enunciado, new { htmlAttributes = new { @class = "form-control" } })
+                </div>
+            </div>
+            <div class="col-md-2">
+                @Html.Hidden("QuestaoId", x.Questao.QuestaoId)
+                @Html.Hidden("TipoQuestao", x.Questao.TipoQuestao)
+            </div>
+            <br />
+            <br />
+            <div class="form-row">
+                <div class="col-md-3">
+                    <label for="">Alternativas:</label>
+                </div>
+            </div>
+            <br />
+            <div id="DivAlternativas">
+                @for (int i = 0; i < x.Questao.Alternativas.Count; i++)
+                {
+                    <div class="form-row">
+                        @Html.RadioButton("AlternativaId", x.Questao.Alternativas[i].AlternativaId)
+                        <label for="">@(i+1)) </label>
+                        @Html.EditorFor(model => x.Questao.Alternativas[i].DescAlternativa,null, "DescAlternativa", new { htmlAttributes = new { @class = "form-control col-md-6" } })
+                    </div>
+                }
+            </div>
+            <br />
+            <script>@count = @(count + 1) </script>
+        }
+    </form>
+</div>
 
-<h2>Realizar Prova</h2>
-
-<div class="col-md-12">
-    <div class="row">
-        <div class="col-md-8">
-            <h3>Questão 1</h3>
-            <textarea class="" style="min-width: 100%;" cols="30" rows="2" wrap="hard" name="DTquestao" id="DTquestao" placeholder="Pergunta numero 1 da prova" disabled></textarea>
-        </div>
-        <div class="col-md-4">
-            <br /><br />
-            <button witdh="50" title="Salvar" class="btn btn-default btn-sm btn-diss" onclick="SalvarQuestão()">Salvar</button>
-        </div>
-    </div>
-</div>
-<div class="col-md-12">
-    <div class="row">
-        <div class="col-md-8">
-            <h4>Resposta: </h4>
-            <textarea class="" style="min-width: 100%;" cols="30" rows="3" wrap="hard" name="DTreposta" id="DTreposta" placeholder="Reposta do aluno"></textarea>
-        </div>
-        <div class="col-md-4">
-        </div>
-    </div>
-</div>
-
-<br />
-<div class="col-md-12">
-    <div class="row">
-        <div class="col-md-8">
-            <h3>Questão 2</h3>
-            <textarea class="" style="min-width: 100%;" cols="30" rows="2" wrap="hard" name="DTquestao" id="DTquestao" placeholder="Qunato é 2 * 2?" disabled></textarea>
-        </div>
-        <div class="col-md-4">
-            <br /><br />
-            <button witdh="50" title="Salvar" class="btn btn-default btn-sm btn-diss" onclick="SalvarQuestão()">Salvar</button>
-        </div>
-    </div>
-</div>
-<div class="col-md-12">
-    <div class="row">
-        <div class="col-md-8">
-            <h4>Resposta: </h4>
-            <textarea class="" style="min-width: 100%;" cols="30" rows="3" wrap="hard" name="DTreposta" id="DTreposta" placeholder="4"></textarea>
-        </div>
-        <div class="col-md-4">
-        </div>
-    </div>
-</div>
-
-<br /><br />
-<div>
-    <button witdh="50" title="Enviar Prova" class="btn btn-default btn-sm btn-diss btn-orange" onclick="SalvarProva()">Enviar Prova</button>
-</div>
+@Scripts.Render("~/bundles/jquery")
+<script type="text/javascript" src="//tinymce.cachefly.net/4.0/tinymce.min.js"></script>
+<script type="text/javascript">
+    tinymce.init({ selector: 'textarea', width: 500 });
+</script>
