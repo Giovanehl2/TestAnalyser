@@ -12,7 +12,7 @@ namespace TestAnalyser.Model
     {
         public Disciplina()
         {
-             Turmas = new List<Turma>();
+              Turmas = new List<Turma>();
               Professores = new List<Professor>();
               Cursos = new List<Curso>();
               Provas = new List<Prova>();

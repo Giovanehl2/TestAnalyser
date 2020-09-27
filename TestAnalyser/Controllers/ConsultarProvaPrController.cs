@@ -131,11 +131,16 @@ namespace TestAnalyser.Controllers
 
         public ActionResult SalvarCorrecaoProva(List<int> idquestao, List<double> notas, List<int> idSituacao)
         {
-
+            Aluno aluno = new Aluno();
             foreach (RespostasAluno obj in prova.RespostasAlunos)
             {
+                if (aluno == null)
+                    aluno = obj.Aluno;
+     
+
                 for (int i = 0; i < idquestao.Count; i++)
                 {
+
                     if (obj.Questao.QuestaoId == idquestao[i])
                     {
                         obj.SituacaoCorrecao = idSituacao[i];
@@ -145,6 +150,20 @@ namespace TestAnalyser.Controllers
                     }
                     RespostasAlunoDAO.Editar(obj);
                 }
+            }
+            //verificar funcionalidade
+            if(AlunoNotaDAO.BuscarAlunoNota(aluno.AlunoId, ProvaId) == null)
+            {
+                AlunoNota alunoNota = new AlunoNota();
+                prova = ProvaDAO.BuscarRespostasPorAluno(aluno.AlunoId, ProvaId);
+                foreach (var item in prova.RespostasAlunos)
+                {
+                    alunoNota.NotaTotal += item.NotaAluno;
+
+                }
+                alunoNota.Prova = prova;
+                alunoNota.Aluno = aluno;
+                AlunoNotaDAO.CadastrarAlunoNota(alunoNota);
             }
 
 

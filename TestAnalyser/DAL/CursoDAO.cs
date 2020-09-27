@@ -37,9 +37,15 @@ namespace TestAnalyser.DAL
             return ctx.Cursos.Include("Disciplinas").Include("Turmas").ToList();
 
         }
+        public static List<Curso> listarCursosPorAluno(int idAluno)
+        {
+            //parece que ta errado esta trazendo todos precisa fazer ajustes
+            return ctx.Cursos.Include("Disciplinas").Include("Turmas").Where(x => x.Turmas.Any(y=> y.Alunos.Any(z=> z.AlunoId == idAluno))).ToList();
 
+        }
         public static List<Curso> listarCursosPorProfessor(int idProfessor)
         {
+            //parece que ta errado esta trazendo todos precisa fazer ajustes
             return ctx.Cursos.Include("Disciplinas").Include("Turmas").Where(x=> x.Disciplinas.Any(u => u.Professores.Any(p => p.ProfessorId == idProfessor))).ToList();
 
         }

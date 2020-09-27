@@ -74,6 +74,32 @@ namespace TestAnalyser.DAL
             return result;
 
         }
+
+        public static List<Prova> BuscarProvasAluno(int matricula, int Pendente, DateTime DataIni, DateTime DataFim, int Curso, int Disciplina, int Turma)
+        {
+            List<Prova> result = new List<Prova>();
+
+            var resultado = ctx.Provas.Where(x => x.DataProva >= DataIni  && x.DataProva <= DataFim && x.StatusProva == Pendente)
+                .Include(c => c.Disciplina)
+                .Where(c => c.Disciplina.DisciplinaId == Disciplina).Include(p => p.Professor).Where(p => p.Professor.Matricula == matricula).ToList();
+
+
+            List<Prova> provas = ctx.Provas.Include("Professor").Include("Disciplina").Where(x => x.DataProva >= DataIni && x.DataProva <= DataFim && x.StatusProva == Pendente).ToList();
+
+            foreach (var item in provas)
+            {
+                foreach (var item2 in item.Disciplina.Turmas)
+                {
+                    if (item2.TurmaId == Turma)
+                    {
+                        result.Add(item);
+                    }
+                }
+            }
+
+            return result;
+
+        }
         public static List<Prova> BuscarProvasPorProfessor(int matricula)
         {
             return ctx.Provas.Where(p => p.Professor.Matricula == matricula).ToList();

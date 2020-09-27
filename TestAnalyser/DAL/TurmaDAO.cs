@@ -26,7 +26,6 @@ namespace TestAnalyser.DAL
             ctx.SaveChanges();
             return true;
         }
-
         public static Turma BuscarTurmaId(int id)
         {
             return ctx.Turmas.Include("Disciplinas").Include("Alunos").Include("Curso").Where(t =>  t.TurmaId == id).FirstOrDefault();

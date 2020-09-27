@@ -24,6 +24,13 @@ namespace TestAnalyser.DAL
             return true;
         }
 
+        //public static List<RespostasAluno> ListarPorAlunoProva (int idProva, int idAluno)
+        //{
+
+        //    return ctx.RespostasAlunos.Include("Questao").Include("Alternativas").Include("Aluno").Where(x => x.RespostasAlunoId == idAluno && x.).ToList();
+
+
+        //}
         public static List<RespostasAluno> PerguntasParaCorrigir(int id, int situac)
         {
 

@@ -185,49 +185,6 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.2/js/bootstrap-select.min.js"></script>
 
-<script>
-    function ExcluirProvaModal() {
-        $('#ExcluirProva').modal('show');
-    }
-
-    function VisualisarTodasAsProvas() {
-        location.href = "https://localhost:44310/ConsultarProvaPr/VisualizarTodasAsProvas";
-    }
-
-    function ExcluirProva() {
-        console.log("Prova deletada...");
-        $('#ExcluirProva').modal('hide');
-    }
-
-    function EditarProva() {
-        location.href = "https://localhost:44310/GerarProva/GerarProva";
-    }
-
-    function CorrigirProvaAlunoEspecifico() {
-        location.href = "https://localhost:44310/ConsultarProvaPr/CorrigirProva";
-    }
-
-    var div1 = document.getElementById('divGridConsultaPr1'),
-        div2 = document.getElementById('divGridConsultaPr2');
-    div3 = document.getElementById('divGridConsultaProvaPend1');
-    div4 = document.getElementById('divGridConsultaProvaPend2');
-    function switchVisible() {
-        if (!div1) return;
-        if (getComputedStyle(div1).display == 'block') {
-            div1.style.display = 'none';
-            div2.style.display = 'none';
-            div3.style.display = 'block';
-            div4.style.display = 'block';
-        } else {
-            div1.style.display = 'block';
-            div2.style.display = 'block';
-            div3.style.display = 'none';
-            div4.style.display = 'none';
-        }
-    }
-    document.getElementById('btnConsult').addEventListener('click', switchVisible);
-
-</script>
 
 <script>
     $('.selectpicker').selectpicker();

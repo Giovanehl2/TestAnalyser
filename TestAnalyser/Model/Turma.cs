@@ -26,5 +26,6 @@ namespace TestAnalyser.Model
 
         public Curso Curso { get; set; }
 
+        /*caso precise colocar alunos grade irregular precisamos reformular o modelo*/
     }
 }

@@ -38,6 +38,15 @@ namespace TestAnalyser.DAL
             ctx.SaveChanges();
             return true;
         }
+        public static List<Disciplina> BuscarPorAluno(int idAluno, int idCurso)
+        {
+            //revisar pois esta query
+            var listaDisciplinas = ctx.Disciplinas.Include("Turmas").Include("Professores").Include("Cursos").Where(x => x.Cursos.Any(y => y.CursoId == idCurso ) && x.Turmas.Any(z=> z.Alunos.Any(a=> a.AlunoId == idAluno)) ).ToList();
+
+
+
+            return listaDisciplinas;
+        }
         public static List<Disciplina> BuscarPorProfessor(int id)
         {
 
