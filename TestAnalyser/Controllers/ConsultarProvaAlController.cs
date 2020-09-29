@@ -77,5 +77,12 @@ namespace TestAnalyser.Controllers
             var output = Newtonsoft.Json.JsonConvert.SerializeObject(dict);
             return output;
         }
+
+        //public ActionResult SalvarProva(List<Prova> prova)
+        public ActionResult SalvarProva(Prova prova)
+        {
+            var provafeita = prova;
+            return View();
+        }
     }
 }
