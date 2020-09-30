@@ -348,6 +348,7 @@
     <Content Include="Views\EditarQuestoes\Dissertativa.cshtml" />
     <Content Include="Views\ConsultarProvaPr\VisualizarProva.cshtml" />
     <Content Include="Views\ConsultarProvaPr\OpcoesCorrecao.cshtml" />
+    <Content Include="Views\ConsultarProvaAl\VisualizarProva.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

@@ -1,14 +1,21 @@
 ﻿@{
     ViewBag.Title = "ConsultarProvaAl";
+    var provas = ViewBag.Provas;
+    var curos = ViewBag.Cursos;
 }
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script> @*//remover*@
+@using TestAnalyser.Model
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.2/css/bootstrap-select.min.css">
+
+</head>
 
 <div class="container">
     <div class="row">
         <div class="col-md-12">
             <h2>Consultar Provas</h2>
             <br />
-            <form>
+            <form name="formConsultarProva" id="formConsultaProva" method="post" action="@Url.Action("ConsultarProva", "ConsultarProvaAl")">
                 <div class="form-row">
                     <div class="col-md-1">
                         <div class="row">
@@ -26,62 +33,98 @@
                     <div class="col-md-2">
                         <div class="row">
                             <div class="col">
-                                <label for="AssuntoSE">Data da prova</label>
+                                <label for="AssuntoSE">data inicio</label>
                             </div>
                         </div>
 
                         <div class="row">
                             <div class="col">
-                                <input class="form-control" type="date" name="DataProva" value="" id="DataProva" />
+                                <input class="form-control" type="date" name="DataIni" value="" id="DataProva" />
+                            </div>
+
+                        </div>
+
+                    </div>
+                    <div class="col-md-2">
+                        <div class="row">
+                            <div class="col">
+                                <label for="AssuntoSE">data fim</label>
                             </div>
                         </div>
+
+                        <div class="row">
+                            <div class="col">
+                                <input class="form-control" type="date" name="DataFim" value="" id="DataProva" />
+                            </div>
+
+                        </div>
+
+                    </div>
+                    <div class="col-md-2">
+                        <div class="row">
+                            <div class="col">
+                                <label for="AssuntoSE">Curso</label>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col">
+                                <select class="form-control" id="CursoId" name="Curso">
+                                    @{
+                                        <option value="0"> </option>
+                                        foreach (var item in curos)
+                                        {
+                                            <option value="@item.CursoId">@item.Descricao</option>
+                                        }
+                                    }
+                                </select>
+                            </div>
+                        </div>
+
                     </div>
 
                     <div class="col-md-2">
                         <div class="row">
                             <div class="col">
-                                <label for="AssuntoSE">Disciplinas</label>
+                                <label for="AssuntoSE">Disciplina</label>
                             </div>
                         </div>
 
                         <div class="row">
                             <div class="col">
-                                <select class="form-control" id="Disciplina" name="Disciplina">
+                                <select class="form-control" id="DisciplinaId" name="Disciplina">
                                     <option>Selecionar</option>
-                                    <option>Disciplina 1</option>
-                                    <option>Disciplina 2</option>
                                 </select>
                             </div>
+
                         </div>
                     </div>
 
-                    <div class="col-md-4">
+                    <div class="col-md-3">
                         <div class="row">
                             <div class="col">
-                                <label for="AssuntoSE">Turmas</label>
+                                <label for="AssuntoSE">Turma</label>
                             </div>
                         </div>
 
                         <div class="row">
                             <div class="col">
-                                <select class="form-control" id="Turma" name="Turma">
+                                <select class="form-control" id="TurmaId" name="Turma">
                                     <option>Selecionar</option>
-                                    <option>Turma1</option>
-                                    <option>Turma2</option>
                                 </select>
                             </div>
-                            <div class="col">
-                                <button witdh="50" title="Consultar" class="btn btn-default btn-sm btn-toggle" data-element="#divGridConsultaAl" onclick="ConsultarProvas()">Consultar</button>
-                            </div>
+                            <input id="btnPesquisar" autofocus type="submit" value="Consultar" class="btn btn-default" />
                         </div>
+
                     </div>
+
                 </div>
             </form>
         </div>
     </div>
     <br />
     <br />
-    <div class="row " id="divGridConsultaAl" style="display:none">
+    <div class="row " id="divGridConsultaAl">
         <div class="col-md-12">
             <h3>Provas</h3>
             <table class="table">
@@ -89,303 +132,122 @@
                     <tr>
                         <th scope="col">Data</th>
                         <th scope="col">Disciplina</th>
-                        <th scope="col">Turma</th>
                         <th scope="col">Assunto</th>
                         <th>Ações</th>
 
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>21/02/2020</td>
-                        <td>Gestão de T.I</td>
-                        <td>3° A</td>
-                        <td>Gerenciamento de riscos</td>
-                        <td>
-                            <button witdh="50" title="Realizar" class="btn btn-primary btn-sm" onclick="RealizarProva()">Realizar</button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>04/03/2020</td>
-                        <td>Sistemas operacionais</td>
-                        <td>2° C</td>
-                        <td>Segurança</td>
-                        <td>
-                            <button witdh="50" title="Visualizar" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#VisualizarProva">Visualizar</button>
-                            <button witdh="50" title="Solcitar Revisão" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#ConfirmaRevisao">Revisar</button>
-                        </td>
+                    @{
+                        if (provas != null)
+                        {
+                            foreach (var item in provas)
+                            {
+                                <tr>
+                                    <td>@Convert.ToDateTime(@item.DataProva).ToString("dd/MM/yyyy")</td>
+                                    <td>@item.Disciplina.Nome</td>
+                                    <td>@item.TituloProva</td>
+                                    <td>
+                                        @Html.ActionLink("Visualizar", "VisualizarProva", "ConsultarProvaAl", new { idProva = item.ProvaId }, null) 
+                                        @if(@item.HoraInicio >= DateTime.Now && @item.HoraFim <= DateTime.Now){
+                                        @Html.ActionLink(" | Realizar", "Realizar", "ConsultarProvaAl", new { idProva = item.ProvaId }, null)
+                                        }
 
 
-                    </tr>
-                    <tr>
-                        <td>04/03/2020</td>
-                        <td>Sistemas operacionais</td>
-                        <td>2° C</td>
-                        <td>Segurança</td>
-                        <td>
-                            <button witdh="50" title="Visualizar" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#VisualizarProva">Visualizar</button>
-                        </td>
+                                    </td>
+                                </tr>
+
+                            }
+
+                        }
+                    }
 
 
-                    </tr>
                 </tbody>
 
             </table>
-
-
-            <!--
-
-    <div id="divGridConsultaAl" style="display:none">
-        @*Só visualização, deverá ser feito por um grid de grid que carrega depois da consulta...*@
-        <div class="col-lg-12">
-            <div class="row">
-                <div class="col-lg-9">
-                    <input class="" style="min-width: 100%;" type="text" name="Detahes" value="" id="Detahes" placeholder="Data - Disciplina - Turma - Assunto" />
-                </div>
-                <div class="col-lg-3">
-                    <button witdh="50" title="Realizar" class="btn btn-default btn-sm" onclick="RealizarProva()">Realizar</button>
-                    @*<a class="btn btn-default btn-sm" href="@Url.Action("RealizarProva", "ConsultarProvaAl")">Realizar</a>*@
-                    @* <button witdh="50" title="Visualizar" class="btn btn-default btn-sm" data-toggle="modal" data-target="#VisualizarProva"">Visualizar</button>
-                <button witdh="50" title="Solcitar Revisão" class="btn btn-default btn-sm" data-toggle="modal" data-target="#ConfirmaRevisao">Solicitar</button>*@
-                </div>
-            </div>
-        </div>
-        <div class="col-lg-12">
-            <div class="row">
-                <div class="col-lg-9">
-                    <input class="" style="min-width: 100%;" type="text" name="Detahes" value="" id="Detahes" placeholder="Data - Disciplina - Turma - Assunto" />
-                </div>
-                <div class="col-lg-3">
-                    @*<button witdh="50" title="Realizar" class="btn btn-default btn-sm" onclick="RealizarProva()">Realizar</button>*@
-                    <button witdh="50" title="Visualizar" class="btn btn-default btn-sm" data-toggle="modal" data-target="#VisualizarProva" ">Visualizar</button>
-                    <button witdh="50" title="Solcitar Revisão" class="btn btn-default btn-sm" data-toggle="modal" data-target="#ConfirmaRevisao">Revisar</button>
-                </div>
-            </div>
-        </div>
-        <div class="col-lg-12">
-            <div class="row">
-                <div class="col-lg-9">
-                    <input class="" style="min-width: 100%;" type="text" name="Detahes" value="" id="Detahes" placeholder="Data - Disciplina - Turma - Assunto" />
-                </div>
-                <div class="col-lg-3">
-                    @*<button witdh="50" title="Realizar" class="btn btn-default btn-sm" onclick="RealizarProva()">Realizar</button>*@
-                    <button witdh="50" title="Visualizar" class="btn btn-default btn-sm" data-toggle="modal" data-target="#VisualizarProva">Visualizar</button>
-                    @*<button witdh="50" title="Solcitar Revisão" class="btn btn-default btn-sm" data-toggle="modal" data-target="#ConfirmaRevisao">Solicitar</button>*@
-                </div>
-            </div>
-        </div>
-    </div>
-
-        -->
-
-
-        </div>
-    </div>
-</div>
-    
-        
-
-
-
-
-
-
-<div class="modal fade" id="ConfirmaRevisao">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h4 class="modal-title">Solicitar Revisão</h4>
-            </div>
-            <div class="modal-body">    
-                <p>Você deseja solicitar uma revisão dessa prova? (nomeDaProva)</p>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-primary" onclick="SolicitarRevisao()">Sim</button>
-                <button type="button" class="btn btn-default" data-dismiss="modal">Voltar</button>
-            </div>
-        </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
-
-
-
-<div class="modal fade" id="RealizarProva">
-    <div class="modal-dialog novep">
-        <div class="modal-content">
-            <div>
-                <h2>Questão 1</h2>
-                <form method="post">
-                    <fieldset>
-                        <div style="margin-left: 100px;">
-                            <br />
-                            <div class="col-lg-9">
-                                <h3>Questão: </h3>
-                                <textarea class="oitop" cols="30" rows="5" wrap="hard" name="DTquestao" id="DTquestao" placeholder="Pergunta numero 1 da prova"></textarea>
-                            </div>
-                        </div>
-
-                        <br />
-                        <div>
-                            <div style="margin-left: 100px;" class="col-lg-9">
-                                <br />
-                                <h4>Resposta: </h4>
-                                <textarea class="oitop" cols="30" rows="5" wrap="hard" name="DTreposta" id="DTreposta" placeholder="Reposta do aluno"></textarea>
-                            </div>
-                            <div style="margin-left: 100px;" class="col-lg-3">
-
-                            </div>
-                        </div>
-
-                        <br />
-                        <div>
-                            <br />
-                            <label>&nbsp;</label>
-                            <button witdh="50" title="Salvar" class="btn btn-default btn-sm btn-diss" onclick="SalvarQuestão()">Salvar</button>
-                        </div>
-                    </fieldset>
-                </form>
-            </div>
-            <div>
-                <h2>Questão 2</h2>
-                <form method="post">
-                    <fieldset>
-                        <div style="margin-left: 100px;">
-                            <br />
-                            <div class="col-lg-9">
-                                <h3>Questão: </h3>
-                                <textarea class="oitop" cols="30" rows="5" wrap="hard" name="DTquestao" id="DTquestao"></textarea>
-                            </div>
-                        </div>
-
-                        <br />
-                        <div>
-                            <div style="margin-left: 100px;" class="col-lg-9">
-                                <br />
-                                <h4>Resposta: </h4>
-                                <textarea class="oitop" cols="30" rows="5" wrap="hard" name="DTreposta" id="DTreposta"></textarea>
-                            </div>
-                            <div style="margin-left: 100px;" class="col-lg-3">
-
-                            </div>
-                        </div>
-
-                        <br />
-                        <div>
-                            <br />
-                            <label>&nbsp;</label>
-                            <button witdh="50" title="Salvar" class="btn btn-default btn-sm btn-diss" onclick="SalvarQuestão()">Salvar</button>
-                        </div>
-                    </fieldset>
-                </form>
-            </div>
-            <div>
-                <label>&nbsp;</label>
-                <button witdh="50" title="Salvar" class="btn btn-default btn-sm btn-diss btn-orange" onclick="SalvarProva()">Enviar Prova</button>
-            </div>
         </div>
     </div>
 </div>
 
-@* modal de visualização de Prova (sem corrigir) *@
-<div class="modal fade novep" id="VisualizarProva">
-    <div class="modal-dialog" style="min-width: 50%;">
-        <div class="modal-content">
-            <div>
 
-                <div class="container">
-                    <br />
-
-                    <div class="row">
-                        <div class="col-md-10 offset-md-1">
-                            <h5>Questão 1</h5>
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="col-md-10 offset-md-1">
-                            <input class="form-control" id="questao1" type="text" value="Quanto é 1 + 1" disabled>
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="col-md-10 offset-md-1">
-                            <h5>Resposta 1</h5>
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="col-md-10 offset-md-1">
-                            <input class="form-control" id="resposta1" type="text" value="42" disabled>
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="col-md-10 offset-md-1">
-                            <h5>Observações</h5>
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="col-md-10 offset-md-1">
-                            <input class="form-control" id="obsevações" type="text" value="Vejá bem, aqui parece que está algo errado." disabled>
-                        </div>
-                    </div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.2/js/bootstrap-select.min.js"></script>
 
 
-                    <br />
-                    <br />
-                    <div class="row">
-                        <div class="col-md-10 offset-md-1">
-                            <h5>Questão 2</h5>
-                        </div>
-                    </div>
+<script>
+    $('.selectpicker').selectpicker();
 
-                    <div class="row">
-                        <div class="col-md-10 offset-md-1">
-                            <input class="form-control" id="questao2" type="text" value="Quanto é 2 * 2" disabled>
-                        </div>
-                    </div>
 
-                    <div class="row">
-                        <div class="col-md-10 offset-md-1">
-                            <h5>Resposta 2</h5>
-                        </div>
-                    </div>
+    $(document).ready(function () {
+        $("#CursoId").on("change", function () {
 
-                    <div class="row">
-                        <div class="col-md-10 offset-md-1">
-                            <input class="form-control" id="resposta2" type="text" value="4" disabled>
-                        </div>
-                    </div>
+            var val = $('#CursoId').val();
+            var Paramters = "{id:'" + val + "'}";
 
-                    <div class="row">
-                        <div class="col-md-10 offset-md-1">
-                            <h5>Observações</h5>
-                        </div>
-                    </div>
+            $.ajax({
 
-                    <div class="row">
-                        <div class="col-md-10 offset-md-1">
-                            <input class="form-control" id="obsevações" type="text" value="" disabled>
-                        </div>
-                    </div>
+                type: "POST",
 
-                    <br />
-                    <div class="row">
-                        <div class="col-md-5 offset-md-1">
-                            <h5>Nota</h5>
-                            <input class="form-control" id="nota" type="text" value="5,0" disabled>
-                        </div>
-                        <div class="col-md-5 offset-md-1">
-                            <button witdh="50" title="Fechar" class="btn btn-danger" data-dismiss="modal">Fechar</button>
-                        </div>
-                    </div>
-                    <br />
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+                url: "/ConsultarProvaAl/ConsultarDisciplina",
+
+                contentType: "application/json",
+
+                data: Paramters,
+
+                success: function (data) {
+                    var obj = JSON.parse(data);
+                    $.each(obj, function (key, value) {
+                        $('<option>').text(value).appendTo("#DisciplinaId");
+                        $('.form - control').selectpicker('refresh');
+                    })
+                }
+
+            });
+
+        });
+
+    });
+
+    $(document).ready(function () {
+        $("#DisciplinaId").on("change", function () {
+
+            var val = $('#DisciplinaId').val();
+            var Paramters = "{nome:'" + val + "'}";
+
+            $.ajax({
+
+                type: "POST",
+
+                url: "/ConsultarProvaAl/BuscarTurmas",
+
+                contentType: "application/json",
+
+                data: Paramters,
+
+                success: function (data) {
+                    var obj = JSON.parse(data);
+                    $.each(obj, function (key, value) {
+                        $('<option>').val(key).text(value).appendTo("#TurmaId");
+                        $('.selectpicker').selectpicker('refresh');
+                    })
+                }
+
+            });
+        });
+
+    });
+
+    function CarregarPagina() {
+        btnPesquisar
+        location.reload();
+    }
+
+
+
+</script>
+
 
 <script>
 

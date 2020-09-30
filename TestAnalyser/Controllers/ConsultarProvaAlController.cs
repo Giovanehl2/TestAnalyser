@@ -78,6 +78,15 @@ namespace TestAnalyser.Controllers
             return output;
         }
 
+        public ActionResult VisualizarProva(int idProva)
+        {
+            Prova prova  = ProvaDAO.BuscarRespostasPorAluno(Convert.ToInt32(Session["IdUsr"]), idProva);
+
+            ViewBag.RespostasAluno = prova.RespostasAlunos;
+
+            return View(prova);
+        }
+
         //public ActionResult SalvarProva(List<Prova> prova)
         public ActionResult SalvarProva(Prova prova)
         {
