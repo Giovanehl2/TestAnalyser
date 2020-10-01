@@ -23,8 +23,8 @@
             <br />
             <div class="form-row">
                 <div class="col-md-8">
-                    <label for="EnunciadoSE">Enunciado</label>
-                    @Html.TextArea("Enunciado", x.Questao.Enunciado, new { @class = "form-control", @id = "EnunciadoSE", @readonly = "True" })
+                    
+                    @Html.Raw(x.Questao.Enunciado)
                 </div>
             </div>
             <div class="col-md-2">
@@ -43,7 +43,7 @@
                 @for (int i = 0; i < x.Questao.Alternativas.Count; i++)
                 {
                     <div class="form-row">
-                        @Html.RadioButton("AlternativaId" + "SE" + count, x.Questao.Alternativas[i].AlternativaId)
+                        @Html.RadioButton("AlternativaId" + "SE" + count, x.Questao.Alternativas[i].AlternativaId, new { disabled = "disabled" })
                         <label for="">@(i+1)) </label>
                         @Html.EditorFor(model => x.Questao.Alternativas[i].DescAlternativa, null, "DescAlternativa", new { htmlAttributes = new { @class = "form-control col-md-6", @readonly = "True" } })
                     </div>
@@ -66,8 +66,9 @@
             <br />
             <div class="form-row">
                 <div class="col-md-8">
-                    <label for="EnunciadoME">Enunciado</label>
-                    @Html.TextArea("Enunciado", x.Questao.Enunciado, new { @class = "form-control", @id = "EnunciadoME", @readonly = "True" })
+
+                    @Html.Raw(x.Questao.Enunciado)
+                   
                 </div>
             </div>
             <div class="col-md-2">
@@ -98,7 +99,7 @@
                 @for (int i = 0; i < x.Questao.Alternativas.Count; i++)
                 {
                     <div class="form-row">
-                        @Html.CheckBox("AlternativaId" + "ME" + count, x.Questao.Alternativas[i].AlternativaId)
+                        @Html.CheckBox("AlternativaId" + "ME" + count, new { disabled = "disabled" })
                         <label for="">@(i+1)) </label>
                         @Html.EditorFor(model => x.Questao.Alternativas[i].DescAlternativa, null, "DescAlternativa", new { htmlAttributes = new { @class = "form-control col-md-6", @readonly = "True" } })
                     </div>
@@ -121,8 +122,9 @@
             <br />
             <div class="form-row">
                 <div class="col-md-8">
-                    <label for="EnunciadoSE">Enunciado</label>
-                    @Html.TextArea("Enunciado", x.Questao.Enunciado, new { @class = "form-control", @id = "EnunciadoVF", @readonly = "True" })
+                    
+                    @Html.Raw(x.Questao.Enunciado)
+                   
                 </div>
             </div>
             <div class="col-md-2">
@@ -153,7 +155,7 @@
                 @for (int i = 0; i < x.Questao.Alternativas.Count; i++)
                 {
                     <div class="form-row">
-                        @Html.RadioButton("AlternativaId" + "VF" + count, x.Questao.Alternativas[i].AlternativaId)
+                        @Html.RadioButton("AlternativaId" + "VF" + count, x.Questao.Alternativas[i].AlternativaId, new { disabled = "disabled" })
                         <label for="">@(i+1)) </label>
                         @Html.EditorFor(model => x.Questao.Alternativas[i].DescAlternativa, null, "DescAlternativa", new { htmlAttributes = new { @class = "form-control col-md-6", @readonly = "True" } })
                     </div>
@@ -172,8 +174,8 @@
             <br />
             <div class="form-row">
                 <div class="col-md-8">
-                    <label for="EnunciadoSE">Enunciado</label>
-                    @Html.TextArea("Enunciado", x.Questao.Enunciado, new { @class = "form-control", @id = "EnunciadoDT", @readonly = "True" })
+                    
+                    @Html.Raw(x.Questao.Enunciado)
                 </div>
             </div>
             <div class="col-md-2">
@@ -189,7 +191,8 @@
             </div>
             <br />
             <div id="DivRespostaDT">
-                @Html.TextArea("Enunciado", null, new { @class = "form-control", @id = "RespostaDiscursiva" })
+
+                @Html.TextArea("Enunciado", new { @class = "form-control", @id = "RespostaDiscursiva", @readonly = true })
             </div>
             <br />
             <script>@(count = count + 1) </script>
