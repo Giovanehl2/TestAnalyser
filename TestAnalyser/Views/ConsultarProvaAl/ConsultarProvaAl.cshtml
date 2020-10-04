@@ -149,8 +149,8 @@
                                     <td>@item.TituloProva</td>
                                     <td>
                                         @Html.ActionLink("Visualizar", "VisualizarProva", "ConsultarProvaAl", new { idProva = item.ProvaId }, null) 
-                                        @if(@item.HoraInicio >= DateTime.Now && @item.HoraFim <= DateTime.Now){
-                                        @Html.ActionLink(" | Realizar", "Realizar", "ConsultarProvaAl", new { idProva = item.ProvaId }, null)
+                                        @if(@item.HoraInicio <= DateTime.Now && @item.HoraFim >= DateTime.Now){
+                                        @Html.ActionLink(" | Realizar", "RealizarProva", "ConsultarProvaAl", new { ProvaID = item.ProvaId }, null)
                                         }
 
 

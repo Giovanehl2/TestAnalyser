@@ -42,11 +42,12 @@
             <div id="DivAlternativas">
                 @for (int i = 0; i < x.Questao.Alternativas.Count; i++)
                 {
-                    <div class="form-row">
-                        @Html.RadioButton("AlternativaId" + "SE" + count, x.Questao.Alternativas[i].AlternativaId, new { disabled = "disabled" })
-                        <label for="">@(i+1)) </label>
-                        @Html.EditorFor(model => x.Questao.Alternativas[i].DescAlternativa, null, "DescAlternativa", new { htmlAttributes = new { @class = "form-control col-md-6", @readonly = "True" } })
-                    </div>
+                <div class="form-row">
+                    @Html.Hidden("AlternativaCorreta", x.Questao.Alternativas[i].correto)
+                    @Html.RadioButton("AlternativaId" + "SE" + count, x.Questao.Alternativas[i].AlternativaId, new { disabled = "disabled" })
+                    <label for="">@(i+1)) </label>
+                    @Html.EditorFor(model => x.Questao.Alternativas[i].DescAlternativa, null, "DescAlternativa", new { htmlAttributes = new { @class = "form-control col-md-6", @readonly = "True" } })
+                </div>
                 }
             </div>
             <br />
