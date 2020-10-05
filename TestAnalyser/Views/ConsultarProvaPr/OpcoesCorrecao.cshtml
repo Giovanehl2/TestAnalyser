@@ -14,6 +14,12 @@
 <h2>Consultar Provas</h2>
 <br />
 
+<style>
+    .col-md-2 {
+        margin: 0 15px;
+    }
+</style>
+
 <div class="container">
     <form name="formConsultarProva" id="formConsultaProva" method="post" action="@Url.Action("FiltrarConsulta", "ConsultarProvaPr")">
         <div class="row">
@@ -37,7 +43,7 @@
                         </div>
                     </div>
 
-                    <div class="col-md-2">
+                    <div class="col-md-3">
                         <div class="row">
                             <div class="col">
                                 <label for="matricula">Matricula aluno</label>
@@ -48,15 +54,16 @@
                             <div class="col">
                                 <input class="form-control" type="text" name="matriculaAluno" id="AlunoProva" />
                             </div>
+
                             <input id="btnPesquisar" autofocus type="submit" value="Filtrar" class="btn btn-default" />
                         </div>
 
 
                     </div>
 
-            </div>
+                </div>
 
-        </div>
+            </div>
     </form>
     <br />
     <br />
@@ -83,7 +90,7 @@
                                 <td>@item.Aluno.Matricula</td>
                                 <td>
                                     <div id="divGridConsultaPr1">
-                                        @Html.ActionLink("Corrigir", "CorrigirProvaAlunoEspecifico", "ConsultarProvaPr", new { id = item.Aluno.AlunoId, idProva = Model.ProvaId },null) |
+                                        @Html.ActionLink("Corrigir", "CorrigirProvaAlunoEspecifico", "ConsultarProvaPr", new { id = item.Aluno.AlunoId, idProva = Model.ProvaId }, null) |
                                     </div>
                                 </td>
                             </tr>
