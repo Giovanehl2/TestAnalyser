@@ -41,15 +41,28 @@ namespace TestAnalyser.Controllers
 
             TempData["$AlertMessage$"] = "Questão Alterada com Sucesso";
             TempData["objquestao"] = questao;
-            
+
             return RedirectToAction("Dissertativa", "EditarQuestoes");
         }
 
-        public ActionResult SalvarQuestaoEdit(Questao questao)
+        public ActionResult SalvarQuestaoEdit(Questao questao/*, List<int?> AltCorreto*/)
         {
             questao.situacao = 1;
             questao.RespostaDiscursiva = "";
             questao.Disciplina = DisciplinaDAO.BuscarPorNome(questao.Disciplina.Nome);
+            //int count = 1;
+            //foreach (var item in questao.Alternativas)
+            //{
+            //    if (AltCorreto.Contains(count))
+            //    {
+            //        item.correto = 1;
+            //    }
+            //    else
+            //    {
+            //        item.correto = 0;
+            //    }
+            //    count++;
+            //}
             QuestaoDAO.SalvarQuestao(questao);
 
             TempData["$AlertMessage$"] = "Questão Editada com Sucesso";
@@ -70,3 +83,5 @@ namespace TestAnalyser.Controllers
         }
     }
 }
+
+//Projetos Futuros -> Aplicar a função de alterar as alternativas corretas pelo editar...

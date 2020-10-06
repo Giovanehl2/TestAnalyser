@@ -34,7 +34,7 @@
             @Html.HiddenFor(model => model.QuestaoId)
             @Html.HiddenFor(model => model.TipoQuestao)
         </div>
-        <br />
+        @*<br />
         <br />
         <div id="DivAlternativas">
             @for (int i = 0; i < Model.Opcoes.Count; i++)
@@ -42,7 +42,7 @@
                 @Html.HiddenFor(model => model.Opcoes[i].OpcaoId)
                 @Html.EditorFor(model => model.Opcoes[i].descricao, new { htmlAttributes = new { @class = "form-control col-md-6" } })
             }
-        </div>
+        </div>*@
         <br />
         <br />
         <div class="form-row">
@@ -56,10 +56,11 @@
             {
                 @Html.HiddenFor(model => model.Alternativas[i].AlternativaId)
                 @Html.HiddenFor(model => model.Alternativas[i].correto)
-                <div class="form-row">
-                    <label for="">@(i+1)) </label>
-                    @Html.EditorFor(model => model.Alternativas[i].DescAlternativa, new { htmlAttributes = new { @class = "form-control col-md-6" } })
-                </div>
+            <div class="form-row">
+                @Html.CheckBox("AltCorreto", (Model.Alternativas[i].correto == 1) ? true : false, new { @value = i+1, @disabled = true } )
+                <label for="">@(i+1)) </label>
+                @Html.EditorFor(model => model.Alternativas[i].DescAlternativa, new { htmlAttributes = new { @class = "form-control col-md-6" } })
+            </div>
             }
         </div>
         <br />
@@ -72,7 +73,7 @@
 @Scripts.Render("~/bundles/jquery")
 <script type="text/javascript" src="//tinymce.cachefly.net/4.0/tinymce.min.js"></script>
 <script type="text/javascript">
-    tinymce.init({ selector: 'textarea', width: 500 });
+    tinymce.init({ selector: 'textarea', width: 700 });
 </script>
 
 <script type="text/javascript">

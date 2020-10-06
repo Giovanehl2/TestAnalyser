@@ -99,6 +99,10 @@
 </head>
 
 <h2>Cadastrar Questoes</h2>
+@if (TempData["$AlertMessage$"] != null)
+{
+    <div id="alerta" style="color: red; text-align: center;">@TempData["$AlertMessage$"]</div>
+}
 <div class="col-lg-12 tab-content">
     @*Abas para cada tipo de questão ...*@
     <br />
@@ -185,51 +189,51 @@
                     <textarea class="form-control" id="EnunciadoME" name="Enunciado"></textarea>
                 </div>
             </div>
-            <br />
-            <div class="form-row">
-                <div class="col-md-8">
-                    <div class="row">
-                        <div class="col-md-1">
-                            <label for="1">I)</label>
+            @*<br />
+                <div class="form-row">
+                    <div class="col-md-8">
+                        <div class="row">
+                            <div class="col-md-1">
+                                <label for="1">I)</label>
+                            </div>
+                            <div class="col-md-10">
+                                <input class="form-control" type="text" id="Opcoes" name="Opcoes">
+                            </div>
                         </div>
-                        <div class="col-md-10">
-                            <input class="form-control" type="text" id="Opcoes" name="Opcoes">
+                        <div class="row">
+                            <div class="col-md-1">
+                                <label for="2">II)</label>
+                            </div>
+                            <div class="col-md-10">
+                                <input class="form-control" type="text" id="Opcoes" name="Opcoes">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-1">
+                                <label for="3">III)</label>
+                            </div>
+                            <div class="col-md-10">
+                                <input class="form-control" type="text" id="Opcoes" name="Opcoes">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-1">
+                                <label for="4">IV)</label>
+                            </div>
+                            <div class="col-md-10">
+                                <input class="form-control" type="text" id="Opcoes" name="Opcoes">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-1">
+                                <label for="5">V)</label>
+                            </div>
+                            <div class="col-md-10">
+                                <input class="form-control" type="text" id="Opcoes" name="Opcoes">
+                            </div>
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="col-md-1">
-                            <label for="2">II)</label>
-                        </div>
-                        <div class="col-md-10">
-                            <input class="form-control" type="text" id="Opcoes" name="Opcoes">
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-1">
-                            <label for="3">III)</label>
-                        </div>
-                        <div class="col-md-10">
-                            <input class="form-control" type="text" id="Opcoes" name="Opcoes">
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-1">
-                            <label for="4">IV)</label>
-                        </div>
-                        <div class="col-md-10">
-                            <input class="form-control" type="text" id="Opcoes" name="Opcoes">
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-1">
-                            <label for="5">V)</label>
-                        </div>
-                        <div class="col-md-10">
-                            <input class="form-control" type="text" id="Opcoes" name="Opcoes">
-                        </div>
-                    </div>
-                </div>
-            </div>
+                </div>*@
             <br />
             <br />
             <div class="form-row">
@@ -281,53 +285,53 @@
                     <textarea class="form-control" id="EnunciadoVF" name="Enunciado"></textarea>
                 </div>
             </div>
-            <br />
-            <div class="form-row">
-                <div class="col-md-8">
-                    <div class="row">
-                        <div class="col-md-1">
-                            <label for="I">I)</label>
+            @*<br />
+                <div class="form-row">
+                    <div class="col-md-8">
+                        <div class="row">
+                            <div class="col-md-1">
+                                <label for="I">I)</label>
+                            </div>
+                            <div class="col-md-10">
+                                <input class="form-control" type="text" id="Opcoes" name="Opcoes">
+                            </div>
                         </div>
-                        <div class="col-md-10">
-                            <input class="form-control" type="text" id="Opcoes" name="Opcoes">
+                        <div class="row">
+                            <div class="col-md-1">
+                                <label for="II">II)</label>
+                            </div>
+                            <div class="col-md-10">
+                                <input class="form-control" type="text" id="Opcoes" name="Opcoes">
+                            </div>
                         </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-1">
-                            <label for="II">II)</label>
+                        <div class="row">
+                            <div class="col-md-1">
+                                <label for="III">III)</label>
+                            </div>
+                            <div class="col-md-10">
+                                <input class="form-control" type="text" id="Opcoes" name="Opcoes">
+                            </div>
                         </div>
-                        <div class="col-md-10">
-                            <input class="form-control" type="text" id="Opcoes" name="Opcoes">
+                        <div class="row">
+                            <div class="col-md-1">
+                                <label for="IV">IV)</label>
+                            </div>
+                            <div class="col-md-10">
+                                <input class="form-control" type="text" id="Opcoes" name="Opcoes">
+                            </div>
                         </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-1">
-                            <label for="III">III)</label>
+                        <div class="row">
+                            <div class="col-md-1">
+                                <label for="V">V)</label>
+                            </div>
+                            <div class="col-md-10">
+                                <input class="form-control" type="text" id="Opcoes" name="Opcoes">
+                            </div>
                         </div>
-                        <div class="col-md-10">
-                            <input class="form-control" type="text" id="Opcoes" name="Opcoes">
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-1">
-                            <label for="IV">IV)</label>
-                        </div>
-                        <div class="col-md-10">
-                            <input class="form-control" type="text" id="Opcoes" name="Opcoes">
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-1">
-                            <label for="V">V)</label>
-                        </div>
-                        <div class="col-md-10">
-                            <input class="form-control" type="text" id="Opcoes" name="Opcoes">
-                        </div>
-                    </div>
 
+                    </div>
                 </div>
-            </div>
-            <br />
+                <br />*@
             <br />
             <div class="form-row">
                 <div class="col-md-3">
@@ -339,8 +343,8 @@
                 <script type="text/javascript">
                     //Escrevendo o código-fonte HTML e ocultando os campos criados:
                     for (iLoop = 1; iLoop <= totalCampos; iLoop++) {
-                        document.write("<div class='' id='VFAlternativas" + iLoop + "' style='display:none'><input type='radio' id='VFradio" +
-                            "' name='VFradio' value='" + iLoop + "' /> <span id='Alternativas' > " + iLoop + ") <input class='col-md-6' type='text' id='Alternativas' name='Alternativas" +
+                        document.write("<div class='' id='VFAlternativas" + iLoop + "' style='display:none'><input type='checkbox' id='VFchbx" +
+                            "' name='VFchbx' value='" + iLoop + "' /> <span id='Alternativas' > " + iLoop + ") <input class='col-md-6' type='text' id='Alternativas' name='Alternativas" +
                             "'> <input type='button' value='Remover' onclick='RemoverCampos(\"" + iLoop + "\",\"VF\")'></span></div>");
                     }
                 </script>
@@ -374,10 +378,10 @@
                     @Scripts.Render("~/bundles/jquery")
                     <script type="text/javascript" src="//tinymce.cachefly.net/4.0/tinymce.min.js"></script>
                     <script type="text/javascript">
-                        tinymce.init({ selector: 'textarea#EnunciadoDT', width: 500 });
-                        tinymce.init({ selector: 'textarea#EnunciadoVF', width: 500 });
-                        tinymce.init({ selector: 'textarea#EnunciadoME', width: 500 });
-                        tinymce.init({ selector: 'textarea#Enunciado', width: 500 });
+                        tinymce.init({ selector: 'textarea#EnunciadoDT', width: 700 });
+                        tinymce.init({ selector: 'textarea#EnunciadoVF', width: 700 });
+                        tinymce.init({ selector: 'textarea#EnunciadoME', width: 700 });
+                        tinymce.init({ selector: 'textarea#Enunciado', width: 700 });
                     </script>
 
                 </div>
@@ -405,6 +409,13 @@
         </form>
     </div>
 </div>
-
+@Scripts.Render("~/bundles/jquery")
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 
+<script type="text/javascript">
+    $(document).ready(function () {
+        setTimeout(function () {
+            $('#alerta').fadeOut(1000);
+        }, 2500);
+    });
+</script>

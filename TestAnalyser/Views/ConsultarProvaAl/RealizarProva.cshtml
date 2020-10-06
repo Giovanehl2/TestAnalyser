@@ -4,10 +4,9 @@
 @{
     ViewBag.Title = "Editar Simples Escolha";
     var count = 1;
-    var cq = 1;
+    var provaID = Model.ProvaId;
 }
 
-<script src="ckeditor/ckeditor.js"></script>
 <div id="divSE" class="">
     <h5>Tipo: Simples-Escolha</h5>
     <br />
@@ -16,15 +15,14 @@
         {
             <div class="form-row">
                 <div class="col-md-4">
-                    <h6>Questão @count</h6>
+                    <h6><b>Questão @count</b></h6>
                 </div>
 
             </div>
             <br />
             <div class="form-row">
                 <div class="col-md-8">
-                    <label for="EnunciadoSE">Enunciado</label>
-                    @Html.TextArea("Enunciado", x.Questao.Enunciado, new { @class = "form-control", @id = "EnunciadoSE", @readonly = "True" })
+                    @Html.Raw(x.Questao.Enunciado)
                 </div>
             </div>
             <div class="col-md-2">
@@ -32,20 +30,19 @@
                 @Html.Hidden("TipoQuestao", x.Questao.TipoQuestao)
             </div>
             <br />
-            <br />
             <div class="form-row">
                 <div class="col-md-3">
-                    <label for="">Alternativas:</label>
+                    <label for=""><b>Alternativas:</b></label>
                 </div>
             </div>
-            <br />
             <div id="DivAlternativas">
                 @for (int i = 0; i < x.Questao.Alternativas.Count; i++)
                 {
-                    <div class="form-row">
+                    <div class="form-row" id="AlternativaId">
                         @Html.RadioButton("AlternativaId" + "SE" + count, x.Questao.Alternativas[i].AlternativaId)
                         <label for="">@(i+1)) </label>
-                        @Html.EditorFor(model => x.Questao.Alternativas[i].DescAlternativa, null, "DescAlternativa", new { htmlAttributes = new { @class = "form-control col-md-6", @readonly = "True" } })
+                        @Html.Raw(x.Questao.Alternativas[i].DescAlternativa)
+                        @Html.Hidden("QuestaoIdSE", x.Questao.QuestaoId, new { @class = "QuestaoIdSE", @id = "QuestaoIdSE" })
                     </div>
                 }
             </div>
@@ -57,26 +54,21 @@
         {
             <div class="form-row">
                 <div class="col-md-4">
-                    <h6>Questão @count</h6>
+                    <h6><b>Questão @count</b></h6>
                 </div>
-                @*<div class="form-row">
-                      <button witdh="50" id="btnSalvar" type="submit" class="btn btn-primary btn-sm">Salvar</button>
-                </div>*@
             </div>
             <br />
             <div class="form-row">
                 <div class="col-md-8">
-                    <label for="EnunciadoME">Enunciado</label>
-                    @Html.TextArea("Enunciado", x.Questao.Enunciado, new { @class = "form-control", @id = "EnunciadoME", @readonly = "True" })
+                    @Html.Raw(x.Questao.Enunciado)
                 </div>
             </div>
+            <br />
             <div class="col-md-2">
                 @Html.Hidden("QuestaoId", x.Questao.QuestaoId)
                 @Html.Hidden("TipoQuestao", x.Questao.TipoQuestao)
             </div>
-            <br />
-            <br />
-            <div id="Divopcoes">
+            @*<div id="Divopcoes">
                 @for (int i = 0; i < x.Questao.Opcoes.Count; i++)
                 {
                     <div class="form-row">
@@ -87,20 +79,19 @@
                 }
             </div>
             <br />
-            <br />
+            <br />*@
             <div class="form-row">
                 <div class="col-md-3">
-                    <label for="">Alternativas:</label>
+                    <label for=""><b>Alternativas:</b></label>
                 </div>
             </div>
-            <br />
             <div id="DivAlternativas">
                 @for (int i = 0; i < x.Questao.Alternativas.Count; i++)
                 {
                     <div class="form-row">
                         @Html.CheckBox("AlternativaId" + "ME" + count, x.Questao.Alternativas[i].AlternativaId)
                         <label for="">@(i+1)) </label>
-                        @Html.EditorFor(model => x.Questao.Alternativas[i].DescAlternativa, null, "DescAlternativa", new { htmlAttributes = new { @class = "form-control col-md-6", @readonly = "True" } })
+                        @Html.Raw(x.Questao.Alternativas[i].DescAlternativa)
                     </div>
                 }
             </div>
@@ -112,17 +103,13 @@
         {
             <div class="form-row">
                 <div class="col-md-4">
-                    <h6>Questão @count</h6>
+                    <h6><b>Questão @count</b></h6>
                 </div>
-                @*<div class="form-row">
-                      <button witdh="50" id="btnSalvar" type="submit" class="btn btn-primary btn-sm">Salvar</button>
-                </div>*@
             </div>
             <br />
             <div class="form-row">
                 <div class="col-md-8">
-                    <label for="EnunciadoSE">Enunciado</label>
-                    @Html.TextArea("Enunciado", x.Questao.Enunciado, new { @class = "form-control", @id = "EnunciadoVF", @readonly = "True" })
+                    @Html.Raw(x.Questao.Enunciado)
                 </div>
             </div>
             <div class="col-md-2">
@@ -131,7 +118,7 @@
             </div>
             <br />
             <br />
-            <div id="Divopcoes">
+            @*<div id="Divopcoes">
                 @for (int i = 0; i < x.Questao.Opcoes.Count; i++)
                 {
                     <div class="form-row">
@@ -142,20 +129,19 @@
                 }
             </div>
             <br />
-            <br />
+            <br />*@
             <div class="form-row">
                 <div class="col-md-3">
-                    <label for="">Alternativas:</label>
+                    <label for=""><b>Alternativas:</b></label>
                 </div>
             </div>
-            <br />
             <div id="DivAlternativas">
                 @for (int i = 0; i < x.Questao.Alternativas.Count; i++)
                 {
                     <div class="form-row">
-                        @Html.RadioButton("AlternativaId" + "VF" + count, x.Questao.Alternativas[i].AlternativaId)
-                        <label for="">@(i+1)) </label>
-                        @Html.EditorFor(model => x.Questao.Alternativas[i].DescAlternativa, null, "DescAlternativa", new { htmlAttributes = new { @class = "form-control col-md-6", @readonly = "True" } })
+                        @Html.CheckBox("AlternativaId" + "VF" + count, x.Questao.Alternativas[i].AlternativaId)
+                        <label for="">@(i+1))</label>
+                        @Html.Raw(x.Questao.Alternativas[i].DescAlternativa)
                     </div>
                 }
             </div>
@@ -166,14 +152,13 @@
         {
             <div class="form-row">
                 <div class="col-md-4">
-                    <h6>Questão @count</h6>
+                    <h6><b>Questão @count</b></h6>
                 </div>
             </div>
             <br />
             <div class="form-row">
                 <div class="col-md-8">
-                    <label for="EnunciadoSE">Enunciado</label>
-                    @Html.TextArea("Enunciado", x.Questao.Enunciado, new { @class = "form-control", @id = "EnunciadoDT", @readonly = "True" })
+                    @Html.Raw(x.Questao.Enunciado)
                 </div>
             </div>
             <div class="col-md-2">
@@ -184,12 +169,11 @@
             <br />
             <div class="form-row">
                 <div class="col-md-3">
-                    <label for="">Resposta:</label>
+                    <label for=""><b>Resposta:</b></label>
                 </div>
             </div>
-            <br />
             <div id="DivRespostaDT">
-                @Html.TextArea("Enunciado", null, new { @class = "form-control", @id = "RespostaDiscursiva" })
+                @Html.TextArea("Resposta", null, new { @class = "form-control", @id = "RespostaDiscursiva", style = "max-width: 50%" })
             </div>
             <br />
             <script>@(count = count + 1) </script>
@@ -200,11 +184,37 @@
     </form>
 </div>
 
-@Scripts.Render("~/bundles/jquery")
-<script type="text/javascript" src="//tinymce.cachefly.net/4.0/tinymce.min.js"></script>
-<script type="text/javascript">
-    tinymce.init({ selector: 'textarea#EnunciadoDT', width: 500 });
-    tinymce.init({ selector: 'textarea#EnunciadoVF', width: 500 });
-    tinymce.init({ selector: 'textarea#EnunciadoME', width: 500 });
-    tinymce.init({ selector: 'textarea#EnunciadoSE', width: 500 });
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+
+<script>
+    window.load = AutoSaveQuestao();
+    function AutoSaveQuestao() {
+        jQuery("#AlternativaId input[name^='AlternativaIdSE']").focusout(function () {
+            //$(this).css("background-color", "#00a000");
+            var AltID = this.value;
+            var QustID = ("#AlternativaId .QuestaoIdSE").value;
+            //var QustID = jQuery("this #QuestaoIdSE").value;
+            //var QustID = $("input[name^='AlternativaIdSE'] #QuestaoIdSE").value();
+
+            //jQuery("input[name^='AlternativaIdSE']
+
+            console.log(AltID + " " + QustID);
+        });
+        
+
+        //$.ajax({
+        //    type: "POST",
+        //    url: "/ConsultarProvaAl/SalvarProva",
+        //    contentType: "application/json",
+        //    data: QuestaoID, ProvaID: ProvaID, AlternativaID,
+        //    success: function (data) {
+        //        $.each(data, function (index, value) {
+        //            $('<option>').text(value).appendTo("#idAssuntoProva");
+        //            $('.selectpicker').selectpicker('refresh');
+        //        })
+        //    }
+        //});
+    }
+    
+
 </script>

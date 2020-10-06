@@ -59,7 +59,7 @@ namespace TestAnalyser.Controllers
                 }
                 count++;
             }
-
+            TempData["$AlertMessage$"] = "Questão Criada com Sucesso";
             //Podemos dar uma mensagem antes de retornar a view.
             return RedirectToAction("CadastrarQuestoes", "CadastrarQuestoes");
         }
@@ -76,16 +76,16 @@ namespace TestAnalyser.Controllers
 
             var QuestaoID = QuestaoDAO.CadastrarQuestao(questao);
 
-            foreach (var item in Opcoes)
-            {
-                if (item != "")
-                {
-                    Opcao opt = new Opcao();
-                    opt.descricao = item;
-                    opt.Questao = QuestaoID;
-                    OpcaoDAO.CadastrarOpcao(opt);
-                }
-            }
+            //foreach (var item in Opcoes)
+            //{
+            //    if (item != "")
+            //    {
+            //        Opcao opt = new Opcao();
+            //        opt.descricao = item;
+            //        opt.Questao = QuestaoID;
+            //        OpcaoDAO.CadastrarOpcao(opt);
+            //    }
+            //}
 
             int count = 1;
             foreach (var item in Alternativas)
@@ -104,12 +104,13 @@ namespace TestAnalyser.Controllers
                 }
                 count++;
             }
-
+            TempData["$AlertMessage$"] = "Questão Criada com Sucesso";
             return RedirectToAction("CadastrarQuestoes", "CadastrarQuestoes");
         }
 
         [HttpPost]
-        public ActionResult CadastrarVF(Questao questao, string DisciplinaId, List<string> Alternativas, List<string> Opcoes, int? VFradio)
+        public ActionResult CadastrarVF(Questao questao, string DisciplinaId, List<string> Alternativas, List<string> Opcoes, List<int?>VFchbx)
+        
         {
             questao.TipoQuestao = 3;
             questao.situacao = 1;
@@ -120,16 +121,16 @@ namespace TestAnalyser.Controllers
 
             var QuestaoID = QuestaoDAO.CadastrarQuestao(questao);
 
-            foreach (var item in Opcoes)
-            {
-                if (item != "")
-                {
-                    Opcao opt = new Opcao();
-                    opt.descricao = item;
-                    opt.Questao = QuestaoID;
-                    OpcaoDAO.CadastrarOpcao(opt);
-                }
-            }
+            //foreach (var item in Opcoes)
+            //{
+            //    if (item != "")
+            //    {
+            //        Opcao opt = new Opcao();
+            //        opt.descricao = item;
+            //        opt.Questao = QuestaoID;
+            //        OpcaoDAO.CadastrarOpcao(opt);
+            //    }
+            //}
 
             int count = 1;
             foreach (var item in Alternativas)
@@ -138,9 +139,12 @@ namespace TestAnalyser.Controllers
                 {
                     Alternativa alt = new Alternativa();
                     alt.DescAlternativa = item;
-                    if (count == VFradio) {
+                    if (VFchbx.Contains(count))
+                    {
                         alt.correto = 1;
-                    } else {
+                    }
+                    else
+                    {
                         alt.correto = 0;
                     }
                     alt.Questao = QuestaoID;
@@ -148,7 +152,7 @@ namespace TestAnalyser.Controllers
                 }
                 count++;
             }
-
+            TempData["$AlertMessage$"] = "Questão Criada com Sucesso";
             return RedirectToAction("CadastrarQuestoes", "CadastrarQuestoes");
         }
 
@@ -162,7 +166,7 @@ namespace TestAnalyser.Controllers
             questao.Disciplina = x;
 
             QuestaoDAO.CadastrarQuestao(questao);
-
+            TempData["$AlertMessage$"] = "Questão Criada com Sucesso";
             return RedirectToAction("CadastrarQuestoes", "CadastrarQuestoes");
         }
     }
