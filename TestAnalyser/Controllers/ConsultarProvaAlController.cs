@@ -88,10 +88,17 @@ namespace TestAnalyser.Controllers
         }
 
         //public ActionResult SalvarProva(List<Prova> prova)
-        public ActionResult SalvarProva(string QuestaoID, string ProvaID, List<string> AlternativaID)
+        public void SalvarQuestaoSE(int QuestaoID, int ProvaID, int AlternativaID)
         {
             //var provafeita = prova;
-            return RedirectToAction("ConsultarProvaAl", "ConsultarProvaAl");
+        }
+        public void SalvarQuestaoMEVF(int QuestaoID, int ProvaID, List<int> AlternativaID)
+        {
+            //var provafeita = prova;
+        }
+        public void SalvarQuestaoDS(int QuestaoID, int ProvaID, string Resposta)
+        {
+            //var provafeita = prova;
         }
     }
 }
