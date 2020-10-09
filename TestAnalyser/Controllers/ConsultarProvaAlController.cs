@@ -22,13 +22,11 @@ namespace TestAnalyser.Controllers
         }
         public ActionResult ConsultarProva(int? Pendentes, DateTime DataIni, DateTime DataFim, int Curso, string Disciplina, int Turma)
         {
-            int Pendente = 0;
+            int Pendente;
             if (Pendentes == null)
             {
                 Pendente = 0;
-            }
-            else
-            {
+            } else {
                 Pendente = 1;
             }
             var disciplinaId = DisciplinaDAO.BuscarPorNome(Disciplina).DisciplinaId;
@@ -39,6 +37,8 @@ namespace TestAnalyser.Controllers
 
         public ActionResult RealizarProva(int provaID)
         {
+            //VERIFICAR SE O ALUNO JA FEZ ESSA PROVA... FAZER BUSCA NA TABELA E VER SE JA TEM DATA DE RESPOSTA...
+
             Prova prova = ProvaDAO.BuscarProvaId(provaID);
             return View(prova);
         }
@@ -87,18 +87,25 @@ namespace TestAnalyser.Controllers
             return View(prova);
         }
 
-        //public ActionResult SalvarProva(List<Prova> prova)
+        public ActionResult FinalizarProva() {
+
+            //TempData["provas"] = provas;   //VERIFICAR COM O SAULO, COMO ZERAR O TEMPDATA...
+            return RedirectToAction("ConsultarProvaAl", "ConsultarProvaAl");
+        }
         public void SalvarQuestaoSE(int QuestaoID, int ProvaID, int AlternativaID)
         {
-            //var provafeita = prova;
+            //Verificar a Prova e Questão, e validar a alternativa marcada com a correta no DB.
+
+            //Salvar nota e data de resposta da questão na tabela de respostaAlunos.
+
         }
         public void SalvarQuestaoMEVF(int QuestaoID, int ProvaID, List<int> AlternativaID)
         {
-            //var provafeita = prova;
+            
         }
         public void SalvarQuestaoDS(int QuestaoID, int ProvaID, string Resposta)
         {
-            //var provafeita = prova;
+            
         }
     }
 }

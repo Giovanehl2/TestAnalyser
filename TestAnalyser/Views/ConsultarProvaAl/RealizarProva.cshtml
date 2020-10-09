@@ -7,66 +7,66 @@
     var provaID = Model.ProvaId;
 }
 
-<div id="divSE" class="">
-    <form class="form-horizontal" name="form1" id="form" method="post" action="@Url.Action("SalvarProva", "ConsultarProvaAl")">
-        @foreach (var x in Model.NotasQuestoes.Where(y => y.Questao.TipoQuestao == 1).ToList())
-        {
-            <div id="qust" class="form-row">
+    <div id="divSE" class="">
+        <form class="form-horizontal" name="form1" id="form" @*method="post" action="@Url.Action("SalvarProva", "ConsultarProvaAl")"*@>
+            @foreach (var x in Model.NotasQuestoes.Where(y => y.Questao.TipoQuestao == 1).ToList())
+            {
+                <div id="qust" class="form-row">
+                    <div class="col-md-2">
+                        <h6><b>Questão @count</b></h6>
+                    </div>
+                    @*<div id="salvandoSE" style="display: none;">Salvando...</div>
+                    <div id="OKSE" style="display: none;"><b>Salvo</b></div>*@
+                </div>
+                <br />
+                <div class="form-row">
+                    <div class="col-md-8">
+                        @Html.Raw(x.Questao.Enunciado)
+                    </div>
+                </div>
                 <div class="col-md-2">
-                    <h6><b>Questão @count</b></h6>
+                    @Html.Hidden("TipoQuestao", x.Questao.TipoQuestao)
                 </div>
-                <div id="salvandoSE" style="display: none;">Salvando...</div>
-                <div id="OKSE" style="display: none;"><b>Salvo</b></div>
-            </div>
-            <br />
-            <div class="form-row">
-                <div class="col-md-8">
-                    @Html.Raw(x.Questao.Enunciado)
-                </div>
-            </div>
-            <div class="col-md-2">
-                @Html.Hidden("TipoQuestao", x.Questao.TipoQuestao)
-            </div>
-            <br />
-            <div class="form-row">
-                <div class="col-md-3">
-                    <label for=""><b>Alternativas:</b></label>
-                </div>
-            </div>
-            <div id="DivAlternativas">
-                @for (int i = 0; i < x.Questao.Alternativas.Count; i++)
-                {
-                    <div class="form-row" id="AlternativaId">
-                        @Html.RadioButton("AlternativaId" + "SE" + count, x.Questao.Alternativas[i].AlternativaId)
-                        <label for="">@(i+1)) </label>
-                        @Html.Raw(x.Questao.Alternativas[i].DescAlternativa)
-                        @Html.Hidden("QuestaoIdSE", x.Questao.QuestaoId, new { @class = "QuestaoIdSE", @id = "QuestaoIdSE" })
+                <br />
+                <div class="form-row">
+                    <div class="col-md-3">
+                        <label for=""><b>Alternativas:</b></label>
                     </div>
-                }
-            </div>
-            <br />
-            <script>@(count = count + 1) </script>
-        }
-        <br />
-        @foreach (var x in Model.NotasQuestoes.Where(y => y.Questao.TipoQuestao == 2).ToList())
-        {
-            <div class="form-row">
-                <div class="col-md-4">
-                    <h6><b>Questão @count</b></h6>
                 </div>
-            </div>
-            <br />
-            <div class="form-row">
-                <div class="col-md-8">
-                    @Html.Raw(x.Questao.Enunciado)
+                <div id="DivAlternativas">
+                    @for (int i = 0; i < x.Questao.Alternativas.Count; i++)
+                    {
+                        <div class="form-row" id="AlternativaId">
+                            @Html.RadioButton("AlternativaId" + "SE" + count, x.Questao.Alternativas[i].AlternativaId)
+                            <label for="">@(i+1)) </label>
+                            @Html.Raw(x.Questao.Alternativas[i].DescAlternativa)
+                            @Html.Hidden("QuestaoIdSE", x.Questao.QuestaoId, new { @class = "QuestaoIdSE", @id = "QuestaoIdSE" })
+                        </div>
+                    }
                 </div>
-            </div>
+                <br />
+                <script>@(count = count + 1) </script>
+            }
             <br />
-            <div class="col-md-2">
-                @Html.Hidden("QuestaoId", x.Questao.QuestaoId)
-                @Html.Hidden("TipoQuestao", x.Questao.TipoQuestao)
-            </div>
-            @*<div id="Divopcoes">
+            @foreach (var x in Model.NotasQuestoes.Where(y => y.Questao.TipoQuestao == 2).ToList())
+            {
+                <div class="form-row">
+                    <div class="col-md-4">
+                        <h6><b>Questão @count</b></h6>
+                    </div>
+                </div>
+                <br />
+                <div class="form-row">
+                    <div class="col-md-8">
+                        @Html.Raw(x.Questao.Enunciado)
+                    </div>
+                </div>
+                <br />
+                <div class="col-md-2">
+                    @Html.Hidden("QuestaoId", x.Questao.QuestaoId)
+                    @Html.Hidden("TipoQuestao", x.Questao.TipoQuestao)
+                </div>
+                @*<div id="Divopcoes">
                     @for (int i = 0; i < x.Questao.Opcoes.Count; i++)
                     {
                         <div class="form-row">
@@ -78,45 +78,46 @@
                 </div>
                 <br />
                 <br />*@
-            <div class="form-row">
-                <div class="col-md-3">
-                    <label for=""><b>Alternativas:</b></label>
-                </div>
-            </div>
-            <div id="DivAlternativas">
-                @for (int i = 0; i < x.Questao.Alternativas.Count; i++)
-                {
-                    <div class="form-row">
-                        @Html.CheckBox("AlternativaId" + "ME" + count, x.Questao.Alternativas[i].AlternativaId)
-                        <label for="">@(i+1)) </label>
-                        @Html.Raw(x.Questao.Alternativas[i].DescAlternativa)
+                <div class="form-row">
+                    <div class="col-md-3">
+                        <label for=""><b>Alternativas:</b></label>
                     </div>
-                }
-            </div>
-            <br />
-            <script>@(count = count + 1) </script>
-        }
-        <br />
-        @foreach (var x in Model.NotasQuestoes.Where(y => y.Questao.TipoQuestao == 3).ToList())
-        {
-            <div class="form-row">
-                <div class="col-md-4">
-                    <h6><b>Questão @count</b></h6>
                 </div>
-            </div>
-            <br />
-            <div class="form-row">
-                <div class="col-md-8">
-                    @Html.Raw(x.Questao.Enunciado)
+                <div id="DivAlternativas">
+                    @for (int i = 0; i < x.Questao.Alternativas.Count; i++)
+                    {
+                        <div class="form-row" id="AlternativaIdME">
+                            @Html.CheckBox("AlternativaId" + "ME" + count, new { @value = x.Questao.Alternativas[i].AlternativaId })
+                            <label for="">@(i+1)) </label>
+                            @Html.Raw(x.Questao.Alternativas[i].DescAlternativa)
+                            @Html.Hidden("QuestaoIdME", x.Questao.QuestaoId, new { @class = "QuestaoIdME", @id = "QuestaoIdME" })
+                        </div>
+                    }
                 </div>
-            </div>
-            <div class="col-md-2">
-                @Html.Hidden("QuestaoId", x.Questao.QuestaoId)
-                @Html.Hidden("TipoQuestao", x.Questao.TipoQuestao)
-            </div>
+                <br />
+                <script>@(count = count + 1) </script>
+            }
             <br />
-            <br />
-            @*<div id="Divopcoes">
+            @foreach (var x in Model.NotasQuestoes.Where(y => y.Questao.TipoQuestao == 3).ToList())
+            {
+                <div class="form-row">
+                    <div class="col-md-4">
+                        <h6><b>Questão @count</b></h6>
+                    </div>
+                </div>
+                <br />
+                <div class="form-row">
+                    <div class="col-md-8">
+                        @Html.Raw(x.Questao.Enunciado)
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    @Html.Hidden("QuestaoId", x.Questao.QuestaoId)
+                    @Html.Hidden("TipoQuestao", x.Questao.TipoQuestao)
+                </div>
+                <br />
+                <br />
+                @*<div id="Divopcoes">
                     @for (int i = 0; i < x.Questao.Opcoes.Count; i++)
                     {
                         <div class="form-row">
@@ -128,66 +129,67 @@
                 </div>
                 <br />
                 <br />*@
-            <div class="form-row">
-                <div class="col-md-3">
-                    <label for=""><b>Alternativas:</b></label>
-                </div>
-            </div>
-            <div id="DivAlternativas">
-                @for (int i = 0; i < x.Questao.Alternativas.Count; i++)
-                {
-                    <div class="form-row">
-                        @Html.CheckBox("AlternativaId" + "VF" + count, x.Questao.Alternativas[i].AlternativaId)
-                        <label for="">@(i+1))</label>
-                        @Html.Raw(x.Questao.Alternativas[i].DescAlternativa)
+                <div class="form-row">
+                    <div class="col-md-3">
+                        <label for=""><b>Alternativas:</b></label>
                     </div>
-                }
-            </div>
-            <br />
-            <script>@(count = count + 1) </script>
-        }
-        @foreach (var x in Model.NotasQuestoes.Where(y => y.Questao.TipoQuestao == 4).ToList())
-        {
-            <div class="form-row">
-                <div class="col-md-4">
-                    <h6><b>Questão @count</b></h6>
                 </div>
-            </div>
-            <br />
-            <div class="form-row">
-                <div class="col-md-8">
-                    @Html.Raw(x.Questao.Enunciado)
+                <div id="DivAlternativas">
+                    @for (int i = 0; i < x.Questao.Alternativas.Count; i++)
+                    {
+                        <div class="form-row" id="AlternativaIdVF">
+                            @Html.CheckBox("AlternativaId" + "VF" + count, new { @value = x.Questao.Alternativas[i].AlternativaId })
+                            <label for="">@(i+1))</label>
+                            @Html.Raw(x.Questao.Alternativas[i].DescAlternativa)
+                            @Html.Hidden("QuestaoIdVF", x.Questao.QuestaoId, new { @class = "QuestaoIdVF", @id = "QuestaoIdVF" })
+                        </div>
+                    }
                 </div>
-            </div>
-            <div class="col-md-2">
-                @Html.Hidden("TipoQuestao", x.Questao.TipoQuestao)
-            </div>
-            <br />
-            <br />
-            <div class="form-row">
-                <div class="col-md-3">
-                    <label for=""><b>Resposta:</b></label>
+                <br />
+                <script>@(count = count + 1) </script>
+            }
+            @foreach (var x in Model.NotasQuestoes.Where(y => y.Questao.TipoQuestao == 4).ToList())
+            {
+                <div class="form-row">
+                    <div class="col-md-4">
+                        <h6><b>Questão @count</b></h6>
+                    </div>
                 </div>
-            </div>
-            <div id="DivRespostaDT">
-                @Html.TextArea("Resposta", null, new { @class = "form-control", @id = "RespostaDiscursiva", style = "max-width: 50%" })
-                @Html.Hidden("QuestaoIdDS", x.Questao.QuestaoId, new { @class = "QuestaoIdDS", @id = "QuestaoIdDS" })
-            </div>
-            <div id="salvandoDS" hidden>Salvando...</div>
-            <br />
-            <script>@(count = count + 1) </script>
-        }
-        <div class="form-row">
-            <button witdh="50" id="btnSalvar" type="submit" class="btn btn-primary btn-sm">Salvar</button>
-        </div>
-    </form>
-</div>
+                <br />
+                <div class="form-row">
+                    <div class="col-md-8">
+                        @Html.Raw(x.Questao.Enunciado)
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    @Html.Hidden("TipoQuestao", x.Questao.TipoQuestao)
+                </div>
+                <br />
+                <br />
+                <div class="form-row">
+                    <div class="col-md-3">
+                        <label for=""><b>Resposta:</b></label>
+                    </div>
+                </div>
+                <div id="DivRespostaDT">
+                    @Html.TextArea("Resposta", null, new { @class = "form-control", @id = "RespostaDiscursiva", style = "max-width: 50%" })
+                    @Html.Hidden("QuestaoIdDS", x.Questao.QuestaoId, new { @class = "QuestaoIdDS", @id = "QuestaoIdDS" })
+                </div>
+                <div id="salvandoDS" hidden>Salvando...</div>
+                <br />
+                <script>@(count = count + 1) </script>
+            }
+        </form>
+        <button id="btnFinalizar" witdh="50" title="FinalizarProva" class="btn btn-primary btn-sm" onclick="FinalizarProva()">Finalizar</button>
+    </div>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 
 <script>
     window.load = AutoSaveQuestao();
     function AutoSaveQuestao() {
+        var arrME = new Array();
+        var arrVF = new Array();
         $("#AlternativaId input[name^='AlternativaIdSE']").focusout(function () {
 
             //$(this).css("background-color", "#00a000");
@@ -212,18 +214,28 @@
             });
         });
 
-        @*$("#AlternativaId input[name^='AlternativaIdMEVF']").focusout(function () {
+        $("#AlternativaIdME input[name^='AlternativaIdME']").focusout(function () {
 
-            var AltID = this.value;
-            var QustID = $(this).closest(".form-row").find("#QuestaoIdMEVF").val();
+            $(this).each(function () {
+                var ID = $(this).val();
+                var index = arrME.findIndex(i => i == ID);
+
+                if (index == -1) {
+                    arrME.push(parseInt(ID));
+                } else {
+                    arrME.splice(index, 1);
+                }
+            });
+
+            var QustID = $(this).closest(".form-row").find("#QuestaoIdME").val();
             var ProvID = "@provaID";
 
-            console.log(AltID + " " + QustID + " " + ProvID);
+            console.log(arrME + " " + QustID + " " + ProvID);
 
             $.ajax({
                 type: "POST",
                 url:'/ConsultarProvaAl/SalvarQuestaoMEVF',
-                data: { QuestaoID: QustID, ProvaID: ProvID, AlternativaID: AltID },
+                data: { QuestaoID: QustID, ProvaID: ProvID, AlternativaID: arrME },
                 success: function (data) {
                 }, beforeSend: function () {
                     //$("#qust #OKSE").hide();
@@ -233,7 +245,40 @@
                     //$("#qust #salvandoSE").hide();
                 }
             });
-        });*@
+        });
+
+        $("#AlternativaIdVF input[name^='AlternativaIdVF']").focusout(function () {
+
+            $(this).each(function () {
+                var ID = $(this).val();
+                var index = arrVF.findIndex(i => i == ID);
+
+                if (index == -1) {
+                    arrVF.push(parseInt(ID));
+                } else {
+                    arrVF.splice(index, 1);
+                }
+            });
+
+            var QustID = $(this).closest(".form-row").find("#QuestaoIdVF").val();
+            var ProvID = "@provaID";
+
+            console.log(arrVF + " " + QustID + " " + ProvID);
+
+            $.ajax({
+                type: "POST",
+                url:'/ConsultarProvaAl/SalvarQuestaoMEVF',
+                data: { QuestaoID: QustID, ProvaID: ProvID, AlternativaID: arrVF },
+                success: function (data) {
+                }, beforeSend: function () {
+                    //$("#qust #OKSE").hide();
+                    //$("#qust #salvandoSE").show();
+                }, complete: function () {
+                    //$("#qust #OKSE").show();
+                    //$("#qust #salvandoSE").hide();
+                }
+            });
+        });
 
         $("#DivRespostaDT textarea[name^='Resposta']").focusout(function () {
 
@@ -259,5 +304,13 @@
         });
     }
 
+    function FinalizarProva() {
+        var ProvID = "@provaID";
+
+        var r = confirm("Confirma que respondeu todas as questões e deseja Finalizar?");
+        if (r == true) {
+            window.location.href = "/ConsultarProvaAl/FinalizarProva";
+        }
+    }
 
 </script>
