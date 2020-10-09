@@ -49,16 +49,16 @@ namespace TestAnalyser.DAL
 
         }
         //( )
-        public static List<Prova> BuscarProvasPesquisa(int matricula, int Pendente, DateTime DataProva, int Curso, int Disciplina, int Turma)
+        public static List<Prova> BuscarProvasPesquisa(int matricula, int status, DateTime DataInicio, DateTime DataFim, int Curso, int Disciplina, int Turma)
         {
             List<Prova> result = new List<Prova>();
 
-            var resultado = ctx.Provas.Where(x => x.DataProva.Equals(DataProva) && x.StatusProva == Pendente)
-                .Include(c => c.Disciplina)
-                .Where(c => c.Disciplina.DisciplinaId == Disciplina).Include(p => p.Professor).Where(p=> p.Professor.Matricula == matricula).ToList();
+            //var resultado = ctx.Provas.Where(x => x.DataProva.Equals(DataProva) && x.StatusProva == Pendente)
+            //    .Include(c => c.Disciplina)
+            //    .Where(c => c.Disciplina.DisciplinaId == Disciplina).Include(p => p.Professor).Where(p=> p.Professor.Matricula == matricula).ToList();
   
 
-            List<Prova>  provas = ctx.Provas.Include("Professor").Include("Disciplina").Where(p => p.StatusProva == Pendente &&  p.DataProva.Equals(DataProva)).ToList();
+            List<Prova>  provas = ctx.Provas.Include("Professor").Include("Disciplina").Where(p => p.StatusProva == status &&  p.DataProva >= DataInicio && p.DataProva <= DataFim).ToList();
 
             foreach (var item in provas)
             {
@@ -110,7 +110,7 @@ namespace TestAnalyser.DAL
         {
             return ctx.Provas.Where(p => p.StatusProva.Equals(status)).ToList();
         }
-        public static Prova BuscarRespostasPorAluno(int idAluno, int idProva)
+        public static List<RespostasAluno> BuscarRespostasPorAluno(int idAluno, int idProva)
         {
 
             Prova prova = ctx.Provas.Include("RespostasAlunos").Where(p => p.ProvaId == idProva).FirstOrDefault();
@@ -123,9 +123,19 @@ namespace TestAnalyser.DAL
             prova.RespostasAlunos.Clear();
             prova.RespostasAlunos.AddRange(result);
 
-            return prova;
+            return prova.RespostasAlunos;
         }
 
+
+        public static List<RespostasAluno> ListaAlunoPorProva(int idProva)
+        {
+            Prova prova = new Prova();
+            List<RespostasAluno> result = new List<RespostasAluno>();
+            prova = ctx.Provas.Include("RespostasAlunos").Where(x => x.ProvaId == idProva).FirstOrDefault();
+
+            result = prova.RespostasAlunos.ToList().GroupBy(elem => elem.Aluno.AlunoId).Select(g => g.First()).ToList();
+            return result.OrderBy(x=> x.Aluno.Nome).ToList();
+        }
 
     }
 }
