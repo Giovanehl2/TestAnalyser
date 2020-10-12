@@ -47,5 +47,17 @@ namespace TestAnalyser.DAL
 
         }
 
+        public static RespostasAluno BuscarProvaQuestaoAluno(int QuestaoID, int ProvaID, int AlunoID)
+        {
+            Prova prova = ProvaDAO.BuscarProvaId(ProvaID);
+            RespostasAluno result = new RespostasAluno();
+            foreach (RespostasAluno item in prova.RespostasAlunos)
+            {
+                if (item.Aluno.AlunoId == AlunoID && item.Questao.QuestaoId == QuestaoID)
+                    result = item;
+            }
+
+            return result;
+        }
     }
 }

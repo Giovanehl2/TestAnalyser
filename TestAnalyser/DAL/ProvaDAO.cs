@@ -36,6 +36,7 @@ namespace TestAnalyser.DAL
             return ctx.Provas.Include("Professor").Include("NotasQuestoes").Include("RespostasAlunos")
                 .Include("ConfigPln").Include("Disciplina").Include("NotasQuestoes.Questao")
                 .Include("NotasQuestoes.Questao.Alternativas").Include("NotasQuestoes.Questao.Opcoes")
+                .Include("RespostasAlunos.Aluno")
                 .FirstOrDefault(x => x.ProvaId == id);
         }
         public static Prova BuscarProvaDuplicada(string titulo)
@@ -126,6 +127,20 @@ namespace TestAnalyser.DAL
             return prova.RespostasAlunos;
         }
 
+        public static double BuscarValorNotamax(int ProvaID, int QuestaoID)
+        {
+            double notamax = 0;
+            Prova prov = ctx.Provas.Include("NotasQuestoes").Include("Questao").FirstOrDefault(x => x.ProvaId == ProvaID);
+            foreach (var item in prov.NotasQuestoes)
+            {
+                if (item.Questao.QuestaoId == QuestaoID)
+                {
+                    notamax = item.ValorQuestao; 
+                }
+            }
+
+            return notamax;
+        }
 
         public static List<RespostasAluno> ListaAlunoPorProva(int idProva)
         {

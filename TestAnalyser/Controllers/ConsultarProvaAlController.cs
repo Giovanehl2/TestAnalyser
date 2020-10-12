@@ -90,17 +90,30 @@ namespace TestAnalyser.Controllers
             //TempData["provas"] = provas;   //VERIFICAR COM O SAULO, COMO ZERAR O TEMPDATA...
             return RedirectToAction("ConsultarProvaAl", "ConsultarProvaAl");
         }
+
+        //Verificar a Prova e Questão, e validar a alternativa marcada com a correta no DB.
         public void SalvarQuestaoSE(int QuestaoID, int ProvaID, int AlternativaID)
         {
-            //Verificar a Prova e Questão, e validar a alternativa marcada com a correta no DB.
+            int AlunoID = Convert.ToInt32(Session["IdUsr"]);
+            //Tabela RespostasAlunos, provaID x, QuestãoID x, AlunoID x
+            RespostasAluno Questao = RespostasAlunoDAO.BuscarProvaQuestaoAluno(QuestaoID, ProvaID, AlunoID);
 
-            //Salvar nota e data de resposta da questão na tabela de respostaAlunos.
+            double notamax = ProvaDAO.BuscarValorNotamax(ProvaID, QuestaoID);
+            foreach (Alternativa item2 in Questao.Questao.Alternativas) {
+                if (item2.AlternativaId == AlternativaID && item2.correto == 1)
+                    { Questao.NotaAluno = notamax; }
+            }
+            Questao.SituacaoCorrecao = 1;
+            Questao.DataHoraInicio = DateTime.Now;
 
+            RespostasAlunoDAO.Editar(Questao);
         }
+
         public void SalvarQuestaoMEVF(int QuestaoID, int ProvaID, List<int> AlternativaID)
         {
             
         }
+
         public void SalvarQuestaoDS(int QuestaoID, int ProvaID, string Resposta)
         {
             
