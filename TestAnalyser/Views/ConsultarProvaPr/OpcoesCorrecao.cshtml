@@ -34,7 +34,7 @@
                         </div>
                         <div class="row">
                             <select class="form-control" id="Prova" name="Situacao">
-                                <option value="">Todos</option>
+                                <option value="">Selecionar</option>
                                 <option value="0">não corrigidas</option>
                                 <option value="1">Corretas</option>
                                 <option value="2">Parciais</option>
@@ -52,10 +52,10 @@
 
                         <div class="row">
                             <div class="col">
-                                <input class="form-control" type="text" name="matriculaAluno" id="AlunoProva" />
+                                <input class="form-control" type="text" name="matriculaAluno" id="AlunoProva"/>
                             </div>
 
-                            <input id="btnPesquisar" autofocus type="submit" value="Filtrar" class="btn btn-default" />
+                            <input id="submit"  type="submit" value="Filtrar" class="btn btn-default" />
                         </div>
 
 
@@ -119,11 +119,9 @@
 <script>
     $('.selectpicker').selectpicker();
 
-
-
-    function CarregarPagina() {
-        btnPesquisar
+    $('#submit').on('click', function () {
         location.reload();
-    }
+
+    });
 
 </script>

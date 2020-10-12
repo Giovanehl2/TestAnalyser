@@ -20,7 +20,7 @@
             <div class="col-md-12">
                 <div class="form-row">
 
-                    <div class="col-md-1">
+                    @*<div class="col-md-1">
                         <div class="row">
                             <div class="col">
                                 <label for="AssuntoSE">Pendente</label>
@@ -32,7 +32,7 @@
                                 <input type="checkbox" id="chbxPendentes" name="Pendentes" value="" />
                             </div>
                         </div>
-                    </div>
+                    </div>*@
 
                     <div class="col-md-2">
                         <div class="row">
@@ -43,7 +43,7 @@
 
                         <div class="row">
                             <div class="col">
-                                <input class="form-control" type="date" name="DataInicio" value="" id="DataInicio" />
+                                <input class="form-control" type="date" name="DataInicio" value="" id="DataInicio" required />
                             </div>
                         </div>
                     </div>
@@ -57,7 +57,7 @@
 
                         <div class="row">
                             <div class="col">
-                                <input class="form-control" type="date" name="DataFim" value="" id="DataFim" />
+                                <input class="form-control" type="date" name="DataFim" value="" id="DataFim" required />
                             </div>
                         </div>
                     </div>
@@ -71,9 +71,9 @@
 
                         <div class="row">
                             <div class="col">
-                                <select class="form-control" id="CursoId" name="Curso">
+                                <select class="form-control" id="CursoId" name="Curso" required>
                                     @{
-                                        <option value="0"> </option>
+                                        <option value="0"> Selecionar </option>
                                         foreach (var item in ViewBag.Cursos)
                                         {
                                             <option value="@item.CursoId">@item.Descricao</option>

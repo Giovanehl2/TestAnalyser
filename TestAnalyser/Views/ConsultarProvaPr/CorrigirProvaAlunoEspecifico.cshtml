@@ -84,9 +84,10 @@
                 }
             }
             <button witdh="50" title="Salvar" type="submit" class="btn btn-primary">Salvar</button>
+            <input id="btnVoltar" value="Voltar" onclick="VoltarPagina()" type="button" class="btn btn-default" />
         </form>
-        <input id="btnVoltar" value="Voltar" onclick="VoltarPagina()" type="button" class="btn btn-default" />
-        @Html.ActionLink("Back to previous page", null, null, null, new { href = "/ConsultarProvaPr/OpcoesCorrecao" })
+
+       @* @Html.ActionLink("Back to previous page", null, null, null, new { href = "/ConsultarProvaPr/OpcoesCorrecao" })*@
     </div>
 </div>
 <script>
@@ -100,7 +101,7 @@
 
 
             success: function (data) {
-
+                window.location.href = "/ConsultarProvaPr/OpcoesCorrecao";
             }
 
 

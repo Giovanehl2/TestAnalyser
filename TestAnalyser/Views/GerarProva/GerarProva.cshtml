@@ -36,13 +36,13 @@
 
                         <div class="row">
                             <div class="col-md-4">
-                                <input class="form-control" id="DataProva" type="date" name="DataProva">
+                                <input class="form-control" id="DataProva" type="date" name="DataProva" required>
                             </div>
                             <div class="col-md-4">
-                                <input class="form-control" id="HoraProvaInicio" type="time" name="HoraInicio">
+                                <input class="form-control" id="HoraProvaInicio" type="time" name="HoraInicio" required>
                             </div>
                             <div class="col-md-4">
-                                <input class="form-control" id="HoraProvaFinal" type="time" name="HoraFim">
+                                <input class="form-control" id="HoraProvaFinal" type="time" name="HoraFim" required>
                             </div>
                         </div>
                     </div>
@@ -50,13 +50,13 @@
                 <div class="form-row">
                     <div class="form-group col">
                         <label for="NotaMax">Nota máxima</label>
-                        <input class="form-control " id="NotaMax" type="number" name="ValorProva">
+                        <input class="form-control " id="NotaMax" type="number" name="ValorProva" required>
                     </div>
                     <div class="form-group col">
                         <label for="DisciplinaProva">Curso</label>
-                        <select class="form-control" id="idCurso" name="Curso" size="1">
+                        <select class="form-control" id="idCurso" name="Curso" size="1" required>
                             @{
-                                <option value="0"> </option>
+                                <option value="0"> Selecione</option>
                                 foreach (var item in ViewBag.Cursos)
                                 {
                                   <option value="@item.CursoId">@item.Descricao</option>
@@ -66,14 +66,14 @@
                     </div>
                     <div class="form-group col">
                         <label for="DisciplinaProva">Disciplina</label>
-                        <select class="form-control" id="idDisciplina" name="NomeDisciplina" size="1">
+                        <select class="form-control" id="idDisciplina" name="NomeDisciplina" size="1" required>
                             <option> </option>
                         </select>
                     </div>
 
                     <div class="form-group col">
                         <label for="TurmaProva">Turma</label>
-                        <select class="form-control" id="idTurma" name="NomeTurma" size="1">
+                        <select class="form-control" id="idTurma" name="NomeTurma" size="1" required>
                             <option> </option>
                         </select>
 
@@ -84,7 +84,7 @@
                 <div class="form-row">
                         <div class="form-group col-md-6" id="mydiv">
                             <label for="AssuntoProva">Assunto</label>
-                            <select class="selectpicker" multiple name="Assuntos" id="idAssuntoProva" style="width:250px;" tabindex="2">
+                            <select class="selectpicker" multiple name="Assuntos" id="idAssuntoProva" style="width:250px;" tabindex="2" required>
                                 <option> </option>
 
                             </select>
@@ -112,7 +112,7 @@
                                             </div>
                                         </div>
                                         <div class="col">
-                                            <input class="form-control" id="IdQtSimplesEscolha" type="number" name="QtSimplesEscolha">
+                                            <input class="form-control" id="IdQtSimplesEscolha" type="number" name="QtSimplesEscolha" required>
                                         </div>
                                     </div>
                                     <div class="row">
@@ -124,7 +124,7 @@
                                             </div>
                                         </div>
                                         <div class="col">
-                                            <input class="form-control" id="IdQtMultiplaEscolha" type="number" name="QtMultiplaEscolha">
+                                            <input class="form-control" id="IdQtMultiplaEscolha" type="number" name="QtMultiplaEscolha" required>
                                         </div>
                                     </div>
                                     <div class="row">
@@ -136,7 +136,7 @@
                                             </div>
                                         </div>
                                         <div class="col">
-                                            <input class="form-control" id="IdQtVerdadeirFalso" type="number" name="QtVerdadeirFalso">
+                                            <input class="form-control" id="IdQtVerdadeirFalso" type="number" name="QtVerdadeirFalso" required>
                                         </div>
                                     </div>
                                     <div class="row">
@@ -149,7 +149,7 @@
                                             </div>
                                         </div>
                                         <div class="col">
-                                            <input class="form-control" id="IdQtDissertativa" type="number" name="QtDissertativa">
+                                            <input class="form-control" id="IdQtDissertativa" type="number" name="QtDissertativa" required>
                                         </div>
                                     </div>
                                 </div>

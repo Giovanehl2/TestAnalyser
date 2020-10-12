@@ -17,12 +17,12 @@
 
                         @Html.Raw(item.Questao.Enunciado)
 
-                        <input class="form-control" type="hidden" id="NotaQ" name="idquestao" value="@item.Questao.QuestaoId" />
+                        <input class="form-control" type="hidden" id="NotaQ" name="idquestao" value="@item.Questao.QuestaoId" required />
                         </div>
 
                     <div class="col-md-1">
                         <h6>Nota: </h6>
-                        <input class="form-control" type="number" id="NotaQ" name="notas" value="@item.ValorQuestao" />
+                        <input class="form-control" type="number" id="NotaQ" name="notas" value="@item.ValorQuestao" required />
                     </div>
                 </div>
             </div>
@@ -33,7 +33,7 @@
         <div class="col-md-8"></div>
         <div class="col-md-2">
             <label>Total:</label>
-            <input class="form-control" type="number" id="NotaTotal" />
+            <input class="form-control" type="number" id="NotaTotal"  required/>
         </div>
     </div>
     <br />

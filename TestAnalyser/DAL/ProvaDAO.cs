@@ -49,30 +49,37 @@ namespace TestAnalyser.DAL
             return ctx.Provas.Where(p => p.TituloProva.Equals(titulo)).FirstOrDefault();
 
         }
-        //( )
-        public static List<Prova> BuscarProvasPesquisa(int matricula, int status, DateTime DataInicio, DateTime DataFim, int Curso, int Disciplina, int Turma)
+
+        public static List<Prova> BuscarProvasPesquisa(int idProfessor, DateTime DataInicio, DateTime DataFim, int Curso, int Disciplina, int Turma)
         {
             List<Prova> result = new List<Prova>();
 
-            //var resultado = ctx.Provas.Where(x => x.DataProva.Equals(DataProva) && x.StatusProva == Pendente)
-            //    .Include(c => c.Disciplina)
-            //    .Where(c => c.Disciplina.DisciplinaId == Disciplina).Include(p => p.Professor).Where(p=> p.Professor.Matricula == matricula).ToList();
-  
-
-            List<Prova>  provas = ctx.Provas.Include("Professor").Include("Disciplina").Where(p => p.StatusProva == status &&  p.DataProva >= DataInicio && p.DataProva <= DataFim).ToList();
-
-            foreach (var item in provas)
+            List<Prova>  provas = ctx.Provas.Include("Professor").Include("Disciplina").Where(p => p.DataProva >= DataInicio && p.DataProva <= DataFim && p.Professor.ProfessorId == idProfessor).ToList();
+            if(Disciplina == 0 || Turma == 0)
             {
-                foreach (var item2 in item.Disciplina.Turmas)
-                {
-                    if (item2.TurmaId == Turma)
-                    {
-                        result.Add(item);
-                    }
-                }
+                return provas;
             }
+            else
+            {
+                foreach (var itemProva in provas)
+                {
+                    if (itemProva.Disciplina.DisciplinaId == Disciplina)
+                    {
+                        foreach (var item2 in itemProva.Disciplina.Turmas)
+                        {
 
-            return result;
+                            if (item2.TurmaId == Turma)
+                            {
+                                result.Add(itemProva);
+                            }
+                        }
+                    }
+
+                }
+
+                return result;
+            }
+            
 
         }
 

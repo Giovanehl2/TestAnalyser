@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.WebPages;
 using TestAnalyser.DAL;
 using TestAnalyser.Model;
 
@@ -16,6 +17,7 @@ namespace TestAnalyser.Controllers
         private static Prova prova;
         private static List<RespostasAluno> todosGabaritos = new List<RespostasAluno>();
         private static List<RespostasAluno> CorrigirGabarito= new List<RespostasAluno>();
+        private static List<RespostasAluno> CorrigirAlunoEspecifico = new List<RespostasAluno>();
 
         // GET: ConsultarProvaPr
         public ActionResult ConsultarProvaPr()
@@ -60,17 +62,19 @@ namespace TestAnalyser.Controllers
             return output;
         }
 
-        public ActionResult ConsultarProva( int? Pendentes,  DateTime DataInicio, DateTime DataFim, int Curso, string Disciplina, int Turma)
+        public ActionResult ConsultarProva(DateTime DataInicio, DateTime DataFim, int Curso, string Disciplina, int? Turma)
         {
-            int Pendente = 0;
-            if (Pendentes == null)
-            {
-                Pendente = 0;
-            } else {
-                Pendente = 1;
-            }
-            var disciplinaId = DisciplinaDAO.BuscarPorNome(Disciplina).DisciplinaId;
-            List<Prova> provas = ProvaDAO.BuscarProvasPesquisa(Convert.ToInt32(Session["IdUsr"]), Pendente, DataInicio, DataFim, Curso, disciplinaId, Turma);
+            Disciplina disc = new Disciplina();
+            int idTurma = 0;
+
+            if (Turma != null)
+                idTurma = Convert.ToInt32(Turma);
+
+            if (Disciplina.IsEmpty() || Disciplina.Equals(null))
+                disc = DisciplinaDAO.BuscarPorNome(Disciplina);
+
+         
+            List<Prova> provas = ProvaDAO.BuscarProvasPesquisa(Convert.ToInt32(Session["IdUsr"]), DataInicio, DataFim, Curso, disc.DisciplinaId, idTurma);
             TempData["provas"] = provas;
             return RedirectToAction("ConsultarProvaPr", "ConsultarProvaPr");
         }
@@ -84,11 +88,16 @@ namespace TestAnalyser.Controllers
                 ProvaId = Convert.ToInt32(idProva);
             }
 
-            if (todosGabaritos?.Any() != true) {
+            if (todosGabaritos?.Any() != true && CorrigirAlunoEspecifico.Count() == 0) {
                 prova = ProvaDAO.BuscarProvaId(ProvaId);
                 List<RespostasAluno> result = new List<RespostasAluno>();
                 result = prova.RespostasAlunos.ToList().GroupBy(elem => elem.Aluno.AlunoId).Select(g => g.First()).ToList();
                 todosGabaritos = result.OrderBy(x => x.Aluno.Nome).ToList();
+            }
+           else if (CorrigirAlunoEspecifico.Count() != 0)
+            {
+                ViewBag.RespostasAluno = CorrigirAlunoEspecifico;
+                return View(ProvaDAO.BuscarProvaId(ProvaId));
             }
 
 
@@ -103,22 +112,35 @@ namespace TestAnalyser.Controllers
             TempData["ListaRespostasAlunos"] = null;
             return View();
         }
-        public ActionResult FiltrarConsulta(int Situacao, int matriculaAluno)
+        public ActionResult FiltrarConsulta(int? Situacao, int? matriculaAluno)
         {
-            List<RespostasAluno> respostasFiltradas = new List<RespostasAluno>();
-            Aluno aluno = AlunoDAO.BuscarAlunoPorMatricula(matriculaAluno);
-            //adiciona apenas do aluno especifico
-            if (aluno != null)
+            int situac = -1;
+            int matr = -1;
+            if (Situacao != null)
+                situac = Convert.ToInt32(Situacao);
+
+
+            if (matriculaAluno != null)
+                matr = Convert.ToInt32(matriculaAluno);
+
+            if (situac != -1 && matr != -1)
             {
-                  respostasFiltradas.AddRange(RespostasAlunoDAO.PerguntasParaCorrigir(aluno.AlunoId, Situacao));
+                List<RespostasAluno> respostasFiltradas = new List<RespostasAluno>();
+                Aluno aluno = AlunoDAO.BuscarAlunoPorMatricula(matr);
+                //adiciona apenas do aluno especifico
+                if (aluno != null)
+                {
+                    CorrigirAlunoEspecifico = new List<RespostasAluno>();
+                    List<RespostasAluno> result = new List<RespostasAluno>();
+                    result = RespostasAlunoDAO.PerguntasParaCorrigir(aluno.AlunoId, situac).ToList().GroupBy(elem => elem.Aluno.AlunoId).Select(g => g.First()).ToList();
+                    CorrigirAlunoEspecifico.AddRange(result);
+                }
             }
             else
             {
-                //adiciona todos os alunos
-                respostasFiltradas.AddRange(RespostasAlunoDAO.PerguntasParaCorrigir(Situacao));
+                CorrigirAlunoEspecifico.Clear();
             }
-            TempData["respostasFiltradas"] = respostasFiltradas;
-
+            
             return RedirectToAction("OpcoesCorrecao", "ConsultarProvaPr");
         }
 
@@ -146,6 +168,7 @@ namespace TestAnalyser.Controllers
         }
         public ActionResult VoltarOpcoesCorrecao()
         {
+            CorrigirAlunoEspecifico.Clear();
             return RedirectToActionPermanent("OpcoesCorrecao", "ConsultarProvaPr");
         }
          public void limpar()
