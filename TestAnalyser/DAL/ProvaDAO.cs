@@ -137,12 +137,13 @@ namespace TestAnalyser.DAL
         public static double BuscarValorNotamax(int ProvaID, int QuestaoID)
         {
             double notamax = 0;
-            Prova prov = ctx.Provas.Include("NotasQuestoes").Include("Questao").FirstOrDefault(x => x.ProvaId == ProvaID);
+            Prova prov = ctx.Provas.Include("NotasQuestoes").Include("NotasQuestoes.Questao").FirstOrDefault(x => x.ProvaId == ProvaID);
             foreach (var item in prov.NotasQuestoes)
             {
                 if (item.Questao.QuestaoId == QuestaoID)
                 {
-                    notamax = item.ValorQuestao; 
+                    notamax = item.ValorQuestao;
+                    break;
                 }
             }
 

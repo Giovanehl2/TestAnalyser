@@ -100,23 +100,87 @@ namespace TestAnalyser.Controllers
 
             double notamax = ProvaDAO.BuscarValorNotamax(ProvaID, QuestaoID);
             foreach (Alternativa item2 in Questao.Questao.Alternativas) {
-                if (item2.AlternativaId == AlternativaID && item2.correto == 1)
-                    { Questao.NotaAluno = notamax; }
+                if (item2.AlternativaId == AlternativaID)
+                { 
+                    if (item2.correto == 1)
+                        { Questao.NotaAluno = notamax; }
+                    else
+                        { Questao.NotaAluno = 0; }
+                    break;
+                }
             }
-            Questao.SituacaoCorrecao = 1;
+            Questao.SituacaoCorrecao = 1; //Corrigido = 1
             Questao.DataHoraInicio = DateTime.Now;
 
             RespostasAlunoDAO.Editar(Questao);
         }
 
-        public void SalvarQuestaoMEVF(int QuestaoID, int ProvaID, List<int> AlternativaID)
+        //Variavel "Parcial" significa se essa questão aceita nota parcial ou total.
+        public void SalvarQuestaoMEVF(int QuestaoID, int ProvaID, List<int> AlternativaID, int? Parcial)
         {
-            
+            List<int> corretos = new List<int>();
+            var MarcCor = 0;
+            var MarcInc = 0;
+            double Total = 0;
+            int AlunoID = Convert.ToInt32(Session["IdUsr"]);
+            RespostasAluno Questao = RespostasAlunoDAO.BuscarProvaQuestaoAluno(QuestaoID, ProvaID, AlunoID);
+
+            //if (Parcial == 1) {} else {}  --  Função separada para ativar e desativar o Salvar nota Parcial ou Total.
+            //Pegar todas as AlternativasID dessa questão em especifica...
+            List<int> AltersQuestao = new List<int>();
+            foreach (Alternativa AltsQuest in Questao.Questao.Alternativas)
+            {
+                AltersQuestao.Add(AltsQuest.AlternativaId);
+            }
+
+            //Inclui na lista "AltsDtQuest" as "AlternativaID" que pertencem a essa questão...
+            List<int> AltsDtQuest = new List<int>();
+            foreach (var SelAlts in AlternativaID)
+            {
+                if (AltersQuestao.Contains(SelAlts))
+                    { AltsDtQuest.Add(SelAlts); }
+            }
+
+            //Pega as AlternativasID dessa questão, onde as alternativas são "Corretas"...
+            foreach (Alternativa item in Questao.Questao.Alternativas)
+            {
+                if (item.correto == 1)
+                    { corretos.Add(item.AlternativaId); }
+            }
+            double notamax = ProvaDAO.BuscarValorNotamax(ProvaID, QuestaoID);
+            double notaDiv = (notamax / corretos.Count);
+
+            //Separa quantas alternativas marcadas estão corretas e incorretas...
+            foreach (int item2 in AltsDtQuest)
+            {
+                if (corretos.Contains(item2))
+                    { MarcCor++; }
+                else
+                    { MarcInc++; }
+            }
+
+            //Atribui o valor total da nota do Aluno com base nas alternativas marcadas...
+            Total = (notaDiv * MarcCor);
+            Total = (Total - ((notaDiv * MarcInc) / 2));
+            if (Total < 0) { Total = 0; }
+
+            Questao.NotaAluno = Total;
+            Questao.SituacaoCorrecao = 1; //Corrigido = 1
+            Questao.DataHoraInicio = DateTime.Now;
+
+            RespostasAlunoDAO.Editar(Questao);
         }
 
         public void SalvarQuestaoDS(int QuestaoID, int ProvaID, string Resposta)
         {
-            
+            int AlunoID = Convert.ToInt32(Session["IdUsr"]);
+            RespostasAluno Questao = RespostasAlunoDAO.BuscarProvaQuestaoAluno(QuestaoID, ProvaID, AlunoID);
+
+            Questao.RespostaDiscursiva = Resposta;
+            Questao.SituacaoCorrecao = 2; //Aguardando correção Dissertativa = 2
+            Questao.DataHoraInicio = DateTime.Now;
+
+            RespostasAlunoDAO.Editar(Questao);
         }
     }
 }
