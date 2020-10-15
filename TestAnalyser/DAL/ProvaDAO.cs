@@ -54,7 +54,7 @@ namespace TestAnalyser.DAL
         {
             List<Prova> result = new List<Prova>();
 
-            List<Prova>  provas = ctx.Provas.Include("Professor").Include("Disciplina").Where(p => p.DataProva >= DataInicio && p.DataProva <= DataFim && p.Professor.ProfessorId == idProfessor).ToList();
+            List<Prova>  provas = ctx.Provas.Include("Professor").Include("Disciplina").Where(p => p.DataProvaInicio >= DataInicio && p.DataProvaFim <= DataFim && p.Professor.ProfessorId == idProfessor).ToList();
             if(Disciplina == 0 || Turma == 0)
             {
                 return provas;
@@ -87,12 +87,12 @@ namespace TestAnalyser.DAL
         {
             List<Prova> result = new List<Prova>();
 
-            var resultado = ctx.Provas.Where(x => x.DataProva >= DataIni  && x.DataProva <= DataFim && x.StatusProva == Pendente)
+            var resultado = ctx.Provas.Where(x => x.DataProvaInicio >= DataIni  && x.DataProvaFim <= DataFim && x.StatusProva == Pendente)
                 .Include(c => c.Disciplina)
                 .Where(c => c.Disciplina.DisciplinaId == Disciplina).Include(p => p.Professor).Where(p => p.Professor.Matricula == matricula).ToList();
 
 
-            List<Prova> provas = ctx.Provas.Include("Professor").Include("Disciplina").Where(x => x.DataProva >= DataIni && x.DataProva <= DataFim && x.StatusProva == Pendente).ToList();
+            List<Prova> provas = ctx.Provas.Include("Professor").Include("Disciplina").Where(x => x.DataProvaInicio >= DataIni && x.DataProvaFim <= DataFim && x.StatusProva == Pendente).ToList();
 
             foreach (var item in provas)
             {

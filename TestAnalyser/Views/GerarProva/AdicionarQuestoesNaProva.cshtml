@@ -11,19 +11,50 @@
 <form name="form1" id="formCadSE" method="post" action="@Url.Action("SalvarProvaQuestoes", "GerarProva")">
     @{
         foreach (var item in @Model.NotasQuestoes)
-        {<div class="col-md-12">
+        {
+            string teste = " ";
+            if (item.Questao.TipoQuestao == 1)
+            {
+                teste = "Questão: Simples Escolha";
+            }
+            if (item.Questao.TipoQuestao == 2)
+            {
+                teste = "Questão: Multipla Escolha";
+            }
+            if (item.Questao.TipoQuestao == 3)
+            {
+                teste = "Questão: Verdadeiro ou Falso";
+            }
+
+            if (item.Questao.TipoQuestao == 4)
+            {
+                teste = "<b> Questão: Discursiva </b>";
+            }
+
+            <div class="col-md-12">
+
                 <div class="row">
-                        <div class="col-md-8">
+                    <div class="col-md-8">
+
+                        @Html.Raw(@teste)
+
+                        <input class="form-control" type="hidden" id="NotaQ" name="idquestao" value="@item.Questao.QuestaoId" required />
+
+                    </div>
+                    <br />
+                    <br />
+                    <div class="col-md-8">
 
                         @Html.Raw(item.Questao.Enunciado)
 
                         <input class="form-control" type="hidden" id="NotaQ" name="idquestao" value="@item.Questao.QuestaoId" required />
-                        </div>
+                    </div>
 
                     <div class="col-md-1">
                         <h6>Nota: </h6>
                         <input class="form-control" type="number" id="NotaQ" name="notas" value="@item.ValorQuestao" required />
                     </div>
+
                 </div>
             </div>
         }
@@ -33,8 +64,13 @@
         <div class="col-md-8"></div>
         <div class="col-md-2">
             <label>Total:</label>
-            <input class="form-control" type="number" id="NotaTotal"  required/>
+            <input class="form-control" type="number" id="NotaTotal" required />
         </div>
+    </div>
+    <div class="col-md-1">
+        <br />
+        <button witdh="50" title="Regerar Questões" class="btn btn-primary glyphicon glyphicon-refresh" onclick="TrocarQuestao()">Trocar</button>
+        <input id="btnVoltar" value="Voltar" onclick="VoltarPagina()" type="button" class="btn btn-default" />
     </div>
     <br />
     <br />
@@ -42,10 +78,7 @@
         <button witdh="50" title="Confirmar prova" type="submit" class="btn btn-primary">Confirmar Prova</button>
     </div>
 </form>
-<div class="col-md-1">
-    <br />
-    <button witdh="50" title="Regerar Questões" class="btn btn-primary glyphicon glyphicon-refresh" onclick="TrocarQuestao()">Trocar</button>
-</div>
+
 
 
 <script>
@@ -64,6 +97,27 @@
 
         });
         location.reload();
+    }
+
+    function VoltarPagina() {
+
+        $.ajax({
+
+            type: "GET",
+
+            url: "/GerarProva/Voltar",
+
+
+            success: function (data) {
+                window.location.href = "/GerarProva/GerarProva";
+
+            }
+
+
+        });
+
+        location.reload();
+
     }
 
 

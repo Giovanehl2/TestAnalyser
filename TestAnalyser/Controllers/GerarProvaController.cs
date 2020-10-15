@@ -20,14 +20,26 @@ namespace TestAnalyser.Controllers
         // GET: GerarProva
         public ActionResult GerarProva()
         {
-            Prova prova = new Prova();
-
             List<string> assuntos = new List<string>();
             //localiza os cursos de acordo com o id do professor
             ViewBag.Cursos = CursoDAO.listarCursosPorProfessor(Convert.ToInt32(Session["IdUsr"])); ;
             return View(new Prova());
         }
-        public JsonResult BuscarDisciplina(int id)
+
+        public ActionResult Voltar()
+        {
+            LimparDadosTela();
+            return RedirectToAction("GerarProva", "GerarProva");
+        }
+
+        private void LimparDadosTela()
+        {
+            disciplinas = new List<Disciplina>();
+            turmas = new List<Turma>();
+            provaFixa = new Prova();
+
+        }
+            public JsonResult BuscarDisciplina(int id)
         {
             List<string> listagem = new List<string>();
             disciplinas = DisciplinaDAO.ListarDisciplinas();

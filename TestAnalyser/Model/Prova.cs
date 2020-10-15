@@ -54,8 +54,11 @@ namespace TestAnalyser.Model
         public double ConfirmaNota { get; set; }
 
 
-        [Required(ErrorMessage = "Campo data da prova é obrigatório!")]
-        public DateTime DataProva { get; set; }
+        [Required(ErrorMessage = "Campo data inicio da prova é obrigatório!")]
+        public DateTime DataProvaInicio { get; set; }
+
+        [Required(ErrorMessage = "Campo data fim da prova é obrigatório!")]
+        public DateTime DataProvaFim { get; set; }
 
         [Required(ErrorMessage = "Campo nome horario de inicio da prova é obrigatório!")]
         public DateTime HoraInicio { get; set; }
