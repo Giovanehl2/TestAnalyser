@@ -115,9 +115,7 @@
                             </div>
                             <input id="btnPesquisar" autofocus type="submit" value="Consultar" class="btn btn-default" />
                         </div>
-
                     </div>
-
                 </div>
             </form>
         </div>
@@ -134,7 +132,6 @@
                         <th scope="col">Disciplina</th>
                         <th scope="col">Assunto</th>
                         <th>Ações</th>
-
                     </tr>
                 </thead>
                 <tbody>
@@ -148,37 +145,28 @@
                                     <td>@item.Disciplina.Nome</td>
                                     <td>@item.TituloProva</td>
                                     <td>
-                                        @Html.ActionLink("Visualizar", "VisualizarProva", "ConsultarProvaAl", new { idProva = item.ProvaId }, null) 
-                                        @if(@item.HoraInicio <= DateTime.Now && @item.HoraFim >= DateTime.Now){
-                                        @Html.ActionLink(" | Realizar", "RealizarProva", "ConsultarProvaAl", new { ProvaID = item.ProvaId }, null)
+                                        @Html.ActionLink("Visualizar", "VisualizarProva", "ConsultarProvaAl", new { idProva = item.ProvaId }, null)
+                                        @if (@item.HoraInicio <= DateTime.Now && @item.HoraFim >= DateTime.Now)
+                                        {
+                                            @Html.ActionLink(" | Realizar", "RealizarProva", "ConsultarProvaAl", new { ProvaID = item.ProvaId }, null)
                                         }
-
-
                                     </td>
                                 </tr>
-
                             }
-
                         }
                     }
-
-
                 </tbody>
-
             </table>
         </div>
     </div>
 </div>
 
-
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.2/js/bootstrap-select.min.js"></script>
 
-
 <script>
     $('.selectpicker').selectpicker();
-
 
     $(document).ready(function () {
         $("#CursoId").on("change", function () {
@@ -203,11 +191,8 @@
                         $('.form - control').selectpicker('refresh');
                     })
                 }
-
             });
-
         });
-
     });
 
     $(document).ready(function () {
@@ -233,10 +218,8 @@
                         $('.selectpicker').selectpicker('refresh');
                     })
                 }
-
             });
         });
-
     });
 
     function CarregarPagina() {

@@ -86,7 +86,6 @@ namespace TestAnalyser.Controllers
         }
 
         public ActionResult FinalizarProva() {
-
             //TempData["provas"] = provas;   //VERIFICAR COM O SAULO, COMO ZERAR O TEMPDATA...
             return RedirectToAction("ConsultarProvaAl", "ConsultarProvaAl");
         }
@@ -103,13 +102,14 @@ namespace TestAnalyser.Controllers
                 if (item2.AlternativaId == AlternativaID)
                 { 
                     if (item2.correto == 1)
-                        { Questao.NotaAluno = notamax; }
+                        { Questao.NotaAluno = notamax; 
+                          Questao.SituacaoCorrecao = 1; }
                     else
-                        { Questao.NotaAluno = 0; }
+                        { Questao.NotaAluno = 0; 
+                          Questao.SituacaoCorrecao = 3; }
                     break;
                 }
             }
-            Questao.SituacaoCorrecao = 1; //Corrigido = 1
             Questao.DataHoraInicio = DateTime.Now;
 
             RespostasAlunoDAO.Editar(Questao);
@@ -164,8 +164,20 @@ namespace TestAnalyser.Controllers
             Total = (Total - ((notaDiv * MarcInc) / 2));
             if (Total < 0) { Total = 0; }
 
+            //Define qual é o status da questão, correto, parcialmente correto ou incorreto...
+            if (MarcCor > 0)
+            {
+                if (Total == notamax)
+                    { Questao.SituacaoCorrecao = 1; }
+                else
+                    { Questao.SituacaoCorrecao = 2; }
+            }
+            else
+            {
+                Questao.SituacaoCorrecao = 3;
+            }
+
             Questao.NotaAluno = Total;
-            Questao.SituacaoCorrecao = 1; //Corrigido = 1
             Questao.DataHoraInicio = DateTime.Now;
 
             RespostasAlunoDAO.Editar(Questao);
@@ -177,7 +189,7 @@ namespace TestAnalyser.Controllers
             RespostasAluno Questao = RespostasAlunoDAO.BuscarProvaQuestaoAluno(QuestaoID, ProvaID, AlunoID);
 
             Questao.RespostaDiscursiva = Resposta;
-            Questao.SituacaoCorrecao = 2; //Aguardando correção Dissertativa = 2
+            Questao.SituacaoCorrecao = 0;
             Questao.DataHoraInicio = DateTime.Now;
 
             RespostasAlunoDAO.Editar(Questao);
