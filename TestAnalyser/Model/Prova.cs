@@ -50,6 +50,8 @@ namespace TestAnalyser.Model
 
         public int StatusProva { get; set; }
 
+        public int QtTentativas { get; set; }
+
         [NotMapped]
         public double ConfirmaNota { get; set; }
 

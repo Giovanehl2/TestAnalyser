@@ -142,24 +142,34 @@
                 @{
                     if (provas != null)
                     {
+                        string dataProva = "";
                         foreach (var item in provas)
                         {
-                            <tr>
-                                <td>@item.DataProva</td>
-                                <td>@item.Disciplina.Nome</td>
-                                <td>@item.NomeTurma</td>
-                                <td>@item.TituloProva</td>
-                                <td>
-                                    <div id="divGridConsultaPr1">
-                                        @Html.ActionLink("Visualizar", "Visualizar", "ConsultarProvaPr", new { idProva = item.ProvaId },null) |
-                                        @Html.ActionLink("Corrigir", "OpcoesCorrecao", "ConsultarProvaPr", new { idProva = item.ProvaId },null) |
-                                    </div>
-                                    <div id="divGridConsultaProvaPend1" style="display:none">
-                                        @Html.ActionLink("Editar", "Editar", new { id = item.ProvaId }) |
-                                        @Html.ActionLink("Excluir", "Excluir", new { id = item.ProvaId })
-                                    </div>
-                                </td>
-                            </tr>
+                            if (item.DataProvaInicio == item.DataProvaFim)
+                            {
+                                dataProva = DateTime.Parse(@item.DataProvaInicio).ToString("dd-MM-yyyy");
+                            }
+                            else
+                            {
+                                dataProva = @item.DataProvaInicio.ToString("dd/MM/yyyy") + " á " + @item.DataProvaFim.ToString("dd/MM/yyyy");
+                            }
+                         
+                                <tr>
+                                    <td>@dataProva</td>
+                                    <td>@item.Disciplina.Nome</td>
+                                    <td>@item.NomeTurma</td>
+                                    <td>@item.TituloProva</td>
+                                    <td>
+                                        <div id="divGridConsultaPr1">
+                                            @Html.ActionLink("Visualizar", "Visualizar", "ConsultarProvaPr", new { idProva = item.ProvaId }, null) |
+                                            @Html.ActionLink("Corrigir", "OpcoesCorrecao", "ConsultarProvaPr", new { idProva = item.ProvaId }, null) |
+                                        </div>
+                                        <div id="divGridConsultaProvaPend1" style="display:none">
+                                            @Html.ActionLink("Editar", "Editar", new { id = item.ProvaId }) |
+                                            @Html.ActionLink("Excluir", "Excluir", new { id = item.ProvaId })
+                                        </div>
+                                    </td>
+                                </tr>
                         }
                     }
 

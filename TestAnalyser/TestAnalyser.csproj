@@ -280,6 +280,10 @@
     <Compile Include="Migrations\202009032321265_teste22.designer.cs">
       <DependentUpon>202009032321265_teste22.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202010150217000_teste4343443.cs" />
+    <Compile Include="Migrations\202010150217000_teste4343443.designer.cs">
+      <DependentUpon>202010150217000_teste4343443.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Model\Admin.cs" />
     <Compile Include="Model\Alternativa.cs" />
@@ -366,6 +370,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202009032321265_teste22.resx">
       <DependentUpon>202009032321265_teste22.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202010150217000_teste4343443.resx">
+      <DependentUpon>202010150217000_teste4343443.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

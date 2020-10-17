@@ -129,8 +129,7 @@ namespace TestAnalyser.Controllers
 
         public ActionResult CadastrarQuestoesProva(Prova prova)
         {
-            if (ModelState.IsValid)
-            {
+
                 Disciplina disc = DisciplinaDAO.BuscarPorNome(prova.NomeDisciplina);
                 List<RespostasAluno> respostaAluno = new List<RespostasAluno>();
                 prova.RespostasAlunos = respostaAluno;
@@ -156,8 +155,7 @@ namespace TestAnalyser.Controllers
 
                 }
 
-            }
-            ModelState.AddModelError("", "Não foi possivel realizar o cadastro, por favor preencha todos os campos!");
+           
             return RedirectToAction("GerarProva", "GerarProva", provaFixa);
 
 

@@ -65,13 +65,17 @@
                         <input class="form-control " id="NotaMax" type="number" name="ValorProva" required>
                     </div>
                     <div class="form-group col">
+                        <label for="NotaMax">tentativas</label>
+                        <input class="form-control " id="QtTentativa" type="number" name="QtTentativas" required>
+                    </div>
+                    <div class="form-group col">
                         <label for="DisciplinaProva">Curso</label>
                         <select class="form-control" id="idCurso" name="Curso" size="1" required>
                             @{
                                 <option value="0"> Selecione</option>
                                 foreach (var item in ViewBag.Cursos)
                                 {
-                                  <option value="@item.CursoId">@item.Descricao</option>
+                                    <option value="@item.CursoId">@item.Descricao</option>
                                 }
                             }
                         </select>
