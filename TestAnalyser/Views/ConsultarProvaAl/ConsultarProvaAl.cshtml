@@ -15,6 +15,10 @@
         <div class="col-md-12">
             <h2>Consultar Provas</h2>
             <br />
+            @if (TempData["$ProvaJaFeita$"] != null)
+            {
+                <div id="alerta" style="color: red; text-align: center;">@TempData["$ProvaJaFeita$"]</div>
+            }
             <form name="formConsultarProva" id="formConsultaProva" method="post" action="@Url.Action("ConsultarProva", "ConsultarProvaAl")">
                 <div class="form-row">
                     <div class="col-md-1">
@@ -33,7 +37,7 @@
                     <div class="col-md-2">
                         <div class="row">
                             <div class="col">
-                                <label for="AssuntoSE">data inicio</label>
+                                <label for="AssuntoSE">Data de Inicio</label>
                             </div>
                         </div>
 
@@ -48,7 +52,7 @@
                     <div class="col-md-2">
                         <div class="row">
                             <div class="col">
-                                <label for="AssuntoSE">data fim</label>
+                                <label for="AssuntoSE">Data Final</label>
                             </div>
                         </div>
 
@@ -124,13 +128,14 @@
     <br />
     <div class="row " id="divGridConsultaAl">
         <div class="col-md-12">
-            <h3>Provas</h3>
+            <h3 title="As provas dentro de sua data e horario de aplicação, estaram disponiveis para serem realizadas." >Provas <spam class="glyphicon glyphicon-exclamation-sign"></spam></h3>
             <table class="table">
                 <thead>
                     <tr>
-                        <th scope="col">Data</th>
+                        <th scope="col">Data de Inicio</th>
+                        <th scope="col">Data Final</th>
                         <th scope="col">Disciplina</th>
-                        <th scope="col">Assunto</th>
+                        <th scope="col">Titulo da Prova</th>
                         <th>Ações</th>
                     </tr>
                 </thead>
@@ -140,18 +145,19 @@
                         {
                             foreach (var item in provas)
                             {
-                                <tr>
-                                    <td>@Convert.ToDateTime(@item.DataProva).ToString("dd/MM/yyyy")</td>
-                                    <td>@item.Disciplina.Nome</td>
-                                    <td>@item.TituloProva</td>
-                                    <td>
-                                        @Html.ActionLink("Visualizar", "VisualizarProva", "ConsultarProvaAl", new { idProva = item.ProvaId }, null)
-                                        @if (@item.HoraInicio <= DateTime.Now && @item.HoraFim >= DateTime.Now)
-                                        {
-                                            @Html.ActionLink(" | Realizar", "RealizarProva", "ConsultarProvaAl", new { ProvaID = item.ProvaId }, null)
-                                        }
-                                    </td>
-                                </tr>
+                                        <tr>
+                                            <td>@Convert.ToDateTime(@item.DataProvaInicio).ToString("dd/MM/yyyy")</td>
+                                            <td>@Convert.ToDateTime(@item.DataProvaFim).ToString("dd/MM/yyyy")</td>
+                                            <td>@item.Disciplina.Nome</td>
+                                            <td>@item.TituloProva</td>
+                                            <td>
+                                                @Html.ActionLink("Visualizar", "VisualizarProva", "ConsultarProvaAl", new { idProva = item.ProvaId }, null)
+                                                @if (@item.HoraInicio <= DateTime.Now && @item.HoraFim >= DateTime.Now)
+                                                {
+                                                    @Html.ActionLink(" | Realizar", "RealizarProva", "ConsultarProvaAl", new { ProvaID = item.ProvaId }, null)
+                                                }
+                                            </td>
+                                        </tr>
                             }
                         }
                     }
@@ -165,8 +171,17 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.2/js/bootstrap-select.min.js"></script>
 
+@Scripts.Render("~/bundles/jquery")
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        setTimeout(function () {
+            $('#alerta').fadeOut(1000);
+        }, 3500);
+    });
+</script>
+
 <script>
-    $('.selectpicker').selectpicker();
 
     $(document).ready(function () {
         $("#CursoId").on("change", function () {
@@ -188,7 +203,6 @@
                     var obj = JSON.parse(data);
                     $.each(obj, function (key, value) {
                         $('<option>').text(value).appendTo("#DisciplinaId");
-                        $('.form - control').selectpicker('refresh');
                     })
                 }
             });
@@ -215,7 +229,6 @@
                     var obj = JSON.parse(data);
                     $.each(obj, function (key, value) {
                         $('<option>').val(key).text(value).appendTo("#TurmaId");
-                        $('.selectpicker').selectpicker('refresh');
                     })
                 }
             });
@@ -226,34 +239,5 @@
         btnPesquisar
         location.reload();
     }
-
-
-
-</script>
-
-
-<script>
-
-    function SolicitarRevisao() {
-        console.log("Solicitação Enviada...");
-        $('#ConfirmaRevisao').modal('hide');
-    }
-
-    function SalvarProva() {
-        console.log("Prova Realizada...");
-        $('#RealizarProva').modal('hide');
-    }
-
-    function RealizarProva() {
-        location.href = "https://localhost:44310/ConsultarProvaAl/RealizarProva";
-    }
-
-    $(function () { @*//remover*@
-        $(".btn-toggle").click(function (e) {
-            e.preventDefault();
-            el = $(this).data('element');
-            $(el).toggle();
-        });
-    });
 
 </script>

@@ -25,7 +25,6 @@ namespace TestAnalyser.Model
         public double NotaAluno { get; set; }
         //public Prova Prova { get; set; }
         public Aluno Aluno { get; set; }
-
         //0 = não corrigido, 1 = correto, 2= parcial ,3 = incorreto , 4 correção manual, 5 silicitado Revisao, 6 ERRO.
         public int SituacaoCorrecao { get; set; }
         public DateTime? DataHoraInicio { get; set; }

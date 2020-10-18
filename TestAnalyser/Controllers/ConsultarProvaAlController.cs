@@ -17,7 +17,7 @@ namespace TestAnalyser.Controllers
         {
             ViewBag.Cursos = ViewBag.Cursos = CursoDAO.listarCursosPorAluno(Convert.ToInt32(Session["IdUsr"])); ;
             ViewBag.Provas = TempData["provas"];
-            TempData.Keep();
+            TempData.Keep("provas");
             return View(new Prova());
         }
         public ActionResult ConsultarProva(int? Pendentes, DateTime DataIni, DateTime DataFim, int Curso, string Disciplina, int Turma)
@@ -37,8 +37,16 @@ namespace TestAnalyser.Controllers
 
         public ActionResult RealizarProva(int provaID)
         {
-            //VERIFICAR SE O ALUNO JA FEZ ESSA PROVA... FAZER BUSCA NA TABELA E VER SE JA TEM DATA DE RESPOSTA...
+            //Verificar se o AlunoID ja realizou a prova...
+            int AlunoID = Convert.ToInt32(Session["IdUsr"]);
+            if (RespostasAlunoDAO.VerificarSeProvaFeita(provaID, AlunoID))
+            {
+                TempData["$ProvaJaFeita$"] = "Você já realizou essa prova.";
+                return RedirectToAction("ConsultarProvaAl", "ConsultarProvaAl");
+            }
 
+            //Se não realizou, enviar para prova.
+            TempData.Remove("$ProvaJaFeita$");
             Prova prova = ProvaDAO.BuscarProvaId(provaID);
             return View(prova);
         }
@@ -86,7 +94,7 @@ namespace TestAnalyser.Controllers
         }
 
         public ActionResult FinalizarProva() {
-            //TempData["provas"] = provas;   //VERIFICAR COM O SAULO, COMO ZERAR O TEMPDATA...
+            TempData.Remove("provas");
             return RedirectToAction("ConsultarProvaAl", "ConsultarProvaAl");
         }
 

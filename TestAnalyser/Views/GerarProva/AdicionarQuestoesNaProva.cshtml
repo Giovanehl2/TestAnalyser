@@ -6,7 +6,15 @@
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 
-<h2>Verificar e Modificar Questões da Prova</h2>
+@{ 
+    var count = 0;
+}
+
+<div class="col-md-10 row">
+    <h2>Verificar e Modificar Questões da Prova  &emsp;&emsp;  </h2>
+    <button witdh="50" title="Regerar Questões" class="btn btn-primary glyphicon glyphicon-refresh" onclick="TrocarQuestao()">Re-Gerar</button>
+    <input id="btnVoltar" value="Cancelar" onclick="VoltarPagina()" type="button" class="btn btn-default" />
+</div>
 <br />
 <form name="form1" id="formCadSE" method="post" action="@Url.Action("SalvarProvaQuestoes", "GerarProva")">
     @{
@@ -15,20 +23,19 @@
             string teste = " ";
             if (item.Questao.TipoQuestao == 1)
             {
-                teste = "<b>Questão: Simples Escolha</b>";
+                teste = "<b>Questão "+ (count + 1) +": Simples Escolha</b>";
             }
             if (item.Questao.TipoQuestao == 2)
             {
-                teste = "<b>Questão: Multipla Escolha</b>";
+                teste = "<b>Questão " + (count + 1) + ": Multipla Escolha</b>";
             }
             if (item.Questao.TipoQuestao == 3)
             {
-                teste = "<b>Questão: Verdadeiro ou Falso</b>";
+                teste = "<b>Questão " + (count + 1) + ": Verdadeiro ou Falso</b>";
             }
-
             if (item.Questao.TipoQuestao == 4)
             {
-                teste = "<b>Questão: Discursiva</b>";
+                teste = "<b>Questão " + (count + 1) + ": Discursiva</b>";
             }
 
             <div class="col-md-12">
@@ -57,29 +64,26 @@
 
                 </div>
             </div>
+            <script>@(count = count + 1) </script>
         }
     }
-
+    <br />
     <div class="row">
-        <div class="col-md-8"></div>
         <div class="col-md-2">
-            <label>Total:</label>
+            <label>Total Questões: @count</label>
+            <button witdh="50" title="Confirmar prova" type="submit" class="btn btn-primary">Confirmar Prova</button>
+        </div>
+        <div class="col-md-6"></div>
+        <div class="col-md-2">
+            <label>Total Nota:</label>
             <input class="form-control" type="number" id="NotaTotal" required />
         </div>
     </div>
-    <div class="col-md-1">
-        <br />
-        <button witdh="50" title="Regerar Questões" class="btn btn-primary glyphicon glyphicon-refresh" onclick="TrocarQuestao()">Trocar</button>
-        <input id="btnVoltar" value="Voltar" onclick="VoltarPagina()" type="button" class="btn btn-default" />
-    </div>
-    <br />
-    <br />
-    <div class="col-md-12">
-        <button witdh="50" title="Confirmar prova" type="submit" class="btn btn-primary">Confirmar Prova</button>
-    </div>
+    @*<br />
+        <div class="col-md-12">
+            <button witdh="50" title="Confirmar prova" type="submit" class="btn btn-primary">Confirmar Prova</button>
+        </div>*@
 </form>
-
-
 
 <script>
     function TrocarQuestao() {
