@@ -31,7 +31,7 @@
                         <div class="row">
                             <div class="col-md-4"><label for="DataProvaInicio">Data inicio da Prova</label></div>
                             <div class="col-md-4"><label for="HoraProvaInicio">Hora - Inicio</label></div>
-                            
+
                         </div>
 
                         <div class="row">
@@ -98,15 +98,14 @@
                 <br />
                 <br />
                 <div class="form-row">
-                        <div class="form-group col-md-6" id="mydiv">
-                            <label for="AssuntoProva">Assunto</label>
-                            <select class="selectpicker" multiple name="Assuntos" id="idAssuntoProva" style="width:250px;" tabindex="2" required>
-                                <option> </option>
+                    <div class="form-group col-md-6" id="mydiv">
+                        <label for="AssuntoProva">Assunto</label>
+                        <select class="selectpicker" multiple name="Assuntos" id="idAssuntoProva" style="width:250px;" tabindex="2" required>
+                            <option> </option>
 
-                            </select>
+                        </select>
 
-                        </div>
-
+                    </div>
 
                     <div class="form-group col-md-6">
 
@@ -187,54 +186,46 @@
                         </div>
                         <br />
                         <div class="row">
-                            <div class="form-group col-md-4">
-                                <label for="Incorreto">Incorreto</label>
-
+                            <div class="form-group col-md-12">
+                                <div class="col-md-2">
+                                    <label></label>
+                                </div>
+                                <div class="col-md-3">
+                                    <label>&emsp;Incorreto</label>
+                                </div>
+                                <div class="col-md-3">
+                                    <label>&emsp;&emsp;&emsp;Revisar</label>
+                                </div>
+                                <div class="col-md-2">
+                                    <label>&emsp;&emsp;&emsp;&emsp;Correto</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-group col-md-12">
+                                @*<label for="Incorreto">&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp; Incorreto &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp; Revisar &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp; Correto</label>*@
                                 <div class="row">
-                                    <div class="col-md-5">
-                                        <input class="form-control" id="IncorretoInicio" name="InIni" type="number" value="0">
+                                    <div class="col-lg-offset-1 col-md-2">
+                                        <input class="form-control" id="IncorretoInicio" name="InIni" type="number" value="0" readonly>
                                     </div>
                                     à
-                                    <div class="col-md-5">
+                                    <div class="col-md-3">
                                         <input class="form-control" id="IncorretoFim" name="InFim" type="number" value="35">
                                     </div>
-                                </div>
-                            </div>
-
-                            <div class="form-group col-md-4">
-                                <label for="Revisar">Revisar</label>
-
-                                <div class="row">
-                                    <div class="col-md-5">
-                                        <input class="form-control" id="RevisarInicio" name="ParIni" type="number" value="36">
-                                    </div>
                                     à
-                                    <div class="col-md-5">
+                                    <div class="col-md-3">
                                         <input class="form-control" id="RevisarFim" name="ParFim" type="number" value="70">
                                     </div>
-                                </div>
-                            </div>
-
-                            <div class="form-group col-md-4">
-                                <label for="Correto">Correto</label>
-
-                                <div class="row">
-                                    <div class="col-md-5">
-                                        <input class="form-control" id="CorretoInicio" name="CoIni" type="number" value="71">
-                                    </div>
                                     à
-                                    <div class="col-md-5">
-                                        <input class="form-control" id="CorretoFim" name="CoFim" type="number" value="100">
+                                    <div class="col-md-2">
+                                        <input class="form-control" id="CorretoFim" name="CoFim" type="number" value="100" readonly>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-
                 </div>
                 <input id="btnConfirmar" type="submit" value="Gerar Questões" class="btn btn-default" />
-
-
             </form>
         </div>
     </div>
@@ -295,56 +286,56 @@
 
             });
 
-            
+
         });
 
     });
 
-        $("#idDisciplina").on("change", function () {
+    $("#idDisciplina").on("change", function () {
 
-            var val = $('#idDisciplina').val();
-            var Paramters = "{nome:'" + val + "'}";
+        var val = $('#idDisciplina').val();
+        var Paramters = "{nome:'" + val + "'}";
 
-            $.ajax({
+        $.ajax({
 
-                type: "POST",
+            type: "POST",
 
-                url: "/GerarProva/BuscarTurma",
+            url: "/GerarProva/BuscarTurma",
 
-                contentType: "application/json",
+            contentType: "application/json",
 
-                data: Paramters,
+            data: Paramters,
 
-                success: function (data) {
+            success: function (data) {
 
-                    $.each(data, function (index, value) {
-                        $('<option>').text(value).appendTo("#idTurma");
-                        $('.selectpicker').selectpicker('refresh');
-                    })
-                }
+                $.each(data, function (index, value) {
+                    $('<option>').text(value).appendTo("#idTurma");
+                    $('.selectpicker').selectpicker('refresh');
+                })
+            }
 
-            });
-
-            $.ajax({
-
-                type: "POST",
-
-                url: "/GerarProva/BuscarAssunto",
-
-                contentType: "application/json",
-
-                data: Paramters,
-
-                success: function (data) {
-
-                    $.each(data, function (index, value) {
-                        $('<option>').text(value).appendTo("#idAssuntoProva");
-                        $('.selectpicker').selectpicker('refresh');
-                    })
-                }
-
-            });
         });
+
+        $.ajax({
+
+            type: "POST",
+
+            url: "/GerarProva/BuscarAssunto",
+
+            contentType: "application/json",
+
+            data: Paramters,
+
+            success: function (data) {
+
+                $.each(data, function (index, value) {
+                    $('<option>').text(value).appendTo("#idAssuntoProva");
+                    $('.selectpicker').selectpicker('refresh');
+                })
+            }
+
+        });
+    });
 
 
 

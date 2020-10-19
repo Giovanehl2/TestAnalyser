@@ -136,12 +136,12 @@ namespace TestAnalyser.Controllers
                 prova.Disciplina = disc;
 
                 //Aplicando os valores da Faixa de correção (gambs)
-                prova.ConfigPln.IncorretoInicio = prova.InIni;
+                prova.ConfigPln.IncorretoInicio = 0;
                 prova.ConfigPln.IncorretoFim = prova.InFim;
-                prova.ConfigPln.RevisarInicio = prova.ParIni;
+                prova.ConfigPln.RevisarInicio = (prova.InFim + 1);
                 prova.ConfigPln.RevisarFim = prova.ParFim;
-                prova.ConfigPln.CorretoInicio = prova.CoIni;
-                prova.ConfigPln.CorretoFim = prova.CoFim;
+                prova.ConfigPln.CorretoInicio = (prova.ParFim + 1);
+                prova.ConfigPln.CorretoFim = 100;
 
                 int id = Convert.ToInt32(Session["IdUsr"]);
                 prova.Professor = ProfessorDAO.BuscarProfessorPorId(id);

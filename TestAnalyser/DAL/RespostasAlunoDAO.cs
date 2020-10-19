@@ -28,22 +28,18 @@ namespace TestAnalyser.DAL
         //{
 
         //    return ctx.RespostasAlunos.Include("Questao").Include("Alternativas").Include("Aluno").Where(x => x.RespostasAlunoId == idAluno && x.).ToList();
-
-
         //}
+
         public static List<RespostasAluno> PerguntasParaCorrigir(int id, int situac)
         {
 
             return ctx.RespostasAlunos.Include("Questao").Include("Alternativas").Include("Aluno").Where(x => x.Aluno.AlunoId == id && x.SituacaoCorrecao == situac).ToList();
-
         }
 
         public static List<RespostasAluno> PerguntasParaCorrigir( int situac)
         {
 
             return ctx.RespostasAlunos.Include("Questoes").Include("Alternativas").Include("Alunos").Where(x =>  x.RespostaDiscursiva != null).ToList();
-
-
         }
 
         public static RespostasAluno BuscarProvaQuestaoAluno(int QuestaoID, int ProvaID, int AlunoID)
@@ -54,6 +50,22 @@ namespace TestAnalyser.DAL
             {
                 if (item.Aluno.AlunoId == AlunoID && item.Questao.QuestaoId == QuestaoID)
                     result = item;
+            }
+
+            return result;
+        }
+
+        public static bool VerificarSeProvaFeita(int ProvaID, int AlunoID)
+        {
+            Prova prova = ProvaDAO.BuscarProvaId(ProvaID);
+            bool result = false;
+            foreach (RespostasAluno item in prova.RespostasAlunos)
+            {
+                if (item.Aluno.AlunoId == AlunoID && item.DataHoraInicio != null)
+                {
+                    result = true;
+                    break;
+                }
             }
 
             return result;
