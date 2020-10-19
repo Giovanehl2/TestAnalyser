@@ -16,6 +16,7 @@ namespace TestAnalyser.Model
               Professores = new List<Professor>();
               Cursos = new List<Curso>();
               Provas = new List<Prova>();
+              Alunos = new List<Aluno>();
         }
         
         [Key]
@@ -23,6 +24,8 @@ namespace TestAnalyser.Model
         public string Nome { get; set; }
         public string Descricao { get; set; }
         public List<Turma> Turmas { get; set; }
+
+        public List<Aluno> Alunos { get; set; }
         public List<Professor> Professores { get; set; }
         public List<Prova> Provas { get; set; }
         public List<Curso> Cursos { get; set; }

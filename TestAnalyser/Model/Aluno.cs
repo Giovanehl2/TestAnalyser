@@ -13,7 +13,7 @@ namespace TestAnalyser.Model
         public Aluno()
         {
             Turmas = new List<Turma>();
-            //Provas = new List<Prova>();
+            Disciplinas = new List<Disciplina>();
         }
         [Key]
         public int AlunoId { get; set; }
@@ -22,10 +22,8 @@ namespace TestAnalyser.Model
 
         public int Matricula { get; set; }
         public string Email { get; set; }
-
+        public List<Disciplina> Disciplinas { get; set; }
         public List<Turma> Turmas { get; set; }
-
-        //public List<Prova> Provas { get; set; }
 
     }
 }

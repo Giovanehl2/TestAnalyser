@@ -244,7 +244,7 @@ namespace TestAnalyser.Model
             turma.Nome = "A";
             turma.Periodo = 4;
 
-            objApi.AlunoJson = alunosTurmaA;
+            //objApi.AlunoJson = alunosTurmaA;
             objApi.CursoJson = curso;
             objApi.DisciplinaJson = disciplina1;
             objApi.ProfessorJson = professor1;
@@ -281,7 +281,7 @@ namespace TestAnalyser.Model
             turma.Periodo = 4;
 
 
-            objApi.AlunoJson = alunosTurmaB;
+            //objApi.AlunoJson = alunosTurmaB;
             objApi.CursoJson = curso;
             objApi.DisciplinaJson = disciplina2;
             objApi.ProfessorJson = professor2;

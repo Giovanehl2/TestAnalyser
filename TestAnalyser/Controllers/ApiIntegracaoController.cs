@@ -22,8 +22,6 @@ namespace TestAnalyser.Controllers
         public static Turma turma = new Turma();
         public static Usuario usr = new Usuario();
 
-        public static List<Aluno> alunos = new List<Aluno>();
-
         public static Aluno alunoEdit = new Aluno();
         public static Professor professorEdit = new Professor();
         public static Disciplina disciplinaEdit = new Disciplina();
@@ -32,197 +30,18 @@ namespace TestAnalyser.Controllers
         public static Usuario usrEdit = new Usuario();
 
 
-        public static Boolean RelacionarObj(ObjApi objApi)
-        {
-            try
-            {
-                alunos.Clear();
-                /*Disciplina*/
-                disciplinaEdit = new Disciplina();
-                professorEdit = new Professor();
 
-                disciplinaEdit = DisciplinaDAO.BuscarPorNome(disciplina.Nome);
-
-                cursoEdit = CursoDAO.BuscarPorNome(curso.NomeCurso);
-                turmaEdit = TurmaDAO.BuscarTurmaNome(turma.NomeTurma);
-                professorEdit = ProfessorDAO.BuscarProfessorMatricula(professor.Matricula);
-
-                disciplinaEdit.Turmas.Add(turmaEdit);
-                disciplinaEdit.Cursos.Add(cursoEdit);
-                disciplinaEdit.Professores.Add(professorEdit);
-
-                /*edição para inclusão de uma Disciplina para o Professor*/
-                DisciplinaDAO.EditarDisciplina(disciplinaEdit);
-
-
-                /*Turma*/
-                turmaEdit = new Turma();
-                disciplinaEdit = new Disciplina();
-                alunoEdit = new Aluno();
-
-                disciplinaEdit = DisciplinaDAO.BuscarPorNome(disciplina.Nome);
-                turmaEdit = TurmaDAO.BuscarTurmaNome(turma.NomeTurma);
-                cursoEdit = CursoDAO.BuscarPorNome(curso.NomeCurso);
-
-                foreach (AlunoJson item in objApi.AlunoJson)
-                {
-                    alunos.Add(AlunoDAO.BuscarAlunoPorMatricula(item.Matricula));
-                }
-
-
-                turmaEdit.Curso = cursoEdit;
-                turmaEdit.Alunos = alunos; //insere todos alunos de uma vez
-                turmaEdit.Disciplinas.Add(disciplinaEdit);
-
-                TurmaDAO.EditarTurma(turmaEdit);
-
-                /*Curso*/
-                cursoEdit = new Curso();
-                turmaEdit = new Turma();
-                disciplinaEdit = new Disciplina();
-
-                cursoEdit = CursoDAO.BuscarPorNome(curso.NomeCurso);
-                disciplinaEdit = DisciplinaDAO.BuscarPorNome(disciplina.Nome);
-                turmaEdit = TurmaDAO.BuscarTurmaNome(turma.NomeTurma);
-                cursoEdit.Turmas.Add(turmaEdit);
-                cursoEdit.Disciplinas.Add(disciplinaEdit);
-
-                CursoDAO.EditarCurso(cursoEdit);
-
-
-
-
-                /* Aluno*/
-                turmaEdit = new Turma();
-                turmaEdit = TurmaDAO.BuscarTurmaNome(turma.NomeTurma);
-
-                foreach (AlunoJson item in objApi.AlunoJson)
-                {
-                    alunoEdit = new Aluno();
-
-                    alunoEdit = AlunoDAO.BuscarAlunoPorMatricula(item.Matricula);
-                    alunoEdit.Turmas.Add(turmaEdit);
-
-                    /*edição para inclusão de uma turma para o aluno*/
-                    AlunoDAO.EditarAluno(alunoEdit);
-                }
-
-
-
-                /*Professor*/
-                usrEdit = new Usuario();
-                disciplinaEdit = new Disciplina();
-                professorEdit = new Professor();
-
-                professorEdit = ProfessorDAO.BuscarProfessorMatricula(professor.Matricula);
-                disciplinaEdit = DisciplinaDAO.BuscarPorNome(disciplina.Nome);
-                professorEdit.Disciplinas.Add(disciplinaEdit);
-
-                /*edição para inclusão de uma Disciplina para o Professor*/
-                ProfessorDAO.EditarProfessor(professorEdit);
-            }
-
-            catch (Exception e)
-            {
-
-                Console.WriteLine("{0} Exception caught.", e);
-                return false;
-            }
-            return true;
-
-        }
         public static Boolean OrganizarObjParaPersistir(ObjApi objApi)
         {
             try
             {
-                foreach (AlunoJson objAluno in objApi.AlunoJson)
-                {
-                    aluno = new Aluno();
-
-                    aluno.CPF = objAluno.CPF;
-                    aluno.Nome = objAluno.Nome;
-                    aluno.Email = objAluno.Email;
-                    aluno.Matricula = objAluno.Matricula;
-                    //aluno.Provas = null;
-                    aluno.Turmas = null;
-
-                    usr.Login = Convert.ToString(aluno.Matricula);
-                    usr.Senha = null;
-                    usr.TipoUsr = 1;
-                    usr.Aluno = aluno;
-                    usr.Professor = null;
-                    usr.Admin = null;
+                CadastrarAluno(objApi);
+                CadastrarProfessor(objApi);
+                CadastrarCurso(objApi);
+                CadastrarTurma(objApi);
+                CadastrarDisciplina(objApi);
 
 
-                    /*verifica se o registro ja se encontra na base*/
-                    if (UsuarioDAO.BuscarUsuarioPorLogin(usr.Login) == null)
-                    {
-                        /*persiste usuario - Aluno*/
-                        UsuarioDAO.CadastrarUsuario(usr);
-                    }
-                }
-
-
-
-                usr = new Usuario();
-
-                professor.Matricula = objApi.ProfessorJson.Matricula;
-                professor.Nome = objApi.ProfessorJson.Nome;
-                professor.CPF = objApi.ProfessorJson.CPF;
-                professor.Email = objApi.ProfessorJson.Email;
-                professor.Provas = null;
-                professor.Disciplinas = null;
-
-
-                usr.Login = Convert.ToString(professor.Matricula);
-                usr.Senha = null;
-                usr.TipoUsr = 2;
-                usr.Professor = professor;
-                usr.Aluno = null;
-                usr.Admin = null;
-
-                /*verifica se o registro ja se encontra na base*/
-                if (UsuarioDAO.BuscarUsuarioPorLogin(usr.Login) == null)
-                {
-                    /*persiste usuario - Professor*/
-                    UsuarioDAO.CadastrarUsuario(usr);
-                }
-
-                disciplina.Nome = objApi.DisciplinaJson.Nome;
-                disciplina.Descricao = objApi.DisciplinaJson.Descricao;
-                disciplina.Turmas = null;
-
-                /*verifica se o registro ja se encontra na base*/
-                if (DisciplinaDAO.BuscarPorNome(disciplina.Nome) == null)
-                {
-                    /*persiste disciplina*/
-                    DisciplinaDAO.CadastrarDisciplina(disciplina);
-                }
-
-                turma.NomeTurma = objApi.TurmaJson.Nome;
-                turma.Periodo = objApi.TurmaJson.Periodo;
-                turma.Curso = curso;
-                turma.Curso = null;
-                turma.Alunos = null;
-                turma.Disciplinas = null;
-
-                /*verifica se o registro ja se encontra na base*/
-                if (TurmaDAO.BuscarTurmaNome(turma.NomeTurma) == null)
-                {
-                    TurmaDAO.CadastrarTurma(turma);
-
-                }
-                curso.NomeCurso = objApi.CursoJson.Nome;
-                curso.Descricao = objApi.CursoJson.Descricao;
-                curso.Turmas = null;/*preencher depois*/
-
-                /*verifica se o registro ja se encontra na base*/
-                if (CursoDAO.BuscarPorNome(curso.NomeCurso) == null)
-                {
-                    /*persiste Curso*/
-                    CursoDAO.CadastrarCurso(curso);
-
-                }
             }
             catch (Exception e)
             {
@@ -259,6 +78,491 @@ namespace TestAnalyser.Controllers
 
             }
 
+        }
+       
+        public static bool RelacionarObj(ObjApi objApi)
+        {
+            try
+            {
+                ManipularAluno(objApi);
+                ManipularDisciplina(objApi);
+                ManipularProfessor(objApi);
+                ManipularTurma(objApi);
+                ManipularCurso(objApi);
+
+            }
+
+            catch (Exception e)
+            {
+
+                Console.WriteLine("{0} Exception caught.", e);
+                return false;
+            }
+            return true;
+
+        }
+        private static void CadastrarAluno(ObjApi objApi)
+        {
+            aluno = new Aluno();
+            usr = new Usuario();
+
+            aluno.CPF = objApi.AlunoJson.CPF;
+            aluno.Nome = objApi.AlunoJson.Nome;
+            aluno.Email = objApi.AlunoJson.Email;
+            aluno.Matricula = objApi.AlunoJson.Matricula;
+            aluno.Turmas = null;
+            aluno.Disciplinas = null;
+
+            usr.Login = Convert.ToString(aluno.Matricula);
+            usr.Senha = null;
+            usr.TipoUsr = 1;
+            usr.Aluno = aluno;
+            usr.Professor = null;
+            usr.Admin = null;
+
+
+            /*verifica se o registro ja se encontra na base*/
+            if (UsuarioDAO.BuscarUsuarioPorLogin(usr.Login) == null)
+            {
+                /*persiste usuario - Aluno*/
+                UsuarioDAO.CadastrarUsuario(usr);
+            }
+
+        }
+
+        private static void CadastrarProfessor(ObjApi objApi)
+        {
+            usr = new Usuario();
+            professor = new Professor();
+
+            professor.Matricula = objApi.ProfessorJson.Matricula;
+            professor.Nome = objApi.ProfessorJson.Nome;
+            professor.CPF = objApi.ProfessorJson.CPF;
+            professor.Email = objApi.ProfessorJson.Email;
+            professor.Provas = null;
+            professor.Disciplinas = null;
+
+
+            usr.Login = Convert.ToString(professor.Matricula);
+            usr.Senha = null;
+            usr.TipoUsr = 2;
+            usr.Professor = professor;
+            usr.Aluno = null;
+            usr.Admin = null;
+
+            /*verifica se o registro ja se encontra na base*/
+            if (UsuarioDAO.BuscarUsuarioPorLogin(usr.Login) == null)
+            {
+                /*persiste usuario - Professor*/
+                UsuarioDAO.CadastrarUsuario(usr);
+            }
+        }
+
+
+        private static void CadastrarDisciplina(ObjApi objApi)
+        {
+            disciplina = new Disciplina();
+
+            disciplina.Nome = objApi.DisciplinaJson.Nome;
+            disciplina.Descricao = objApi.DisciplinaJson.Descricao;
+            disciplina.Turmas = null;
+            disciplina.Professores = null;
+            disciplina.Alunos = null;
+
+            /*verifica se o registro ja se encontra na base*/
+            if (DisciplinaDAO.BuscarPorNome(disciplina.Nome) == null)
+            {
+                /*persiste disciplina*/
+                DisciplinaDAO.CadastrarDisciplina(disciplina);
+            }
+        }
+        private static void CadastrarTurma(ObjApi objApi)
+        {
+            turma = new Turma();
+
+            turma.NomeTurma = objApi.TurmaJson.Nome;
+            turma.Periodo = objApi.TurmaJson.Periodo;
+            turma.Curso = null;
+            turma.Alunos = null;
+            turma.Disciplinas = null;
+
+            /*verifica se o registro ja se encontra na base*/
+            if (TurmaDAO.BuscarTurmaNome(turma.NomeTurma) == null)
+            {
+                TurmaDAO.CadastrarTurma(turma);
+
+            }
+
+        }
+
+        private static void CadastrarCurso(ObjApi objApi)
+        {
+            curso = new Curso();
+
+            curso.NomeCurso = objApi.CursoJson.Nome;
+            curso.Descricao = objApi.CursoJson.Descricao;
+            curso.Disciplinas = null;
+            curso.Turmas = null;
+
+            /*verifica se o registro ja se encontra na base*/
+            if (CursoDAO.BuscarPorNome(curso.NomeCurso) == null)
+            {
+                /*persiste Curso*/
+                CursoDAO.CadastrarCurso(curso);
+
+            }
+        }
+
+        private static void ManipularTurma(ObjApi objApi)
+        {
+            turmaEdit = new Turma();
+            disciplinaEdit = new Disciplina();
+            alunoEdit = new Aluno();
+            cursoEdit = new Curso();
+
+            disciplinaEdit = DisciplinaDAO.BuscarPorNome(objApi.DisciplinaJson.Nome);
+            turmaEdit = TurmaDAO.BuscarTurmaNome(objApi.TurmaJson.Nome);
+            cursoEdit = CursoDAO.BuscarPorNome(objApi.CursoJson.Nome);
+
+
+            alunoEdit = AlunoDAO.BuscarAlunoPorMatricula(objApi.AlunoJson.Matricula);
+
+            turmaEdit.Curso = cursoEdit;
+
+            //flag para fazer a validação de inclusão de registro
+            bool cadastrar = true;
+            if (turmaEdit.Alunos != null && turmaEdit.Alunos.Count() > 1)
+            {
+                foreach (Aluno obj in turmaEdit.Alunos)
+                {
+                    if (obj.Matricula.Equals(alunoEdit.Matricula)){
+                        cadastrar = false;
+                        break;
+                    }
+                        
+                }
+
+            }
+            if (cadastrar)
+            turmaEdit.Alunos.Add(alunoEdit);
+
+
+            cadastrar = true;
+
+            if (turmaEdit.Disciplinas != null && turmaEdit.Disciplinas.Count() > 1)
+            {
+                foreach (Disciplina obj in turmaEdit.Disciplinas)
+                {
+                    if (obj.Nome.Equals(disciplinaEdit.Nome))
+                    {
+                        cadastrar = false;
+                        break;
+                    }
+
+                }
+
+            }
+            if (cadastrar)
+                turmaEdit.Disciplinas.Add(disciplinaEdit);
+
+
+            TurmaDAO.EditarTurma(turmaEdit);
+
+        }
+
+        private static void ManipularCurso(ObjApi objApi)
+        {
+
+            cursoEdit = new Curso();
+            turmaEdit = new Turma();
+            disciplinaEdit = new Disciplina();
+
+            cursoEdit = CursoDAO.BuscarPorNome(objApi.CursoJson.Nome);
+            disciplinaEdit = DisciplinaDAO.BuscarPorNome(objApi.DisciplinaJson.Nome);
+            turmaEdit = TurmaDAO.BuscarTurmaNome(objApi.TurmaJson.Nome);
+
+            //flag para fazer a validação de inclusão de registro
+            bool cadastrar = true;
+            if (cursoEdit.Turmas != null && cursoEdit.Turmas.Count() > 1)
+            {
+                foreach (Turma obj in cursoEdit.Turmas)
+                {
+                    if (obj.NomeTurma.Equals(turmaEdit.NomeTurma))
+                    {
+                        cadastrar = false;
+                        break;
+                    }
+
+                }
+
+            }
+            if (cadastrar)
+                cursoEdit.Turmas.Add(turmaEdit);
+
+
+            //flag para fazer a validação de inclusão de registro
+            cadastrar = true;
+            if (cursoEdit.Disciplinas != null && cursoEdit.Disciplinas.Count() > 1)
+            {
+                foreach (Disciplina obj in cursoEdit.Disciplinas)
+                {
+                    if (obj.Nome.Equals(disciplinaEdit.Nome))
+                    {
+                        cadastrar = false;
+                        break;
+                    }
+
+                }
+
+            }
+            if (cadastrar)
+            cursoEdit.Disciplinas.Add(disciplinaEdit);
+
+            CursoDAO.EditarCurso(cursoEdit);
+
+        }
+        private static void ManipularAluno(ObjApi objApi)
+        {
+            turmaEdit = new Turma();
+            alunoEdit = new Aluno();
+            disciplinaEdit = new Disciplina();
+            cursoEdit = new Curso();
+            professorEdit = new Professor();
+
+            turmaEdit = TurmaDAO.BuscarTurmaNome(objApi.TurmaJson.Nome);
+            alunoEdit = AlunoDAO.BuscarAlunoPorMatricula(objApi.AlunoJson.Matricula);
+            disciplinaEdit = DisciplinaDAO.BuscarPorNome(objApi.DisciplinaJson.Nome);
+            cursoEdit = CursoDAO.BuscarPorNome(objApi.CursoJson.Nome);
+            professorEdit = ProfessorDAO.BuscarProfessorMatricula(objApi.ProfessorJson.Matricula);
+
+            //flag para fazer a validação de inclusão de registro
+            bool cadastrar = true;
+            if (turmaEdit.Disciplinas != null && turmaEdit.Disciplinas.Count() > 1)
+            {
+                foreach (Disciplina obj in turmaEdit.Disciplinas)
+                {
+                    if (obj.Nome.Equals(disciplinaEdit.Nome))
+                    {
+                        cadastrar = false;
+                        break;
+                    }
+
+                }
+
+            }
+            if (cadastrar)
+            turmaEdit.Disciplinas.Add(disciplinaEdit);
+
+            cadastrar = true;
+            if (disciplinaEdit.Alunos != null && disciplinaEdit.Alunos.Count() > 1)
+            {
+                foreach (Aluno obj in disciplinaEdit.Alunos)
+                {
+                    if (obj.Nome.Equals(alunoEdit.Nome))
+                    {
+                        cadastrar = false;
+                        break;
+                    }
+
+                }
+
+            }
+            if (cadastrar)
+                disciplinaEdit.Alunos.Add(alunoEdit);
+
+
+            cadastrar = true;
+            if (disciplinaEdit.Turmas != null && disciplinaEdit.Turmas.Count() > 1)
+            {
+                foreach (Turma obj in disciplinaEdit.Turmas)
+                {
+                    if (obj.NomeTurma.Equals(turmaEdit.NomeTurma))
+                    {
+                        cadastrar = false;
+                        break;
+                    }
+
+                }
+
+            }
+            if (cadastrar)
+                disciplinaEdit.Turmas.Add(turmaEdit);
+
+
+            cadastrar = true;
+            if (disciplinaEdit.Professores != null && disciplinaEdit.Professores.Count() > 1)
+            {
+                foreach (Professor obj in disciplinaEdit.Professores)
+                {
+                    if (obj.Matricula.Equals(professorEdit.Matricula))
+                    {
+                        cadastrar = false;
+                        break;
+                    }
+
+                }
+
+            }
+            if (cadastrar)
+                disciplinaEdit.Professores.Add(professorEdit);
+
+
+
+            cadastrar = true;
+            if (disciplinaEdit.Cursos != null && disciplinaEdit.Cursos.Count() > 1)
+            {
+                foreach (Curso obj in disciplinaEdit.Cursos)
+                {
+                        if (obj.NomeCurso.Equals(cursoEdit.NomeCurso))
+                        {
+                            cadastrar = false;
+                            break;
+                        }
+                }
+
+            }
+            if (cadastrar)
+                disciplinaEdit.Cursos.Add(cursoEdit);
+
+
+            cadastrar = true;
+            if (alunoEdit.Turmas != null && alunoEdit.Turmas.Count() > 1)
+            {
+                foreach (Turma obj in alunoEdit.Turmas)
+                {
+                    if (obj.NomeTurma.Equals(turmaEdit.NomeTurma))
+                    {
+                        cadastrar = false;
+                        break;
+                    }
+                }
+
+            }
+            if (cadastrar)
+                alunoEdit.Turmas.Add(turmaEdit);
+
+
+
+            disciplinaEdit.Provas = null;
+            
+            alunoEdit.Disciplinas = new List<Disciplina>();
+
+
+            cadastrar = true;
+            if (alunoEdit.Disciplinas != null && alunoEdit.Disciplinas.Count() > 1)
+            {
+                foreach (Disciplina obj in alunoEdit.Disciplinas)
+                {
+                    if (obj.Nome.Equals(disciplinaEdit.Nome))
+                    {
+                        cadastrar = false;
+                        break;
+                    }
+                }
+
+            }
+            if (cadastrar)
+                alunoEdit.Disciplinas.Add(disciplinaEdit);
+
+
+
+            AlunoDAO.EditarAluno(alunoEdit);
+        }
+        private static void ManipularProfessor(ObjApi objApi)
+        {
+            usrEdit = new Usuario();
+            disciplinaEdit = new Disciplina();
+            professorEdit = new Professor();
+
+            professorEdit = ProfessorDAO.BuscarProfessorMatricula(objApi.ProfessorJson.Matricula);
+            disciplinaEdit = DisciplinaDAO.BuscarPorNome(objApi.DisciplinaJson.Nome);
+
+            bool cadastrar = true;
+            if (professorEdit.Disciplinas != null && professorEdit.Disciplinas.Count() > 1)
+            {
+                foreach (Disciplina obj in professorEdit.Disciplinas)
+                {
+                    if (obj.Nome.Equals(disciplinaEdit.Nome))
+                    {
+                        cadastrar = false;
+                        break;
+                    }
+                }
+            }
+            if (cadastrar)
+            professorEdit.Disciplinas.Add(disciplinaEdit);
+
+            /*edição para inclusão de uma Disciplina para o Professor*/
+            ProfessorDAO.EditarProfessor(professorEdit);
+        }
+
+        private static void ManipularDisciplina(ObjApi objApi)
+        {
+            /*Disciplina*/
+            disciplinaEdit = new Disciplina();
+            professorEdit = new Professor();
+            alunoEdit = new Aluno();
+            cursoEdit = new Curso();
+
+            alunoEdit = AlunoDAO.BuscarAlunoPorMatricula(objApi.AlunoJson.Matricula);
+            disciplinaEdit = DisciplinaDAO.BuscarPorNome(objApi.DisciplinaJson.Nome);
+
+            cursoEdit = CursoDAO.BuscarPorNome(objApi.CursoJson.Nome);
+            turmaEdit = TurmaDAO.BuscarTurmaNome(objApi.TurmaJson.Nome);
+            professorEdit = ProfessorDAO.BuscarProfessorMatricula(objApi.ProfessorJson.Matricula);
+
+
+
+            bool cadastrar = true;
+            if (disciplinaEdit.Turmas != null && disciplinaEdit.Turmas.Count() > 1)
+            {
+                foreach (Turma obj in disciplinaEdit.Turmas)
+                {
+                    if (obj.NomeTurma.Equals(turmaEdit.NomeTurma))
+                    {
+                        cadastrar = false;
+                        break;
+                    }
+                }
+            }
+            if (cadastrar)
+                disciplinaEdit.Turmas.Add(turmaEdit);
+
+
+            cadastrar = true;
+            if (disciplinaEdit.Cursos != null && disciplinaEdit.Cursos.Count() > 1)
+            {
+                foreach (Curso obj in disciplinaEdit.Cursos)
+                {
+                    if (obj.NomeCurso.Equals(cursoEdit.NomeCurso))
+                    {
+                        cadastrar = false;
+                        break;
+                    }
+                }
+            }
+            if (cadastrar)
+            disciplinaEdit.Cursos.Add(cursoEdit);
+
+
+            cadastrar = true;
+            if (disciplinaEdit.Professores != null && disciplinaEdit.Professores.Count() > 1)
+            {
+                foreach (Professor obj in disciplinaEdit.Professores)
+                {
+                    if (obj.Matricula.Equals(professorEdit.Matricula))
+                    {
+                        cadastrar = false;
+                        break;
+                    }
+                }
+            }
+            if (cadastrar)
+            disciplinaEdit.Professores.Add(professorEdit);
+
+
+            /*edição para inclusão de uma Disciplina para o Professor*/
+            DisciplinaDAO.EditarDisciplina(disciplinaEdit);
         }
     }
 }

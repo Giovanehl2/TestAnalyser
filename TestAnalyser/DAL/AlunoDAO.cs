@@ -10,16 +10,16 @@ namespace TestAnalyser.DAL
     public class AlunoDAO
     {
         private static Context ctx = SingletonContext.GetInstance();
-        public static bool CadastrarAluno(Aluno usr)
+        public static bool CadastrarAluno(Aluno aluno)
         {
-            ctx.Alunos.Add(usr);
+            ctx.Alunos.Add(aluno);
             ctx.SaveChanges();
             return true;
         }
 
-        public static bool EditarAluno(Aluno usr)
+        public static bool EditarAluno(Aluno aluno)
         {
-            ctx.Entry(usr).State = System.Data.Entity.EntityState.Modified;
+            ctx.Entry(aluno).State = System.Data.Entity.EntityState.Modified;
             ctx.SaveChanges();
             return true;
         }

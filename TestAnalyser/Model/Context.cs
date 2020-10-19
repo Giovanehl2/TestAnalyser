@@ -37,11 +37,4 @@ namespace TestAnalyser.Model
         Unistall-Package EntityFramework 
      */
 
-    /*
-     1) curso - disciplinas - turmas objeto json relacionando 
-     2) professores serão associados as disciplinas de acordo com o objeto json
-     3) alunos serão associados a turma  "com base em curso e periodo"
-     4) 
-     
-     */
 }
