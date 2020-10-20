@@ -33,6 +33,8 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <DocumentationFile>
+    </DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -171,6 +173,9 @@
     <Reference Include="System.Web.Http.OData, Version=5.7.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.WebApi.OData.5.7.0\lib\net45\System.Web.Http.OData.dll</HintPath>
     </Reference>
+    <Reference Include="System.Web.Http.WebHost, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.WebHost.4.0.30506.0\lib\net40\System.Web.Http.WebHost.dll</HintPath>
+    </Reference>
     <Reference Include="System.Web.Mvc, Version=5.2.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.Mvc.5.2.7\lib\net45\System.Web.Mvc.dll</HintPath>
     </Reference>
@@ -196,6 +201,9 @@
     <Reference Include="System.Configuration" />
     <Reference Include="System.Web.Services" />
     <Reference Include="System.EnterpriseServices" />
+    <Reference Include="WebActivatorEx, Version=2.0.0.0, Culture=neutral, PublicKeyToken=7b26dc2a43f6a0d4, processorArchitecture=MSIL">
+      <HintPath>..\packages\WebActivatorEx.2.0\lib\net40\WebActivatorEx.dll</HintPath>
+    </Reference>
     <Reference Include="WebGrease, Version=1.6.5135.21930, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\WebGrease.1.6.0\lib\WebGrease.dll</HintPath>
     </Reference>
@@ -272,17 +280,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202009032204188_teste.cs" />
-    <Compile Include="Migrations\202009032204188_teste.designer.cs">
-      <DependentUpon>202009032204188_teste.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202009032321265_teste22.cs" />
-    <Compile Include="Migrations\202009032321265_teste22.designer.cs">
-      <DependentUpon>202009032321265_teste22.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202010150217000_teste4343443.cs" />
-    <Compile Include="Migrations\202010150217000_teste4343443.designer.cs">
-      <DependentUpon>202010150217000_teste4343443.cs</DependentUpon>
+    <Compile Include="Migrations\202010180328162_teste.cs" />
+    <Compile Include="Migrations\202010180328162_teste.designer.cs">
+      <DependentUpon>202010180328162_teste.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Model\Admin.cs" />
@@ -365,14 +365,8 @@
     <Folder Include="Data\" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202009032204188_teste.resx">
-      <DependentUpon>202009032204188_teste.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202009032321265_teste22.resx">
-      <DependentUpon>202009032321265_teste22.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202010150217000_teste4343443.resx">
-      <DependentUpon>202010150217000_teste4343443.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202010180328162_teste.resx">
+      <DependentUpon>202010180328162_teste.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

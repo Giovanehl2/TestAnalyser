@@ -35,6 +35,7 @@ namespace TestAnalyser.Controllers
         {
             try
             {
+                /* persiste o objeto vindo da api*/
                 CadastrarAluno(objApi);
                 CadastrarProfessor(objApi);
                 CadastrarCurso(objApi);
