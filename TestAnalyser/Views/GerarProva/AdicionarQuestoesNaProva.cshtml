@@ -6,7 +6,7 @@
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 
-@{ 
+@{
     var count = 0;
 }
 
@@ -20,46 +20,41 @@
     @{
         foreach (var item in @Model.NotasQuestoes)
         {
-            string teste = " ";
+            string Texto = " ";
             if (item.Questao.TipoQuestao == 1)
             {
-                teste = "<b>Questão "+ (count + 1) +": Simples Escolha</b>";
+                Texto = "<b>Questão " + (count + 1) + ": Simples Escolha</b>";
             }
             if (item.Questao.TipoQuestao == 2)
             {
-                teste = "<b>Questão " + (count + 1) + ": Multipla Escolha</b>";
+                Texto = "<b>Questão " + (count + 1) + ": Multipla Escolha</b>";
             }
             if (item.Questao.TipoQuestao == 3)
             {
-                teste = "<b>Questão " + (count + 1) + ": Verdadeiro ou Falso</b>";
+                Texto = "<b>Questão " + (count + 1) + ": Verdadeiro ou Falso</b>";
             }
             if (item.Questao.TipoQuestao == 4)
             {
-                teste = "<b>Questão " + (count + 1) + ": Discursiva</b>";
+                Texto = "<b>Questão " + (count + 1) + ": Discursiva</b>";
             }
 
             <div class="col-md-12">
 
-                <div class="row">
+                <div class="row" id="EssaDIV">
                     <div class="col-md-8">
-
-                        @Html.Raw(@teste)
-
-                        <input class="form-control" type="hidden" id="NotaQ" name="idquestao" value="@item.Questao.QuestaoId" required />
-
+                        @Html.Raw(@Texto)
+                        <input class="form-control" type="hidden" id="idquestao" name="idquestao" value="@item.Questao.QuestaoId" required />
                     </div>
                     <br />
                     <br />
                     <div class="col-md-8">
-
                         @Html.Raw(item.Questao.Enunciado)
-
-                        <input class="form-control" type="hidden" id="NotaQ" name="idquestao" value="@item.Questao.QuestaoId" required />
+                        <input class="form-control" type="hidden" id="idquestao" name="idquestao" value="@item.Questao.QuestaoId" required />
                     </div>
-
                     <div class="col-md-1">
                         <h6>Nota: </h6>
                         <input class="form-control" type="number" id="NotaQ" name="notas" value="@item.ValorQuestao" required />
+                        @Html.Hidden("NotaProva", Model.ValorProva)
                     </div>
 
                 </div>
@@ -68,37 +63,34 @@
         }
     }
     <br />
-    <div class="row">
-        <div class="col-md-2">
+    <div class="row" id="DivFinal">
+        <div class="col-md-2" id="divConfirma">
             <label>Total Questões: @count</label>
             <button witdh="50" title="Confirmar prova" type="submit" class="btn btn-primary">Confirmar Prova</button>
+        </div>
+        <div class="col-md-2" style="Display: none" id="divErroNota">
+            @Html.Raw("A Soma das Notas deve ser igual á: " + Model.ValorProva)
         </div>
         <div class="col-md-6"></div>
         <div class="col-md-2">
             <label>Total Nota:</label>
             <input class="form-control" type="number" id="NotaTotal" required />
+
         </div>
     </div>
-    @*<br />
-        <div class="col-md-12">
-            <button witdh="50" title="Confirmar prova" type="submit" class="btn btn-primary">Confirmar Prova</button>
-        </div>*@
 </form>
 
 <script>
+    window.load = CalculaNotaTotal();
+
     function TrocarQuestao() {
 
         $.ajax({
-
             type: "GET",
-
             url: "/GerarProva/RegerarQuestoes",
-
             contentType: "application/json",
-
             success: function (data) {
             }
-
         });
         location.reload();
     }
@@ -106,23 +98,36 @@
     function VoltarPagina() {
 
         $.ajax({
-
             type: "GET",
-
             url: "/GerarProva/Voltar",
-
-
             success: function (data) {
                 window.location.href = "/GerarProva/GerarProva";
-
             }
-
-
         });
-
         location.reload();
-
     }
 
+    $("#EssaDIV #NotaQ").focusout(function () {
+        CalculaNotaTotal();
+    });
+
+    function CalculaNotaTotal() {
+        var Total = 0.0;
+        var ValorProva = $("#EssaDIV #NotaProva").val();
+        $("#EssaDIV #NotaQ").each(function () {
+            var qtd = $(this).val();
+            Total = parseFloat(Total) + parseFloat(qtd);
+        });
+        $("#NotaTotal").val(parseFloat(Total));
+        if (Total != ValorProva) {
+            $("#DivFinal #NotaTotal").css('color', 'red');
+            document.getElementById("divConfirma").style.display = "none";
+            document.getElementById("divErroNota").style.display = "block";
+        } else {
+            $("#DivFinal #NotaTotal").css('color', 'black');
+            document.getElementById("divConfirma").style.display = "block";
+            document.getElementById("divErroNota").style.display = "none";
+        }
+    }
 
 </script>

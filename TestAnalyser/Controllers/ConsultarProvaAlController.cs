@@ -89,8 +89,8 @@ namespace TestAnalyser.Controllers
         public ActionResult VisualizarProva(int idProva)
         {
             ViewBag.RespostasAluno = ProvaDAO.BuscarRespostasPorAluno(Convert.ToInt32(Session["IdUsr"]), idProva);
-
-            return View(new Prova());
+            Prova prova = ProvaDAO.BuscarProvaId(idProva);
+            return View(prova);
         }
 
         public ActionResult FinalizarProva() {

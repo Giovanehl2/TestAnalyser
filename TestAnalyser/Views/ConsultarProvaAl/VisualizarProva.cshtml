@@ -7,23 +7,21 @@
     var cq = 1;
 }
 
-<script src="ckeditor/ckeditor.js"></script>
 <div id="divSE" class="">
-    <h5>Tipo: Simples-Escolha</h5>
-    <br />
-    <form class="form-horizontal" name="form1" id="form" method="post" action="@Url.Action("SalvarProva", "ConsultarProvaAl")">
-        @foreach (var x in Model.NotasQuestoes.Where(y => y.Questao.TipoQuestao == 1).ToList())
+    <form class="form-horizontal" name="form1" id="form" @*method="post" action="@Url.Action("SalvarProva", "ConsultarProvaAl")*@>
+        @foreach (var x in Model.NotasQuestoes.Where(y => y.Questao.TipoQuestao == 1).ToList()) //VERIFICAR O MODELO, QUE ESTÁ VINDO VAZIO.
         {
+            <br />
             <div class="form-row">
                 <div class="col-md-4">
-                    <h6>Questão @count</h6>
+                    <h6><b>Questão @count</b></h6>
                 </div>
 
             </div>
             <br />
             <div class="form-row">
                 <div class="col-md-8">
-                    
+
                     @Html.Raw(x.Questao.Enunciado)
                 </div>
             </div>
@@ -32,22 +30,20 @@
                 @Html.Hidden("TipoQuestao", x.Questao.TipoQuestao)
             </div>
             <br />
-            <br />
             <div class="form-row">
                 <div class="col-md-3">
-                    <label for="">Alternativas:</label>
+                    <label for=""><b>Alternativas:</b></label>
                 </div>
             </div>
-            <br />
             <div id="DivAlternativas">
                 @for (int i = 0; i < x.Questao.Alternativas.Count; i++)
                 {
-                <div class="form-row">
-                    @Html.Hidden("AlternativaCorreta", x.Questao.Alternativas[i].correto)
-                    @Html.RadioButton("AlternativaId" + "SE" + count, x.Questao.Alternativas[i].AlternativaId, new { disabled = "disabled" })
-                    <label for="">@(i+1)) </label>
-                    @Html.EditorFor(model => x.Questao.Alternativas[i].DescAlternativa, null, "DescAlternativa", new { htmlAttributes = new { @class = "form-control col-md-6", @readonly = "True" } })
-                </div>
+                    <div class="form-row">
+                        @Html.Hidden("AlternativaCorreta", x.Questao.Alternativas[i].correto)
+                        @Html.RadioButton("AlternativaId" + "SE" + count, x.Questao.Alternativas[i].AlternativaId, new { disabled = "disabled" })
+                        <label for="">@(i+1)) </label>
+                        @Html.Raw(x.Questao.Alternativas[i].DescAlternativa)
+                    </div>
                 }
             </div>
             <br />
@@ -56,20 +52,21 @@
         <br />
         @foreach (var x in Model.NotasQuestoes.Where(y => y.Questao.TipoQuestao == 2).ToList())
         {
+            <br />
             <div class="form-row">
                 <div class="col-md-4">
-                    <h6>Questão @count</h6>
+                    <h6><b>Questão @count</b></h6>
                 </div>
                 @*<div class="form-row">
-                      <button witdh="50" id="btnSalvar" type="submit" class="btn btn-primary btn-sm">Salvar</button>
-                </div>*@
+                          <button witdh="50" id="btnSalvar" type="submit" class="btn btn-primary btn-sm">Salvar</button>
+                    </div>*@
             </div>
             <br />
             <div class="form-row">
                 <div class="col-md-8">
 
                     @Html.Raw(x.Questao.Enunciado)
-                   
+
                 </div>
             </div>
             <div class="col-md-2">
@@ -77,32 +74,19 @@
                 @Html.Hidden("TipoQuestao", x.Questao.TipoQuestao)
             </div>
             <br />
-            <br />
-            <div id="Divopcoes">
-                @for (int i = 0; i < x.Questao.Opcoes.Count; i++)
-                {
-                    <div class="form-row">
-                        @Html.Hidden("OpcaoId", x.Questao.Opcoes[i].OpcaoId)
-                        <label for="">@(i+1)) </label>
-                        @Html.EditorFor(model => x.Questao.Opcoes[i].descricao, null, "descricao", new { htmlAttributes = new { @class = "form-control col-md-6", @readonly = "True" } })
-                    </div>
-                }
-            </div>
-            <br />
-            <br />
             <div class="form-row">
                 <div class="col-md-3">
-                    <label for="">Alternativas:</label>
+                    <label for=""><b>Alternativas:</b></label>
                 </div>
             </div>
-            <br />
             <div id="DivAlternativas">
                 @for (int i = 0; i < x.Questao.Alternativas.Count; i++)
                 {
                     <div class="form-row">
+                        @Html.Hidden("AlternativaCorreta", x.Questao.Alternativas[i].correto)
                         @Html.CheckBox("AlternativaId" + "ME" + count, new { disabled = "disabled" })
                         <label for="">@(i+1)) </label>
-                        @Html.EditorFor(model => x.Questao.Alternativas[i].DescAlternativa, null, "DescAlternativa", new { htmlAttributes = new { @class = "form-control col-md-6", @readonly = "True" } })
+                        @Html.Raw(x.Questao.Alternativas[i].DescAlternativa)
                     </div>
                 }
             </div>
@@ -112,20 +96,21 @@
         <br />
         @foreach (var x in Model.NotasQuestoes.Where(y => y.Questao.TipoQuestao == 3).ToList())
         {
+            <br />
             <div class="form-row">
                 <div class="col-md-4">
-                    <h6>Questão @count</h6>
+                    <h6><b>Questão @count</b></h6>
                 </div>
                 @*<div class="form-row">
-                      <button witdh="50" id="btnSalvar" type="submit" class="btn btn-primary btn-sm">Salvar</button>
-                </div>*@
+                          <button witdh="50" id="btnSalvar" type="submit" class="btn btn-primary btn-sm">Salvar</button>
+                    </div>*@
             </div>
             <br />
             <div class="form-row">
                 <div class="col-md-8">
-                    
+
                     @Html.Raw(x.Questao.Enunciado)
-                   
+
                 </div>
             </div>
             <div class="col-md-2">
@@ -133,49 +118,38 @@
                 @Html.Hidden("TipoQuestao", x.Questao.TipoQuestao)
             </div>
             <br />
-            <br />
-            <div id="Divopcoes">
-                @for (int i = 0; i < x.Questao.Opcoes.Count; i++)
-                {
-                    <div class="form-row">
-                        @Html.Hidden("OpcaoId", x.Questao.Opcoes[i].OpcaoId)
-                        <label for="">@(i+1)) </label>
-                        @Html.EditorFor(model => x.Questao.Opcoes[i].descricao, null, "descricao", new { htmlAttributes = new { @class = "form-control col-md-6", @readonly = "True" } })
-                    </div>
-                }
-            </div>
-            <br />
-            <br />
             <div class="form-row">
                 <div class="col-md-3">
-                    <label for="">Alternativas:</label>
+                    <label for=""><b>Alternativas:</b></label>
                 </div>
             </div>
-            <br />
             <div id="DivAlternativas">
                 @for (int i = 0; i < x.Questao.Alternativas.Count; i++)
                 {
                     <div class="form-row">
+                        @Html.Hidden("AlternativaCorreta", x.Questao.Alternativas[i].correto)
                         @Html.RadioButton("AlternativaId" + "VF" + count, x.Questao.Alternativas[i].AlternativaId, new { disabled = "disabled" })
                         <label for="">@(i+1)) </label>
-                        @Html.EditorFor(model => x.Questao.Alternativas[i].DescAlternativa, null, "DescAlternativa", new { htmlAttributes = new { @class = "form-control col-md-6", @readonly = "True" } })
+                        @Html.Raw(x.Questao.Alternativas[i].DescAlternativa)
                     </div>
                 }
             </div>
             <br />
             <script>@(count = count + 1) </script>
         }
+        <br />
         @foreach (var x in Model.NotasQuestoes.Where(y => y.Questao.TipoQuestao == 4).ToList())
         {
+            <br />
             <div class="form-row">
                 <div class="col-md-4">
-                    <h6>Questão @count</h6>
+                    <h6><b>Questão @count</b></h6>
                 </div>
             </div>
             <br />
             <div class="form-row">
                 <div class="col-md-8">
-                    
+
                     @Html.Raw(x.Questao.Enunciado)
                 </div>
             </div>
@@ -183,7 +157,6 @@
                 @Html.Hidden("QuestaoId", x.Questao.QuestaoId)
                 @Html.Hidden("TipoQuestao", x.Questao.TipoQuestao)
             </div>
-            <br />
             <br />
             <div class="form-row">
                 <div class="col-md-3">
@@ -204,11 +177,10 @@
     </form>
 </div>
 
-@Scripts.Render("~/bundles/jquery")
-<script type="text/javascript" src="//tinymce.cachefly.net/4.0/tinymce.min.js"></script>
-<script type="text/javascript">
-    tinymce.init({ selector: 'textarea#EnunciadoDT', width: 500 });
-    tinymce.init({ selector: 'textarea#EnunciadoVF', width: 500 });
-    tinymce.init({ selector: 'textarea#EnunciadoME', width: 500 });
-    tinymce.init({ selector: 'textarea#EnunciadoSE', width: 500 });
+<script>
+    window.load();
+
+    function MarcarCorretas() {
+
+    }
 </script>
