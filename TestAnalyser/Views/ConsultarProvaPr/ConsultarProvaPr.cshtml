@@ -147,7 +147,7 @@
                         {
                             if (item.DataProvaInicio == item.DataProvaFim)
                             {
-                                dataProva = DateTime.Parse(@item.DataProvaInicio).ToString("dd-MM-yyyy");
+                                dataProva = @item.DataProvaInicio.ToString("dd/MM/yyyy");
                             }
                             else
                             {

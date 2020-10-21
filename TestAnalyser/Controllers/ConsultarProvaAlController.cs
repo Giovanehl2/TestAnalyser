@@ -88,6 +88,14 @@ namespace TestAnalyser.Controllers
 
         public ActionResult VisualizarProva(int idProva)
         {
+            //Verificar se o AlunoID ja realizou a prova...
+            int AlunoID = Convert.ToInt32(Session["IdUsr"]);
+            if (!RespostasAlunoDAO.VerificarSeProvaFeita(idProva, AlunoID))
+            {
+                TempData["$ProvaJaFeita$"] = "Só é possivel visualizar a prova depois de concluída.";
+                return RedirectToAction("ConsultarProvaAl", "ConsultarProvaAl");
+            }
+
             ViewBag.RespostasAluno = ProvaDAO.BuscarRespostasPorAluno(Convert.ToInt32(Session["IdUsr"]), idProva);
             Prova prova = ProvaDAO.BuscarProvaId(idProva);
             return View(prova);
