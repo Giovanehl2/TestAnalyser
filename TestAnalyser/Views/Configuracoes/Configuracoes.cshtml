@@ -85,8 +85,11 @@
             <br />
             <div class="col-md-2">
                 <button witdh="50" id="btnSalvar" type="submit" class="btn btn-primary btn-sm">Salvar</button>
+
+
             </div>
         </form>
+        <button witdh="50" id="btnImportar" type="submit" onclick="ImportarDados()" class="btn btn-primary btn-sm">Importar agora</button>
         <br />
     </div>
 </div>
@@ -117,4 +120,15 @@
         $('#SincOK').modal('show');
     }
 
+    function ImportarDados() {
+
+        $.ajax({
+            type: "GET",
+            url: "/Configuracoes/ImportarDadosApi",
+            success: function (data) {
+                alert(data);
+            }
+        });
+        location.reload();
+    }
 </script>

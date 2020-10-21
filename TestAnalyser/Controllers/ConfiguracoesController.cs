@@ -24,5 +24,14 @@ namespace TestAnalyser.Controllers
 
             return RedirectToAction("Configuracoes", "Configuracoes");
         }
+
+        public string ImportarDadosApi()
+        {
+            
+           if (ApiIntegracaoController.Importar(AdminDAO.BuscarConfiguracoes()))
+            return "Carga realizada com sucesso";
+
+            return "Erro inesperado durante a carga, favor entrar em contato com o suporte!";
+        }
     }
 }

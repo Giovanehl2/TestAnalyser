@@ -46,21 +46,22 @@ namespace TestAnalyser.Controllers
             }
             catch (Exception e)
             {
-
                 Console.WriteLine("{0} Exception caught.", e);
                 return false;
             }
             return true;
         }
-        public static void Importar()
+        public static bool Importar(Configuracao config)
         {
             List<ObjApi> objApi = new List<ObjApi>();
-
+            bool sucesso = true;
 
             using (var client = new WebClient { Encoding = System.Text.Encoding.UTF8 })
             {
-                String json = client.DownloadString("http://localhost:44351/api/values");
-                var serializer = new JavaScriptSerializer();
+                   //carrega url da base
+                   String json = client.DownloadString(config.UrlApi);
+                   // String json = client.DownloadString("http://localhost:44351/api/values");
+                   var serializer = new JavaScriptSerializer();
 
                 json = json.TrimStart('\"');
                 json = json.TrimEnd('\"');
@@ -69,15 +70,13 @@ namespace TestAnalyser.Controllers
 
                 foreach (ObjApi item in objApi)
                 {
-
                     /*posteriormente podemos realizar o log dos itens registrados ou não no import*/
-                    OrganizarObjParaPersistir(item);
-                    RelacionarObj(item);
-
-
+                    sucesso = OrganizarObjParaPersistir(item);
+                    sucesso = RelacionarObj(item);
                 }
 
             }
+            return sucesso;
 
         }
        

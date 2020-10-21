@@ -34,10 +34,8 @@ namespace TestAnalyser.DAL
 
         public static bool SalvarConfiguracoes(Configuracao configuracao)
         {
-            if(BuscarConfiguracoes())
+            if(BuscarConfiguracoes() == null)
             {
-                //var x = Convert.ToDateTime(configuracao.sincAuto);
-                //var x = Convert.ToDateTime(configuracao.HoraCorrecao);
                 ctx.Configuracoes.Add(configuracao);
                 ctx.SaveChanges();
                 return true;
@@ -51,18 +49,9 @@ namespace TestAnalyser.DAL
             
         }
 
-        public static bool BuscarConfiguracoes()
+        public static Configuracao BuscarConfiguracoes()
         {
-            var x = ctx.Configuracoes.Where(p => p.ConfiguracaoId != 1).FirstOrDefault();
-            if(x != null)
-            {
-                return false;
-            }
-            else
-            {
-                return true;
-            }
-            
+            return ctx.Configuracoes.Where(p => p.ConfiguracaoId != 1).FirstOrDefault();
         }
 
         //1) Verificar como mostrar na tela os dados ja salvos da instituição. (como enviar o objeto para os campos)
