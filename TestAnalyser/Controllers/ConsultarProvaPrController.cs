@@ -29,6 +29,12 @@ namespace TestAnalyser.Controllers
             return View(new Prova());
         }
 
+        public ActionResult VisualizarProva(int ProvaID)
+        {
+            Prova prova = ProvaDAO.BuscarProvaId(ProvaID);
+            return View(prova);
+        }
+
         public string ConsultarDisciplina(int id)
         {
             cursoId = id;

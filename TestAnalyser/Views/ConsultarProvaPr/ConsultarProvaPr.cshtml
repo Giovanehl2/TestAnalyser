@@ -1,6 +1,6 @@
 ﻿
 @{
-    ViewBag.Title = "ConsultarProvaPr";
+    ViewBag.Title = "Consultar Prova";
 }
 @{
     var provas = ViewBag.Provas;
@@ -161,7 +161,7 @@
                                     <td>@item.TituloProva</td>
                                     <td>
                                         <div id="divGridConsultaPr1">
-                                            @Html.ActionLink("Visualizar", "Visualizar", "ConsultarProvaPr", new { idProva = item.ProvaId }, null) |
+                                            @Html.ActionLink("Visualizar", "VisualizarProva", "ConsultarProvaPr", new { ProvaID = item.ProvaId }, null) |
                                             @Html.ActionLink("Corrigir", "OpcoesCorrecao", "ConsultarProvaPr", new { idProva = item.ProvaId }, null) |
                                         </div>
                                         <div id="divGridConsultaProvaPend1" style="display:none">
