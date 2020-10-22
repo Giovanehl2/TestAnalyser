@@ -57,6 +57,9 @@
                             <label id="labelinputPassword" name="labelinputPassword" class="text-danger" style="display:none;">Digite sua senha</label>
                         </div>
                     </div>
+                    <div class="col-lg-8">
+                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    </div>
                     <div class="form-group">
                         <div class="col-lg-4">
                             <input id="btnConfirmar" type="submit" value="Confirmar" class="btn btn-default" />

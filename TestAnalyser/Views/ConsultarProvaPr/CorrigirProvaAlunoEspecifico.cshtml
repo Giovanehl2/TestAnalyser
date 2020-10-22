@@ -42,6 +42,7 @@
                         {
                             status = "não processada";
                         }
+
                         <div class="form-row">
                             <div class="form-group col-md-8 offset-md-1">
                             </div>
@@ -69,7 +70,13 @@
                         <div class="form-row">
                             <div class="form-group col-md-8 offset-md-1">
                                 <h5>Resposta </h5>
-                                <textarea class="form-control" id="resposta1" disabled>@item.RespostaDiscursiva</textarea>
+                                <textarea class="form-control" id="respostaAluno" disabled>@item.RespostaDiscursiva</textarea>
+                            </div>
+                            <br />
+                            <br />
+                            <div class="form-group col-md-8 offset-md-1">
+                                <h5>Resposta Correta </h5>
+                                <textarea class="form-control" id="respostaProfessor" disabled>@item.Questao.RespostaDiscursiva</textarea>
                             </div>
                             <div class="col-md-2">
                                 <h5>Nota</h5>
@@ -80,7 +87,7 @@
                         <br />
                     }
 
-                    aux++;
+                aux++;
                 }
             }
             <button witdh="50" title="Salvar" type="submit" class="btn btn-primary">Salvar</button>

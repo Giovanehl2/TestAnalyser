@@ -66,35 +66,37 @@ namespace TestAnalyser.DAL
             Usuario usr = new Usuario();
 
             usr = ctx.Usuarios.Include("Aluno").Include("Admin").Include("Professor").Where(x => x.Login.Equals(login) && x.Senha.Equals(null)).FirstOrDefault();
-
-            switch (usr.TipoUsr)
+            if(usr != null)
             {
-                case 1:
-                    if (usr.Aluno != null && usr.Aluno.CPF.Equals(cpf))
-                        return usr;
-                    break;
-                case 2:
-                    if (usr.Professor != null && usr.Professor.CPF.Equals(cpf))
-                        return usr;
-                    break;
-                case 3:
-                    if (usr.Admin != null && usr.Admin.CPF.Equals(cpf))
-                        return usr;
-                    break;
+                switch (usr.TipoUsr)
+                {
+                    case 1:
+                        if (usr.Aluno != null && usr.Aluno.CPF.Equals(cpf))
+                            return usr;
+                        break;
+                    case 2:
+                        if (usr.Professor != null && usr.Professor.CPF.Equals(cpf))
+                            return usr;
+                        break;
+                    case 3:
+                        if (usr.Admin != null && usr.Admin.CPF.Equals(cpf))
+                            return usr;
+                        break;
+                }
+
             }
 
             return null;
         }
-        public static Usuario ValidaLogin(Usuario usuario)
+        public static bool ValidaLogin(Usuario usuario)
         {
-
-
             Usuario usr = ctx.Usuarios.Include("Aluno").Include("Admin").Include("Professor").Where(x => x.Login.Equals(usuario.Login)).FirstOrDefault();
+            
             if (Utilitarios.ValidatePassword(usuario.Senha, usr.Senha))
             {
-                return usr;
+                return true;
             }
-            return null;
+            return false;
         }
         public static int BuscarRolesUsr(string login)
         {

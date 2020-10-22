@@ -30,7 +30,7 @@ namespace TestAnalyser.Controllers
         {
              
             //Validar o Login e Senha digitados na View
-            var result = UsuarioDAO.ValidaLogin(usuario);
+            var result = UsuarioDAO.BuscarUsuarioPorLogin(usuario.Login);
             if (result != null)
             {
                 //Verificar se é o primeiro login, caso sim enviar para a tela de criar uma senha e confirmar dados.
@@ -38,9 +38,13 @@ namespace TestAnalyser.Controllers
                 {
                     return RedirectToAction("ConfirmarLogin", "Login");
                 }
-
+                else if (UsuarioDAO.ValidaLogin(result))
+                {
+                    ModelState.AddModelError("", "Usuário ou Senha incorreto!");
+                    return View();
+                }
                 //Pegando o nivel de acesso do usuario para mostrar as telas corretas. (NA 1 = aluno, NA 2 = professor, NA 3 = Admin)
-
+                if (Utilitarios.ValidatePassword(usuario.Senha, result.Senha))
                 FormsAuthentication.SetAuthCookie(usuario.Login, false);
 
 
@@ -71,7 +75,7 @@ namespace TestAnalyser.Controllers
                 Session["IdUsr"] = IdUsr;
                 return RedirectToAction("TelaInicial", "TelaInicial");
             }
-            else
+            else 
             {
                 ModelState.AddModelError("", "Usuário ou Senha incorreto!");
                 return View();
@@ -88,7 +92,11 @@ namespace TestAnalyser.Controllers
                 usuario.Senha = Senha;
                 UsuarioDAO.EditarUsuario(usuario);
             }
-
+            else
+            {
+                ModelState.AddModelError("", "Dados inconsistentes!");
+                return View();
+            }
             return RedirectToAction("Login", "Login");
         }
 
