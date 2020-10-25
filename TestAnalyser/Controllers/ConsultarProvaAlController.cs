@@ -96,7 +96,25 @@ namespace TestAnalyser.Controllers
                 return RedirectToAction("ConsultarProvaAl", "ConsultarProvaAl");
             }
 
-            ViewBag.RespostasAluno = ProvaDAO.BuscarRespostasPorAluno(Convert.ToInt32(Session["IdUsr"]), idProva);
+            //ViewBag.RespostasAluno = ProvaDAO.BuscarRespostasPorAluno(Convert.ToInt32(Session["IdUsr"]), idProva);
+            List<RespostasAluno> Resp = ProvaDAO.BuscarRespostasPorAluno(Convert.ToInt32(Session["IdUsr"]), idProva);
+            double NotaSomada = 0;
+            if (ProvaDAO.MostrarNota(idProva))
+            {
+                foreach (var item in Resp)
+                {
+                    NotaSomada = (NotaSomada + item.NotaAluno);
+                }
+                TempData["$NotaAluno$"] = NotaSomada.ToString("F");
+
+            } 
+            else 
+            { 
+                TempData.Remove("$NotaAluno$");
+                TempData["$ProvaJaFeita$"] = "Só é possivel visualizar a prova após a data e hora final.";
+                return RedirectToAction("ConsultarProvaAl", "ConsultarProvaAl");
+            }
+            
             Prova prova = ProvaDAO.BuscarProvaId(idProva);
             return View(prova);
         }

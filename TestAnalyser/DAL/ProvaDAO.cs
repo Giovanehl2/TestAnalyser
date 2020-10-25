@@ -111,7 +111,6 @@ namespace TestAnalyser.DAL
         public static List<Prova> BuscarProvasPorProfessor(int matricula)
         {
             return ctx.Provas.Where(p => p.Professor.Matricula == matricula).ToList();
-
         }
 
         public static List<Prova> BuscarPorStatus(int status)
@@ -120,7 +119,6 @@ namespace TestAnalyser.DAL
         }
         public static List<RespostasAluno> BuscarRespostasPorAluno(int idAluno, int idProva)
         {
-
             Prova prova = ctx.Provas.Include("RespostasAlunos").Where(p => p.ProvaId == idProva).FirstOrDefault();
             List<RespostasAluno> result = new List<RespostasAluno>();
             foreach (RespostasAluno item in prova.RespostasAlunos)
@@ -158,6 +156,17 @@ namespace TestAnalyser.DAL
 
             result = prova.RespostasAlunos.ToList().GroupBy(elem => elem.Aluno.AlunoId).Select(g => g.First()).ToList();
             return result.OrderBy(x=> x.Aluno.Nome).ToList();
+        }
+
+        public static bool MostrarNota(int ProvaID)
+        {
+            bool mostrar = false;
+            Prova prova = BuscarProvaId(ProvaID);
+            if (DateTime.Now > prova.HoraFim)
+            {
+                mostrar = true;
+            }
+            return mostrar;
         }
 
     }
