@@ -58,10 +58,18 @@ namespace TestAnalyser.Controllers
 
             using (var client = new WebClient { Encoding = System.Text.Encoding.UTF8 })
             {
-                   //carrega url da base
-                   String json = client.DownloadString(config.UrlApi);
-                   // String json = client.DownloadString("http://localhost:44351/api/values");
-                   var serializer = new JavaScriptSerializer();
+                String json = "";
+                if (config == null)
+                {
+                      json = client.DownloadString("http://localhost:44351/api/values");
+                }
+                else
+                {
+                    //carrega url da base
+                     json = client.DownloadString(config.UrlApi);
+                }
+
+                var serializer = new JavaScriptSerializer();
 
                 json = json.TrimStart('\"');
                 json = json.TrimEnd('\"');

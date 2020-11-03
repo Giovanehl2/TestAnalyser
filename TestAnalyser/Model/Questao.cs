@@ -22,7 +22,7 @@ namespace TestAnalyser.Model
         public string Assunto { get; set; }
 
         [AllowHtml]
-        [Column(TypeName = "varchar(MAX)")]
+        [Column(TypeName = "Text")]
         public string Enunciado { get; set; }
 
         //1 = Simples Escolha, 2 = Multipla Escolha, 3 = Verdadeiro ou Falso, 4 = Discursiva.
@@ -32,7 +32,7 @@ namespace TestAnalyser.Model
         public int situacao { get; set; }
 
         [AllowHtml]
-        [Column(TypeName = "varchar(MAX)")]
+        [Column(TypeName = "Text")]
         public string RespostaDiscursiva { get; set; }
 
         public Disciplina Disciplina { get; set; }

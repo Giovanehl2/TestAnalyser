@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MySql.Data.Entity;
+using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
@@ -6,6 +7,7 @@ using System.Web;
 
 namespace TestAnalyser.Model
 {
+    [DbConfigurationType(typeof(MySqlEFConfiguration))]
     public class Context : DbContext
     {
         public Context() : base("DBTestAnalyser") { }
@@ -30,6 +32,7 @@ namespace TestAnalyser.Model
     }
 
     /*   
+     * https://www.syncfusion.com/blogs/post/how-to-migrate-sql-server-in-an-asp-net-mvc-application-to-mysql-and-postgresql.aspx
         Install-Package EntityFramework
         Enable-Migrations
         Add-Migration teste
