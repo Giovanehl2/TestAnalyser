@@ -228,5 +228,19 @@ namespace TestAnalyser.Controllers
 
             RespostasAlunoDAO.Editar(Questao);
         }
+
+        public ActionResult SolicitarRevisao(int ProvaID)
+        {
+            int AlunoID = Convert.ToInt32(Session["IdUsr"]);
+            var count = 0;
+            List<RespostasAluno> resps = RespostasAlunoDAO.SolicitarRevisaoProva(ProvaID, AlunoID);
+            foreach (var item in resps)
+            {
+                item.SituacaoCorrecao = 5;
+                RespostasAlunoDAO.Editar(resps[count]);
+                count++;
+            }
+            return RedirectToAction("ConsultarProvaAl", "ConsultarProvaAl");
+        }
     }
 }

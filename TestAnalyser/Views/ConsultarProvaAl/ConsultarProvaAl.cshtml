@@ -128,7 +128,7 @@
     <br />
     <div class="row " id="divGridConsultaAl">
         <div class="col-md-12">
-            <h3>Provas </h3><h7 title="Só é possível Visualizar as provas já Concluídas.   
+            <h3>Provas </h3><h7 title="Só é possível Visualizar as provas já Concluídas.
 As provas dentro de sua data e horario de aplicação, estaram disponiveis para serem realizadas."> (Info)</h7>
             <table class="table">
                 <thead>
@@ -146,19 +146,23 @@ As provas dentro de sua data e horario de aplicação, estaram disponiveis para 
                         {
                             foreach (var item in provas)
                             {
-                                        <tr>
-                                            <td>@Convert.ToDateTime(@item.DataProvaInicio).ToString("dd/MM/yyyy")</td>
-                                            <td>@Convert.ToDateTime(@item.DataProvaFim).ToString("dd/MM/yyyy")</td>
-                                            <td>@item.Disciplina.Nome</td>
-                                            <td>@item.TituloProva</td>
-                                            <td>
-                                                @Html.ActionLink("Visualizar", "VisualizarProva", "ConsultarProvaAl", new { idProva = item.ProvaId }, null)
-                                                @if (@item.HoraInicio <= DateTime.Now && @item.HoraFim >= DateTime.Now)
-                                                {
-                                                    @Html.ActionLink(" | Realizar", "RealizarProva", "ConsultarProvaAl", new { ProvaID = item.ProvaId }, null)
-                                                }
-                                            </td>
-                                        </tr>
+                                <tr>
+                                    <td>@Convert.ToDateTime(@item.DataProvaInicio).ToString("dd/MM/yyyy")</td>
+                                    <td>@Convert.ToDateTime(@item.DataProvaFim).ToString("dd/MM/yyyy")</td>
+                                    <td>@item.Disciplina.Nome</td>
+                                    <td>@item.TituloProva</td>
+                                    <td>
+                                        @Html.ActionLink("Visualizar", "VisualizarProva", "ConsultarProvaAl", new { idProva = item.ProvaId }, null)
+                                        @if (@item.HoraInicio <= DateTime.Now && @item.HoraFim >= DateTime.Now)
+                                        {
+                                            @Html.ActionLink(" | Realizar", "RealizarProva", "ConsultarProvaAl", new { ProvaID = item.ProvaId }, null)
+                                        }
+                                        else if (@item.HoraFim <= DateTime.Now)
+                                        {
+                                            @Html.ActionLink(" | Solicitar Revisão", "SolicitarRevisao", "ConsultarProvaAl", new { ProvaID = item.ProvaId }, null)
+                                        }
+                                    </td>
+                                </tr>
                             }
                         }
                     }

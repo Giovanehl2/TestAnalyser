@@ -70,5 +70,19 @@ namespace TestAnalyser.DAL
 
             return result;
         }
+
+        public static List<RespostasAluno> SolicitarRevisaoProva(int ProvaID, int AlunoID)
+        {
+            Prova prova = ProvaDAO.BuscarProvaId(ProvaID);
+            List<RespostasAluno> result = new List<RespostasAluno>();
+            foreach (RespostasAluno item in prova.RespostasAlunos)
+            {
+                if (item.Aluno.AlunoId == AlunoID && item.RespostaDiscursiva != null)
+                {
+                    result.Add(item);
+                }
+            }
+            return result;
+        }
     }
 }
