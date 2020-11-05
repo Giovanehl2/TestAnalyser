@@ -48,6 +48,7 @@ namespace TestAnalyser.Model
 
         public double NotaProva { get; set; }
 
+        //para implementação de expurgo lógico dos registros de provas
         public int StatusProva { get; set; }
 
         public int QtTentativas { get; set; }

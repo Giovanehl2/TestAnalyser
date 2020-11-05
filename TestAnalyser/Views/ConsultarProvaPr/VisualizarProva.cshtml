@@ -5,6 +5,13 @@
     ViewBag.Title = "Visualizar Prova";
     var count = 1;
 }
+<style>
+    #btnVoltar button {
+        margin: 20px;
+    }
+</style>
+
+
 
 <div id="divSE" class="">
     <form class="form-horizontal" name="form1" id="form" @*method="post" action="@Url.Action("SalvarProva", "ConsultarProvaAl")*@>
@@ -58,8 +65,8 @@
                         <h6><b>Questão @count</b></h6>
                     </div>
                     @*<div class="form-row">
-                              <button witdh="50" id="btnSalvar" type="submit" class="btn btn-primary btn-sm">Salvar</button>
-                        </div>*@
+                      <button witdh="50" id="btnSalvar" type="submit" class="btn btn-primary btn-sm">Salvar</button>
+                </div>*@
                 </div>
                 <br />
                 <div class="form-row">
@@ -102,8 +109,8 @@
                         <h6><b>Questão @count</b></h6>
                     </div>
                     @*<div class="form-row">
-                              <button witdh="50" id="btnSalvar" type="submit" class="btn btn-primary btn-sm">Salvar</button>
-                        </div>*@
+                      <button witdh="50" id="btnSalvar" type="submit" class="btn btn-primary btn-sm">Salvar</button>
+                </div>*@
                 </div>
                 <br />
                 <div class="form-row">
@@ -171,9 +178,19 @@
                 <br />
                 <script>@(count = count + 1) </script>
             }
-            @*<div class="form-row">
+            <div class="form-group row">
+                <div class="col-md-1">
+                    <button witdh="50" id="btnSalvar" type="submit" class="btn btn-primary btn-sm">Salvar</button>
+                </div>
+                <div class="col-md-1">
+                    <button witdh="50" id="btnVoltar" onclick="VoltarPagina()" type="button" class="btn btn-primary btn-sm">Voltar</button>
+                </div>
+            </div>
+            @*<div class="btn-toolbar">
                 <button witdh="50" id="btnSalvar" type="submit" class="btn btn-primary btn-sm">Salvar</button>
+                <button witdh="50" id="btnVoltar" onclick="VoltarPagina()" type="button" class="btn btn-primary btn-sm">Voltar</button>
             </div>*@
+
         </div>
     </form>
 </div>
@@ -191,6 +208,23 @@
                 $(this).closest(".form-row").css("background-color", "#50FF50");
             }
         });
+    }
+
+    function VoltarPagina() {
+
+        $.ajax({
+
+            type: "GET",
+
+            url: "/ConsultarProvaPr/ConsultarProvaPr",
+
+
+            success: function (data) {
+                window.location.href = "/ConsultarProvaPr/ConsultarProvaPr";
+            }
+
+        });
+        location.reload();
     }
 </script>
 

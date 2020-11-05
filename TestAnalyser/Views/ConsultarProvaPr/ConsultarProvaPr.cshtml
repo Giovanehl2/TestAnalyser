@@ -143,6 +143,7 @@
                     if (provas != null)
                     {
                         string dataProva = "";
+                        string turma = "";
                         foreach (var item in provas)
                         {
                             if (item.DataProvaInicio == item.DataProvaFim)
@@ -153,11 +154,16 @@
                             {
                                 dataProva = @item.DataProvaInicio.ToString("dd/MM/yyyy") + " á " + @item.DataProvaFim.ToString("dd/MM/yyyy");
                             }
-                         
+                            foreach (var item2 in @item.Disciplina.Turmas)
+                            {
+                                turma = item2.NomeTurma;
+                            }
+
+
                                 <tr>
                                     <td>@dataProva</td>
                                     <td>@item.Disciplina.Nome</td>
-                                    <td>@item.NomeTurma</td>
+                                    <td>@turma</td>
                                     <td>@item.TituloProva</td>
                                     <td>
                                         <div id="divGridConsultaPr1">
@@ -278,6 +284,22 @@
         location.reload();
     }
 
+    function VoltarPagina() {
 
+        $.ajax({
+
+            type: "GET",
+
+            url: "/ConsultarProvaPr/ConsultarProvaPr",
+
+
+            success: function (data) {
+                window.location.href = "/ConsultarProvaPr/ConsultarProvaPr";
+            }
+
+
+        });
+
+    }
 
 </script>

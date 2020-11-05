@@ -25,7 +25,8 @@ namespace TestAnalyser.Controllers
             limpar();
             ViewBag.Cursos = ViewBag.Cursos = CursoDAO.listarCursosPorProfessor(Convert.ToInt32(Session["IdUsr"])); ;
             ViewBag.Provas = TempData["provas"];
-            TempData.Keep();
+            //caso deixe esta linha o dado sempre continuara disponivel
+            //TempData.Keep();
             return View(new Prova());
         }
 

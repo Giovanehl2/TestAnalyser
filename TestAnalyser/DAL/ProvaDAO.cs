@@ -15,15 +15,19 @@ namespace TestAnalyser.DAL
         /*o objeto deve vir validado e com todos os campos obrigatórios preenchidos*/
         public static bool CadastrarProva(Prova prova)
         {
-            /*não estou incluindo regras e nem validações no momento*/
-            if (BuscarProvaDuplicada(prova.TituloProva) == null)
+            try
             {
                 ctx.Provas.Add(prova);
                 ctx.SaveChanges();
                 ctx.Entry(prova).State = System.Data.Entity.EntityState.Detached;
                 return true;
             }
-            return false;
+            catch (Exception ex)
+            {
+                Console.WriteLine("Exception: " + ex.Message);
+                return false;
+            }
+
         }
         public static bool EditarProva(Prova prova)
         {
