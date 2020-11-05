@@ -157,10 +157,10 @@ As provas dentro de sua data e horario de aplicação, estaram disponiveis para 
                                         {
                                             @Html.ActionLink(" | Realizar", "RealizarProva", "ConsultarProvaAl", new { ProvaID = item.ProvaId }, null)
                                         }
-                                        else if (@item.HoraFim <= DateTime.Now)
+                                        @*else if (@item.HoraFim <= DateTime.Now)
                                         {
                                             @Html.ActionLink(" | Solicitar Revisão", "SolicitarRevisao", "ConsultarProvaAl", new { ProvaID = item.ProvaId }, null)
-                                        }
+                                        }*@
                                     </td>
                                 </tr>
                             }

@@ -12,11 +12,22 @@ namespace TestAnalyser.Controllers
 {
     public class LoginController : Controller
     {
+        [HttpGet]
+        public ActionResult Login()
+        {
+            return View();
+        }
+
+        [HttpGet]
+        public ActionResult ConfirmarLogin()
+        {
+            return View();
+        }
 
         [HttpPost]
         public ActionResult Login([Bind(Include = "Login,Senha")] Usuario usuario)
         {
-            ApiIntegracaoController.Importar(null);
+            //ApiIntegracaoController.Importar(null);
             //Validar o Login e Senha digitados na View
             var result = UsuarioDAO.BuscarUsuarioPorLogin(usuario.Login);
             if (result != null)

@@ -33,11 +33,17 @@ namespace TestAnalyser.DAL
         }
         public static Prova BuscarProvaId(int id)
         {
-            return ctx.Provas.Include("Professor").Include("NotasQuestoes").Include("RespostasAlunos")
-                .Include("ConfigPln").Include("Disciplina").Include("NotasQuestoes.Questao")
-                .Include("NotasQuestoes.Questao.Alternativas").Include("NotasQuestoes.Questao.Opcoes")
+            Prova prova = ctx.Provas.Include("RespostasAlunos")
+                .Include("Professor")
+                .Include("NotasQuestoes")
+                .Include("ConfigPln")
+                .Include("Disciplina")
+                .Include("NotasQuestoes.Questao")
+                .Include("NotasQuestoes.Questao.Alternativas")
                 .Include("RespostasAlunos.Aluno")
                 .FirstOrDefault(x => x.ProvaId == id);
+
+            return prova;
         }
         public static Prova BuscarProvaDuplicada(string titulo)
         {

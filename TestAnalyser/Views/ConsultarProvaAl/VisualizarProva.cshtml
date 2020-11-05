@@ -4,183 +4,184 @@
 @{
     ViewBag.Title = "Visualizar Prova";
     var count = 1;
+    var provaID = Model.ProvaId;
 }
 
-    <div id="divSE" class="">
-        @if (TempData["$NotaAluno$"] != null)
-        {
-            <div id="NotaAluno" style="color: cornflowerblue; text-align: right;"><h4>Sua Nota: @TempData["$NotaAluno$"]</h4></div>
-        }
-        <form class="form-horizontal" name="form1" id="form" @*method="post" action="@Url.Action("SalvarProva", "ConsultarProvaAl")*@>
-            <div id="DivGeral">
-                @foreach (var x in Model.NotasQuestoes.Where(y => y.Questao.TipoQuestao == 1).ToList()) //VERIFICAR O MODELO, QUE ESTÁ VINDO VAZIO.
-                {
-                    <br />
-                    <div class="form-row">
-                        <div class="col-md-4">
-                            <h6><b>Questão @count</b></h6>
-                        </div>
-
-                    </div>
-                    <br />
-                    <div class="form-row">
-                        <div class="col-md-8">
-
-                            @Html.Raw(x.Questao.Enunciado)
-                        </div>
-                    </div>
-                    <div class="col-md-2">
-                        @Html.Hidden("QuestaoId", x.Questao.QuestaoId)
-                        @Html.Hidden("TipoQuestao", x.Questao.TipoQuestao)
-                    </div>
-                    <br />
-                    <div class="form-row">
-                        <div class="col-md-3">
-                            <label for=""><b>Alternativas:</b></label>
-                        </div>
-                    </div>
-                    <div id="DivAlternativas">
-                        @for (int i = 0; i < x.Questao.Alternativas.Count; i++)
-                        {
-                            <div class="form-row">
-                                @Html.Hidden("AlternativaCorreta", x.Questao.Alternativas[i].correto, new { id = "QstCorreta" })
-                                @Html.RadioButton("AlternativaId" + "SE" + count, x.Questao.Alternativas[i].AlternativaId, new { disabled = "disabled" })
-                                <label for="">@(i+1)) </label>
-                                @Html.Raw(x.Questao.Alternativas[i].DescAlternativa)
-                            </div>
-                        }
-                    </div>
-                    <br />
-                    <script>@(count = count + 1) </script>
-                }
+<div id="divSE" class="">
+    @if (TempData["$NotaAluno$"] != null)
+    {
+        <div id="NotaAluno" style="color: cornflowerblue; text-align: right;"><h4>Sua Nota: @TempData["$NotaAluno$"]</h4> <button witdh="50" title="Regerar Questões" class="btn btn-primary glyphicon glyphicon-refresh" onclick="SolicitarRevisao()">Solicitar Revisão</button></div>
+    }
+    <form class="form-horizontal" name="form1" id="form" @*method="post" action="@Url.Action("SalvarProva", "ConsultarProvaAl")*@>
+        <div id="DivGeral">
+            @foreach (var x in Model.NotasQuestoes.Where(y => y.Questao.TipoQuestao == 1).ToList()) //VERIFICAR O MODELO, QUE ESTÁ VINDO VAZIO.
+            {
                 <br />
-                @foreach (var x in Model.NotasQuestoes.Where(y => y.Questao.TipoQuestao == 2).ToList())
-                {
-                    <br />
-                    <div class="form-row">
-                        <div class="col-md-4">
-                            <h6><b>Questão @count</b></h6>
-                        </div>
-                        @*<div class="form-row">
-                              <button witdh="50" id="btnSalvar" type="submit" class="btn btn-primary btn-sm">Salvar</button>
-                        </div>*@
-                    </div>
-                    <br />
-                    <div class="form-row">
-                        <div class="col-md-8">
-
-                            @Html.Raw(x.Questao.Enunciado)
-
-                        </div>
-                    </div>
-                    <div class="col-md-2">
-                        @Html.Hidden("QuestaoId", x.Questao.QuestaoId)
-                        @Html.Hidden("TipoQuestao", x.Questao.TipoQuestao)
-                    </div>
-                    <br />
-                    <div class="form-row">
-                        <div class="col-md-3">
-                            <label for=""><b>Alternativas:</b></label>
-                        </div>
-                    </div>
-                    <div id="DivAlternativas">
-                        @for (int i = 0; i < x.Questao.Alternativas.Count; i++)
-                        {
-                            <div class="form-row">
-                                @Html.Hidden("AlternativaCorreta", x.Questao.Alternativas[i].correto, new { id = "QstCorreta" })
-                                @Html.CheckBox("AlternativaId" + "ME" + count, new { disabled = "disabled" })
-                                <label for="">@(i+1)) </label>
-                                @Html.Raw(x.Questao.Alternativas[i].DescAlternativa)
-                            </div>
-                        }
-                    </div>
-                    <br />
-                    <script>@(count = count + 1) </script>
-                }
-                <br />
-                @foreach (var x in Model.NotasQuestoes.Where(y => y.Questao.TipoQuestao == 3).ToList())
-                {
-                    <br />
-                    <div class="form-row">
-                        <div class="col-md-4">
-                            <h6><b>Questão @count</b></h6>
-                        </div>
-                        @*<div class="form-row">
-                              <button witdh="50" id="btnSalvar" type="submit" class="btn btn-primary btn-sm">Salvar</button>
-                        </div>*@
-                    </div>
-                    <br />
-                    <div class="form-row">
-                        <div class="col-md-8">
-
-                            @Html.Raw(x.Questao.Enunciado)
-
-                        </div>
-                    </div>
-                    <div class="col-md-2">
-                        @Html.Hidden("QuestaoId", x.Questao.QuestaoId)
-                        @Html.Hidden("TipoQuestao", x.Questao.TipoQuestao)
-                    </div>
-                    <br />
-                    <div class="form-row">
-                        <div class="col-md-3">
-                            <label for=""><b>Alternativas:</b></label>
-                        </div>
-                    </div>
-                    <div id="DivAlternativas">
-                        @for (int i = 0; i < x.Questao.Alternativas.Count; i++)
-                        {
-                            <div class="form-row">
-                                @Html.Hidden("AlternativaCorreta", x.Questao.Alternativas[i].correto, new { id = "QstCorreta" })
-                                @Html.RadioButton("AlternativaId" + "VF" + count, x.Questao.Alternativas[i].AlternativaId, new { disabled = "disabled" })
-                                <label for="">@(i+1)) </label>
-                                @Html.Raw(x.Questao.Alternativas[i].DescAlternativa)
-                            </div>
-                        }
-                    </div>
-                    <br />
-                    <script>@(count = count + 1) </script>
-                }
-                <br />
-                @foreach (var x in Model.NotasQuestoes.Where(y => y.Questao.TipoQuestao == 4).ToList())
-                {
-                    <br />
-                    <div class="form-row">
-                        <div class="col-md-4">
-                            <h6><b>Questão @count</b></h6>
-                        </div>
-                    </div>
-                    <br />
-                    <div class="form-row">
-                        <div class="col-md-8">
-
-                            @Html.Raw(x.Questao.Enunciado)
-                        </div>
-                    </div>
-                    <div class="col-md-2">
-                        @Html.Hidden("QuestaoId", x.Questao.QuestaoId)
-                        @Html.Hidden("TipoQuestao", x.Questao.TipoQuestao)
-                    </div>
-                    <br />
-                    <div class="form-row">
-                        <div class="col-md-3">
-                            <label for="">Resposta:</label>
-                        </div>
-                    </div>
-                    <br />
-                    <div id="DivRespostaDT">
-
-                        @Html.TextArea("Enunciado", new { @class = "form-control", @id = "RespostaDiscursiva", @readonly = true })
-                    </div>
-                    <br />
-                    <script>@(count = count + 1) </script>
-                }
                 <div class="form-row">
-                    <button witdh="50" id="btnSalvar" type="submit" class="btn btn-primary btn-sm">Salvar</button>
+                    <div class="col-md-4">
+                        <h6><b>Questão @count</b></h6>
+                    </div>
+
                 </div>
+                <br />
+                <div class="form-row">
+                    <div class="col-md-8">
+
+                        @Html.Raw(x.Questao.Enunciado)
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    @Html.Hidden("QuestaoId", x.Questao.QuestaoId)
+                    @Html.Hidden("TipoQuestao", x.Questao.TipoQuestao)
+                </div>
+                <br />
+                <div class="form-row">
+                    <div class="col-md-3">
+                        <label for=""><b>Alternativas:</b></label>
+                    </div>
+                </div>
+                <div id="DivAlternativas">
+                    @for (int i = 0; i < x.Questao.Alternativas.Count; i++)
+                    {
+                        <div class="form-row">
+                            @Html.Hidden("AlternativaCorreta", x.Questao.Alternativas[i].correto, new { id = "QstCorreta" })
+                            @Html.RadioButton("AlternativaId" + "SE" + count, x.Questao.Alternativas[i].AlternativaId, new { disabled = "disabled" })
+                            <label for="">@(i+1)) </label>
+                            @Html.Raw(x.Questao.Alternativas[i].DescAlternativa)
+                        </div>
+                    }
+                </div>
+                <br />
+                <script>@(count = count + 1) </script>
+            }
+            <br />
+            @foreach (var x in Model.NotasQuestoes.Where(y => y.Questao.TipoQuestao == 2).ToList())
+            {
+                <br />
+                <div class="form-row">
+                    <div class="col-md-4">
+                        <h6><b>Questão @count</b></h6>
+                    </div>
+                    @*<div class="form-row">
+                              <button witdh="50" id="btnSalvar" type="submit" class="btn btn-primary btn-sm">Salvar</button>
+                        </div>*@
+                </div>
+                <br />
+                <div class="form-row">
+                    <div class="col-md-8">
+
+                        @Html.Raw(x.Questao.Enunciado)
+
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    @Html.Hidden("QuestaoId", x.Questao.QuestaoId)
+                    @Html.Hidden("TipoQuestao", x.Questao.TipoQuestao)
+                </div>
+                <br />
+                <div class="form-row">
+                    <div class="col-md-3">
+                        <label for=""><b>Alternativas:</b></label>
+                    </div>
+                </div>
+                <div id="DivAlternativas">
+                    @for (int i = 0; i < x.Questao.Alternativas.Count; i++)
+                    {
+                        <div class="form-row">
+                            @Html.Hidden("AlternativaCorreta", x.Questao.Alternativas[i].correto, new { id = "QstCorreta" })
+                            @Html.CheckBox("AlternativaId" + "ME" + count, new { disabled = "disabled" })
+                            <label for="">@(i+1)) </label>
+                            @Html.Raw(x.Questao.Alternativas[i].DescAlternativa)
+                        </div>
+                    }
+                </div>
+                <br />
+                <script>@(count = count + 1) </script>
+            }
+            <br />
+            @foreach (var x in Model.NotasQuestoes.Where(y => y.Questao.TipoQuestao == 3).ToList())
+            {
+                <br />
+                <div class="form-row">
+                    <div class="col-md-4">
+                        <h6><b>Questão @count</b></h6>
+                    </div>
+                    @*<div class="form-row">
+                              <button witdh="50" id="btnSalvar" type="submit" class="btn btn-primary btn-sm">Salvar</button>
+                        </div>*@
+                </div>
+                <br />
+                <div class="form-row">
+                    <div class="col-md-8">
+
+                        @Html.Raw(x.Questao.Enunciado)
+
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    @Html.Hidden("QuestaoId", x.Questao.QuestaoId)
+                    @Html.Hidden("TipoQuestao", x.Questao.TipoQuestao)
+                </div>
+                <br />
+                <div class="form-row">
+                    <div class="col-md-3">
+                        <label for=""><b>Alternativas:</b></label>
+                    </div>
+                </div>
+                <div id="DivAlternativas">
+                    @for (int i = 0; i < x.Questao.Alternativas.Count; i++)
+                    {
+                        <div class="form-row">
+                            @Html.Hidden("AlternativaCorreta", x.Questao.Alternativas[i].correto, new { id = "QstCorreta" })
+                            @Html.RadioButton("AlternativaId" + "VF" + count, x.Questao.Alternativas[i].AlternativaId, new { disabled = "disabled" })
+                            <label for="">@(i+1)) </label>
+                            @Html.Raw(x.Questao.Alternativas[i].DescAlternativa)
+                        </div>
+                    }
+                </div>
+                <br />
+                <script>@(count = count + 1) </script>
+            }
+            <br />
+            @foreach (var x in Model.NotasQuestoes.Where(y => y.Questao.TipoQuestao == 4).ToList())
+            {
+                <br />
+                <div class="form-row">
+                    <div class="col-md-4">
+                        <h6><b>Questão @count</b></h6>
+                    </div>
+                </div>
+                <br />
+                <div class="form-row">
+                    <div class="col-md-8">
+
+                        @Html.Raw(x.Questao.Enunciado)
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    @Html.Hidden("QuestaoId", x.Questao.QuestaoId)
+                    @Html.Hidden("TipoQuestao", x.Questao.TipoQuestao)
+                </div>
+                <br />
+                <div class="form-row">
+                    <div class="col-md-3">
+                        <label for="">Resposta:</label>
+                    </div>
+                </div>
+                <br />
+                <div id="DivRespostaDT">
+
+                    @Html.TextArea("Enunciado", new { @class = "form-control", @id = "RespostaDiscursiva", @readonly = true })
+                </div>
+                <br />
+                <script>@(count = count + 1) </script>
+            }
+            <div class="form-row">
+                <button witdh="50" id="btnSalvar" type="submit" class="btn btn-primary btn-sm">Salvar</button>
             </div>
-        </form>
-    </div>
+        </div>
+    </form>
+</div>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 
@@ -196,5 +197,22 @@
             }
         });
     }
+
+    function SolicitarRevisao() {
+        var ProvID = parseInt("@provaID");
+        var r = confirm("Deseja solicitar ao professor a revisão dessa prova?");
+        if (r == true) {
+
+            $.ajax({
+                type: "POST",
+                url: "/ConsultarProvaAl/SolicitarRevisao",
+                data: { ProvaID: ProvID },
+                success: function (data) {
+                }
+            });
+        }
+        window.location.href = "/ConsultarProvaAl/ConsultarProvaAl";
+    }
+
 </script>
 
