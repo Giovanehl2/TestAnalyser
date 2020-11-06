@@ -7,7 +7,7 @@
     var provaID = Model.ProvaId;
 }
 
-    <div id="divSE" class="">
+    <div id="divGeral" class="">
         <form class="form-horizontal" name="form1" id="form" @*method="post" action="@Url.Action("SalvarProva", "ConsultarProvaAl")"*@>
             @foreach (var x in Model.NotasQuestoes.Where(y => y.Questao.TipoQuestao == 1).ToList())
             {
@@ -196,7 +196,7 @@
             var QustID = $(this).closest(".form-row").find("#QuestaoIdSE").val();
             var ProvID = "@provaID";
 
-            console.log(AltID + " " + QustID + " " + ProvID);
+            //console.log(AltID + " " + QustID + " " + ProvID);
 
             $.ajax({
                 type: "POST",
@@ -229,7 +229,7 @@
             var QustID = $(this).closest(".form-row").find("#QuestaoIdME").val();
             var ProvID = "@provaID";
 
-            console.log(arrME + " " + QustID + " " + ProvID);
+            //console.log(arrME + " " + QustID + " " + ProvID);
 
             $.ajax({
                 type: "POST",
@@ -262,7 +262,7 @@
             var QustID = $(this).closest(".form-row").find("#QuestaoIdVF").val();
             var ProvID = "@provaID";
 
-            console.log(arrVF + " " + QustID + " " + ProvID);
+            //console.log(arrVF + " " + QustID + " " + ProvID);
 
             $.ajax({
                 type: "POST",
@@ -285,7 +285,7 @@
             var QustID = $(this).closest("#DivRespostaDT").find("#QuestaoIdDS").val();
             var ProvID = "@provaID";
 
-            console.log(Resp + " " + QustID + " " + ProvID);
+            //console.log(Resp + " " + QustID + " " + ProvID);
 
             $.ajax({
                 type: "POST",
@@ -305,9 +305,28 @@
 
     function FinalizarProva() {
         var ProvID = "@provaID";
+        var arrIDs = new Array();
 
         var r = confirm("Confirma que respondeu todas as questões e deseja Finalizar?");
         if (r == true) {
+
+            $("#divGeral input[name^='AlternativaId']").each(function () {
+
+                if (this.checked == true) {
+                    var ID = $(this).val();
+                    if (ID != "false") {
+                        arrIDs.push(parseInt(ID));
+                    }
+                }
+            });
+
+            $.ajax({
+                type: "POST",
+                url: "/ConsultarProvaAl/SalvarTodasAlternativas",
+                data: { ProvaID: ProvID, AlternativasID: arrIDs },
+                success: function (data) {
+                }
+            });
             window.location.href = "/ConsultarProvaAl/FinalizarProva";
         }
     }

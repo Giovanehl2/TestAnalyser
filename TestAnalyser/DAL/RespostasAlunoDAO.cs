@@ -24,6 +24,19 @@ namespace TestAnalyser.DAL
             return true;
         }
 
+        public static List<RespostasAluno> BuscarRespostasAluno(int ProvaID, int AlunoID)
+        {
+            Prova prova = ProvaDAO.BuscarProvaId(ProvaID);
+            List<RespostasAluno> resps = new List<RespostasAluno>();
+            foreach (RespostasAluno item in prova.RespostasAlunos)
+            {
+                if (item.Aluno.AlunoId == AlunoID)
+                    resps.Add(item);
+            }
+
+            return resps;
+        }
+
         //public static List<RespostasAluno> ListarPorAlunoProva (int idProva, int idAluno)
         //{
 

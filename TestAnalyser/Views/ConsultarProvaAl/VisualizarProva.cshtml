@@ -133,7 +133,7 @@
                     {
                         <div class="form-row">
                             @Html.Hidden("AlternativaCorreta", x.Questao.Alternativas[i].correto, new { id = "QstCorreta" })
-                            @Html.RadioButton("AlternativaId" + "VF" + count, x.Questao.Alternativas[i].AlternativaId, new { disabled = "disabled" })
+                            @Html.CheckBox("AlternativaId" + "VF" + count, new { disabled = "disabled" })
                             <label for="">@(i+1)) </label>
                             @Html.Raw(x.Questao.Alternativas[i].DescAlternativa)
                         </div>
@@ -196,6 +196,13 @@
                 $(this).closest(".form-row").css("background-color", "#50FF50");
             }
         });
+        AlternativasSelecionadas()
+    }
+
+    //Passar uma viewbag com todos as AlternativasIDs que o aluno marcou e varrer na tela e dar o check.
+    function AlternativasSelecionadas() {
+
+
     }
 
     function SolicitarRevisao() {
