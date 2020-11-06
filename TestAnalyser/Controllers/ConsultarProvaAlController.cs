@@ -88,6 +88,7 @@ namespace TestAnalyser.Controllers
             return output;
         }
 
+        //Passar para a prova a resposta discursiva do aluno...
         public ActionResult VisualizarProva(int idProva)
         {
             //Verificar se o AlunoID ja realizou a prova...
@@ -98,7 +99,6 @@ namespace TestAnalyser.Controllers
                 return RedirectToAction("ConsultarProvaAl", "ConsultarProvaAl");
             }
 
-            //ViewBag.RespostasAluno = ProvaDAO.BuscarRespostasPorAluno(Convert.ToInt32(Session["IdUsr"]), idProva);
             List<RespostasAluno> Resp = ProvaDAO.BuscarRespostasPorAluno(Convert.ToInt32(Session["IdUsr"]), idProva);
             double NotaSomada = 0;
             if (ProvaDAO.MostrarNota(idProva))
@@ -264,7 +264,6 @@ namespace TestAnalyser.Controllers
             return RedirectToAction("ConsultarProvaAl", "ConsultarProvaAl");
         }
 
-        //Validar alterações nas questões (se não altera nos lugares errados).
         public void SalvarTodasAlternativas(int ProvaID, List<int> AlternativasID, List<int> QuestoesID)
         {
             var count = 0;
