@@ -51,7 +51,12 @@ namespace TestAnalyser.DAL
 
         public static Configuracao BuscarConfiguracoes()
         {
-            return ctx.Configuracoes.Where(p => p.ConfiguracaoId != 1).FirstOrDefault();
+            return ctx.Configuracoes.Where(p => p.ConfiguracaoId == 1).FirstOrDefault();
+        }
+
+        public static Configuracao MostrarConfigsTela()
+        {
+            return ctx.Configuracoes.Where(p => p.ConfiguracaoId == 1).FirstOrDefault();
         }
 
         //1) Verificar como mostrar na tela os dados ja salvos da instituição. (como enviar o objeto para os campos)

@@ -14,8 +14,8 @@ namespace TestAnalyser.Controllers
         // GET: Configuracoes
         public ActionResult Configuracoes()
         {
-            //var configs = AdminDAO.BuscarConfiguracoes();
-            return View();
+            var configs = AdminDAO.MostrarConfigsTela();
+            return View(configs);
         }
 
         public ActionResult SalvarConfiguracoes(Configuracao configuracoes)

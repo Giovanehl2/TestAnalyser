@@ -46,12 +46,12 @@
                 <div class="col-md-6">
                     <div class="row">
                         <div class="col-md-6">
-                            <label for="sincAuto">Sincronização Automatica (Data)</label>
-                            <input id="sincAuto" class="form-control" name="sincAuto" type="date" value="" />
+                            <label for="sincAuto" title="Digite um dia para a sincronização automática dos dados!">Sincronização Automatica (Data)</label>
+                            <input id="sincAuto" title="Digite um dia para a sincronização automática dos dados!" class="form-control" name="sincAuto" type="number" value=@Model.sincAuto placeholder="1 á 20" />
                         </div>
                         <div class="col-md-6">
-                            <label for="HoraCorrecao">Horário de correção</label>
-                            <input id="HoraCorrecao" class="form-control" name="HoraCorrecao" type="time" value="" />
+                            <label for="HoraCorrecao" title="Selecione o horário que será realizado a sincronização automática!">Horário de correção</label>
+                            <input id="HoraCorrecao" title="Selecione o horário que será realizado a sincronização automática!" class="form-control" name="HoraCorrecao" type="time" value=@Model.HoraCorrecao />
                         </div>
                     </div>
                 </div>
@@ -85,10 +85,9 @@
             <br />
             <div class="col-md-2">
                 <button witdh="50" id="btnSalvar" type="submit" class="btn btn-primary btn-sm">Salvar</button>
-
-
             </div>
         </form>
+        <br /><br />
         <button witdh="50" id="btnImportar" type="submit" onclick="ImportarDados()" class="btn btn-primary btn-sm">Importar agora</button>
         <br />
     </div>
@@ -111,7 +110,7 @@
         </div>
     </div>
 </div>
-
+@Scripts.Render("~/bundles/jquery")
 <script type="text/javascript">
 
     function SincNow() {

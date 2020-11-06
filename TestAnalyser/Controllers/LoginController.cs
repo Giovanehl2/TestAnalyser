@@ -44,35 +44,41 @@ namespace TestAnalyser.Controllers
                 }
                 //Pegando o nivel de acesso do usuario para mostrar as telas corretas. (NA 1 = aluno, NA 2 = professor, NA 3 = Admin)
                 if (Utilitarios.ValidatePassword(usuario.Senha, result.Senha))
-                FormsAuthentication.SetAuthCookie(usuario.Login, false);
-
-
-                int NA = 0;
-                string NomeUser = "";
-                int IdUsr = 0;
-                if (result.TipoUsr == 1)
                 {
-                    NA = 1;
-                    NomeUser = result.Aluno.Nome;
-                    IdUsr = result.Aluno.AlunoId;
-                }
-                else if (result.TipoUsr == 2)
-                {
-                    NA = 2;
-                    NomeUser = result.Professor.Nome;
-                    IdUsr = result.Professor.ProfessorId;
-                }
-                else if (result.TipoUsr == 3)
-                {
-                    NA = 3;
-                    NomeUser = result.Admin.Nome;
-                    IdUsr = result.Admin.AdminId;
-                }
+                    FormsAuthentication.SetAuthCookie(usuario.Login, false);
 
-                Session["NivelAcesso"] = NA;
-                Session["NomeUsuario"] = NomeUser;
-                Session["IdUsr"] = IdUsr;
-                return RedirectToAction("TelaInicial", "TelaInicial");
+                    int NA = 0;
+                    string NomeUser = "";
+                    int IdUsr = 0;
+                    if (result.TipoUsr == 1)
+                    {
+                        NA = 1;
+                        NomeUser = result.Aluno.Nome;
+                        IdUsr = result.Aluno.AlunoId;
+                    }
+                    else if (result.TipoUsr == 2)
+                    {
+                        NA = 2;
+                        NomeUser = result.Professor.Nome;
+                        IdUsr = result.Professor.ProfessorId;
+                    }
+                    else if (result.TipoUsr == 3)
+                    {
+                        NA = 3;
+                        NomeUser = result.Admin.Nome;
+                        IdUsr = result.Admin.AdminId;
+                    }
+
+                    Session["NivelAcesso"] = NA;
+                    Session["NomeUsuario"] = NomeUser;
+                    Session["IdUsr"] = IdUsr;
+                    return RedirectToAction("TelaInicial", "TelaInicial");
+                }
+                else
+                {
+                    ModelState.AddModelError("", "Usuário ou Senha incorreto!");
+                    return View();
+                }
             }
             else 
             {
