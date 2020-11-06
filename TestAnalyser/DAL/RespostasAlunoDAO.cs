@@ -49,10 +49,10 @@ namespace TestAnalyser.DAL
             return ctx.RespostasAlunos.Include("Questao").Include("Alternativas").Include("Aluno").Where(x => x.Aluno.AlunoId == id && x.SituacaoCorrecao == situac).ToList();
         }
 
-        public static List<RespostasAluno> PerguntasParaCorrigir( int situac)
+        public static List<RespostasAluno> PerguntasParaCorrigir(int situac)
         {
 
-            return ctx.RespostasAlunos.Include("Questoes").Include("Alternativas").Include("Alunos").Where(x =>  x.RespostaDiscursiva != null).ToList();
+            return ctx.RespostasAlunos.Include("Questoes").Include("Alternativas").Include("Alunos").Where(x => x.RespostaDiscursiva != null).ToList();
         }
 
         public static RespostasAluno BuscarProvaQuestaoAluno(int QuestaoID, int ProvaID, int AlunoID)
@@ -96,6 +96,29 @@ namespace TestAnalyser.DAL
                 }
             }
             return result;
+        }
+
+        public static List<int> BuscarAltsMarcadas(int ProvaID, int AlunoID)
+        {
+            List<int> lista = new List<int>();
+            List<RespostasAluno> respostaAluno = new List<RespostasAluno>();
+            Prova prova = ProvaDAO.BuscarProvaId(ProvaID);
+
+            foreach (var item in prova.RespostasAlunos)
+            {
+                if (item.Aluno.AlunoId == AlunoID)
+                    respostaAluno.Add(item);
+            }
+
+            foreach (RespostasAluno item2 in respostaAluno)
+            {
+                foreach (var item3 in item2.Alternativas)
+                {
+                    lista.Add(item3.AlternativaId);
+                }
+            }
+
+            return lista;
         }
     }
 }

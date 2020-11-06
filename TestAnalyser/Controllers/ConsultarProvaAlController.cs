@@ -117,6 +117,7 @@ namespace TestAnalyser.Controllers
                 return RedirectToAction("ConsultarProvaAl", "ConsultarProvaAl");
             }
 
+            ViewBag.Marcadas = RespostasAlunoDAO.BuscarAltsMarcadas(idProva, Convert.ToInt32(Session["IdUsr"])); ;
             Prova prova = ProvaDAO.BuscarProvaId(idProva);
             return View(prova);
         }
@@ -285,9 +286,6 @@ namespace TestAnalyser.Controllers
                 }
                 count++;
             }
-
-            //Resposta.Alternativas = AlternativasID;
-
         }
     }
 }

@@ -4,6 +4,8 @@
 @{
     ViewBag.Title = "Visualizar Prova";
     var count = 1;
+    var contador = 0;
+    var MarcadasX = ViewBag.Marcadas;
     var provaID = Model.ProvaId;
 }
 
@@ -14,6 +16,7 @@
     }
     <form class="form-horizontal" name="form1" id="form" @*method="post" action="@Url.Action("SalvarProva", "ConsultarProvaAl")*@>
         <div id="DivGeral">
+            @Html.Hidden("contador", 0)
             @foreach (var x in Model.NotasQuestoes.Where(y => y.Questao.TipoQuestao == 1).ToList()) //VERIFICAR O MODELO, QUE ESTÁ VINDO VAZIO.
             {
                 <br />
@@ -46,7 +49,7 @@
                         <div class="form-row">
                             @Html.Hidden("AlternativaCorreta", x.Questao.Alternativas[i].correto, new { id = "QstCorreta" })
                             @Html.RadioButton("AlternativaId" + "SE" + count, x.Questao.Alternativas[i].AlternativaId, new { disabled = "disabled" })
-                            <label for="">@(i+1)) </label>
+                            <label for="">@(i + 1)) </label>
                             @Html.Raw(x.Questao.Alternativas[i].DescAlternativa)
                         </div>
                     }
@@ -63,8 +66,8 @@
                         <h6><b>Questão @count</b></h6>
                     </div>
                     @*<div class="form-row">
-                              <button witdh="50" id="btnSalvar" type="submit" class="btn btn-primary btn-sm">Salvar</button>
-                        </div>*@
+                      <button witdh="50" id="btnSalvar" type="submit" class="btn btn-primary btn-sm">Salvar</button>
+                </div>*@
                 </div>
                 <br />
                 <div class="form-row">
@@ -89,8 +92,8 @@
                     {
                         <div class="form-row">
                             @Html.Hidden("AlternativaCorreta", x.Questao.Alternativas[i].correto, new { id = "QstCorreta" })
-                            @Html.CheckBox("AlternativaId" + "ME" + count, new { disabled = "disabled" })
-                            <label for="">@(i+1)) </label>
+                            @Html.CheckBox("AlternativaId" + "ME" + count, new { disabled = "disabled", value = x.Questao.Alternativas[i].AlternativaId })
+                            <label for="">@(i + 1)) </label>
                             @Html.Raw(x.Questao.Alternativas[i].DescAlternativa)
                         </div>
                     }
@@ -107,8 +110,8 @@
                         <h6><b>Questão @count</b></h6>
                     </div>
                     @*<div class="form-row">
-                              <button witdh="50" id="btnSalvar" type="submit" class="btn btn-primary btn-sm">Salvar</button>
-                        </div>*@
+                      <button witdh="50" id="btnSalvar" type="submit" class="btn btn-primary btn-sm">Salvar</button>
+                </div>*@
                 </div>
                 <br />
                 <div class="form-row">
@@ -133,8 +136,8 @@
                     {
                         <div class="form-row">
                             @Html.Hidden("AlternativaCorreta", x.Questao.Alternativas[i].correto, new { id = "QstCorreta" })
-                            @Html.CheckBox("AlternativaId" + "VF" + count, new { disabled = "disabled" })
-                            <label for="">@(i+1)) </label>
+                            @Html.CheckBox("AlternativaId" + "VF" + count, new { disabled = "disabled", value = x.Questao.Alternativas[i].AlternativaId })
+                            <label for="">@(i + 1)) </label>
                             @Html.Raw(x.Questao.Alternativas[i].DescAlternativa)
                         </div>
                     }
@@ -176,9 +179,9 @@
                 <br />
                 <script>@(count = count + 1) </script>
             }
-            <div class="form-row">
-                <button witdh="50" id="btnSalvar" type="submit" class="btn btn-primary btn-sm">Salvar</button>
-            </div>
+            @*<div class="form-row">
+            <button witdh="50" id="btnSalvar" type="submit" class="btn btn-primary btn-sm">Salvar</button>
+        </div>*@
         </div>
     </form>
 </div>
@@ -199,10 +202,18 @@
         AlternativasSelecionadas()
     }
 
-    //Passar uma viewbag com todos as AlternativasIDs que o aluno marcou e varrer na tela e dar o check.
     function AlternativasSelecionadas() {
+        var Marcs = @Html.Raw(Json.Encode(ViewBag.Marcadas));
+        var contador = 0;
 
+        $("#DivGeral input[name^='AlternativaId']").each(function () {
+            var ID = $(this).val();
 
+            if (ID == Marcs[contador]) {
+                $(this).attr("checked", true);
+                contador++;
+            }
+        });
     }
 
     function SolicitarRevisao() {

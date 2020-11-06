@@ -45,6 +45,7 @@ namespace TestAnalyser.DAL
                 .Include("NotasQuestoes.Questao")
                 .Include("NotasQuestoes.Questao.Alternativas")
                 .Include("RespostasAlunos.Aluno")
+                .Include("RespostasAlunos.Alternativas")
                 .FirstOrDefault(x => x.ProvaId == id);
 
             return prova;
