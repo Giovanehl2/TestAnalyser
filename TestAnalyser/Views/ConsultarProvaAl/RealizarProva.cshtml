@@ -306,6 +306,7 @@
     function FinalizarProva() {
         var ProvID = "@provaID";
         var arrIDs = new Array();
+        var QIDs = new Array();
 
         var r = confirm("Confirma que respondeu todas as questões e deseja Finalizar?");
         if (r == true) {
@@ -316,14 +317,18 @@
                     var ID = $(this).val();
                     if (ID != "false") {
                         arrIDs.push(parseInt(ID));
+
+                        var Confirm = $(this).closest(".form-row").find("input[name^='QuestaoId']").val();
+                        QIDs.push(parseInt(Confirm));
                     }
                 }
+
             });
 
             $.ajax({
                 type: "POST",
                 url: "/ConsultarProvaAl/SalvarTodasAlternativas",
-                data: { ProvaID: ProvID, AlternativasID: arrIDs },
+                data: { ProvaID: ProvID, AlternativasID: arrIDs, QuestoesID: QIDs },
                 success: function (data) {
                 }
             });

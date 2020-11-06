@@ -266,9 +266,25 @@ namespace TestAnalyser.Controllers
         //Validar alterações nas questões (se não altera nos lugares errados).
         public void SalvarTodasAlternativas(int ProvaID, List<int> AlternativasID, List<int> QuestoesID)
         {
+            var count = 0;
             int AlunoID = Convert.ToInt32(Session["IdUsr"]);
             List<RespostasAluno> Respostas = new List<RespostasAluno>();
 
+            Respostas = RespostasAlunoDAO.BuscarRespostasAluno(ProvaID, AlunoID);
+            foreach (var item in QuestoesID)
+            {
+                foreach (var item2 in Respostas)
+                {
+                    if (item2.Questao.QuestaoId == item)
+                    {
+                        Alternativa alt = AlternativaDAO.BuscarAlternativaId(AlternativasID[count]);
+                        item2.Alternativas.Add(alt);
+                        RespostasAlunoDAO.Editar(item2);
+                        break;
+                    }
+                }
+                count++;
+            }
 
             //Resposta.Alternativas = AlternativasID;
 
