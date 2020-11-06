@@ -10,6 +10,7 @@ using TestAnalyser.Utils;
 
 namespace TestAnalyser.Controllers
 {
+
     public class LoginController : Controller
     {
         [HttpGet]
@@ -23,7 +24,6 @@ namespace TestAnalyser.Controllers
         {
             return View();
         }
-
         [HttpPost]
         public ActionResult Login([Bind(Include = "Login,Senha")] Usuario usuario)
         {

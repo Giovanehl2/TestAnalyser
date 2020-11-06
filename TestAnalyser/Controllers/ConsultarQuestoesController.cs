@@ -8,6 +8,7 @@ using TestAnalyser.Model;
 
 namespace TestAnalyser.Controllers
 {
+    [Authorize]
     //Filtro: Curso, Disciplina e Assunto.
     public class ConsultarQuestoesController : Controller
     {
@@ -21,7 +22,6 @@ namespace TestAnalyser.Controllers
 
             ViewBag.Cursos = cursos;
             ViewBag.Questoes = TempData["questoes"];
-            TempData.Keep();
             return View(new Questao());
         }
 
@@ -55,7 +55,7 @@ namespace TestAnalyser.Controllers
         public ActionResult ConsultarQuestoesBtn(string Disciplina, string Assunto, int? Desativado)
         {
             List<Questao> questoes = new List<Questao>();
-            if (Assunto.Equals("Selecionar"))
+            if (Assunto.Equals("Selecionar") && !Disciplina.Equals("Selecionar"))
             {
                 questoes = QuestaoDAO.BuscarPorDisciplina(Disciplina, Desativado);
                 TempData["questoes"] = questoes;
@@ -68,10 +68,24 @@ namespace TestAnalyser.Controllers
 
             return RedirectToAction("ConsultarQuestoes", "ConsultarQuestoes");
         }
+        public ActionResult Voltar()
+        {
+            LimparDadosTela();
+            return RedirectToAction("GerarProva", "GerarProva");
+        }
 
+        private void LimparDadosTela()
+        {
+
+
+        }
         public ActionResult ExcluirQuestao(int questaoID)
         {
-            QuestaoDAO.ExcDesQuestao(questaoID);
+            if(QuestaoDAO.ExcDesQuestao(questaoID))
+            TempData["$AlertMessage$"] = "Exclusão realizada com sucesso!";
+            else
+                TempData["$AlertMessage$"] = "Erro inesperado durante o processo de exclusão!";
+
             return RedirectToAction("ConsultarQuestoes", "ConsultarQuestoes");
         }
 

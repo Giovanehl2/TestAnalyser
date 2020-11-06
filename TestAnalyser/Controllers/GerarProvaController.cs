@@ -39,7 +39,7 @@ namespace TestAnalyser.Controllers
             provaFixa = new Prova();
 
         }
-            public JsonResult BuscarDisciplina(int id)
+        public JsonResult BuscarDisciplina(int id)
         {
             List<string> listagem = new List<string>();
             disciplinas = DisciplinaDAO.ListarDisciplinas();
@@ -84,15 +84,15 @@ namespace TestAnalyser.Controllers
 
         public ActionResult SalvarProvaQuestoes(List<int> idquestao, List<double> notas)
         {
-                for (int i = 0; i < provaFixa.NotasQuestoes.Count; i++)
+            for (int i = 0; i < provaFixa.NotasQuestoes.Count; i++)
+            {
+                if (provaFixa.NotasQuestoes[i].Questao.QuestaoId == idquestao[i])
                 {
-                   if( provaFixa.NotasQuestoes[i].Questao.QuestaoId == idquestao[i])
-                    {
                     provaFixa.NotasQuestoes[i].ValorQuestao = notas[i];
-                    }
                 }
-                //adiciona o gabarito de todos os alunosk
-                GerarGabaritoAluno();
+            }
+            //adiciona o gabarito de todos os alunosk
+            GerarGabaritoAluno();
 
             if (ProvaDAO.CadastrarProva(provaFixa))
             {
@@ -130,32 +130,32 @@ namespace TestAnalyser.Controllers
         public ActionResult CadastrarQuestoesProva(Prova prova)
         {
 
-                Disciplina disc = DisciplinaDAO.BuscarPorNome(prova.NomeDisciplina);
-                List<RespostasAluno> respostaAluno = new List<RespostasAluno>();
-                prova.RespostasAlunos = respostaAluno;
-                prova.Disciplina = disc;
+            Disciplina disc = DisciplinaDAO.BuscarPorNome(prova.NomeDisciplina);
+            List<RespostasAluno> respostaAluno = new List<RespostasAluno>();
+            prova.RespostasAlunos = respostaAluno;
+            prova.Disciplina = disc;
 
-                //Aplicando os valores da Faixa de correção (gambs)
-                prova.ConfigPln.IncorretoInicio = 0;
-                prova.ConfigPln.IncorretoFim = prova.InFim;
-                prova.ConfigPln.RevisarInicio = (prova.InFim + 1);
-                prova.ConfigPln.RevisarFim = prova.ParFim;
-                prova.ConfigPln.CorretoInicio = (prova.ParFim + 1);
-                prova.ConfigPln.CorretoFim = 100;
+            //Aplicando os valores da Faixa de correção (gambs)
+            prova.ConfigPln.IncorretoInicio = 0;
+            prova.ConfigPln.IncorretoFim = prova.InFim;
+            prova.ConfigPln.RevisarInicio = (prova.InFim + 1);
+            prova.ConfigPln.RevisarFim = prova.ParFim;
+            prova.ConfigPln.CorretoInicio = (prova.ParFim + 1);
+            prova.ConfigPln.CorretoFim = 100;
 
-                int id = Convert.ToInt32(Session["IdUsr"]);
-                prova.Professor = ProfessorDAO.BuscarProfessorPorId(id);
-                provaFixa = prova;
-                GerarQuestoesProva();
+            int id = Convert.ToInt32(Session["IdUsr"]);
+            prova.Professor = ProfessorDAO.BuscarProfessorPorId(id);
+            provaFixa = prova;
+            GerarQuestoesProva();
 
-                if (ProvaDAO.BuscarPorTituloProva(prova.TituloProva) == null)
-                {
-                    
-                    return RedirectToAction("AdicionarQuestoesNaProva", "GerarProva", provaFixa);
+            if (ProvaDAO.BuscarPorTituloProva(prova.TituloProva) == null)
+            {
 
-                }
+                return RedirectToAction("AdicionarQuestoesNaProva", "GerarProva", provaFixa);
 
-           
+            }
+
+
             return RedirectToAction("GerarProva", "GerarProva", provaFixa);
 
 

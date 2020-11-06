@@ -8,6 +8,7 @@ using TestAnalyser.Model;
 
 namespace TestAnalyser.Controllers
 {
+    [Authorize]
     public class ConfiguracoesController : Controller
     {
         // GET: Configuracoes

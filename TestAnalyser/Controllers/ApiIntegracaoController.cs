@@ -13,6 +13,7 @@ using TestAnalyser.Model;
 
 namespace TestAnalyser.Controllers
 {
+    [Authorize]
     public class ApiIntegracaoController : Controller
     {
         public static Aluno aluno = new Aluno();

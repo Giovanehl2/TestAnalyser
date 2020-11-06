@@ -28,20 +28,24 @@ namespace TestAnalyser.DAL
             return obj;
         }
 
-        public static void ExcDesQuestao(int id)
+        public static bool ExcDesQuestao(int id)
         {
-            Questao q = BuscarQuestaoId(id);
-            if(q.situacao == 1)
+            try
             {
-                q.situacao = 0;
-                AlterarQuestao(q);
+                Questao q = BuscarQuestaoId(id);
+                if (q.situacao == 1)
+                {
+                    q.situacao = 0;
+                    AlterarQuestao(q);
+                    return true;
+                }
             }
-            //else
-            //{
-            //    ctx.Entry(q).State = System.Data.Entity.EntityState.Deleted;
-            //    ctx.SaveChanges();
-            //}
+            catch (Exception ex)
+            {
+                Console.WriteLine("Exception: " + ex.Message);
+            }
 
+            return false;
         }
 
         public static void AlterarQuestao(Questao questao)

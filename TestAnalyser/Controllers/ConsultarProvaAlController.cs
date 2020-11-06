@@ -8,7 +8,7 @@ using TestAnalyser.Model;
 
 namespace TestAnalyser.Controllers
 {
-
+    [Authorize]
     public class ConsultarProvaAlController : Controller
     {
         private static int cursoId = 0;

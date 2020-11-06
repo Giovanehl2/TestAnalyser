@@ -173,7 +173,7 @@
                 <br />
                 <div id="DivRespostaDT">
 
-                    @Html.TextArea("Enunciado", new { @class = "form-control", @id = "RespostaDiscursiva", @readonly = true })
+                    @Html.TextArea("Enunciado", x.Questao.RespostaDiscursiva , new { @class = "form-control", @id = "RespostaDiscursiva", @readonly = true})
                 </div>
                 <br />
                 <script>@(count = count + 1) </script>

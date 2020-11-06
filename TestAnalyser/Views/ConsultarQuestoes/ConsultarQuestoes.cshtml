@@ -22,7 +22,7 @@
                         </div>
                         <div class="row">
                             <div class="col">
-                                <select class="form-control" id="CursoId" name="Curso">
+                                <select class="form-control" id="CursoId" name="Curso" required>
                                     @{
                                         <option value="0">Selecionar</option>
                                         foreach (var item in ViewBag.Cursos)
@@ -43,8 +43,8 @@
                         </div>
                         <div class="row">
                             <div class="col">
-                                <select class="form-control" id="DisciplinaId" name="Disciplina">
-                                    <option>Selecionar</option>
+                                <select class="form-control" id="DisciplinaId" name="Disciplina" required>
+                                    <option value="0"> Selecionar </option>
                                 </select>
                             </div>
                         </div>
@@ -59,8 +59,8 @@
 
                         <div class="row">
                             <div class="col">
-                                <select class="form-control" id="AssuntoId" name="Assunto">
-                                    <option>Selecionar</option>
+                                <select class="form-control" id="AssuntoId" name="Assunto" required>
+                                    <option value="0"> Selecionar </option>
                                 </select>
                             </div>
                         </div>
@@ -88,6 +88,10 @@
     </div>
     <br />
     <br />
+    @if (TempData["$AlertMessage$"] != null)
+    {
+        <div id="alerta" style="color: red; text-align: center;">@TempData["$AlertMessage$"]</div>
+    }
     <div class="row">
         <h3>Provas</h3>
         <table class="table">
@@ -104,13 +108,33 @@
                 @{
                     if (questoes != null)
                     {
+
                         foreach (var item in questoes)
                         {
+                            string tpQuestao = "";
+
+                            if (item.TipoQuestao == 1)
+                            {
+                                tpQuestao = "Simples Escolha";
+                            }
+                            else if (item.TipoQuestao == 2)
+                            {
+                                tpQuestao = "Multipla Escolha"; 
+                            }
+                            else if (item.TipoQuestao == 3)
+                            {
+                                tpQuestao = "Verdadeiro ou Falso";
+                            }
+                            else if (item.TipoQuestao == 4)
+                            {
+                                tpQuestao = "Discursiva";
+                            }
+
                             <tr>
                                 <td>@item.Disciplina.Nome</td>
                                 <td>@item.Assunto</td>
                                 <td>@Html.Raw(item.Enunciado)</td>
-                                <td>@item.TipoQuestao</td>
+                                <td>@tpQuestao</td>
                                 <td>
                                     <div id="Acoes">
                                         @Html.ActionLink("Editar", "EditarQuestao", "ConsultarQuestoes", new { questaoID = item.QuestaoId }, null) |
@@ -152,10 +176,6 @@
             console.log("Questão deletada...");
             $('#ConfirmaExcluir').modal('hide');
         }
-
-
-
-
 
 
         //Certo a partir daqui...

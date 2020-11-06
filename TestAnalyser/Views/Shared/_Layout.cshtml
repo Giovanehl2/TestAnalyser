@@ -1,8 +1,7 @@
 ﻿<!DOCTYPE html>
-<html>
+<html lang="pt-br">
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0 charset="utf-8"">
     <title>Test Analyser</title>
 
 
@@ -38,11 +37,11 @@
                     <a class="nav-link" href="@Url.Action("ConsultarQuestoes", "ConsultarQuestoes")">Consultar Questões</a>
                 </li>
             </ul>
-            <ul class="nav navbar-nav ml-auto" >
+            <ul class="nav navbar-nav ml-auto">
                 <li class="nav-item active" id="6"><a class="nav-link" href="@Url.Action("Configuracoes", "Configuracoes")"><span class="glyphicon glyphicon-cog"></span>  Configurações </a></li>
                 <li class="nav-item active">
                     <a id="usermenu" class="nav-link">
-                        <span class="glyphicon glyphicon-user "></span> &nbsp; @((Session["NomeUsuario"])) - 
+                        <span class="glyphicon glyphicon-user "></span> &nbsp; @((Session["NomeUsuario"])) -
                     </a>
                 </li>
                 <li class="nav-item active"><a class="nav-link" href="@Url.Action("Login", "Login")"><span class="glyphicon glyphicon-log-out "></span> Sair </a></li>

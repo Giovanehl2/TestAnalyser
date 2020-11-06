@@ -10,6 +10,7 @@
 @* Script para o funcionamento de adicionar e remover alternativas *@
 <head>
     <meta name="viewport" content="width=device-width" />
+
     <title>Index</title>
     <style type="text/css">
         body {
@@ -22,7 +23,7 @@
         }
     </style>
 
-    <script type="text/javascript">
+    <script type="text/javascript" charset="ISO-8859-1">
         //Total máximo de campos que você permitirá criar em seu site:
         var totalCampos = 9;
 
@@ -80,8 +81,8 @@
             //if (campoValor == "") {
             //    campoValor = "vazio";
             //}
-
-            if (confirm("O Campo de Alternativa será excluído!\nDeseja prosseguir?")) {
+            var mensagem = "O item selecionado sera removido!\nDeseja prosseguir?";
+            if (confirm(mensagem)) {
                 document.getElementById(tipo + "Alternativas" + id).style.display = "none"; iCount--;
 
                 //Removendo o valor de hidden1:
@@ -121,6 +122,9 @@
         <br />
         <form class="form-horizontal" name="form1" id="formCadSE" method="post" action="@Url.Action("CadastrarSE", "CadastrarQuestoes")">
             @*<form name="form1" action="paginaPHPouASP" method="post">*@
+            <div class="col-lg-8">
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            </div>
             <div class="form-row">
                 <div class="col-md-4">
                     <label for="AssuntoSE">Assunto</label>
@@ -161,6 +165,7 @@
                 <input type="hidden" name="hidden2" id="hidden2">
             </div>
             <br />
+
             <div class="form-row">
                 <button witdh="50" id="btnSalvar" type="submit" class="btn btn-primary btn-sm">Salvar</button>
             </div>
@@ -182,9 +187,9 @@
                     @Html.DropDownList("DisciplinaId", new SelectList(ViewBag.Disciplinas, "DisciplinaId", "Nome"), htmlAttributes: new { @class = "form-control" })
                 </div>
                 @*<div class="col-md-1">
-                    <label for="Parcial" title="Marque para permitir que a nota do aluno seja calculada parcialmente com base nas alternativas selecionadas."> Parcial </label>
-                    <input type="checkbox" title="Marque para permitir que a nota do aluno seja calculada parcialmente com base nas alternativas selecionadas." class="form-control" id="Parcial" name="Parcial" value="1">
-                </div>*@
+                        <label for="Parcial" title="Marque para permitir que a nota do aluno seja calculada parcialmente com base nas alternativas selecionadas."> Parcial </label>
+                        <input type="checkbox" title="Marque para permitir que a nota do aluno seja calculada parcialmente com base nas alternativas selecionadas." class="form-control" id="Parcial" name="Parcial" value="1">
+                    </div>*@
             </div>
             <br />
             <div class="form-row">
@@ -282,9 +287,9 @@
                     @Html.DropDownList("DisciplinaId", new SelectList(ViewBag.Disciplinas, "DisciplinaId", "Nome"), htmlAttributes: new { @class = "form-control" })
                 </div>
                 @*<div class="col-md-1">
-                    <label for="Parcial" title="Marque para permitir que a nota do aluno seja calculada parcialmente com base nas alternativas selecionadas."> Parcial </label>
-                    <input type="checkbox" title="Marque para permitir que a nota do aluno seja calculada parcialmente com base nas alternativas selecionadas." class="form-control" id="Parcial" name="Parcial" value="1">
-                </div>*@
+                        <label for="Parcial" title="Marque para permitir que a nota do aluno seja calculada parcialmente com base nas alternativas selecionadas."> Parcial </label>
+                        <input type="checkbox" title="Marque para permitir que a nota do aluno seja calculada parcialmente com base nas alternativas selecionadas." class="form-control" id="Parcial" name="Parcial" value="1">
+                    </div>*@
             </div>
             <br />
             <div class="form-row">
@@ -426,4 +431,7 @@
             $('#alerta').fadeOut(1000);
         }, 2500);
     });
+
+
+    SEradio
 </script>

@@ -8,6 +8,7 @@ using TestAnalyser.Model;
 
 namespace TestAnalyser.Controllers
 {
+    [Authorize]
     public class CadastrarQuestoesController : Controller
     {
         //GET: CadastrarQuestoes
@@ -29,6 +30,16 @@ namespace TestAnalyser.Controllers
         [HttpPost]
         public ActionResult CadastrarSE(Questao questao, string DisciplinaId, List<string>Alternativas, int? SEradio)
         {
+            if (!SEradio.HasValue)
+            {
+                TempData["$AlertMessage$"] = "Favor selecionar uma alternativa correta!";
+                return RedirectToAction("CadastrarQuestoes", "CadastrarQuestoes");
+            }
+            if (questao.Enunciado == null || questao.Enunciado.Equals(""))
+            {
+                TempData["$AlertMessage$"] = "Favor prencher o enunciado da questão!";
+                return RedirectToAction("CadastrarQuestoes", "CadastrarQuestoes");
+            }
             //Salva o tipo de questão, deixa-o ativo e mantem a RespostaDiscursiva vazia...
             questao.TipoQuestao = 1;
             questao.situacao = 1;
@@ -67,6 +78,17 @@ namespace TestAnalyser.Controllers
         [HttpPost]
         public ActionResult CadastrarME(Questao questao, string DisciplinaId, List<string> Alternativas, List<string> Opcoes, List<int?>MEchbx)
         {
+
+            if (MEchbx == null || questao.Enunciado.Equals(""))
+            {
+                TempData["$AlertMessage$"] = "Favor selecionar uma alternativa correta!";
+                return RedirectToAction("CadastrarQuestoes", "CadastrarQuestoes");
+            }
+            if (questao.Enunciado == null || questao.Enunciado.Equals(""))
+            {
+                TempData["$AlertMessage$"] = "Favor prencher o enunciado da questão!";
+                return RedirectToAction("CadastrarQuestoes", "CadastrarQuestoes");
+            }
             questao.TipoQuestao = 2;
             questao.situacao = 1;
             questao.RespostaDiscursiva = "";
@@ -112,6 +134,11 @@ namespace TestAnalyser.Controllers
         public ActionResult CadastrarVF(Questao questao, string DisciplinaId, List<string> Alternativas, List<string> Opcoes, List<int?>VFchbx)
         
         {
+            if (questao.Enunciado == null || questao.Enunciado.Equals(""))
+            {
+                TempData["$AlertMessage$"] = "Favor prencher o enunciado da questão!";
+                return RedirectToAction("CadastrarQuestoes", "CadastrarQuestoes");
+            }
             questao.TipoQuestao = 3;
             questao.situacao = 1;
             questao.RespostaDiscursiva = "";
@@ -159,6 +186,12 @@ namespace TestAnalyser.Controllers
         [HttpPost]
         public ActionResult CadastrarDT(Questao questao, string DisciplinaId)
         {
+            if (questao.Enunciado == null || questao.Enunciado.Equals(""))
+            {
+                TempData["$AlertMessage$"] = "Favor prencher o enunciado da questão!";
+                return RedirectToAction("CadastrarQuestoes", "CadastrarQuestoes");
+            }
+
             questao.TipoQuestao = 4;
             questao.situacao = 1;
 
