@@ -18,6 +18,10 @@
 <div class="container">
     <div class="row">
         <div class="col-md-12">
+            @if (TempData["$ProvaGerada$"] != null)
+            {
+                <div id="alerta" style="color: red; text-align: center;">@TempData["$ProvaGerada$"]</div>
+            }
             <form name="form1" id="formCadSE" method="post" action="@Url.Action("CadastrarQuestoesProva", "GerarProva")">
                 <div class="form-row">
                     <div class="form-group col-md-6">
@@ -26,15 +30,15 @@
                         @Html.TextBoxFor(model => model.TituloProva, new { @class = "form-control", @placeholder = "Digite o Titulo" })
                     </div>
 
-                    <div class="form-group col-md-6">
+                    <div class="form-group col-md-6" style="text-align: center;">
 
-                        <div class="row">
+                        <div class="row" style="justify-content: center;">
                             <div class="col-md-4"><label for="DataProvaInicio">Data inicio da Prova</label></div>
                             <div class="col-md-4"><label for="HoraProvaInicio">Hora - Inicio</label></div>
 
                         </div>
 
-                        <div class="row">
+                        <div class="row" style="justify-content: center;">
                             <div class="col-md-4">
                                 <input class="form-control" id="DataProvaInicio" type="date" name="DataProvaInicio" required>
                             </div>
@@ -43,12 +47,12 @@
                             </div>
                         </div>
 
-                        <div class="row">
+                        <div class="row" style="justify-content: center;">
                             <div class="col-md-4"><label for="DataProvaFim">Data fim da Prova</label></div>
                             <div class="col-md-4"><label for="HoraProvaFim">Hora - Final</label></div>
                         </div>
 
-                        <div class="row">
+                        <div class="row" style="justify-content: center;">
                             <div class="col-md-4">
                                 <input class="form-control" id="DataProvaFim" type="date" name="DataProvaFim" required>
                             </div>
@@ -64,10 +68,10 @@
                         <label for="NotaMax">Nota máxima</label>
                         <input class="form-control " id="NotaMax" type="number" name="ValorProva" required>
                     </div>
-                    <div class="form-group col">
-                        <label for="NotaMax">tentativas</label>
-                        <input class="form-control " id="QtTentativa" type="number" name="QtTentativas" required>
-                    </div>
+                    @*<div class="form-group col">
+                            <label for="NotaMax">tentativas</label>
+                            <input class="form-control " id="QtTentativa" type="number" name="QtTentativas" required>
+                        </div>*@
                     <div class="form-group col">
                         <label for="DisciplinaProva">Curso</label>
                         <select class="form-control" id="idCurso" name="Curso" size="1" required>
@@ -111,9 +115,9 @@
 
                         <div class="row">
                             <div class="col">
-                                <div class="col">
+                                <div class="col" style="text-align: right;">
                                     <div class="row">
-                                        <div class="col">
+                                        <div class="col" style="text-align: center;">
                                             <label class="form-check-label" for="gridCheck">
                                                 Tipo das Questões
                                             </label>
@@ -123,7 +127,9 @@
                                     <div class="row">
                                         <div class="col">
                                             <div class="form-check">
-                                                <label class="form-check-label" for="gridCheck">Simples escolha</label>
+                                                <label class="form-check-label" for="gridCheck">
+                                                    Simples escolha &emsp; @Html.Raw("(" + 5 + ")")
+                                                </label>
                                             </div>
                                         </div>
                                         <div class="col">
@@ -134,7 +140,7 @@
                                         <div class="col">
                                             <div class="form-check">
                                                 <label class="form-check-label" for="gridCheck">
-                                                    Multipla escolha
+                                                    Multipla escolha &emsp; @Html.Raw("(" + 5 + ")")
                                                 </label>
                                             </div>
                                         </div>
@@ -146,7 +152,7 @@
                                         <div class="col">
                                             <div class="form-check">
                                                 <label class="form-check-label" for="gridCheck">
-                                                    Verdadeira ou falso
+                                                    Verdadeira ou falso &emsp; @Html.Raw("(" + 5 + ")")
                                                 </label>
                                             </div>
                                         </div>
@@ -159,7 +165,7 @@
                                             <div class="form-check">
 
                                                 <label class="form-check-label" for="gridCheck">
-                                                    Dissertativa
+                                                    Dissertativa &emsp; @Html.Raw("(" + 5 + ")")
                                                 </label>
                                             </div>
                                         </div>
@@ -239,6 +245,7 @@
 @*https://www.c-sharpcorner.com/UploadFile/4b0136/working-with-dropdownlist-in-mvc-5/*@
 
 <script>
+//Essa parte de Script ainda sendo usado?, parece que não...
     $('.selectpicker').selectpicker();
 
     function AdicionarQuestoesNaProva() {
@@ -254,6 +261,14 @@
 
     }
 
+</script>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        setTimeout(function () {
+            $('#alerta').fadeOut(1000);
+        }, 3500);
+    });
 </script>
 
 <script>

@@ -92,7 +92,8 @@
                                 <td>@item.Aluno.Matricula</td>
                                 <td>
                                     <div id="divGridConsultaPr1">
-                                        @Html.ActionLink("Corrigir", "CorrigirProvaAlunoEspecifico", "ConsultarProvaPr", new { id = item.Aluno.AlunoId, idProva = Model.ProvaId }, null) |
+                                        @Html.ActionLink("Corrigir", "CorrigirProvaAlunoEspecifico", "ConsultarProvaPr", new { id = item.Aluno.AlunoId, idProva = Model.ProvaId }, null) | 
+                                        @Html.ActionLink("Visualizar", "VisualizarProva", "ConsultarProvaAl", new { idAluno = item.Aluno.AlunoId, idProva = Model.ProvaId }, null)
                                     </div>
                                 </td>
                             </tr>

@@ -96,6 +96,7 @@ namespace TestAnalyser.Controllers
 
             if (ProvaDAO.CadastrarProva(provaFixa))
             {
+                TempData["$ProvaGerada$"] = "Prova criada com sucesso.";
 
                 return RedirectToAction("GerarProva", "GerarProva");
             }

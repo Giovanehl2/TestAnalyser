@@ -8,6 +8,8 @@
 }
 
     <div id="divGeral" class="">
+        <div style="text-align: left;"><h2><b>@Html.Raw(Model.TituloProva)</b></h2></div>
+        <br />
         <form class="form-horizontal" name="form1" id="form" @*method="post" action="@Url.Action("SalvarProva", "ConsultarProvaAl")"*@>
             @foreach (var x in Model.NotasQuestoes.Where(y => y.Questao.TipoQuestao == 1).ToList())
             {

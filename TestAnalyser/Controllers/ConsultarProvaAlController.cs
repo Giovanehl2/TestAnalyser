@@ -89,19 +89,23 @@ namespace TestAnalyser.Controllers
         }
 
         //Passar para a prova a resposta discursiva do aluno...
-        public ActionResult VisualizarProva(int idProva)
+        public ActionResult VisualizarProva(int? idAluno, int idProva)
         {
-            //Verificar se o AlunoID ja realizou a prova...
+            int Pr = 0;
             int AlunoID = Convert.ToInt32(Session["IdUsr"]);
+            if (idAluno != null)
+                { AlunoID = Convert.ToInt32(idAluno); Pr = 1; }
+
+            //Verificar se o AlunoID ja realizou a prova...
             if (!RespostasAlunoDAO.VerificarSeProvaFeita(idProva, AlunoID))
             {
                 TempData["$ProvaJaFeita$"] = "Só é possivel visualizar a prova depois de concluída.";
                 return RedirectToAction("ConsultarProvaAl", "ConsultarProvaAl");
             }
 
-            List<RespostasAluno> Resp = ProvaDAO.BuscarRespostasPorAluno(Convert.ToInt32(Session["IdUsr"]), idProva);
+            List<RespostasAluno> Resp = ProvaDAO.BuscarRespostasPorAluno(AlunoID, idProva);
             double NotaSomada = 0;
-            if (ProvaDAO.MostrarNota(idProva))
+            if (ProvaDAO.MostrarNota(idProva) || Pr == 1)
             {
                 foreach (var item in Resp)
                 {
@@ -117,7 +121,7 @@ namespace TestAnalyser.Controllers
                 return RedirectToAction("ConsultarProvaAl", "ConsultarProvaAl");
             }
 
-            ViewBag.Marcadas = RespostasAlunoDAO.BuscarAltsMarcadas(idProva, Convert.ToInt32(Session["IdUsr"])); ;
+            ViewBag.Marcadas = RespostasAlunoDAO.BuscarAltsMarcadas(idProva, AlunoID); ;
             Prova prova = ProvaDAO.BuscarProvaId(idProva);
             return View(prova);
         }
@@ -202,7 +206,8 @@ namespace TestAnalyser.Controllers
                     { corretos.Add(item.AlternativaId); }
                 }
                 double notamax = ProvaDAO.BuscarValorNotamax(ProvaID, QuestaoID);
-                double notaDiv = (notamax / corretos.Count);
+                double notaDiv = (notamax / AltersQuestao.Count);
+                double notaDivCor = (notamax / corretos.Count);
 
                 //Separa quantas alternativas marcadas estão corretas e incorretas...
                 foreach (int item2 in AltsDtQuest)
@@ -214,8 +219,8 @@ namespace TestAnalyser.Controllers
                 }
 
                 //Atribui o valor total da nota do Aluno com base nas alternativas marcadas...
-                Total = (notaDiv * MarcCor);
-                Total = (Total - ((notaDiv * MarcInc) / 2));
+                Total = (notaDivCor * MarcCor);
+                Total = (Total - (notaDiv * MarcInc));
                 if (Total < 0) { Total = 0; }
 
                 //Define qual é o status da questão, correto, parcialmente correto ou incorreto...
@@ -231,7 +236,7 @@ namespace TestAnalyser.Controllers
                     Questao.SituacaoCorrecao = 3;
                 }
 
-                Questao.NotaAluno = Total;
+                Questao.NotaAluno = Math.Round(Total,2);
                 Questao.DataHoraInicio = DateTime.Now;
 
                 RespostasAlunoDAO.Editar(Questao);
