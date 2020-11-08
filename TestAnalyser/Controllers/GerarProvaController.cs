@@ -127,14 +127,57 @@ namespace TestAnalyser.Controllers
 
 
         }
+        public List<DateTime> ajustarHoraFim(DateTime dataIniProva, DateTime horaIniProva, DateTime dataFimProva, DateTime horaFimProva)
+        {
+            List<DateTime> listaData = new List<DateTime>();
+            try
+            {
+               // 08/11/2020 15:55:00
+                //data hora Inicio
+                string dataInicio = dataIniProva.ToString().Substring(0, 11);
+                dataInicio += horaIniProva.ToString().Substring(11, 8);
 
+                DateTime HoraInicioCorreta = Convert.ToDateTime(dataInicio);
+                listaData.Add(HoraInicioCorreta);
+
+
+                // data hora Fim
+                string dataFim = dataFimProva.ToString().Substring(0, 11);
+                dataFim += horaFimProva.ToString().Substring(11, 8);
+
+                DateTime HoraFimCorreta = Convert.ToDateTime(dataFim);
+
+                listaData.Add(HoraFimCorreta);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                return null;
+                
+            }
+
+            return listaData;
+
+        }
         public ActionResult CadastrarQuestoesProva(Prova prova)
         {
+            List<DateTime> listaData = new List<DateTime>();
+
+            listaData = ajustarHoraFim(prova.DataProvaInicio, prova.HoraInicio, prova.DataProvaFim, prova.HoraFim);
+
+            if(listaData != null)
+            {
+                prova.HoraInicio = listaData[0];
+                prova.HoraFim = listaData[1];
+            }
+
+
 
             Disciplina disc = DisciplinaDAO.BuscarPorNome(prova.NomeDisciplina);
             List<RespostasAluno> respostaAluno = new List<RespostasAluno>();
             prova.RespostasAlunos = respostaAluno;
             prova.Disciplina = disc;
+
 
             //Aplicando os valores da Faixa de correção (gambs)
             prova.ConfigPln.IncorretoInicio = 0;

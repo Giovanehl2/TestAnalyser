@@ -60,11 +60,12 @@
                     <div class="col-lg-8">
                         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                     </div>
-                    <div class="form-group">
-                        <div class="col-lg-4">
+
+                        <div class="modal-footer">
                             <input id="btnConfirmar" type="submit" value="Confirmar" class="btn btn-default" />
+                            <input id="btnVoltar" type="button" value="Voltar" onclick="VoltarPagina()" class="btn btn-default" />
                         </div>
-                    </div>
+
                 </fieldset>
             </form>
         </div>
@@ -72,6 +73,17 @@
 </div>
 
 <script>
+    function VoltarPagina() {
+
+        $.ajax({
+            type: "GET",
+            url: "/Login/Voltar",
+            success: function (data) {
+                window.location.href = "/Login/Login";
+            }
+        });
+        location.reload();
+    }
 
     $("#inputUsuario").focus();
 

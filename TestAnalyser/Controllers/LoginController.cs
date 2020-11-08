@@ -24,6 +24,12 @@ namespace TestAnalyser.Controllers
         {
             return View();
         }
+
+        public ActionResult Voltar()
+        {
+            return RedirectToAction("Login", "Login");
+        }
+
         [HttpPost]
         public ActionResult Login([Bind(Include = "Login,Senha")] Usuario usuario)
         {

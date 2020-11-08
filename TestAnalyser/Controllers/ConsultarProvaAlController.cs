@@ -17,7 +17,6 @@ namespace TestAnalyser.Controllers
         {
             ViewBag.Cursos = ViewBag.Cursos = CursoDAO.listarCursosPorAluno(Convert.ToInt32(Session["IdUsr"])); ;
             ViewBag.Provas = TempData["provas"];
-            TempData.Keep("provas");
             return View(new Prova());
         }
         public ActionResult ConsultarProva(int? Pendentes, DateTime DataIni, DateTime DataFim, int Curso, string Disciplina, int Turma)
@@ -87,7 +86,17 @@ namespace TestAnalyser.Controllers
             var output = Newtonsoft.Json.JsonConvert.SerializeObject(dict);
             return output;
         }
+        public ActionResult Voltar()
+        {
+            LimparDadosTela();
+            return RedirectToAction("ConsultarProvaAl", "ConsultarProvaAl");
+        }
 
+        private void LimparDadosTela()
+        {
+            ViewBag.Cursos = null;
+
+        }
         //Passar para a prova a resposta discursiva do aluno...
         public ActionResult VisualizarProva(int? idAluno, int idProva)
         {

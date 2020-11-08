@@ -175,7 +175,7 @@
                 </div>
                 <br />
                 <div id="DivRespostaDT">
-                    @{string resp = Model.RespostasAlunos[(count-1)].RespostaDiscursiva; }
+                    @{string resp = Model.RespostasAlunos[(count - 1)].RespostaDiscursiva; }
                     @Html.TextArea("RespostaDiscursiva", resp, new { @class = "form-control", @id = "RespostaDiscursiva", @readonly = true })
                 </div>
                 <br />
@@ -184,8 +184,11 @@
             @*<div class="form-row">
             <button witdh="50" id="btnSalvar" type="submit" class="btn btn-primary btn-sm">Salvar</button>
         </div>*@
-        </div>
-    </form>
+            <div class="form-row">
+                <input id="btnVoltar" value="Cancelar" onclick="VoltarPagina()" type="button" class="btn btn-default" />
+            </div>
+    </div>
+</form>
 </div>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
@@ -216,6 +219,18 @@
                 contador++;
             }
         });
+    }
+
+    function VoltarPagina() {
+
+        $.ajax({
+            type: "GET",
+            url: "/ConsultarProvaAl/Voltar",
+            success: function (data) {
+                window.location.href = "/ConsultarProvaAl/ConsultarProvaAl";
+            }
+        });
+        location.reload();
     }
 
     function SolicitarRevisao() {
