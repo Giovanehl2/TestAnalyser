@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -153,7 +153,9 @@ namespace TestAnalyser.Controllers
 
         public ActionResult CorrigirProvaAlunoEspecifico(int id, int idProva)
         {
+            Prova prova = ProvaDAO.BuscarProvaId(idProva);
             CorrigirGabarito = BuscarRespostasPorAluno(id, idProva);
+            ViewBag.Prova = prova;
             ViewBag.RespostasAlunoCorrecao = CorrigirGabarito;
 
             return View(prova);

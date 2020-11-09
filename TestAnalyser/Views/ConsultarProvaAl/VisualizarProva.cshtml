@@ -1,4 +1,4 @@
-﻿@model TestAnalyser.Model.Prova
+@model TestAnalyser.Model.Prova
 @using TestAnalyser.Model;
 @using System.Web.Mvc;
 @{
@@ -175,7 +175,7 @@
                 </div>
                 <br />
                 <div id="DivRespostaDT">
-                    @{string resp = Model.RespostasAlunos[(count - 1)].RespostaDiscursiva; }
+                    @{string resp = Model.RespostasAlunos[(count-1)].RespostaDiscursiva; }
                     @Html.TextArea("RespostaDiscursiva", resp, new { @class = "form-control", @id = "RespostaDiscursiva", @readonly = true })
                 </div>
                 <br />

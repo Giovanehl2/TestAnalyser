@@ -57,7 +57,7 @@
                 @Html.HiddenFor(model => model.Alternativas[i].AlternativaId)
                 @Html.HiddenFor(model => model.Alternativas[i].correto)
             <div class="form-row">
-                @Html.CheckBox("AltCorreto", (Model.Alternativas[i].correto == 1) ? true : false, new { @value = i+1, @disabled = true } )
+                @Html.CheckBox("AltCorreto", (Model.Alternativas[i].correto == 1) ? true : false@*, new { @value = i+1, @disabled = true }*@ )
                 <label for="">@(i+1)) </label>
                 @Html.EditorFor(model => model.Alternativas[i].DescAlternativa, new { htmlAttributes = new { @class = "form-control col-md-6" } })
             </div>

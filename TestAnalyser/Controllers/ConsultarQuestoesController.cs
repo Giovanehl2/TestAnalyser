@@ -21,6 +21,7 @@ namespace TestAnalyser.Controllers
             List<Curso> cursos = CursoDAO.BuscarPorProfessor(id);
 
             ViewBag.Cursos = cursos;
+            //ConsultarQuestoesBtn("0","0",null);
             ViewBag.Questoes = TempData["questoes"];
             return View(new Questao());
         }
@@ -55,7 +56,12 @@ namespace TestAnalyser.Controllers
         public ActionResult ConsultarQuestoesBtn(string Disciplina, string Assunto, int? Desativado)
         {
             List<Questao> questoes = new List<Questao>();
-            if (Assunto.Equals("Selecionar") && !Disciplina.Equals("Selecionar"))
+            if (Assunto.Equals("0") && Disciplina.Equals("0"))
+            {
+                questoes = QuestaoDAO.BuscarTodasQuestoes(Desativado);
+                TempData["questoes"] = questoes;
+            }else
+            if (Assunto.Equals("0") && !Disciplina.Equals("0"))
             {
                 questoes = QuestaoDAO.BuscarPorDisciplina(Disciplina, Desativado);
                 TempData["questoes"] = questoes;
@@ -68,6 +74,7 @@ namespace TestAnalyser.Controllers
 
             return RedirectToAction("ConsultarQuestoes", "ConsultarQuestoes");
         }
+
         public ActionResult Voltar()
         {
             LimparDadosTela();

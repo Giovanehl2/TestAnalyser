@@ -2,8 +2,9 @@
 @using TestAnalyser.Model
 @{
     ViewBag.Title = "Corrigir Prova Aluno";
-    Prova provas = ViewBag.Provas;
+    Prova prova = ViewBag.Prova;
     List<RespostasAluno> respostaAluno = ViewBag.RespostasAlunoCorrecao;
+    //Prova prova = 
 }
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 <h2>Corrigir Prova</h2>
@@ -79,8 +80,9 @@
                                 <textarea class="form-control" id="respostaProfessor" disabled>@item.Questao.RespostaDiscursiva</textarea>
                             </div>
                             <div class="col-md-2">
-                                <h5>Nota</h5>
+                                <h4>Nota</h4>
                                 <input class="form-control" id="notas" type="text" name="notas" value="@item.NotaAluno">
+                                <h8>Nota Max: @prova.NotasQuestoes[(aux-1)].ValorQuestao</h8>
                             </div>
                         </div>
                         <br />

@@ -90,35 +90,98 @@ namespace TestAnalyser.DAL
 
                 return result;
             }
-            
-
         }
 
-        public static List<Prova> BuscarProvasAluno(int matricula, int Pendente, DateTime DataIni, DateTime DataFim, int Curso, int Disciplina, int Turma)
+        public static List<Prova> BuscarProvasAluno(int Status, DateTime? DataIni, DateTime? DataFim, int Disciplina, int Turma)
         {
             List<Prova> result = new List<Prova>();
+            List<Prova> provas = new List<Prova>();
 
-            var resultado = ctx.Provas.Where(x => x.DataProvaInicio >= DataIni  && x.DataProvaFim <= DataFim && x.StatusProva == Pendente)
-                .Include(c => c.Disciplina)
-                .Where(c => c.Disciplina.DisciplinaId == Disciplina).Include(p => p.Professor).Where(p => p.Professor.Matricula == matricula).ToList();
-
-
-            List<Prova> provas = ctx.Provas.Include("Professor").Include("Disciplina").Where(x => x.DataProvaInicio >= DataIni && x.DataProvaFim <= DataFim && x.StatusProva == Pendente).ToList();
-
-            foreach (var item in provas)
+            switch (Status)
             {
-                foreach (var item2 in item.Disciplina.Turmas)
-                {
-                    if (item2.TurmaId == Turma)
+                case 1:
+                    provas = ctx.Provas.Include("Professor").Include("Disciplina").Where(x => x.HoraInicio > DateTime.Now).ToList();
+                    break;
+
+                case 2:
+                    provas = ctx.Provas.Include("Professor").Include("Disciplina").Where(x => x.HoraInicio <= DateTime.Now && x.HoraFim >= DateTime.Now).ToList();
+                    break;
+
+                case 3:
+                    provas = ctx.Provas.Include("Professor").Include("Disciplina").Where(x => x.DataProvaFim < DateTime.Now).ToList();
+                    break;
+
+                default:
+                    if (DataIni == null || DataFim == null)
                     {
-                        result.Add(item);
+                        DataIni = Convert.ToDateTime("01/01/2019");
+                        DataFim = Convert.ToDateTime("01/01/2099");
+                    }
+                    provas = ctx.Provas.Include("Professor").Include("Disciplina").Where(x => x.DataProvaInicio >= DataIni && x.DataProvaFim <= DataFim).ToList();
+                    break;
+            }
+
+            //var resultado = ctx.Provas.Where(x => x.DataProvaInicio >= DataIni && x.DataProvaFim <= DataFim)
+            //    .Include(c => c.Disciplina)
+            //    .Where(c => c.Disciplina.DisciplinaId == Disciplina).Include(p => p.Professor).Where(p => p.Professor.Matricula == matricula).ToList();
+            if (Turma != 0)
+            {
+                foreach (var item in provas)
+                {
+                    foreach (var item2 in item.Disciplina.Turmas)
+                    {
+                        if (item2.TurmaId == Turma)
+                        {
+                            result.Add(item);
+                        }
+                    }
+                }
+            }
+            else
+            {
+                foreach (var item3 in provas)
+                {
+                    if (item3.Disciplina.DisciplinaId == Disciplina)
+                    {
+                        result.Add(item3);
                     }
                 }
             }
 
             return result;
-
         }
+
+        public static List<Prova> BuscarProvasAlunoGeral(int Status, DateTime? DataIni, DateTime? DataFim)
+        {
+            List<Prova> provas = new List<Prova>();
+
+            switch (Status)
+            {
+                case 1:
+                    provas = ctx.Provas.Include("Professor").Include("Disciplina").Where(x => x.HoraInicio > DateTime.Now).ToList();
+                    break;
+
+                case 2:
+                    provas = ctx.Provas.Include("Professor").Include("Disciplina").Where(x => x.HoraInicio <= DateTime.Now && x.HoraFim >= DateTime.Now).ToList();
+                    break;
+
+                case 3:
+                    provas = ctx.Provas.Include("Professor").Include("Disciplina").Where(x => x.DataProvaFim < DateTime.Now).ToList();
+                    break;
+
+                default:
+                    if (DataIni == null || DataFim == null)
+                    {
+                        DataIni = Convert.ToDateTime("01/01/2019");
+                        DataFim = Convert.ToDateTime("01/01/2099");
+                    }
+                    provas = ctx.Provas.Include("Professor").Include("Disciplina").Where(x => x.DataProvaInicio >= DataIni && x.DataProvaFim <= DataFim).ToList();
+                    break;
+            }
+
+            return provas;
+        }
+
         public static List<Prova> BuscarProvasPorProfessor(int matricula)
         {
             return ctx.Provas.Where(p => p.Professor.Matricula == matricula).ToList();

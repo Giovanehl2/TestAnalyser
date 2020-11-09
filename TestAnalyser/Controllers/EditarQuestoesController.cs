@@ -46,24 +46,36 @@ namespace TestAnalyser.Controllers
             return RedirectToAction("Dissertativa", "EditarQuestoes");
         }
 
-        public ActionResult SalvarQuestaoEdit(Questao questao/*, List<int?> AltCorreto*/)
+        public ActionResult SalvarQuestaoEdit(Questao questao, List<bool?> AltCorreto, List<int?> AltCorretoSE)
         {
             questao.situacao = 1;
             questao.RespostaDiscursiva = "";
             questao.Disciplina = DisciplinaDAO.BuscarPorNome(questao.Disciplina.Nome);
-            //int count = 1;
-            //foreach (var item in questao.Alternativas)
-            //{
-            //    if (AltCorreto.Contains(count))
-            //    {
-            //        item.correto = 1;
-            //    }
-            //    else
-            //    {
-            //        item.correto = 0;
-            //    }
-            //    count++;
-            //}
+            if (AltCorreto != null)
+            {
+                int count = 0;
+                foreach (var item in questao.Alternativas)
+                {
+                    if (AltCorreto[count] == true)
+                    { item.correto = 1; count++; }
+                    else
+                    { item.correto = 0; }
+                    count++;
+                }
+            }
+            else
+            {
+                int count2 = 1;
+                foreach (var item in questao.Alternativas)
+                {
+                    if (AltCorretoSE[0] == count2)
+                    { item.correto = 1; }
+                    else
+                    { item.correto = 0; }
+                    count2++;
+                }
+            }
+            
             QuestaoDAO.SalvarQuestao(questao);
 
             TempData["$AlertMessage$"] = "Questão Editada com Sucesso";

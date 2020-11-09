@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -17,21 +17,22 @@ namespace TestAnalyser.Controllers
         {
             ViewBag.Cursos = ViewBag.Cursos = CursoDAO.listarCursosPorAluno(Convert.ToInt32(Session["IdUsr"])); ;
             ViewBag.Provas = TempData["provas"];
+            TempData.Keep("provas");
             return View(new Prova());
         }
-        public ActionResult ConsultarProva(int? Pendentes, DateTime DataIni, DateTime DataFim, int Curso, string Disciplina, int Turma)
+        public ActionResult ConsultarProva(DateTime? DataIni, DateTime? DataFim, int Curso, string Disciplina, int Turma, int Status)
         {
-            int Pendente;
-            if (Pendentes == null)
+            List<Prova> provas = new List<Prova>();
+            if (Curso == 0 || Disciplina == "0")
             {
-                Pendente = 0;
+                provas = ProvaDAO.BuscarProvasAlunoGeral(Status, DataIni, DataFim);
             }
             else
             {
-                Pendente = 1;
+                var disciplinaId = DisciplinaDAO.BuscarPorNome(Disciplina).DisciplinaId;
+                provas = ProvaDAO.BuscarProvasAluno(Status, DataIni, DataFim, disciplinaId, Turma);
             }
-            var disciplinaId = DisciplinaDAO.BuscarPorNome(Disciplina).DisciplinaId;
-            List<Prova> provas = ProvaDAO.BuscarProvasAluno(Convert.ToInt32(Session["IdUsr"]), Pendente, DataIni, DataFim, Curso, disciplinaId, Turma);
+
             TempData["provas"] = provas;
             return RedirectToAction("ConsultarProvaAl", "ConsultarProvaAl");
         }

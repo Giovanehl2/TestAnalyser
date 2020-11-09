@@ -61,11 +61,12 @@ namespace TestAnalyser.DAL
             for (int i = 0; i < questao.Alternativas.Count; i++)
             {
                 Q.Alternativas[i].DescAlternativa = questao.Alternativas[i].DescAlternativa;
+                Q.Alternativas[i].correto = questao.Alternativas[i].correto;
             }
-            for (int h = 0; h < questao.Opcoes.Count; h++)
-            {
-                Q.Opcoes[h].descricao = questao.Opcoes[h].descricao;
-            }
+            //for (int h = 0; h < questao.Opcoes.Count; h++)
+            //{
+            //    Q.Opcoes[h].descricao = questao.Opcoes[h].descricao;
+            //}
 
             ctx.SaveChanges();
         }
@@ -91,10 +92,17 @@ namespace TestAnalyser.DAL
             return ctx.Questoes.Include("Opcoes").Include("Alternativas").Where(q => q.QuestaoId == id).FirstOrDefault();
         }
 
+        public static List<Questao> BuscarTodasQuestoes(int? Des)
+        {
+            if (Des == null)
+                { return ctx.Questoes.Include("Opcoes").Include("Alternativas").Where(p => p.situacao == 1).ToList(); }
+            else 
+                { return ctx.Questoes.Include("Opcoes").Include("Alternativas").Where(p => p.situacao == 0).ToList(); }
+        }
+
         public static List<Questao> BuscarPorAssunto(string assunto)
         {
             return ctx.Questoes.Include("Opcoes").Include("Alternativas").Where(p => p.Assunto.Equals(assunto) && p.situacao == 1).ToList();
-
         }
 
         public static List<Questao> BuscarPorDisciplina(string disciplina, int? Des)

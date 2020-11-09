@@ -3,6 +3,7 @@
 @using System.Web.Mvc;
 @{
     ViewBag.Title = "Editar Simples Escolha";
+
 }
 <script src="ckeditor/ckeditor.js"></script>
 <div id="divSE" class="">
@@ -45,8 +46,12 @@
         <div id="DivAlternativas">
             @for (int i = 0; i < Model.Alternativas.Count; i++)
             {
+                @*@{
+                    int altId = Model.Alternativas[i].AlternativaId;
+                }*@
                 @Html.HiddenFor(model => model.Alternativas[i].AlternativaId)
                 @Html.HiddenFor(model => model.Alternativas[i].correto)
+                @Html.RadioButton("AltCorretoSE", i+1, (Model.Alternativas[i].correto == 1) ? true : false)
                 <div class="form-row">
                     <label for="">@(i+1)) </label>
                     @Html.EditorFor(model => model.Alternativas[i].DescAlternativa, new { htmlAttributes = new { @class = "form-control col-md-6" } })
