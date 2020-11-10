@@ -13,13 +13,13 @@ namespace TestAnalyser.Model
     {
         public Questao()
         {
+            AssuntoQuestao = new Assunto();
             Disciplina = new Disciplina();
             Opcoes = new List<Opcao>();
             Alternativas = new List<Alternativa>();
         }
         [Key]
         public int QuestaoId { get; set; }
-        public string Assunto { get; set; }
 
         [AllowHtml]
         [Column(TypeName = "Text")]
@@ -36,6 +36,8 @@ namespace TestAnalyser.Model
         public string RespostaDiscursiva { get; set; }
 
         public Disciplina Disciplina { get; set; }
+
+        public Assunto AssuntoQuestao { get; set; }
 
         public List<Opcao> Opcoes { get; set; }
 

@@ -46,13 +46,13 @@ namespace TestAnalyser.DAL
         public static List<RespostasAluno> PerguntasParaCorrigir(int id, int situac)
         {
 
-            return ctx.RespostasAlunos.Include("Questao").Include("Alternativas").Include("Aluno").Where(x => x.Aluno.AlunoId == id && x.SituacaoCorrecao == situac).ToList();
+            return ctx.RespostasAlunos.Include("Questao").Include("Questao.AssuntoQuestao").Include("Alternativas").Include("Aluno").Where(x => x.Aluno.AlunoId == id && x.SituacaoCorrecao == situac).ToList();
         }
 
         public static List<RespostasAluno> PerguntasParaCorrigir(int situac)
         {
 
-            return ctx.RespostasAlunos.Include("Questoes").Include("Alternativas").Include("Alunos").Where(x => x.RespostaDiscursiva != null).ToList();
+            return ctx.RespostasAlunos.Include("Questao").Include("Questao.AssuntoQuestao").Include("Alternativas").Include("Alunos").Where(x => x.RespostaDiscursiva != null).ToList();
         }
 
         public static RespostasAluno BuscarProvaQuestaoAluno(int QuestaoID, int ProvaID, int AlunoID)

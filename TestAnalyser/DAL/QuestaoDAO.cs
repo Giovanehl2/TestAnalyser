@@ -56,7 +56,7 @@ namespace TestAnalyser.DAL
 
         public static void SalvarQuestao(Questao questao)
         {
-            Questao Q = ctx.Questoes.Include("Opcoes").Include("Alternativas").First(i => i.QuestaoId == questao.QuestaoId);
+            Questao Q = ctx.Questoes.Include("Opcoes").Include("Alternativas").Include("AssuntoQuestao").First(i => i.QuestaoId == questao.QuestaoId);
             ctx.Entry(Q).CurrentValues.SetValues(questao);
             for (int i = 0; i < questao.Alternativas.Count; i++)
             {
@@ -71,15 +71,25 @@ namespace TestAnalyser.DAL
             ctx.SaveChanges();
         }
 
+        public static List<Assunto> BuscarAssuntosQuestaoTodos()
+        {
+            return ctx.AssuntosQuestao.ToList();
+        }
+
+        public static Assunto BuscarAssuntoId(int id)
+        {
+            return ctx.AssuntosQuestao.Find(id);
+        }
+
         public static List<String> BuscarAssuntos(string disc)
         {
             List<String> assuntos = new List<String>();
             List<Questao> questao = new List<Questao>();
 
-            questao = ctx.Questoes.Include("Disciplina").Where(x => x.Disciplina.Nome == disc && x.situacao == 1).ToList();
+            questao = ctx.Questoes.Include("Disciplina").Include("AssuntoQuestao").Where(x => x.Disciplina.Nome == disc && x.situacao == 1).ToList();
             foreach (Questao item in questao)
             {
-                assuntos.Add(item.Assunto);
+                assuntos.Add(item.AssuntoQuestao.Descricao);
 
             }
 
@@ -89,20 +99,20 @@ namespace TestAnalyser.DAL
 
         public static Questao BuscarQuestaoId(int id)
         {
-            return ctx.Questoes.Include("Opcoes").Include("Alternativas").Where(q => q.QuestaoId == id).FirstOrDefault();
+            return ctx.Questoes.Include("Opcoes").Include("Alternativas").Include("AssuntoQuestao").Where(q => q.QuestaoId == id).FirstOrDefault();
         }
 
         public static List<Questao> BuscarTodasQuestoes(int? Des)
         {
             if (Des == null)
-                { return ctx.Questoes.Include("Opcoes").Include("Alternativas").Where(p => p.situacao == 1).ToList(); }
+                { return ctx.Questoes.Include("Opcoes").Include("Alternativas").Include("AssuntoQuestao").Where(p => p.situacao == 1).ToList(); }
             else 
-                { return ctx.Questoes.Include("Opcoes").Include("Alternativas").Where(p => p.situacao == 0).ToList(); }
+                { return ctx.Questoes.Include("Opcoes").Include("Alternativas").Include("AssuntoQuestao").Where(p => p.situacao == 0).ToList(); }
         }
 
         public static List<Questao> BuscarPorAssunto(string assunto)
         {
-            return ctx.Questoes.Include("Opcoes").Include("Alternativas").Where(p => p.Assunto.Equals(assunto) && p.situacao == 1).ToList();
+            return ctx.Questoes.Include("Opcoes").Include("Alternativas").Include("AssuntoQuestao").Where(p => p.AssuntoQuestao.Descricao.Equals(assunto) && p.situacao == 1).ToList();
         }
 
         public static List<Questao> BuscarPorDisciplina(string disciplina, int? Des)
@@ -110,13 +120,13 @@ namespace TestAnalyser.DAL
             if(Des != null)
             {
                 Disciplina disc = DisciplinaDAO.BuscarPorNome(disciplina);
-                return ctx.Questoes.Include("Opcoes").Include("Alternativas").Where(
+                return ctx.Questoes.Include("Opcoes").Include("Alternativas").Include("AssuntoQuestao").Where(
                     p => p.Disciplina.DisciplinaId.Equals(disc.DisciplinaId) && p.situacao == 0).ToList();
             }
             else
             {
                 Disciplina disc = DisciplinaDAO.BuscarPorNome(disciplina);
-                return ctx.Questoes.Include("Opcoes").Include("Alternativas").Where(
+                return ctx.Questoes.Include("Opcoes").Include("Alternativas").Include("AssuntoQuestao").Where(
                     p => p.Disciplina.DisciplinaId.Equals(disc.DisciplinaId) && p.situacao == 1).ToList();
             }
             
@@ -124,7 +134,7 @@ namespace TestAnalyser.DAL
 
         public static List<Questao> BuscarPorTpQuestao(int tpPerg)
         {
-            return ctx.Questoes.Where(p => p.TipoQuestao.Equals(tpPerg)).ToList();
+            return ctx.Questoes.Include("Alternativas").Include("AssuntoQuestao").Where(p => p.TipoQuestao.Equals(tpPerg)).ToList();
         }
     }
 }

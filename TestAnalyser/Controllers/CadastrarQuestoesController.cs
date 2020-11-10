@@ -15,6 +15,7 @@ namespace TestAnalyser.Controllers
         //ActionResult para apresetar a tela de cadastro de questões...
         public ActionResult CadastrarQuestoes()
         {
+            ViewBag.AssuntosQuestao = QuestaoDAO.BuscarAssuntosQuestaoTodos();
             ViewBag.Disciplinas = DisciplinaDAO.ListarDisciplinas();
             return View();
         }
@@ -28,7 +29,7 @@ namespace TestAnalyser.Controllers
 
         //Metodo para cadastrar a questão de tipo especifico no banco...
         [HttpPost]
-        public ActionResult CadastrarSE(Questao questao, string DisciplinaId, List<string>Alternativas, int? SEradio)
+        public ActionResult CadastrarSE(Questao questao, string AssuntoQuestao, string DisciplinaId, List<string>Alternativas, int? SEradio)
         {
             if (!SEradio.HasValue)
             {
@@ -48,6 +49,9 @@ namespace TestAnalyser.Controllers
             //Pega o id da disciplina na view e pega o objeto todo para enviar no cadastro...
             var x = DisciplinaDAO.BuscarDisciplinaId(Convert.ToInt32(DisciplinaId));
             questao.Disciplina = x;
+
+            var y = QuestaoDAO.BuscarAssuntoId(Convert.ToInt32(AssuntoQuestao));
+            questao.AssuntoQuestao = y;
 
             //Salva a questão e rotorna ela com o ID...
             var QuestaoID = QuestaoDAO.CadastrarQuestao(questao);
@@ -76,7 +80,7 @@ namespace TestAnalyser.Controllers
         }
 
         [HttpPost]
-        public ActionResult CadastrarME(Questao questao, string DisciplinaId, List<string> Alternativas, List<string> Opcoes, List<int?>MEchbx)
+        public ActionResult CadastrarME(Questao questao, string AssuntoQuestao, string DisciplinaId, List<string> Alternativas, List<string> Opcoes, List<int?>MEchbx)
         {
 
             if (MEchbx == null || questao.Enunciado.Equals(""))
@@ -95,6 +99,9 @@ namespace TestAnalyser.Controllers
 
             var x = DisciplinaDAO.BuscarDisciplinaId(Convert.ToInt32(DisciplinaId));
             questao.Disciplina = x;
+
+            var y = QuestaoDAO.BuscarAssuntoId(Convert.ToInt32(AssuntoQuestao));
+            questao.AssuntoQuestao = y;
 
             var QuestaoID = QuestaoDAO.CadastrarQuestao(questao);
 
@@ -131,7 +138,7 @@ namespace TestAnalyser.Controllers
         }
 
         [HttpPost]
-        public ActionResult CadastrarVF(Questao questao, string DisciplinaId, List<string> Alternativas, List<string> Opcoes, List<int?>VFchbx)
+        public ActionResult CadastrarVF(Questao questao, string AssuntoQuestao, string DisciplinaId, List<string> Alternativas, List<string> Opcoes, List<int?>VFchbx)
         
         {
             if (questao.Enunciado == null || questao.Enunciado.Equals(""))
@@ -145,6 +152,9 @@ namespace TestAnalyser.Controllers
 
             var x = DisciplinaDAO.BuscarDisciplinaId(Convert.ToInt32(DisciplinaId));
             questao.Disciplina = x;
+
+            var y = QuestaoDAO.BuscarAssuntoId(Convert.ToInt32(AssuntoQuestao));
+            questao.AssuntoQuestao = y;
 
             var QuestaoID = QuestaoDAO.CadastrarQuestao(questao);
 
@@ -184,7 +194,7 @@ namespace TestAnalyser.Controllers
         }
 
         [HttpPost]
-        public ActionResult CadastrarDT(Questao questao, string DisciplinaId)
+        public ActionResult CadastrarDT(Questao questao, string AssuntoQuestao, string DisciplinaId)
         {
             if (questao.Enunciado == null || questao.Enunciado.Equals(""))
             {
@@ -197,6 +207,9 @@ namespace TestAnalyser.Controllers
 
             var x = DisciplinaDAO.BuscarDisciplinaId(Convert.ToInt32(DisciplinaId));
             questao.Disciplina = x;
+
+            var y = QuestaoDAO.BuscarAssuntoId(Convert.ToInt32(AssuntoQuestao));
+            questao.AssuntoQuestao = y;
 
             QuestaoDAO.CadastrarQuestao(questao);
             TempData["$AlertMessage$"] = "Questão Criada com Sucesso";

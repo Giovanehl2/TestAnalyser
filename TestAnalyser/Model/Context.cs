@@ -19,6 +19,7 @@ namespace TestAnalyser.Model
         public DbSet<Curso> Cursos { get; set; }
         public DbSet<Turma> Turmas { get; set; }
         public DbSet<Questao> Questoes { get; set; }
+        public DbSet<Assunto> AssuntosQuestao { get; set; }
         public DbSet<Opcao> Opcoes { get; set; }
         public DbSet<RespostasAluno> RespostasAlunos { get; set; }
         public DbSet<Usuario> Usuarios { get; set; }

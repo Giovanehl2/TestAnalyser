@@ -4,7 +4,6 @@
 @{
     ViewBag.Title = "Visualizar Prova";
     var count = 1;
-    var contador = 0;
     var MarcadasX = ViewBag.Marcadas;
     var provaID = Model.ProvaId;
 }
@@ -18,7 +17,6 @@
     }
     <form class="form-horizontal" name="form1" id="form" @*method="post" action="@Url.Action("SalvarProva", "ConsultarProvaAl")*@>
         <div id="DivGeral">
-            @Html.Hidden("contador", 0)
             @foreach (var x in Model.NotasQuestoes.Where(y => y.Questao.TipoQuestao == 1).ToList()) //VERIFICAR O MODELO, QUE ESTÁ VINDO VAZIO.
             {
                 <br />

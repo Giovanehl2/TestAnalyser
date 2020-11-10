@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
@@ -43,6 +43,7 @@ namespace TestAnalyser.DAL
                 .Include("ConfigPln")
                 .Include("Disciplina")
                 .Include("NotasQuestoes.Questao")
+                .Include("NotasQuestoes.Questao.AssuntoQuestao")
                 .Include("NotasQuestoes.Questao.Alternativas")
                 .Include("RespostasAlunos.Aluno")
                 .Include("RespostasAlunos.Alternativas")
@@ -209,7 +210,7 @@ namespace TestAnalyser.DAL
         public static double BuscarValorNotamax(int ProvaID, int QuestaoID)
         {
             double notamax = 0;
-            Prova prov = ctx.Provas.Include("NotasQuestoes").Include("NotasQuestoes.Questao").FirstOrDefault(x => x.ProvaId == ProvaID);
+            Prova prov = ctx.Provas.Include("NotasQuestoes").Include("NotasQuestoes.Questao").Include("NotasQuestoes.Questao.AssuntoQuestao").FirstOrDefault(x => x.ProvaId == ProvaID);
             foreach (var item in prov.NotasQuestoes)
             {
                 if (item.Questao.QuestaoId == QuestaoID)

@@ -16,7 +16,7 @@
         <div class="form-row">
             <div class="col-md-4">
                 <label for="AssuntoVF">Assunto</label>
-                @Html.EditorFor(model => model.Assunto, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.EditorFor(model => model.AssuntoQuestao.Descricao, new { htmlAttributes = new { @class = "form-control" } })
             </div>
             <div class="col-md-4">
                 <label for="Disciplinas">Disciplinas</label>
