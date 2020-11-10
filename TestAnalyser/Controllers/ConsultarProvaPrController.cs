@@ -99,7 +99,7 @@ namespace TestAnalyser.Controllers
                 prova = ProvaDAO.BuscarProvaId(ProvaId);
                 List<RespostasAluno> result = new List<RespostasAluno>();
                 result = prova.RespostasAlunos.ToList().GroupBy(elem => elem.Aluno.AlunoId).Select(g => g.First()).ToList();
-                todosGabaritos = result.OrderBy(x => x.Aluno.Nome).ToList();
+                todosGabaritos = result.OrderBy(x => x.Aluno.NomeAluno).ToList();
             }
            else if (CorrigirAlunoEspecifico.Count() != 0)
             {

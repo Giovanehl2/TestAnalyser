@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -59,7 +59,7 @@ namespace TestAnalyser.Controllers
                     if (result.TipoUsr == 1)
                     {
                         NA = 1;
-                        NomeUser = result.Aluno.Nome;
+                        NomeUser = result.Aluno.NomeAluno;
                         IdUsr = result.Aluno.AlunoId;
                     }
                     else if (result.TipoUsr == 2)

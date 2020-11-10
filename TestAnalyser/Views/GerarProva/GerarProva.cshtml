@@ -1,4 +1,4 @@
-﻿<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
 @model TestAnalyser.Model.Prova
 
 @{
@@ -11,9 +11,18 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.2/css/bootstrap-select.min.css">
 
 </head>
-<h2>Gerar Prova</h2>
+<div class="row">
+    <div>
+        <h2>Gerar Prova</h2>
+    </div>
+    <div style="margin-left: 67%;">
+        @*@Html.ActionLink("Consultar Turmas", "ConsultarTurmas", "ConsultarProvaPr")*@
+        <button type="button" class="btn btn-default" data-toggle="modal" data-target="#ModalConsultarTurmas">
+            Listar Turmas
+        </button>
+    </div>
+</div>
 <br />
-
 
 <div class="container">
     <div class="row">
@@ -235,8 +244,52 @@
             </form>
         </div>
     </div>
-
 </div>
+
+
+<div class="modal fade" id="ModalConsultarTurmas">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Listagem de Turmas</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+                <table class="table">
+                    <thead>
+                        @{
+                            foreach (var item in ViewBag.Turmas)
+                            {
+                                var alunos = (item.Alunos);
+                                <tr>
+                                    <td><b>Turma: @item.NomeTurma &emsp;-&emsp; @item.Disciplinas[0].Nome</b></td>
+                                    <td><b></b></td>
+                                </tr>
+                                foreach (var item2 in alunos)
+                                {
+                                    <tr>
+                                        <td>@item2.NomeAluno</td>
+                                        <td>@item2.Matricula</td>
+                                    </tr>
+                                }
+                                <tr>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                            }
+                        }
+                    </thead>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Voltar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.2/js/bootstrap-select.min.js"></script>
@@ -245,7 +298,7 @@
 @*https://www.c-sharpcorner.com/UploadFile/4b0136/working-with-dropdownlist-in-mvc-5/*@
 
 <script>
-//Essa parte de Script ainda sendo usado?, parece que não...
+    //Essa parte de Script ainda sendo usado?, parece que não...
     $('.selectpicker').selectpicker();
 
     function AdicionarQuestoesNaProva() {

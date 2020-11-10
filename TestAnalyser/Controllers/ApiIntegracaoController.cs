@@ -1,4 +1,4 @@
-﻿using iTextSharp.LGPLv2.Core.System.NetUtils;
+using iTextSharp.LGPLv2.Core.System.NetUtils;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -116,7 +116,7 @@ namespace TestAnalyser.Controllers
             usr = new Usuario();
 
             aluno.CPF = objApi.AlunoJson.CPF;
-            aluno.Nome = objApi.AlunoJson.Nome;
+            aluno.NomeAluno = objApi.AlunoJson.Nome;
             aluno.Email = objApi.AlunoJson.Email;
             aluno.Matricula = objApi.AlunoJson.Matricula;
             aluno.Turmas = null;
@@ -367,7 +367,7 @@ namespace TestAnalyser.Controllers
             {
                 foreach (Aluno obj in disciplinaEdit.Alunos)
                 {
-                    if (obj.Nome.Equals(alunoEdit.Nome))
+                    if (obj.NomeAluno.Equals(alunoEdit.NomeAluno))
                     {
                         cadastrar = false;
                         break;

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -17,7 +17,7 @@ namespace TestAnalyser.Model
         }
         [Key]
         public int AlunoId { get; set; }
-        public string Nome { get; set; }
+        public string NomeAluno { get; set; }
         public string CPF { get; set; }
 
         public int Matricula { get; set; }

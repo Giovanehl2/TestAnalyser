@@ -11,7 +11,7 @@
 
 <div id="divSE" class="">
     <div style="text-align: left;"><h2><b>@Html.Raw(Model.TituloProva)</b></h2></div>
-    <div style="text-align: left;"><h5><b>@Html.Raw(Model.RespostasAlunos[0].Aluno.Nome)</b></h5></div>
+    <div style="text-align: left;"><h5><b>@Html.Raw(Model.RespostasAlunos[0].Aluno.NomeAluno)</b></h5></div>
     @if (TempData["$NotaAluno$"] != null)
     {
         <div id="NotaAluno" style="color: cornflowerblue; text-align: right;"><div><u>Nota Max: @Html.Raw(Model.ValorProva)</u></div><h4>Sua Nota: @TempData["$NotaAluno$"]</h4> <button witdh="50" title="Regerar Questões" class="btn btn-primary glyphicon glyphicon-refresh" onclick="SolicitarRevisao()">Solicitar Revisão</button></div>

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
@@ -229,7 +229,7 @@ namespace TestAnalyser.DAL
             prova = ctx.Provas.Include("RespostasAlunos").Where(x => x.ProvaId == idProva).FirstOrDefault();
 
             result = prova.RespostasAlunos.ToList().GroupBy(elem => elem.Aluno.AlunoId).Select(g => g.First()).ToList();
-            return result.OrderBy(x=> x.Aluno.Nome).ToList();
+            return result.OrderBy(x=> x.Aluno.NomeAluno).ToList();
         }
 
         public static bool MostrarNota(int ProvaID)

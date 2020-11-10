@@ -1,4 +1,4 @@
-﻿using Microsoft.Ajax.Utilities;
+using Microsoft.Ajax.Utilities;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -22,7 +22,8 @@ namespace TestAnalyser.Controllers
         {
             List<string> assuntos = new List<string>();
             //localiza os cursos de acordo com o id do professor
-            ViewBag.Cursos = CursoDAO.listarCursosPorProfessor(Convert.ToInt32(Session["IdUsr"])); ;
+            ViewBag.Turmas = ProfessorDAO.BuscarDisciplinasProfessor(Convert.ToInt32(Session["IdUsr"]));
+            ViewBag.Cursos = CursoDAO.listarCursosPorProfessor(Convert.ToInt32(Session["IdUsr"]));
             return View(new Prova());
         }
 
