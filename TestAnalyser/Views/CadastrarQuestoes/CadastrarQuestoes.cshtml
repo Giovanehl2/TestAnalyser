@@ -156,8 +156,8 @@
                     //Escrevendo o código-fonte HTML e ocultando os campos criados:
                     for (iLoop = 1; iLoop <= totalCampos; iLoop++) {
                         document.write("<div class='' id='SEAlternativas" + iLoop + "' style='display:none'><input type='radio' id='SEradio" +
-                            "' name='SEradio' value='" + iLoop + "' /> <span id='Alternativas' > " + iLoop + ") <input class='col-md-6' type='text' id='Alternativas' name='Alternativas" +
-                            "'> <input type='button' value='Remover' onclick='RemoverCampos(\"" + iLoop + "\",\"SE\")'></span></div>");
+                            "' name='SEradio' value='" + iLoop + "' /> <span id='Alternativas' > " + iLoop + ") <input class='col-md-6 form-control' type='text' id='Alternativas' name='Alternativas" +
+                            "'> <input type='button' class='btn btn-default' value='Remover' onclick='RemoverCampos(\"" + iLoop + "\",\"SE\")'></span></div>");
                     }
                 </script>
                 <br />

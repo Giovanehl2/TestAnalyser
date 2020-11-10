@@ -17,7 +17,7 @@
         <div class="form-row">
             <div class="col-md-4">
                 <label for="AssuntoSE">Assunto</label>
-                @Html.EditorFor(model => model.AssuntoQuestao.Descricao, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.EditorFor(model => model.AssuntoQuestao.Descricao, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
             </div>
             <div class="col-md-4">
                 <label for="Disciplinas">Disciplinas</label>
@@ -51,8 +51,8 @@
                 }*@
                 @Html.HiddenFor(model => model.Alternativas[i].AlternativaId)
                 @Html.HiddenFor(model => model.Alternativas[i].correto)
-                @Html.RadioButton("AltCorretoSE", i+1, (Model.Alternativas[i].correto == 1) ? true : false)
                 <div class="form-row">
+                    @Html.RadioButton("AltCorretoSE", i+1, (Model.Alternativas[i].correto == 1) ? true : false)
                     <label for="">@(i+1)) </label>
                     @Html.EditorFor(model => model.Alternativas[i].DescAlternativa, new { htmlAttributes = new { @class = "form-control col-md-6" } })
                 </div>
