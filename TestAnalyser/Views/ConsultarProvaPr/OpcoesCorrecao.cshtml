@@ -76,20 +76,23 @@
                 <tr>
                     <th scope="col">Nome</th>
                     <th scope="col">Matrícula</th>
+                    <th scope="col">Nota</th>
                     <th>Ações</th>
 
                 </tr>
             </thead>
             <tbody>
                 @{
+                    var cc = 0;
                     if (respostaAluno != null)
                     {
                         foreach (var item in respostaAluno)
                         {
 
                             <tr>
-                                <td>@item.Aluno.Nome</td>
+                                <td>@item.Aluno.NomeAluno</td>
                                 <td>@item.Aluno.Matricula</td>
+                                <td>@ViewBag.NotaDaProva[cc]</td>
                                 <td>
                                     <div id="divGridConsultaPr1">
                                         @Html.ActionLink("Corrigir", "CorrigirProvaAlunoEspecifico", "ConsultarProvaPr", new { id = item.Aluno.AlunoId, idProva = Model.ProvaId }, null) |
@@ -97,6 +100,7 @@
                                     </div>
                                 </td>
                             </tr>
+                            cc++;
                         }
                     }
 
@@ -127,4 +131,21 @@
 
     });
 
+    function VoltarPagina() {
+
+        $.ajax({
+
+            type: "GET",
+
+            url: "/ConsultarProvaPr/ConsultarProvaPr",
+
+
+            success: function (data) {
+                window.location.href = "/ConsultarProvaPr/ConsultarProvaPr";
+            }
+
+
+        });
+
+    }
 </script>

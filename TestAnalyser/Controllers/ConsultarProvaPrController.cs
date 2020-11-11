@@ -69,19 +69,14 @@ namespace TestAnalyser.Controllers
             return output;
         }
 
-        public ActionResult ConsultarProva(DateTime DataInicio, DateTime DataFim, int Curso, string Disciplina, int? Turma)
+        public ActionResult ConsultarProva(DateTime DataInicio, DateTime DataFim, int Curso, string Disciplina, string NomeTurma)
         {
             Disciplina disc = new Disciplina();
-            int idTurma = 0;
-
-            if (Turma != null)
-                idTurma = Convert.ToInt32(Turma);
-
-            if (Disciplina.IsEmpty() || Disciplina.Equals(null))
+            if (!Disciplina.IsEmpty() || !Disciplina.Equals(null))
                 disc = DisciplinaDAO.BuscarPorNome(Disciplina);
 
          
-            List<Prova> provas = ProvaDAO.BuscarProvasPesquisa(Convert.ToInt32(Session["IdUsr"]), DataInicio, DataFim, Curso, disc.DisciplinaId, idTurma);
+            List<Prova> provas = ProvaDAO.BuscarProvasPesquisa(Convert.ToInt32(Session["IdUsr"]), DataInicio, DataFim, Curso, disc.DisciplinaId, NomeTurma);
             TempData["provas"] = provas;
             return RedirectToAction("ConsultarProvaPr", "ConsultarProvaPr");
         }
@@ -100,8 +95,22 @@ namespace TestAnalyser.Controllers
                 List<RespostasAluno> result = new List<RespostasAluno>();
                 result = prova.RespostasAlunos.ToList().GroupBy(elem => elem.Aluno.AlunoId).Select(g => g.First()).ToList();
                 todosGabaritos = result.OrderBy(x => x.Aluno.NomeAluno).ToList();
+
+                List<string> Notas = new List<string>();
+                foreach (var item in todosGabaritos)
+                {
+                    List<RespostasAluno> Resp = ProvaDAO.BuscarRespostasPorAluno(item.Aluno.AlunoId, ProvaId);
+                    double NotaSomada = 0;
+
+                    foreach (var item2 in Resp)
+                    {
+                        NotaSomada = (NotaSomada + item2.NotaAluno);
+                    }
+                    Notas.Add(Convert.ToString(NotaSomada));
+                }
+                ViewBag.NotaDaProva = Notas;
             }
-           else if (CorrigirAlunoEspecifico.Count() != 0)
+            else if (CorrigirAlunoEspecifico.Count() != 0)
             {
                 ViewBag.RespostasAluno = CorrigirAlunoEspecifico;
                 return View(ProvaDAO.BuscarProvaId(ProvaId));

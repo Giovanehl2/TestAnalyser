@@ -133,6 +133,7 @@ namespace TestAnalyser.Controllers
 
             ViewBag.Marcadas = RespostasAlunoDAO.BuscarAltsMarcadas(idProva, AlunoID); ;
             Prova prova = ProvaDAO.BuscarProvaId(idProva);
+            prova.RespostasAlunos = Resp;
             return View(prova);
         }
 

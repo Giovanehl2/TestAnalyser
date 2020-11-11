@@ -62,35 +62,15 @@ namespace TestAnalyser.DAL
 
         }
 
-        public static List<Prova> BuscarProvasPesquisa(int idProfessor, DateTime DataInicio, DateTime DataFim, int Curso, int Disciplina, int Turma)
+        public static List<Prova> BuscarProvasPesquisa(int idProfessor, DateTime DataInicio, DateTime DataFim, int Curso, int Disciplina, string Turma)
         {
-            List<Prova> result = new List<Prova>();
-
-            List<Prova>  provas = ctx.Provas.Include("Professor").Include("Disciplina").Where(p => p.DataProvaInicio >= DataInicio && p.DataProvaFim <= DataFim && p.Professor.ProfessorId == idProfessor).ToList();
-            if(Disciplina == 0 || Turma == 0)
-            {
-                return provas;
-            }
+            List<Prova> provas = new List<Prova>();
+            if (Turma != "Selecionar")
+                { provas = ctx.Provas.Include("Professor").Include("Disciplina").Where(p => p.DataProvaInicio >= DataInicio && p.DataProvaFim <= DataFim && p.Professor.ProfessorId == idProfessor && p.NomeTurma == Turma).ToList(); }
             else
-            {
-                foreach (var itemProva in provas)
-                {
-                    if (itemProva.Disciplina.DisciplinaId == Disciplina)
-                    {
-                        foreach (var item2 in itemProva.Disciplina.Turmas)
-                        {
+                { provas = ctx.Provas.Include("Professor").Include("Disciplina").Where(p => p.DataProvaInicio >= DataInicio && p.DataProvaFim <= DataFim && p.Professor.ProfessorId == idProfessor).ToList(); }
 
-                            if (item2.TurmaId == Turma)
-                            {
-                                result.Add(itemProva);
-                            }
-                        }
-                    }
-
-                }
-
-                return result;
-            }
+            return provas;
         }
 
         public static List<Prova> BuscarProvasAluno(int Status, DateTime? DataIni, DateTime? DataFim, int Disciplina, int Turma)
@@ -194,17 +174,17 @@ namespace TestAnalyser.DAL
         }
         public static List<RespostasAluno> BuscarRespostasPorAluno(int idAluno, int idProva)
         {
-            Prova prova = ctx.Provas.Include("RespostasAlunos").Where(p => p.ProvaId == idProva).FirstOrDefault();
+            Prova prova = ProvaDAO.BuscarProvaId(idProva);
             List<RespostasAluno> result = new List<RespostasAluno>();
             foreach (RespostasAluno item in prova.RespostasAlunos)
             {
                 if (item.Aluno.AlunoId == idAluno)
                     result.Add(item);
             }
-            prova.RespostasAlunos.Clear();
-            prova.RespostasAlunos.AddRange(result);
+            //prova.RespostasAlunos.Clear();
+            //prova.RespostasAlunos.AddRange(result);
 
-            return prova.RespostasAlunos;
+            return result;
         }
 
         public static double BuscarValorNotamax(int ProvaID, int QuestaoID)

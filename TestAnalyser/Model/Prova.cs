@@ -39,7 +39,6 @@ namespace TestAnalyser.Model
         public string NomeDisciplina { get; set; }
 
         [Required(ErrorMessage = "Campo nome da turma é obrigatório!")]
-        [NotMapped]
         public string NomeTurma { get; set; }
 
         [Required(ErrorMessage = "Campo valor da prova é obrigatório!")]

@@ -36,6 +36,11 @@ namespace TestAnalyser.DAL
                 if (q.situacao == 1)
                 {
                     q.situacao = 0;
+                    if (q.AssuntoQuestao.AssuntoId == 0)
+                    { //Deixar no banco o ID 1 para os que forem vazios...
+                        q.AssuntoQuestao.AssuntoId = 1;
+                        q.AssuntoQuestao.Descricao = "Sem Assunto";
+                    }
                     AlterarQuestao(q);
                     return true;
                 }
@@ -73,7 +78,9 @@ namespace TestAnalyser.DAL
 
         public static List<Assunto> BuscarAssuntosQuestaoTodos()
         {
-            return ctx.AssuntosQuestao.ToList();
+            List<Assunto> assuntos = ctx.AssuntosQuestao.ToList();
+            assuntos.RemoveRange(0,1);
+            return assuntos;
         }
 
         public static Assunto BuscarAssuntoId(int id)
