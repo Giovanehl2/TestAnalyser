@@ -93,8 +93,14 @@ namespace TestAnalyser.Controllers
             if (todosGabaritos?.Any() != true && CorrigirAlunoEspecifico.Count() == 0) {
                 prova = ProvaDAO.BuscarProvaId(ProvaId);
                 List<RespostasAluno> result = new List<RespostasAluno>();
+                List<RespostasAluno> resultAjst = new List<RespostasAluno>();
                 result = prova.RespostasAlunos.ToList().GroupBy(elem => elem.Aluno.AlunoId).Select(g => g.First()).ToList();
-                todosGabaritos = result.OrderBy(x => x.Aluno.NomeAluno).ToList();
+                foreach (var itns in result)
+                {
+                    if (itns.DataHoraInicio != null)
+                        resultAjst.Add(itns);
+                }
+                todosGabaritos = resultAjst.OrderBy(x => x.Aluno.NomeAluno).ToList();
 
                 List<string> Notas = new List<string>();
                 foreach (var item in todosGabaritos)
