@@ -91,7 +91,7 @@ namespace TestAnalyser.Controllers
             if(QuestaoDAO.ExcDesQuestao(questaoID))
             TempData["$AlertMessage$"] = "Exclusão realizada com sucesso!";
             else
-                TempData["$AlertMessage$"] = "Erro inesperado durante o processo de exclusão!";
+                TempData["$AlertMessage$"] = "Esta questão já está desativada, não é posivel remover!";
 
             return RedirectToAction("ConsultarQuestoes", "ConsultarQuestoes");
         }

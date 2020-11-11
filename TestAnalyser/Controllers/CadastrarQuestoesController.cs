@@ -20,6 +20,12 @@ namespace TestAnalyser.Controllers
             return View();
         }
 
+        public ActionResult CadastrarAssunto()
+        {
+            ViewBag.Assuntos = QuestaoDAO.BuscarAssuntosQuestaoTodos();
+            return View();
+        }
+
         [HttpPost]
         public ActionResult CadastrarQuestoes(Questao questao)
         {
@@ -214,6 +220,33 @@ namespace TestAnalyser.Controllers
             QuestaoDAO.CadastrarQuestao(questao);
             TempData["$AlertMessage$"] = "Questão Criada com Sucesso";
             return RedirectToAction("CadastrarQuestoes", "CadastrarQuestoes");
+        }
+
+        public ActionResult CadastrarAssuntos(string AssuntoQ)
+        {
+            Assunto assunto = new Assunto();
+            assunto.Descricao = AssuntoQ;
+
+            QuestaoDAO.CadastrarAssunto(assunto);
+            TempData["$CadAssunto$"] = "Assunto Criado com Sucesso";
+            return RedirectToAction("CadastrarAssunto", "CadastrarQuestoes");
+        }
+        public ActionResult EditarAssuntos(int AssuntoID, string AssuntoDesc)
+        {
+            Assunto assunto = QuestaoDAO.BuscarAssuntoId(AssuntoID);
+            assunto.Descricao = "teste";
+
+            QuestaoDAO.EditarAssunto(assunto);
+            TempData["$CadAssunto$"] = "Assunto Alterado com Sucesso";
+            return RedirectToAction("CadastrarAssunto", "CadastrarQuestoes");
+        }
+        public ActionResult RemoverAssuntos(int AssuntoID)
+        {
+            Assunto assunto = QuestaoDAO.BuscarAssuntoId(AssuntoID);
+            QuestaoDAO.RemoverAssunto(assunto);
+
+            TempData["$CadAssunto$"] = "Assunto Removido com Sucesso";
+            return RedirectToAction("CadastrarAssunto", "CadastrarQuestoes");
         }
     }
 }

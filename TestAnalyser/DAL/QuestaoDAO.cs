@@ -81,6 +81,24 @@ namespace TestAnalyser.DAL
             return ctx.AssuntosQuestao.Find(id);
         }
 
+        public static void CadastrarAssunto(Assunto assunto)
+        {
+            ctx.AssuntosQuestao.Add(assunto);
+            ctx.SaveChanges();
+        }
+
+        public static void EditarAssunto(Assunto assunto)
+        {
+            ctx.Entry(assunto).State = System.Data.Entity.EntityState.Modified;
+            ctx.SaveChanges();
+        }
+
+        public static void RemoverAssunto(Assunto assunto)
+        {
+            ctx.AssuntosQuestao.Remove(assunto);
+            ctx.SaveChanges();
+        }
+
         public static List<String> BuscarAssuntos(string disc)
         {
             List<String> assuntos = new List<String>();
@@ -89,8 +107,10 @@ namespace TestAnalyser.DAL
             questao = ctx.Questoes.Include("Disciplina").Include("AssuntoQuestao").Where(x => x.Disciplina.Nome == disc && x.situacao == 1).ToList();
             foreach (Questao item in questao)
             {
-                assuntos.Add(item.AssuntoQuestao.Descricao);
-
+                if (item.AssuntoQuestao.Descricao != null)
+                    { assuntos.Add(item.AssuntoQuestao.Descricao); }
+                else
+                    { assuntos.Add("Sem Assunto"); }
             }
 
             return assuntos;

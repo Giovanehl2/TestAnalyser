@@ -1,0 +1,69 @@
+@model TestAnalyser.Model.Questao
+@using TestAnalyser.Model;
+@using System.Web.Mvc;
+@{
+    ViewBag.Title = "Consultar Assuntos";
+
+}
+<script src="ckeditor/ckeditor.js"></script>
+<div>
+    <div id="divSE" class="">
+        <h5>Cadastrar Assunto</h5>
+        <br />
+        <form class="form-horizontal" name="form1" id="formCadAS" method="post" action="@Url.Action("CadastrarAssuntos", "CadastrarQuestoes")">
+            @if (TempData["$CadAssunto$"] != null)
+            {
+                <div id="alerta" style="color: red; text-align: center;">@TempData["$CadAssunto$"]</div>
+            }
+            <div class="form-row">
+                <div class="col-md-4">
+                    <label for="AssuntoSE">Novo Assunto</label>
+                    <input class="form-control" id="AssuntoQ" name="AssuntoQ" type="text" required>
+                    @*@Html.EditorFor(model => model.AssuntoQuestao.Descricao, new { @class = "form-control" })*@
+                </div>
+                <div class="col-md-2">
+                    <label for="">&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;</label>
+                    <button witdh="50" id="btnSalvar" type="submit" class="btn btn-primary btn-sm">Cadastrar</button>
+                </div>
+            </div>
+        </form>
+    </div>
+    <br /><br />
+    <div class="row" style="justify-content: center;">
+        <h3>Assuntos Cadastrados</h3>
+        <table class="table" style="text-align: center;">
+            <thead>
+                <tr>
+                    <th scope="col">Assunto</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @{
+                    foreach (var item in ViewBag.Assuntos)
+                    {
+                        <tr>
+                            <td>@item.Descricao</td>
+                            <td>
+                                <div id="Acoes">
+                                    @*@Html.ActionLink("Editar", "EditarAssuntos", "CadastrarQuestoes", new { AssuntoID = item.AssuntoId }, null) |*@
+                                    @Html.ActionLink("Excluir", "RemoverAssuntos", "CadastrarQuestoes", new { AssuntoID = item.AssuntoId }, null)
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+@Scripts.Render("~/bundles/jquery")
+<script type="text/javascript">
+    $(document).ready(function () {
+        setTimeout(function () {
+            $('#alerta').fadeOut(1000);
+        }, 2500);
+    });
+</script>
+

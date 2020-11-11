@@ -99,7 +99,17 @@
 
 </head>
 
-<h2>Cadastrar Questoes</h2>
+<div class="row">
+    <div>
+        <h2>Cadastrar Questoes</h2>
+    </div>
+    <div style="margin-left: 69%;">
+        <a href="@Url.Action("CadastrarAssunto", "CadastrarQuestoes")">
+            <input type="button" class="btn btn-default" value="Cadastrar Assuntos"/>
+        </a>
+    </div>
+</div>
+<br />
 @if (TempData["$AlertMessage$"] != null)
 {
     <div id="alerta" style="color: red; text-align: center;">@TempData["$AlertMessage$"]</div>
