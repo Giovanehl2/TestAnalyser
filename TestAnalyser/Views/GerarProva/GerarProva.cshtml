@@ -137,7 +137,8 @@
                                         <div class="col">
                                             <div class="form-check">
                                                 <label class="form-check-label" for="gridCheck">
-                                                    Simples escolha &emsp; @Html.Raw("(" + 5 + ")")
+                                                    Simples escolha &emsp; <label id="SimplesEscolha"></label>
+                                                    @*<input class="form-control" id="QtSimplesEscolha" type="number" name="SimplesEscolha" required>*@
                                                 </label>
                                             </div>
                                         </div>
@@ -149,19 +150,21 @@
                                         <div class="col">
                                             <div class="form-check">
                                                 <label class="form-check-label" for="gridCheck">
-                                                    Multipla escolha &emsp; @Html.Raw("(" + 5 + ")")
+                                                    Multipla escolha &emsp; <label id="QtMultiplaEscolha"></label>
+                                                    @* <input class="form-control" id="QtMultiplaEscolha" type="number" name="QtMultiplaEscolha" required>*@
                                                 </label>
                                             </div>
                                         </div>
                                         <div class="col">
-                                            <input class="form-control" id="IdQtMultiplaEscolha" type="number" name="QtMultiplaEscolha" required>
+                                            <input class="form-control" id="MultiplaEscolha" type="number" name="MultiplaEscolha" required>
                                         </div>
                                     </div>
                                     <div class="row">
                                         <div class="col">
                                             <div class="form-check">
                                                 <label class="form-check-label" for="gridCheck">
-                                                    Verdadeira ou falso &emsp; @Html.Raw("(" + 5 + ")")
+                                                    Verdadeiro ou Falso &emsp; <label id="QtVerdadeirFalso"></label>
+                                                    @* <input class="form-control" id="QtVerdadeirFalso" type="number" name="QtVerdadeirFalso" required>*@
                                                 </label>
                                             </div>
                                         </div>
@@ -174,7 +177,8 @@
                                             <div class="form-check">
 
                                                 <label class="form-check-label" for="gridCheck">
-                                                    Dissertativa &emsp; @Html.Raw("(" + 5 + ")")
+                                                    Dissertativa &emsp; <label id="QtDissertativa"></label>
+                                                    @*<output id="QtDissertativa" type="number" name="Dissertativa">*@
                                                 </label>
                                             </div>
                                         </div>
@@ -458,6 +462,46 @@
     });
 
 
+    $("#idAssuntoProva").on("change", function () {
+
+        var val = $('#idAssuntoProva').val();
+        
+        var Paramters = "{assuntosSelecionados:'" + val + "'}";
+
+        $.ajax({
+
+            type: "POST",
+
+            url: "/GerarProva/QuantidadeDeQuestoesPorAssunto",
+
+            contentType: "application/json",
+
+            data: Paramters,
+
+            success: function (data) {
+                //1 = Simples Escolha, 2 = Multipla Escolha, 3 = Verdadeiro ou Falso, 4 = Discursiva.
+                var obj = JSON.parse(data);
+                $.each(obj, function (key, value) {
+        
+                    if (key === "1") {
+                        document.getElementById("QtSimplesEscolha").innerHTML = '10';
+                    }
+                    if (key === "2") {
+                        document.getElementById("QtSimplesEscolha").innerHTML = '10';
+                    }
+                    if (key === "3") {
+                        document.getElementById("QtVerdadeirFalso").innerHTML = '10';
+                    }
+                    if (key === "4") {
+                        document.getElementById("QtDissertativa").innerHTML = '10';
+                    }
+                })
+            }
+
+        });
+
+
+    });
 
 
 </script>

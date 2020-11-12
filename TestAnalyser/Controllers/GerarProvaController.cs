@@ -160,6 +160,7 @@ namespace TestAnalyser.Controllers
             return listaData;
 
         }
+
         public ActionResult CadastrarQuestoesProva(Prova prova)
         {
             List<DateTime> listaData = new List<DateTime>();
@@ -206,12 +207,52 @@ namespace TestAnalyser.Controllers
 
 
         }
+        public string QuantidadeDeQuestoesPorAssunto(List<string> assuntosSelecionados)
+        {
+            var dict = new Dictionary<int, int>();
+            List<Questao> questoesRaw = new List<Questao>();
+
+            foreach (string assunto in assuntosSelecionados)
+                questoesRaw.AddRange(QuestaoDAO.BuscarPorAssunto(assunto));
+
+            //1 = Simples Escolha, 2 = Multipla Escolha, 3 = Verdadeiro ou Falso, 4 = Discursiva.
+
+            dict.Add(1,questoesRaw.FindAll(x => x.TipoQuestao == 1).Count());
+            dict.Add(2,questoesRaw.FindAll(x => x.TipoQuestao == 2).Count());
+            dict.Add(3,questoesRaw.FindAll(x => x.TipoQuestao == 3).Count());
+            dict.Add(4,questoesRaw.FindAll(x => x.TipoQuestao == 4).Count());
+
+            var output = Newtonsoft.Json.JsonConvert.SerializeObject(dict);
+
+            return output;
+        }
+
+        //public JsonResult QuantidadeDeQuestoesPorAssunto(string assuntosSelecionados)
+        //{
+        //    QuantidadeQuestoes QuantidadeQuestoes = new QuantidadeQuestoes();
+        //    List<Questao> questoesRaw = new List<Questao>();
+        //    List<int> qtQuestao = new List<int>();
+
+        //        questoesRaw.AddRange(QuestaoDAO.BuscarPorAssunto(assuntosSelecionados));
+
+        //    //1 = Simples Escolha, 2 = Multipla Escolha, 3 = Verdadeiro ou Falso, 4 = Discursiva.
+        //    qtQuestao[0] = questoesRaw.FindAll(x => x.TipoQuestao == 1).Count();
+        //    qtQuestao[1] = questoesRaw.FindAll(x => x.TipoQuestao == 2).Count();
+        //    qtQuestao[2] = questoesRaw.FindAll(x => x.TipoQuestao == 3).Count();
+        //    qtQuestao[3] = questoesRaw.FindAll(x => x.TipoQuestao == 4).Count();
+
+
+
+        //    return Json(qtQuestao);
+        //}
         private void GerarQuestoesProva()
         {
+
+
             NotaQuestao notaquestao;
             List<Questao> questoesProva = new List<Questao>();
-            questoesProva.AddRange(gerarQuestões());
-            double nota = provaFixa.ValorProva / questoesProva.Count();
+            questoesProva.AddRange(gerarQuestoes());
+            double nota = Math.Round((provaFixa.ValorProva / questoesProva.Count()), 3);
             List<NotaQuestao> ListanotaQuestao = new List<NotaQuestao>();
             foreach (Questao item in questoesProva)
             {
@@ -237,7 +278,7 @@ namespace TestAnalyser.Controllers
             return RedirectToAction("AdicionarQuestoesNaProva", "GerarProva", provaFixa);
         }
 
-        private List<Questao> gerarQuestões()
+        private List<Questao> gerarQuestoes()
         {
             List<Questao> questoesFinal = new List<Questao>();
 
@@ -254,7 +295,8 @@ namespace TestAnalyser.Controllers
             List<int> QtSimplesEscolha = new List<int>();
 
             Random rnd = new Random();
-
+            int aleatorio = 0;
+            int contador = 0;
 
             //realiza a busca por assuntos na base de dados e coloca em uma listagem
             foreach (string assunto in provaFixa.Assuntos)
@@ -287,49 +329,99 @@ namespace TestAnalyser.Controllers
 
 
             }
+
+
             //----------------------------------------------//
+            for (int i = 0; i < provaFixa.QtMultiplaEscolha; i++)
+            {
+                contador = 0;
+
+                while (provaFixa.QtMultiplaEscolha > QtMultiplaEscolha.Count())
+                {
+                    aleatorio = 0;
+                    aleatorio = rnd.Next(0, multiplaEscolha.Count);
+                    if (!QtMultiplaEscolha.Contains(aleatorio))
+                    {
+                        QtMultiplaEscolha.Add(aleatorio);
+                    }
+                    contador++;
+                }
+
+
+            }
+
+            //----------------------------------------------//
+            for (int i = 0; i < provaFixa.QtVerdadeirFalso; i++)
+            {
+
+                while (provaFixa.QtVerdadeirFalso > QtVerdadeirFalso.Count())
+                {
+                    aleatorio = 0;
+                    aleatorio = rnd.Next(0, verdadeirFalso.Count);
+                    if (!QtVerdadeirFalso.Contains(aleatorio))
+                    {
+                        QtVerdadeirFalso.Add(aleatorio);
+                    }
+                }
+
+            }
+
+
+            //----------------------------------------------//
+            for (int i = 0; i < provaFixa.QtDissertativa; i++)
+            {
+
+                while (provaFixa.QtDissertativa > QtDissertativa.Count())
+                {
+                    aleatorio = 0;
+                    aleatorio = rnd.Next(0, dissertativa.Count);
+
+                    if (QtDissertativa == null || !QtDissertativa.Exists(item => item == aleatorio))
+                    {
+                        QtDissertativa.Add(aleatorio);
+                    }
+                }
+
+            }
+
+
+
+
             //gera as sequencias aleatorias de acordo com cada tipo de questão
             for (int i = 0; i < provaFixa.QtSimplesEscolha; i++)
             {
-                QtSimplesEscolha.Add(rnd.Next(0, simplesEscolha.Count));
+
+                while (provaFixa.QtSimplesEscolha > QtSimplesEscolha.Count())
+                {
+                    aleatorio = 0;
+                    aleatorio = rnd.Next(0, simplesEscolha.Count);
+                    if (!QtSimplesEscolha.Contains(aleatorio))
+                    {
+                        QtSimplesEscolha.Add(aleatorio);
+                    }
+                }
 
             }
+
+
             //adiciona as questões na lista final
             foreach (int item in QtSimplesEscolha)
             {
                 questoesFinal.Add(simplesEscolha[item]);
             }
 
-            //----------------------------------------------//
-            for (int i = 0; i < provaFixa.QtMultiplaEscolha; i++)
-            {
-                QtMultiplaEscolha.Add(rnd.Next(0, multiplaEscolha.Count));
-
-            }
             //adiciona as questões na lista final
             foreach (int item in QtMultiplaEscolha)
             {
                 questoesFinal.Add(multiplaEscolha[item]);
             }
 
-            //----------------------------------------------//
-            for (int i = 0; i < provaFixa.QtVerdadeirFalso; i++)
-            {
-                QtVerdadeirFalso.Add(rnd.Next(0, verdadeirFalso.Count));
-
-            }
             //adiciona as questões na lista final
             foreach (int item in QtVerdadeirFalso)
             {
                 questoesFinal.Add(verdadeirFalso[item]);
             }
 
-            //----------------------------------------------//
-            for (int i = 0; i < provaFixa.QtDissertativa; i++)
-            {
-                QtDissertativa.Add(rnd.Next(0, dissertativa.Count));
-
-            }
             //adiciona as questões na lista final
             foreach (int item in QtDissertativa)
             {
