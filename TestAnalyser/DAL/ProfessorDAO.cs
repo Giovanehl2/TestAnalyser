@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -37,7 +37,7 @@ namespace TestAnalyser.DAL
 
         }
 
-        public static List<Turma> BuscarDisciplinasProfessor(int ProfID)
+        public static List<Disciplina> BuscarDisciplinasProfessor(int ProfID)
         {
             List<Disciplina> Disc = new List<Disciplina>();
             var Proff = ctx.Professores.Include("Disciplinas")
@@ -47,20 +47,20 @@ namespace TestAnalyser.DAL
             foreach (var item in Proff.Disciplinas)
                 { Disc.Add(item); }
 
-            List<Turma> Turm = new List<Turma>();
-            foreach (var item in Disc)
-            {
-                var turmas = (item.Turmas);
-                foreach (var item2 in turmas)
-                {
-                    if (!Turm.Contains(item2))
-                    {
-                        Turm.Add(item2);
-                    }
-                }
-            }
+            //List<Turma> Turm = new List<Turma>();
+            //foreach (var item in Disc)
+            //{
+            //    var turmas = (item.Turmas);
+            //    foreach (var item2 in turmas)
+            //    {
+            //        if (!Turm.Contains(item2))
+            //        {
+            //            Turm.Add(item2);
+            //        }
+            //    }
+            //}
 
-            return Turm;
+            return Disc;
         }
     }
 }

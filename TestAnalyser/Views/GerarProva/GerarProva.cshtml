@@ -1,4 +1,4 @@
-<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+﻿<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
 @model TestAnalyser.Model.Prova
 
 @{
@@ -246,6 +246,8 @@
     </div>
 </div>
 
+@Scripts.Render("~/bundles/jquery")
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 
 <div class="modal fade" id="ModalConsultarTurmas">
     <div class="modal-dialog">
@@ -255,31 +257,81 @@
                 <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
             </div>
             <div class="modal-body">
-                <table class="table">
-                    <thead>
+                <div>
+                    <ul class="nav justify-content-center nav-pills nav-fill">
                         @{
                             foreach (var item in ViewBag.Turmas)
                             {
-                                var alunos = (item.Alunos);
-                                <tr>
-                                    <td><b>Turma: @item.NomeTurma &emsp;-&emsp; @item.Disciplinas[0].Nome</b></td>
-                                    <td><b></b></td>
-                                </tr>
-                                foreach (var item2 in alunos)
-                                {
-                                    <tr>
-                                        <td>@item2.NomeAluno</td>
-                                        <td>@item2.Matricula</td>
-                                    </tr>
-                                }
-                                <tr>
-                                    <td></td>
-                                    <td></td>
-                                </tr>
+                                <li id="ABA_@item.DisciplinaId" class="nav-item"><a class="borda" data-toggle="tab" href="#Div_@item.DisciplinaId">@item.Nome</a></li>
                             }
                         }
-                    </thead>
-                </table>
+                    </ul>
+                </div>
+                <br /><br />
+                <div class="col-lg-12 tab-content">
+                    @{
+                        foreach (var item in ViewBag.Turmas)
+                        {
+                            var cc = 0;
+                            var turma = item.Turmas;
+                            <div id="Div_@item.DisciplinaId" class="tab-pane fade">
+                                <table class="table">
+                                    <thead>
+                                        @{
+                                            foreach (var item2 in turma)
+                                            {
+                                                var alunos = item2.Alunos;
+                                                <tr>
+                                                    <td><b>Turma: @item2.NomeTurma @*&emsp;-&emsp; @item2.Disciplinas[cc].Nome*@</b></td>
+                                                    <td><b></b></td>
+                                                </tr>
+                                                foreach (var item3 in alunos)
+                                                {
+                                                    <tr>
+                                                        <td>@item3.NomeAluno</td>
+                                                        <td>@item3.Matricula</td>
+                                                    </tr>
+                                                }
+                                                <tr>
+                                                    <td></td>
+                                                    <td></td>
+                                                </tr>
+                                            }
+
+                                        }
+                                    </thead>
+                                </table>
+                            </div>
+
+                            cc++;
+                        }
+                    }
+                </div>
+                @*<table class="table">
+                        <thead>
+                            @{
+                                foreach (var item in ViewBag.Turmas)
+                                {
+                                    var alunos = (item.Alunos);
+                                    <tr>
+                                        <td><b>Turma: @item.NomeTurma &emsp;-&emsp; @item.Disciplinas[0].Nome</b></td>
+                                        <td><b></b></td>
+                                    </tr>
+                                    foreach (var item2 in alunos)
+                                    {
+                                        <tr>
+                                            <td>@item2.NomeAluno</td>
+                                            <td>@item2.Matricula</td>
+                                        </tr>
+                                    }
+                                    <tr>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
+                                }
+                            }
+                        </thead>
+                    </table>*@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Voltar</button>
