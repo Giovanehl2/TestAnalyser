@@ -137,8 +137,7 @@
                                         <div class="col">
                                             <div class="form-check">
                                                 <label class="form-check-label" for="gridCheck">
-                                                    Simples escolha &emsp; <label id="SimplesEscolha"></label>
-                                                    @*<input class="form-control" id="QtSimplesEscolha" type="number" name="SimplesEscolha" required>*@
+                                                    Simples escolha &emsp; (<label id="QtSimplesEscolha">0</label>)
                                                 </label>
                                             </div>
                                         </div>
@@ -150,8 +149,7 @@
                                         <div class="col">
                                             <div class="form-check">
                                                 <label class="form-check-label" for="gridCheck">
-                                                    Multipla escolha &emsp; <label id="QtMultiplaEscolha"></label>
-                                                    @* <input class="form-control" id="QtMultiplaEscolha" type="number" name="QtMultiplaEscolha" required>*@
+                                                    Multipla escolha &emsp; (<label id="QtMultiplaEscolha">0</label>)
                                                 </label>
                                             </div>
                                         </div>
@@ -163,8 +161,7 @@
                                         <div class="col">
                                             <div class="form-check">
                                                 <label class="form-check-label" for="gridCheck">
-                                                    Verdadeiro ou Falso &emsp; <label id="QtVerdadeirFalso"></label>
-                                                    @* <input class="form-control" id="QtVerdadeirFalso" type="number" name="QtVerdadeirFalso" required>*@
+                                                    Verdadeiro ou Falso &emsp; (<label id="QtVerdadeirFalso">0</label>)
                                                 </label>
                                             </div>
                                         </div>
@@ -177,8 +174,7 @@
                                             <div class="form-check">
 
                                                 <label class="form-check-label" for="gridCheck">
-                                                    Dissertativa &emsp; <label id="QtDissertativa"></label>
-                                                    @*<output id="QtDissertativa" type="number" name="Dissertativa">*@
+                                                    Dissertativa &emsp; (<label id="QtDissertativa">0</label>)
                                                 </label>
                                             </div>
                                         </div>
@@ -484,16 +480,16 @@
                 $.each(obj, function (key, value) {
         
                     if (key === "1") {
-                        document.getElementById("QtSimplesEscolha").innerHTML = '10';
+                        document.getElementById("QtSimplesEscolha").innerHTML = value;
                     }
                     if (key === "2") {
-                        document.getElementById("QtSimplesEscolha").innerHTML = '10';
+                        document.getElementById("QtMultiplaEscolha").innerHTML = value;
                     }
                     if (key === "3") {
-                        document.getElementById("QtVerdadeirFalso").innerHTML = '10';
+                        document.getElementById("QtVerdadeirFalso").innerHTML = value;
                     }
                     if (key === "4") {
-                        document.getElementById("QtDissertativa").innerHTML = '10';
+                        document.getElementById("QtDissertativa").innerHTML = value;
                     }
                 })
             }

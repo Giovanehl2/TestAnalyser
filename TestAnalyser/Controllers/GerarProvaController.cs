@@ -198,21 +198,17 @@ namespace TestAnalyser.Controllers
             {
 
                 return RedirectToAction("AdicionarQuestoesNaProva", "GerarProva", provaFixa);
-
             }
 
-
             return RedirectToAction("GerarProva", "GerarProva", provaFixa);
-
-
-
         }
-        public string QuantidadeDeQuestoesPorAssunto(List<string> assuntosSelecionados)
+        public string QuantidadeDeQuestoesPorAssunto(string assuntosSelecionados)
         {
+            string[] ListaQuest = assuntosSelecionados.Split(',');
             var dict = new Dictionary<int, int>();
             List<Questao> questoesRaw = new List<Questao>();
 
-            foreach (string assunto in assuntosSelecionados)
+            foreach (string assunto in ListaQuest)
                 questoesRaw.AddRange(QuestaoDAO.BuscarPorAssunto(assunto));
 
             //1 = Simples Escolha, 2 = Multipla Escolha, 3 = Verdadeiro ou Falso, 4 = Discursiva.
@@ -227,24 +223,6 @@ namespace TestAnalyser.Controllers
             return output;
         }
 
-        //public JsonResult QuantidadeDeQuestoesPorAssunto(string assuntosSelecionados)
-        //{
-        //    QuantidadeQuestoes QuantidadeQuestoes = new QuantidadeQuestoes();
-        //    List<Questao> questoesRaw = new List<Questao>();
-        //    List<int> qtQuestao = new List<int>();
-
-        //        questoesRaw.AddRange(QuestaoDAO.BuscarPorAssunto(assuntosSelecionados));
-
-        //    //1 = Simples Escolha, 2 = Multipla Escolha, 3 = Verdadeiro ou Falso, 4 = Discursiva.
-        //    qtQuestao[0] = questoesRaw.FindAll(x => x.TipoQuestao == 1).Count();
-        //    qtQuestao[1] = questoesRaw.FindAll(x => x.TipoQuestao == 2).Count();
-        //    qtQuestao[2] = questoesRaw.FindAll(x => x.TipoQuestao == 3).Count();
-        //    qtQuestao[3] = questoesRaw.FindAll(x => x.TipoQuestao == 4).Count();
-
-
-
-        //    return Json(qtQuestao);
-        //}
         private void GerarQuestoesProva()
         {
 
