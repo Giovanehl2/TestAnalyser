@@ -7,18 +7,19 @@
     var provaID = Model.ProvaId;
 }
 
-    <div id="divGeral" class="">
-        <div style="text-align: left;"><h2><b>@Html.Raw(Model.TituloProva)</b></h2></div>
-        <br />
-        <form class="form-horizontal" name="form1" id="form" @*method="post" action="@Url.Action("SalvarProva", "ConsultarProvaAl")"*@>
-            @foreach (var x in Model.NotasQuestoes.Where(y => y.Questao.TipoQuestao == 1).ToList())
-            {
+<div id="divGeral" class="">
+    <div style="text-align: left;"><h2><b>@Html.Raw(Model.TituloProva)</b></h2></div>
+    <br />
+    <form class="form-horizontal" name="form1" id="form" @*method="post" action="@Url.Action("SalvarProva", "ConsultarProvaAl")"*@>
+        @foreach (var x in Model.NotasQuestoes.Where(y => y.Questao.TipoQuestao == 1).ToList())
+        {
+            <div id="DivQuestao">
                 <div id="qust" class="form-row">
                     <div class="col-md-2">
                         <h6><b>Questão @count</b></h6>
                     </div>
                     @*<div id="salvandoSE" style="display: none;">Salvando...</div>
-                    <div id="OKSE" style="display: none;"><b>Salvo</b></div>*@
+                        <div id="OKSE" style="display: none;"><b>Salvo</b></div>*@
                 </div>
                 <br />
                 <div class="form-row">
@@ -48,10 +49,12 @@
                 </div>
                 <br />
                 <script>@(count = count + 1) </script>
-            }
-            <br />
-            @foreach (var x in Model.NotasQuestoes.Where(y => y.Questao.TipoQuestao == 2).ToList())
-            {
+            </div>
+        }
+        <br />
+        @foreach (var x in Model.NotasQuestoes.Where(y => y.Questao.TipoQuestao == 2).ToList())
+        {
+            <div id="DivQuestao">
                 <div class="form-row">
                     <div class="col-md-4">
                         <h6><b>Questão @count</b></h6>
@@ -69,17 +72,17 @@
                     @Html.Hidden("TipoQuestao", x.Questao.TipoQuestao)
                 </div>
                 @*<div id="Divopcoes">
-                    @for (int i = 0; i < x.Questao.Opcoes.Count; i++)
-                    {
-                        <div class="form-row">
-                            @Html.Hidden("OpcaoId", x.Questao.Opcoes[i].OpcaoId)
-                            <label for="">@(i+1)) </label>
-                            @Html.EditorFor(model => x.Questao.Opcoes[i].descricao, null, "descricao", new { htmlAttributes = new { @class = "form-control col-md-6", @readonly = "True" } })
-                        </div>
-                    }
-                </div>
-                <br />
-                <br />*@
+                        @for (int i = 0; i < x.Questao.Opcoes.Count; i++)
+                        {
+                            <div class="form-row">
+                                @Html.Hidden("OpcaoId", x.Questao.Opcoes[i].OpcaoId)
+                                <label for="">@(i+1)) </label>
+                                @Html.EditorFor(model => x.Questao.Opcoes[i].descricao, null, "descricao", new { htmlAttributes = new { @class = "form-control col-md-6", @readonly = "True" } })
+                            </div>
+                        }
+                    </div>
+                    <br />
+                    <br />*@
                 <div class="form-row">
                     <div class="col-md-3">
                         <label for=""><b>Alternativas:</b></label>
@@ -98,10 +101,12 @@
                 </div>
                 <br />
                 <script>@(count = count + 1) </script>
-            }
-            <br />
-            @foreach (var x in Model.NotasQuestoes.Where(y => y.Questao.TipoQuestao == 3).ToList())
-            {
+            </div>
+        }
+        <br />
+        @foreach (var x in Model.NotasQuestoes.Where(y => y.Questao.TipoQuestao == 3).ToList())
+        {
+            <div id="DivQuestao">
                 <div class="form-row">
                     <div class="col-md-4">
                         <h6><b>Questão @count</b></h6>
@@ -120,17 +125,17 @@
                 <br />
                 <br />
                 @*<div id="Divopcoes">
-                    @for (int i = 0; i < x.Questao.Opcoes.Count; i++)
-                    {
-                        <div class="form-row">
-                            @Html.Hidden("OpcaoId", x.Questao.Opcoes[i].OpcaoId)
-                            <label for="">@(i+1)) </label>
-                            @Html.EditorFor(model => x.Questao.Opcoes[i].descricao, null, "descricao", new { htmlAttributes = new { @class = "form-control col-md-6", @readonly = "True" } })
-                        </div>
-                    }
-                </div>
-                <br />
-                <br />*@
+                        @for (int i = 0; i < x.Questao.Opcoes.Count; i++)
+                        {
+                            <div class="form-row">
+                                @Html.Hidden("OpcaoId", x.Questao.Opcoes[i].OpcaoId)
+                                <label for="">@(i+1)) </label>
+                                @Html.EditorFor(model => x.Questao.Opcoes[i].descricao, null, "descricao", new { htmlAttributes = new { @class = "form-control col-md-6", @readonly = "True" } })
+                            </div>
+                        }
+                    </div>
+                    <br />
+                    <br />*@
                 <div class="form-row">
                     <div class="col-md-3">
                         <label for=""><b>Alternativas:</b></label>
@@ -149,9 +154,11 @@
                 </div>
                 <br />
                 <script>@(count = count + 1) </script>
-            }
-            @foreach (var x in Model.NotasQuestoes.Where(y => y.Questao.TipoQuestao == 4).ToList())
-            {
+            </div>
+        }
+        @foreach (var x in Model.NotasQuestoes.Where(y => y.Questao.TipoQuestao == 4).ToList())
+        {
+            <div id="DivQuestao">
                 <div class="form-row">
                     <div class="col-md-4">
                         <h6><b>Questão @count</b></h6>
@@ -180,10 +187,11 @@
                 <div id="salvandoDS" hidden>Salvando...</div>
                 <br />
                 <script>@(count = count + 1) </script>
-            }
-        </form>
-        <button id="btnFinalizar" witdh="50" title="FinalizarProva" class="btn btn-primary btn-sm" onclick="FinalizarProva()">Finalizar</button>
-    </div>
+            </div>
+        }
+    </form>
+    <button id="btnFinalizar" witdh="50" title="FinalizarProva" class="btn btn-primary btn-sm" onclick="FinalizarProva()">Finalizar</button>
+</div>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 
