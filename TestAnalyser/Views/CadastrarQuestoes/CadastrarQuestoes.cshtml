@@ -96,18 +96,17 @@
             }
         }
     </script>
-
 </head>
 
 <div class="row">
     <div>
         <h2>Cadastrar Questoes</h2>
     </div>
-    <div style="margin-left: 69%;">
+    @*<div style="margin-left: 69%;">
         <a href="@Url.Action("CadastrarAssunto", "CadastrarQuestoes")">
-            <input type="button" class="btn btn-default" value="Cadastrar Assuntos"/>
+            <input type="button" class="btn btn-primary" value="Cadastrar Assuntos"/>
         </a>
-    </div>
+    </div>*@
 </div>
 <br />
 @if (TempData["$AlertMessage$"] != null)
@@ -118,7 +117,7 @@
     @*Abas para cada tipo de questão ...*@
     <br />
     <ul class="nav justify-content-center nav-pills nav-fill">
-        <li id="SE" class="nav-item"><a class="borda" data-toggle="tab" href="#divSE">Simples-Escolha</a></li>
+        <li id="SE" class="nav-item"><a class="borda active show" data-toggle="tab" href="#divSE">Simples-Escolha</a></li>
         <li id="ME" class="nav-item"><a class="borda" data-toggle="tab" href="#divME">Multipla-Escolha</a></li>
         <li id="VF" class="nav-item"><a class="borda" data-toggle="tab" href="#divVF">Verdadeiro Ou Falso</a></li>
         <li id="DT" class="nav-item"><a class="borda" data-toggle="tab" href="#divDT">Dissertativa</a></li>
@@ -136,10 +135,17 @@
                 @Html.ValidationSummary(true, "", new { @class = "text-danger" })
             </div>
             <div class="form-row">
-                <div class="col-md-4">
-                    <label for="AssuntoSE">Assunto</label>
+                <div class="col-md-5">
+                    <label>Assunto</label>
                     @*<input type="text" class="form-control" id="Assunto" name="Assunto">*@
-                    @Html.DropDownList("AssuntoQuestao", new SelectList(ViewBag.AssuntosQuestao, "AssuntoId", "Descricao"), htmlAttributes: new { @class = "form-control" })
+                    <div class="col-md-10" style="padding-right: 0px !important;padding-left: 0px !important;contain: size;">
+                        @Html.DropDownList("AssuntoQuestao", new SelectList(ViewBag.AssuntosQuestao, "AssuntoId", "Descricao"), htmlAttributes: new { @class = "form-control" })
+                    </div>
+                    <div class="col-lg-2" style="float: right;padding-left: 0px;">
+                        <a href="@Url.Action("CadastrarAssunto", "CadastrarQuestoes")">
+                            <input type="button" class="btn btn-primary" value="+" />
+                        </a>
+                    </div>
                 </div>
                 <div class="col-md-4">
                     <label for="Disciplinas">Disciplinas</label>
