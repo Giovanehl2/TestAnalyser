@@ -72,113 +72,138 @@
 
                     </div>
                 </div>
-                <div class="form-row">
-                    <div class="form-group col">
-                        <label for="NotaMax">Nota máxima</label>
-                        <input class="form-control " id="NotaMax" type="number" name="ValorProva" required>
-                    </div>
-                    @*<div class="form-group col">
-                            <label for="NotaMax">tentativas</label>
-                            <input class="form-control " id="QtTentativa" type="number" name="QtTentativas" required>
-                        </div>*@
-                    <div class="form-group col">
-                        <label for="DisciplinaProva">Curso</label>
-                        <select class="form-control" id="idCurso" name="Curso" size="1" required>
-                            @{
-                                <option value="0"> Selecione</option>
-                                foreach (var item in ViewBag.Cursos)
-                                {
-                                    <option value="@item.CursoId">@item.Descricao</option>
-                                }
-                            }
-                        </select>
-                    </div>
-                    <div class="form-group col">
-                        <label for="DisciplinaProva">Disciplina</label>
-                        <select class="form-control" id="idDisciplina" name="NomeDisciplina" size="1" required>
-                            <option> </option>
-                        </select>
-                    </div>
-
-                    <div class="form-group col">
-                        <label for="TurmaProva">Turma</label>
-                        <select class="form-control" id="idTurma" name="NomeTurma" size="1" required>
-                            <option> </option>
-                        </select>
-
-                    </div>
-                </div>
+                
                 <br />
                 <br />
                 <div class="form-row">
-                    <div class="form-group col-md-6" id="mydiv">
-                        <label for="AssuntoProva" title="Selecione os assuntos que essa prova irá abordar.">Assunto</label>
-                        <select class="selectpicker" multiple name="Assuntos" id="idAssuntoProva" style="width:250px;" tabindex="2" required>
-                            <option> </option>
-
-                        </select>
-
-                    </div>
-
                     <div class="form-group col-md-6">
+                        <div class="form-row">
+                            <div class="form-group col">
+                                <label for="DisciplinaProva">Curso</label>
+                                <select class="form-control" id="idCurso" name="Curso" size="1" required>
+                                    @{
+                                        <option value="0"> Selecione</option>
+                                        foreach (var item in ViewBag.Cursos)
+                                        {
+                                            <option value="@item.CursoId">@item.Descricao</option>
+                                        }
+                                    }
+                                </select>
+                            </div>
+                            <div class="form-group col">
+                                <label for="DisciplinaProva">Disciplina</label>
+                                <select class="form-control" id="idDisciplina" name="NomeDisciplina" size="1" required>
+                                    <option> </option>
+                                </select>
+                            </div>
+                        </div>
 
+                        <div class="form-row">
+                            <div class="form-group col">
+                                <label for="TurmaProva">Turma</label>
+                                <select class="form-control" id="idTurma" name="NomeTurma" size="1" required>
+                                    <option> </option>
+                                </select>
+                            </div>
+                            <div class="form-group col">
+                                <label for="NotaMax">Nota máxima</label>
+                                <input class="form-control " id="NotaMax" type="number" name="ValorProva" required>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group col" id="mydiv">
+                                <label for="AssuntoProva" title="Selecione os assuntos que essa prova irá abordar.">Assunto</label><br />
+                                <select class="selectpicker" multiple name="Assuntos" id="idAssuntoProva" style="width:250px;" tabindex="2" required>
+                                    <option> </option>
+
+                                </select>
+                            </div>
+                        </div>
+
+                    </div>
+                    
+                    <div class="form-group col-md-6">
                         <div class="row">
                             <div class="col">
                                 <div class="col" style="text-align: right;">
+                                    
                                     <div class="row">
-                                        <div class="col" style="text-align: center;">
+                                        <div class="col" style="text-align:center">
                                             <label class="form-check-label" for="gridCheck">
-                                                Tipo das Questões
+                                                Tipo da questão
+                                            </label>
+                                        </div>
+                                        <div class="col" style="text-align:center">
+                                            <label class="form-check-label" for="gridCheck">
+                                                Total de questões
+                                            </label>
+                                        </div>
+                                        <div class="col" style="text-align:center">
+                                            <label class="form-check-label" for="gridCheck">
+                                                Questões da prova
                                             </label>
                                         </div>
                                     </div>
                                     <br />
                                     <div class="row">
-                                        <div class="col">
+                                        <div class="col" style="text-align:center">
                                             <div class="form-check">
                                                 <label class="form-check-label" for="gridCheck">
-                                                    Simples escolha &emsp; (<label id="QtSimplesEscolha">0</label>)
+                                                    Simples escolha
                                                 </label>
                                             </div>
                                         </div>
-                                        <div class="col">
+                                        <div class="col" style="text-align:center">
+                                            (<label id="QtSimplesEscolha">0</label>)
+                                        </div>
+                                        <div class="col" style="text-align:center">
                                             <input class="form-control" id="IdQtSimplesEscolha" type="number" name="QtSimplesEscolha" required>
                                         </div>
                                     </div>
                                     <div class="row">
-                                        <div class="col">
+                                        <div class="col" style="text-align:center">
                                             <div class="form-check">
                                                 <label class="form-check-label" for="gridCheck">
-                                                    Multipla escolha &emsp; (<label id="QtMultiplaEscolha">0</label>)
+                                                    Multipla escolha
                                                 </label>
                                             </div>
                                         </div>
-                                        <div class="col">
-                                            <input class="form-control" id="MultiplaEscolha" type="number" name="QtMultiplaEscolha" required>
+                                        <div class="col" style="text-align:center">
+                                            (<label id="QtMultiplaEscolha">0</label>)
+                                        </div>
+                                        <div class="col" style="text-align:center">
+                                            <input class="form-control" id="IdQtMultiplaEscolha" type="number" name="QtMultiplaEscolha" required>
                                         </div>
                                     </div>
                                     <div class="row">
-                                        <div class="col">
+                                        <div class="col" style="text-align:center">
                                             <div class="form-check">
                                                 <label class="form-check-label" for="gridCheck">
-                                                    Verdadeiro ou Falso &emsp; (<label id="QtVerdadeirFalso">0</label>)
+                                                    Verdadeiro ou Falso
                                                 </label>
                                             </div>
                                         </div>
-                                        <div class="col">
+                                        <div class="col" style="text-align:center">
+                                            (<label id="QtVerdadeirFalso">0</label>)
+                                        </div>
+                                        <div class="col" style="text-align:center">
                                             <input class="form-control" id="IdQtVerdadeirFalso" type="number" name="QtVerdadeirFalso" required>
                                         </div>
                                     </div>
                                     <div class="row">
-                                        <div class="col">
+                                        <div class="col" style="text-align:center">
                                             <div class="form-check">
 
                                                 <label class="form-check-label" for="gridCheck">
-                                                    Dissertativa &emsp; (<label id="QtDissertativa">0</label>)
+                                                    Dissertativa
                                                 </label>
                                             </div>
                                         </div>
-                                        <div class="col">
+                                        <div class="col" style="text-align:center">
+                                            (<label id="QtDissertativa">0</label>)
+                                        </div>
+                                        <div class="col" style="text-align:center">
                                             <input class="form-control" id="IdQtDissertativa" type="number" name="QtDissertativa" required>
                                         </div>
                                     </div>
@@ -206,7 +231,7 @@
                                     <label></label>
                                 </div>
                                 <div class="col-md-3">
-                                    <label>&emsp;Incorreto</label>
+                                    <label>&emsp;&emsp;Incorreto</label>
                                 </div>
                                 <div class="col-md-3">
                                     <label>&emsp;&emsp;&emsp;Revisar</label>

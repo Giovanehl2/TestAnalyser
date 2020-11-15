@@ -18,181 +18,198 @@
         <div id="DivGeral">
             @foreach (var x in Model.NotasQuestoes.Where(y => y.Questao.TipoQuestao == 1).ToList()) //VERIFICAR O MODELO, QUE ESTÁ VINDO VAZIO.
             {
-                <br />
-                <div class="form-row">
-                    <div class="col-md-4">
-                        <h6><b>Questão @count</b></h6>
-                    </div>
-
-                </div>
-                <br />
-                <div class="form-row">
-                    <div class="col-md-8">
-
-                        @Html.Raw(x.Questao.Enunciado)
-                    </div>
-                </div>
-                <div class="col-md-2">
-                    @Html.Hidden("QuestaoId", x.Questao.QuestaoId)
-                    @Html.Hidden("TipoQuestao", x.Questao.TipoQuestao)
-                </div>
-                <br />
-                <div class="form-row">
-                    <div class="col-md-3">
-                        <label for=""><b>Alternativas:</b></label>
-                    </div>
-                </div>
-                <div id="DivAlternativas">
-                    @for (int i = 0; i < x.Questao.Alternativas.Count; i++)
-                    {
+                <div class="card">
+                    <div class="card-body" style="border: 1px solid;border-color: darkcyan">
+                        <br />
                         <div class="form-row">
-                            @Html.Hidden("AlternativaCorreta", x.Questao.Alternativas[i].correto, new { id = "QstCorreta" })
-                            @Html.RadioButton("AlternativaId" + "SE" + count, x.Questao.Alternativas[i].AlternativaId, new { disabled = "disabled" })
-                            <label for="">@(i+1)) </label>
-                            @Html.Raw(x.Questao.Alternativas[i].DescAlternativa)
+                            <div class="col-md-4">
+                                <h6><b>Questão @count</b></h6>
+                            </div>
+
                         </div>
-                    }
+                        <br />
+                        <div class="form-row">
+                            <div class="col-md-8">
+
+                                @Html.Raw(x.Questao.Enunciado)
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            @Html.Hidden("QuestaoId", x.Questao.QuestaoId)
+                            @Html.Hidden("TipoQuestao", x.Questao.TipoQuestao)
+                        </div>
+                        <br />
+                        <div class="form-row">
+                            <div class="col-md-3">
+                                <label for=""><b>Alternativas:</b></label>
+                            </div>
+                        </div>
+                        <div id="DivAlternativas">
+                            @for (int i = 0; i < x.Questao.Alternativas.Count; i++)
+                            {
+                                <div class="form-row">
+                                    @Html.Hidden("AlternativaCorreta", x.Questao.Alternativas[i].correto, new { id = "QstCorreta" })
+                                    @Html.RadioButton("AlternativaId" + "SE" + count, x.Questao.Alternativas[i].AlternativaId, new { disabled = "disabled" })
+                                    <label for="">@(i+1)) </label>
+                                    @Html.Raw(x.Questao.Alternativas[i].DescAlternativa)
+                                </div>
+                            }
+                        </div>
+                        <br />
+                        <script>@(count = count + 1) </script>
+                    </div>
                 </div>
-                <br />
-                <script>@(count = count + 1) </script>
             }
             <br />
             @foreach (var x in Model.NotasQuestoes.Where(y => y.Questao.TipoQuestao == 2).ToList())
             {
-                <br />
-                <div class="form-row">
-                    <div class="col-md-4">
-                        <h6><b>Questão @count</b></h6>
-                    </div>
-                    @*<div class="form-row">
-                      <button witdh="50" id="btnSalvar" type="submit" class="btn btn-primary btn-sm">Salvar</button>
-                </div>*@
-                </div>
-                <br />
-                <div class="form-row">
-                    <div class="col-md-8">
-
-                        @Html.Raw(x.Questao.Enunciado)
-
-                    </div>
-                </div>
-                <div class="col-md-2">
-                    @Html.Hidden("QuestaoId", x.Questao.QuestaoId)
-                    @Html.Hidden("TipoQuestao", x.Questao.TipoQuestao)
-                </div>
-                <br />
-                <div class="form-row">
-                    <div class="col-md-3">
-                        <label for=""><b>Alternativas:</b></label>
-                    </div>
-                </div>
-                <div id="DivAlternativas">
-                    @for (int i = 0; i < x.Questao.Alternativas.Count; i++)
-                    {
+                <div class="card">
+                    <div class="card-body" style="border: 1px solid;border-color: darkcyan">
+                        <br />
                         <div class="form-row">
-                            @Html.Hidden("AlternativaCorreta", x.Questao.Alternativas[i].correto, new { id = "QstCorreta" })
-                            @Html.CheckBox("AlternativaId" + "ME" + count, new { disabled = "disabled" })
-                            <label for="">@(i+1)) </label>
-                            @Html.Raw(x.Questao.Alternativas[i].DescAlternativa)
+                            <div class="col-md-4">
+                                <h6><b>Questão @count</b></h6>
+                            </div>
+                            @*<div class="form-row">
+                              <button witdh="50" id="btnSalvar" type="submit" class="btn btn-primary btn-sm">Salvar</button>
+                        </div>*@
                         </div>
-                    }
+                        <br />
+                        <div class="form-row">
+                            <div class="col-md-8">
+
+                                @Html.Raw(x.Questao.Enunciado)
+
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            @Html.Hidden("QuestaoId", x.Questao.QuestaoId)
+                            @Html.Hidden("TipoQuestao", x.Questao.TipoQuestao)
+                        </div>
+                        <br />
+                        <div class="form-row">
+                            <div class="col-md-3">
+                                <label for=""><b>Alternativas:</b></label>
+                            </div>
+                        </div>
+                        <div id="DivAlternativas">
+                            @for (int i = 0; i < x.Questao.Alternativas.Count; i++)
+                            {
+                                <div class="form-row">
+                                    @Html.Hidden("AlternativaCorreta", x.Questao.Alternativas[i].correto, new { id = "QstCorreta" })
+                                    @Html.CheckBox("AlternativaId" + "ME" + count, new { disabled = "disabled" })
+                                    <label for="">@(i+1)) </label>
+                                    @Html.Raw(x.Questao.Alternativas[i].DescAlternativa)
+                                </div>
+                            }
+                        </div>
+                        <br />
+                        <script>@(count = count + 1) </script>
+                    </div>
                 </div>
-                <br />
-                <script>@(count = count + 1) </script>
             }
             <br />
             @foreach (var x in Model.NotasQuestoes.Where(y => y.Questao.TipoQuestao == 3).ToList())
             {
-                <br />
-                <div class="form-row">
-                    <div class="col-md-4">
-                        <h6><b>Questão @count</b></h6>
-                    </div>
-                    @*<div class="form-row">
-                      <button witdh="50" id="btnSalvar" type="submit" class="btn btn-primary btn-sm">Salvar</button>
-                </div>*@
-                </div>
-                <br />
-                <div class="form-row">
-                    <div class="col-md-8">
-
-                        @Html.Raw(x.Questao.Enunciado)
-
-                    </div>
-                </div>
-                <div class="col-md-2">
-                    @Html.Hidden("QuestaoId", x.Questao.QuestaoId)
-                    @Html.Hidden("TipoQuestao", x.Questao.TipoQuestao)
-                </div>
-                <br />
-                <div class="form-row">
-                    <div class="col-md-3">
-                        <label for=""><b>Alternativas:</b></label>
-                    </div>
-                </div>
-                <div id="DivAlternativas">
-                    @for (int i = 0; i < x.Questao.Alternativas.Count; i++)
-                    {
+                <div class="card">
+                    <div class="card-body" style="border: 1px solid;border-color: darkcyan">
+                        <br />
                         <div class="form-row">
-                            @Html.Hidden("AlternativaCorreta", x.Questao.Alternativas[i].correto, new { id = "QstCorreta" })
-                            @Html.RadioButton("AlternativaId" + "VF" + count, x.Questao.Alternativas[i].AlternativaId, new { disabled = "disabled" })
-                            <label for="">@(i+1)) </label>
-                            @Html.Raw(x.Questao.Alternativas[i].DescAlternativa)
+                            <div class="col-md-4">
+                                <h6><b>Questão @count</b></h6>
+                            </div>
+                            @*<div class="form-row">
+                              <button witdh="50" id="btnSalvar" type="submit" class="btn btn-primary btn-sm">Salvar</button>
+                        </div>*@
                         </div>
-                    }
+                        <br />
+                        <div class="form-row">
+                            <div class="col-md-8">
+
+                                @Html.Raw(x.Questao.Enunciado)
+
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            @Html.Hidden("QuestaoId", x.Questao.QuestaoId)
+                            @Html.Hidden("TipoQuestao", x.Questao.TipoQuestao)
+                        </div>
+                        <br />
+                        <div class="form-row">
+                            <div class="col-md-3">
+                                <label for=""><b>Alternativas:</b></label>
+                            </div>
+                        </div>
+                        <div id="DivAlternativas">
+                            @for (int i = 0; i < x.Questao.Alternativas.Count; i++)
+                            {
+                                <div class="form-row">
+                                    @Html.Hidden("AlternativaCorreta", x.Questao.Alternativas[i].correto, new { id = "QstCorreta" })
+                                    @Html.RadioButton("AlternativaId" + "VF" + count, x.Questao.Alternativas[i].AlternativaId, new { disabled = "disabled" })
+                                    <label for="">@(i+1)) </label>
+                                    @Html.Raw(x.Questao.Alternativas[i].DescAlternativa)
+                                </div>
+                            }
+                        </div>
+                        <br />
+                        <script>@(count = count + 1) </script>
+                    </div>
                 </div>
-                <br />
-                <script>@(count = count + 1) </script>
             }
             <br />
             @foreach (var x in Model.NotasQuestoes.Where(y => y.Questao.TipoQuestao == 4).ToList())
             {
-                <br />
-                <div class="form-row">
-                    <div class="col-md-4">
-                        <h6><b>Questão @count</b></h6>
-                    </div>
-                </div>
-                <br />
-                <div class="form-row">
-                    <div class="col-md-8">
+                <div class="card">
+                    <div class="card-body" style="border: 1px solid;border-color: darkcyan">
+                        <br />
+                        <div class="form-row">
+                            <div class="col-md-4">
+                                <h6><b>Questão @count</b></h6>
+                            </div>
+                        </div>
+                        <br />
+                        <div class="form-row">
+                            <div class="col-md-8">
 
-                        @Html.Raw(x.Questao.Enunciado)
-                    </div>
-                </div>
-                <div class="col-md-2">
-                    @Html.Hidden("QuestaoId", x.Questao.QuestaoId)
-                    @Html.Hidden("TipoQuestao", x.Questao.TipoQuestao)
-                </div>
-                <br />
-                <div class="form-row">
-                    <div class="col-md-3">
-                        <label for="">Resposta:</label>
-                    </div>
-                </div>
-                <br />
-                <div id="DivRespostaDT">
+                                @Html.Raw(x.Questao.Enunciado)
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            @Html.Hidden("QuestaoId", x.Questao.QuestaoId)
+                            @Html.Hidden("TipoQuestao", x.Questao.TipoQuestao)
+                        </div>
+                        <br />
+                        <div class="form-row">
+                            <div class="col-md-3">
+                                <label for="">Resposta:</label>
+                            </div>
+                        </div>
+                        <br />
+                        <div id="DivRespostaDT">
 
-                    @Html.TextArea("Enunciado", x.Questao.RespostaDiscursiva , new { @class = "form-control", @id = "RespostaDiscursiva", @readonly = true})
-                </div>
-                <br />
-                <script>@(count = count + 1) </script>
-            }
-            <div class="form-group row">
-                @*<div class="col-md-1">
-                    <button witdh="50" id="btnSalvar" type="submit" class="btn btn-primary btn-sm">Salvar</button>
-                </div>*@
-                <div class="col-md-1">
-                    <button witdh="50" id="btnVoltar" onclick="VoltarPagina()" type="button" class="btn btn-primary btn-sm">Voltar</button>
-                </div>
-            </div>
-            @*<div class="btn-toolbar">
-                <button witdh="50" id="btnSalvar" type="submit" class="btn btn-primary btn-sm">Salvar</button>
-                <button witdh="50" id="btnVoltar" onclick="VoltarPagina()" type="button" class="btn btn-primary btn-sm">Voltar</button>
-            </div>*@
+                            @Html.TextArea("Enunciado", x.Questao.RespostaDiscursiva, new { @class = "form-control", @id = "RespostaDiscursiva", @readonly = true })
+                        </div>
+                        <br />
+                        <script>@(count = count + 1) </script>
+                        </div>
+                    </div>
+                        }
+                        <div class="form-group row">
+                            @*<div class="col-md-1">
+                            <button witdh="50" id="btnSalvar" type="submit" class="btn btn-primary btn-sm">Salvar</button>
+                        </div>*@
+                            <div class="col-md-1">
+                                <br />
+                                <button witdh="50" id="btnVoltar" onclick="VoltarPagina()" type="button" class="btn btn-primary btn-sm">Voltar</button>
+                            </div>
+                        </div>
+                        @*<div class="btn-toolbar">
+                        <button witdh="50" id="btnSalvar" type="submit" class="btn btn-primary btn-sm">Salvar</button>
+                        <button witdh="50" id="btnVoltar" onclick="VoltarPagina()" type="button" class="btn btn-primary btn-sm">Voltar</button>
+                    </div>*@
 
-        </div>
-    </form>
+                    </div>
+</form>
 </div>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
