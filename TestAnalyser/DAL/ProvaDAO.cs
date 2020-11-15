@@ -51,6 +51,17 @@ namespace TestAnalyser.DAL
 
             return prova;
         }
+        public static List<Prova> BuscarPorProfessor(int idProfessor)
+        {
+            return ctx.Provas.Include("RespostasAlunos")
+                .Include("Professor")
+                .Include("NotasQuestoes")
+                .Include("ConfigPln")
+                .Include("Disciplina.Cursos")
+                .Include("Disciplina.Turmas")
+                .Where(p => p.Professor.ProfessorId == idProfessor).ToList();
+        }
+
         public static Prova BuscarProvaDuplicada(string titulo)
         {
             return ctx.Provas.Where(p => p.TituloProva.Equals(titulo)).FirstOrDefault();
@@ -64,11 +75,23 @@ namespace TestAnalyser.DAL
 
         public static List<Prova> BuscarProvasPesquisa(int idProfessor, DateTime DataInicio, DateTime DataFim, int Curso, int Disciplina, string Turma)
         {
+            return ctx.Provas.Include("Professor").Include("Disciplina").Where(p => p.DataProvaInicio >= DataInicio && p.DataProvaFim <= DataFim && p.Professor.ProfessorId == idProfessor).ToList();
+        }
+
+        public static List<Prova> BuscarProvasPesquisa(int idProfessor, DateTime DataInicio, DateTime DataFim)
+        {
+            return ctx.Provas.Include("Professor").Include("Disciplina").Where(p => p.DataProvaInicio >= DataInicio && p.DataProvaFim <= DataFim && p.Professor.ProfessorId == idProfessor).ToList();
+        }
+        public static List<Prova> BuscarProvasPesquisa(int idProfessor, DateTime DataInicio, DateTime DataFim, int Curso, int Disciplina)
+        {
+            return ctx.Provas.Include("Professor").Include("Disciplina").Where(p => p.DataProvaInicio >= DataInicio && p.DataProvaFim <= DataFim && p.Professor.ProfessorId == idProfessor && p.Disciplina.DisciplinaId == Disciplina).ToList();
+        }
+
+        public static List<Prova> BuscarProvasPesquisa(int idProfessor, DateTime DataInicio, DateTime DataFim, int Curso)
+        {
             List<Prova> provas = new List<Prova>();
-            if (Turma != "Selecionar")
-                { provas = ctx.Provas.Include("Professor").Include("Disciplina").Where(p => p.DataProvaInicio >= DataInicio && p.DataProvaFim <= DataFim && p.Professor.ProfessorId == idProfessor && p.NomeTurma == Turma).ToList(); }
-            else
-                { provas = ctx.Provas.Include("Professor").Include("Disciplina").Where(p => p.DataProvaInicio >= DataInicio && p.DataProvaFim <= DataFim && p.Professor.ProfessorId == idProfessor).ToList(); }
+
+            provas = ctx.Provas.Include("Professor").Include("Disciplina").Where(p => p.DataProvaInicio >= DataInicio && p.DataProvaFim <= DataFim && p.Professor.ProfessorId == idProfessor).ToList(); 
 
             return provas;
         }

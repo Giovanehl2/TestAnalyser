@@ -23,10 +23,17 @@ namespace TestAnalyser.Controllers
         public ActionResult ConsultarProvaPr()
         {
             limpar();
-            ViewBag.Cursos = ViewBag.Cursos = CursoDAO.listarCursosPorProfessor(Convert.ToInt32(Session["IdUsr"])); ;
-            ViewBag.Provas = TempData["provas"];
-            //caso deixe esta linha o dado sempre continuara disponivel
-            //TempData.Keep();
+            ViewBag.Cursos = ViewBag.Cursos = CursoDAO.listarCursosPorProfessor(Convert.ToInt32(Session["IdUsr"]));
+
+            if (TempData["provas"] == null)
+            {
+                ViewBag.Provas = ProvaDAO.BuscarPorProfessor(Convert.ToInt32(Session["IdUsr"]));
+            }
+            else
+            {
+                ViewBag.Provas = TempData["provas"];
+            }
+
             return View(new Prova());
         }
 
@@ -71,12 +78,32 @@ namespace TestAnalyser.Controllers
 
         public ActionResult ConsultarProva(DateTime DataInicio, DateTime DataFim, int Curso, string Disciplina, string NomeTurma)
         {
+            List<Prova> provas = new List<Prova>();
             Disciplina disc = new Disciplina();
-            if (!Disciplina.IsEmpty() || !Disciplina.Equals(null))
+            if (!Disciplina.IsEmpty() || !Disciplina.Equals(null)) { }
                 disc = DisciplinaDAO.BuscarPorNome(Disciplina);
 
-         
-            List<Prova> provas = ProvaDAO.BuscarProvasPesquisa(Convert.ToInt32(Session["IdUsr"]), DataInicio, DataFim, Curso, disc.DisciplinaId, NomeTurma);
+             if (Disciplina.Equals("Selecionar") )
+            {
+                provas = ProvaDAO.BuscarProvasPesquisa(Convert.ToInt32(Session["IdUsr"]), DataInicio, DataFim, Curso);
+                
+            }
+
+            else if ( Curso == 0)
+            {
+                provas = ProvaDAO.BuscarProvasPesquisa(Convert.ToInt32(Session["IdUsr"]), DataInicio, DataFim);
+            }
+
+            if ((!Disciplina.Equals("Selecionar")) && NomeTurma.Equals("Selecionar"))
+            {
+                provas = ProvaDAO.BuscarProvasPesquisa(Convert.ToInt32(Session["IdUsr"]), DataInicio, DataFim, Curso, disc.DisciplinaId);
+            }
+
+            if(!NomeTurma.Equals("Selecionar"))
+            {
+                provas = ProvaDAO.BuscarProvasPesquisa(Convert.ToInt32(Session["IdUsr"]), DataInicio, DataFim, Curso, disc.DisciplinaId, NomeTurma);
+            }
+            
             TempData["provas"] = provas;
             return RedirectToAction("ConsultarProvaPr", "ConsultarProvaPr");
         }

@@ -27,10 +27,9 @@ namespace TestAnalyser.Controllers
             return View(new Prova());
         }
 
-        public ActionResult Voltar()
+        public void Voltar()
         {
             LimparDadosTela();
-            return RedirectToAction("GerarProva", "GerarProva");
         }
 
         private void LimparDadosTela()
@@ -89,7 +88,7 @@ namespace TestAnalyser.Controllers
             {
                 if (provaFixa.NotasQuestoes[i].Questao.QuestaoId == idquestao[i])
                 {
-                    provaFixa.NotasQuestoes[i].ValorQuestao = notas[i];
+                    provaFixa.NotasQuestoes[i].ValorQuestao = Math.Round(notas[i], 2);  ;
                 }
             }
             //adiciona o gabarito de todos os alunosk
@@ -230,7 +229,7 @@ namespace TestAnalyser.Controllers
             NotaQuestao notaquestao;
             List<Questao> questoesProva = new List<Questao>();
             questoesProva.AddRange(gerarQuestoes());
-            double nota = Math.Round((provaFixa.ValorProva / questoesProva.Count()), 3);
+            double nota = Math.Round((provaFixa.ValorProva / questoesProva.Count()), 2);
             List<NotaQuestao> ListanotaQuestao = new List<NotaQuestao>();
             foreach (Questao item in questoesProva)
             {

@@ -12,122 +12,124 @@
 
 <div class="col-md-10 row">
     <h2>Verificar e Modificar Questões da Prova  &emsp;&emsp;  </h2>
-    <button witdh="50" title="Regerar Questões" class="btn btn-primary glyphicon glyphicon-refresh" onclick="TrocarQuestao()">Re-Gerar</button>
-    <input id="btnVoltar" value="Cancelar" onclick="VoltarPagina()" type="button" class="btn btn-default" />
-</div>
-<br />
-<form name="form1" id="formCadSE" method="post" action="@Url.Action("SalvarProvaQuestoes", "GerarProva")">
-    @{
-        foreach (var item in @Model.NotasQuestoes)
-        {
-            string Texto = " ";
-            if (item.Questao.TipoQuestao == 1)
-            {
-                Texto = "<b>Questão " + (count + 1) + ": Simples Escolha</b>";
-            }
-            if (item.Questao.TipoQuestao == 2)
-            {
-                Texto = "<b>Questão " + (count + 1) + ": Multipla Escolha</b>";
-            }
-            if (item.Questao.TipoQuestao == 3)
-            {
-                Texto = "<b>Questão " + (count + 1) + ": Verdadeiro ou Falso</b>";
-            }
-            if (item.Questao.TipoQuestao == 4)
-            {
-                Texto = "<b>Questão " + (count + 1) + ": Discursiva</b>";
-            }
-
-            <div class="col-md-12">
-
-                <div class="row" id="EssaDIV">
-                    <div class="col-md-8">
-                        @Html.Raw(@Texto)
-                        <input class="form-control" type="hidden" id="idquestao" name="idquestao" value="@item.Questao.QuestaoId" required />
-                    </div>
-                    <br />
-                    <br />
-                    <div class="col-md-8">
-                        @Html.Raw(item.Questao.Enunciado)
-                        <input class="form-control" type="hidden" id="idquestao" name="idquestao" value="@item.Questao.QuestaoId" required />
-                    </div>
-                    <div class="col-md-1">
-                        <h6>Nota: </h6>
-                        <input class="form-control" type="number" id="NotaQ" name="notas" value="@item.ValorQuestao" required />
-                        @Html.Hidden("NotaProva", Model.ValorProva)
-                    </div>
-
-                </div>
-            </div>
-            <script>@(count = count + 1) </script>
-        }
-    }
-    <br />
-    <div class="row" id="DivFinal">
-        <div class="col-md-2" id="divConfirma">
-            <label>Total Questões: @count</label>
-            <button witdh="50" title="Confirmar prova" type="submit" class="btn btn-primary">Confirmar Prova</button>
-        </div>
-        <div class="col-md-2" style="Display: none" id="divErroNota">
-            @Html.Raw("A Soma das Notas deve ser igual á: " + Model.ValorProva)
-        </div>
-        <div class="col-md-6"></div>
-        <div class="col-md-2">
-            <label>Total Nota:</label>
-            <input class="form-control" type="number" id="NotaTotal" required />
-
+        <div class="modal-footer">
+          <button witdh="50" title="Regerar Questões" class="btn btn-primary glyphicon glyphicon-refresh" onclick="TrocarQuestao()">Re-Gerar</button>
+          <button id="btnVoltar" witdh="50" title="Cancelar" class="btn btn-primary glyphicon glyphicon-refresh" onclick="VoltarPagina()">Cancelar</button>
         </div>
     </div>
-</form>
+    <br />
+    <form name="form1" id="formCadSE" method="post" action="@Url.Action("SalvarProvaQuestoes", "GerarProva")">
+        @{
+            foreach (var item in @Model.NotasQuestoes)
+            {
+                string Texto = " ";
+                if (item.Questao.TipoQuestao == 1)
+                {
+                    Texto = "<b>Questão " + (count + 1) + ": Simples Escolha</b>";
+                }
+                if (item.Questao.TipoQuestao == 2)
+                {
+                    Texto = "<b>Questão " + (count + 1) + ": Multipla Escolha</b>";
+                }
+                if (item.Questao.TipoQuestao == 3)
+                {
+                    Texto = "<b>Questão " + (count + 1) + ": Verdadeiro ou Falso</b>";
+                }
+                if (item.Questao.TipoQuestao == 4)
+                {
+                    Texto = "<b>Questão " + (count + 1) + ": Discursiva</b>";
+                }
+                
+                <div class="col-md-12">
 
-<script>
-    window.load = CalculaNotaTotal();
+                    <div class="row" id="EssaDIV">
+                        <div class="col-md-8">
+                            @Html.Raw(@Texto)
+                            <input class="form-control" type="hidden" id="idquestao" name="idquestao" value="@item.Questao.QuestaoId" required />
+                        </div>
+                        <br />
+                        <br />
+                        <div class="col-md-8">
+                            @Html.Raw(item.Questao.Enunciado)
+                            <input class="form-control" type="hidden" id="idquestao" name="idquestao" value="@item.Questao.QuestaoId" required />
+                        </div>
+                        <div class="col-md-2">
+                            <h6>Nota: </h6>
+                            <input class="form-control" type="number" id="NotaQ" name="notas" value="@item.ValorQuestao"   step="any" min="0" max="9999" />
+                            @Html.Hidden("NotaProva", Model.ValorProva)
+                        </div>
 
-    function TrocarQuestao() {
-
-        $.ajax({
-            type: "GET",
-            url: "/GerarProva/RegerarQuestoes",
-            contentType: "application/json",
-            success: function (data) {
+                    </div>
+                </div>
+                <script>@(count = count + 1) </script>
             }
-        });
-        location.reload();
-    }
-
-    function VoltarPagina() {
-
-        $.ajax({
-            type: "GET",
-            url: "/GerarProva/Voltar",
-            success: function (data) {
-                window.location.href = "/GerarProva/GerarProva";
-            }
-        });
-        location.reload();
-    }
-
-    $("#EssaDIV #NotaQ").focusout(function () {
-        CalculaNotaTotal();
-    });
-
-    function CalculaNotaTotal() {
-        var Total = 0.0;
-        var ValorProva = $("#EssaDIV #NotaProva").val();
-        $("#EssaDIV #NotaQ").each(function () {
-            var qtd = $(this).val();
-            Total = parseFloat(Total) + parseFloat(qtd);
-        });
-        $("#NotaTotal").val(parseFloat(Total));
-        if (Total != ValorProva) {
-            $("#DivFinal #NotaTotal").css('color', 'red');
-            document.getElementById("divConfirma").style.display = "none";
-            document.getElementById("divErroNota").style.display = "block";
-        } else {
-            $("#DivFinal #NotaTotal").css('color', 'black');
-            document.getElementById("divConfirma").style.display = "block";
-            document.getElementById("divErroNota").style.display = "none";
         }
-    }
+        <br />
+        <div class="row" id="DivFinal">
+            <div class="col-md-2" id="divConfirma">
+                <label>Total Questões: @count</label>
+                <button witdh="50" title="Confirmar prova" type="submit" class="btn btn-primary">Confirmar Prova</button>
+            </div>
+            <div class="col-md-2" style="Display: none" id="divErroNota">
+                @Html.Raw("A Soma das Notas deve ser igual á: " + Model.ValorProva)
+            </div>
+            <div class="col-md-6"></div>
+            <div class="col-md-2">
+                <label>Total Nota:</label>
+                <input class="form-control" type="number" id="NotaTotal" required />
 
-</script>
+            </div>
+        </div>
+    </form>
+
+    <script>
+        window.load = CalculaNotaTotal();
+
+        function TrocarQuestao() {
+
+            $.ajax({
+                type: "GET",
+                url: "/GerarProva/RegerarQuestoes",
+                contentType: "application/json",
+                success: function (data) {
+                }
+            });
+            location.reload();
+        }
+
+        function VoltarPagina() {
+
+            $.ajax({
+                type: "GET",
+                url: "/GerarProva/Voltar",
+                success: function (data) {
+                    window.location.href = "/GerarProva/GerarProva";
+                }
+            });
+            location.reload();
+        }
+
+        $("#EssaDIV #NotaQ").focusout(function () {
+            CalculaNotaTotal();
+        });
+
+        function CalculaNotaTotal() {
+            var Total = 0.0;
+            var ValorProva = $("#EssaDIV #NotaProva").val();
+            $("#EssaDIV #NotaQ").each(function () {
+                var qtd = $(this).val();
+                Total = parseFloat(Total) + parseFloat(qtd);
+            });
+            $("#NotaTotal").val(parseFloat(Total));
+            if (Total != ValorProva) {
+                $("#DivFinal #NotaTotal").css('color', 'red');
+                document.getElementById("divConfirma").style.display = "none";
+                document.getElementById("divErroNota").style.display = "block";
+            } else {
+                $("#DivFinal #NotaTotal").css('color', 'black');
+                document.getElementById("divConfirma").style.display = "block";
+                document.getElementById("divErroNota").style.display = "none";
+            }
+        }
+
+    </script>

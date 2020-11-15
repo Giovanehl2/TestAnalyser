@@ -202,9 +202,15 @@ namespace TestAnalyser.Controllers
         [HttpPost]
         public ActionResult CadastrarDT(Questao questao, string AssuntoQuestao, string DisciplinaId)
         {
-            if (questao.Enunciado == null || questao.Enunciado.Equals(""))
+            if (questao.Enunciado == null || questao.Enunciado.Equals("") )
             {
                 TempData["$AlertMessage$"] = "Favor prencher o enunciado da questão!";
+                return RedirectToAction("CadastrarQuestoes", "CadastrarQuestoes");
+            }
+
+            if (questao.RespostaDiscursiva == null || questao.RespostaDiscursiva.Equals(""))
+            {
+                TempData["$AlertMessage$"] = "Favor prencher a resposta da questão!";
                 return RedirectToAction("CadastrarQuestoes", "CadastrarQuestoes");
             }
 
