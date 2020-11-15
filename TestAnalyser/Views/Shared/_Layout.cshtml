@@ -37,14 +37,14 @@
                     <a class="nav-link" href="@Url.Action("ConsultarQuestoes", "ConsultarQuestoes")">Consultar Questões</a>
                 </li>
             </ul>
-            <ul class="nav navbar-nav ml-auto">
+            <ul class="nav navbar-nav ml-auto" style="float: right;">
                 <li class="nav-item active" id="6"><a class="nav-link" href="@Url.Action("Configuracoes", "Configuracoes")"><span class="glyphicon glyphicon-cog"></span>  Configurações </a></li>
                 <li class="nav-item active">
                     <a id="usermenu" class="nav-link">
-                        <span class="glyphicon glyphicon-user "></span> &nbsp; @((Session["NomeUsuario"])) -
+                        @*<span class="glyphicon glyphicon-user "></span> &nbsp;*@ @((Session["NomeUsuario"])) 
                     </a>
                 </li>
-                <li class="nav-item active"><a class="nav-link" href="@Url.Action("Login", "Login")"><span class="glyphicon glyphicon-log-out "></span> Sair </a></li>
+                <li class="nav-item active"><a class="nav-link" href="@Url.Action("Login", "Login")">@*<span class="glyphicon glyphicon-log-out "></span>*@-&nbsp;&nbsp; Sair </a></li>
             </ul>
 
         </div>

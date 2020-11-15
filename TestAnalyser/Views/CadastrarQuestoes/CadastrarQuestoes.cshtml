@@ -171,20 +171,18 @@
                 <script type="text/javascript">
                     //Escrevendo o código-fonte HTML e ocultando os campos criados:
                     for (iLoop = 1; iLoop <= totalCampos; iLoop++) {
-                        document.write("<div class='' id='SEAlternativas" + iLoop + "' style='display:none'><input type='radio' id='SEradio" +
-                            "' name='SEradio' value='" + iLoop + "' /> <span id='Alternativas' > " + iLoop + ") <input class='col-md-6 form-control' type='text' id='Alternativas' name='Alternativas" +
-                            "'> <input type='button' class='btn btn-default' value='Remover' onclick='RemoverCampos(\"" + iLoop + "\",\"SE\")'></span></div>");
+                        document.write("<div class='' id='SEAlternativas" + iLoop + "' style='display:none'><div class='form-inline'> <div class='form - group mb - 2'><input type='radio' id='SEradio" + "' name='SEradio' value='" + iLoop + "' /> <span id='Alternativas' > " + iLoop + ") </div> <div class='form - group mx - sm - 3 mb - 2' style='min-width: 50%;'> <input class='form-control' style='min-width: 100%;' type='text' id='Alternativas' name='Alternativas'>     </div><input type='button' class='btn btn-default' style='background-color: #ffcfbe; color: black;' value='Remover' onclick='RemoverCampos(\"" + iLoop + "\",\"SE\")'></span> </div> </div>");
                     }
                 </script>
                 <br />
-                <input type="button" value="Adicionar Alternativas" onclick="AddCampos('SE')">
+                <input type="button" value="Adicionar Alternativas" class="btn btn-default" style="background-color: #D3D3D3;" onclick="AddCampos('SE')">
                 <input type="text" name="hidden1" id="hidden1" hidden>
                 <input type="hidden" name="hidden2" id="hidden2">
             </div>
             <br />
 
             <div class="form-row">
-                <button witdh="50" id="btnSalvar" type="submit" class="btn btn-primary btn-sm">Salvar</button>
+                <button witdh="50" id="btnSalvar" type="submit" class="btn btn-primary">Salvar</button>
             </div>
         </form>
     </div>
@@ -195,9 +193,17 @@
         <br />
         <form class="form-horizontal" name="form1" id="formCadME" method="post" action="@Url.Action("CadastrarME", "CadastrarQuestoes")">
             <div class="form-row">
-                <div class="col-md-4">
-                    <label for="AssuntoME">Assunto</label>
-                    @Html.DropDownList("AssuntoQuestao", new SelectList(ViewBag.AssuntosQuestao, "AssuntoId", "Descricao"), htmlAttributes: new { @class = "form-control" })
+                <div class="col-md-5">
+                    <label>Assunto</label>
+                    @*<input type="text" class="form-control" id="Assunto" name="Assunto">*@
+                    <div class="col-md-10" style="padding-right: 0px !important;padding-left: 0px !important;contain: size;">
+                        @Html.DropDownList("AssuntoQuestao", new SelectList(ViewBag.AssuntosQuestao, "AssuntoId", "Descricao"), htmlAttributes: new { @class = "form-control" })
+                    </div>
+                    <div class="col-lg-2" style="float: right;padding-left: 0px;">
+                        <a href="@Url.Action("CadastrarAssunto", "CadastrarQuestoes")">
+                            <input type="button" class="btn btn-primary" value="+" />
+                        </a>
+                    </div>
                 </div>
                 <div class="col-md-4">
                     <label for="Disciplinas">Disciplinas</label>
@@ -270,21 +276,19 @@
             <br />
             <div id="DivAlternativas">
                 <script type="text/javascript">
-                    //Escrevendo o código-fonte HTML e ocultando os campos criados:
                     for (iLoop = 1; iLoop <= totalCampos; iLoop++) {
-                        document.write("<div class='' id='MEAlternativas" + iLoop + "' style='display:none'><input type='checkbox' id='MEchbx" +
-                            "' name='MEchbx' value='" + iLoop + "' /> <span id='Alternativas' > " + iLoop + ") <input class='col-md-6' type='text' id='Alternativas' name='Alternativas" +
-                            "'> <input type='button' value='Remover' onclick='RemoverCampos(\"" + iLoop + "\",\"ME\")'></span></div>");
+                        document.write("<div class='' id='MEAlternativas" + iLoop + "' style='display:none'><div class='form-inline'> <div class='form - group mb - 2'><input type='checkbox' id='MEchbx" +
+                            "' name='MEchbx' value='" + iLoop + "' /> <span id='Alternativas' > " + iLoop + ") </div> <div class='form - group mx - sm - 3 mb - 2' style='min-width: 50%;'> <input class='form-control' style='min-width: 100%;' type='text' id='Alternativas' name='Alternativas'>     </div><input type='button' class='btn btn-default' style='background-color: #ffcfbe; color: black;' value='Remover' onclick='RemoverCampos(\"" + iLoop + "\",\"ME\")'></span> </div> </div>");
                     }
                 </script>
                 <br />
-                <input type="button" value="Adicionar Alternativas" onclick="AddCampos('ME')">
+                <input type="button" value="Adicionar Alternativas" class="btn btn-default" style="background-color: #D3D3D3;" onclick="AddCampos('ME')">
                 <input type="text" name="hidden1" id="hidden1" hidden>
                 <input type="hidden" name="hidden2" id="hidden2">
             </div>
             <br />
             <div class="form-row">
-                <button witdh="50" id="btnSalvar" type="submit" class="btn btn-primary btn-sm">Salvar</button>
+                <button witdh="50" id="btnSalvar" type="submit" class="btn btn-primary">Salvar</button>
             </div>
         </form>
     </div>
@@ -295,9 +299,17 @@
         <br />
         <form class="form-horizontal" name="form1" id="formCadVF" method="post" action="@Url.Action("CadastrarVF", "CadastrarQuestoes")">
             <div class="form-row">
-                <div class="col-md-4">
-                    <label for="AssuntoVF">Assunto</label>
-                    @Html.DropDownList("AssuntoQuestao", new SelectList(ViewBag.AssuntosQuestao, "AssuntoId", "Descricao"), htmlAttributes: new { @class = "form-control" })
+                <div class="col-md-5">
+                    <label>Assunto</label>
+                    @*<input type="text" class="form-control" id="Assunto" name="Assunto">*@
+                    <div class="col-md-10" style="padding-right: 0px !important;padding-left: 0px !important;contain: size;">
+                        @Html.DropDownList("AssuntoQuestao", new SelectList(ViewBag.AssuntosQuestao, "AssuntoId", "Descricao"), htmlAttributes: new { @class = "form-control" })
+                    </div>
+                    <div class="col-lg-2" style="float: right;padding-left: 0px;">
+                        <a href="@Url.Action("CadastrarAssunto", "CadastrarQuestoes")">
+                            <input type="button" class="btn btn-primary" value="+" />
+                        </a>
+                    </div>
                 </div>
                 <div class="col-md-4">
                     <label for="Disciplinas">Disciplinas</label>
@@ -371,21 +383,19 @@
             <br />
             <div id="DivAlternativas">
                 <script type="text/javascript">
-                    //Escrevendo o código-fonte HTML e ocultando os campos criados:
                     for (iLoop = 1; iLoop <= totalCampos; iLoop++) {
-                        document.write("<div class='' id='VFAlternativas" + iLoop + "' style='display:none'><input type='checkbox' id='VFchbx" +
-                            "' name='VFchbx' value='" + iLoop + "' /> <span id='Alternativas' > " + iLoop + ") <input class='col-md-6' type='text' id='Alternativas' name='Alternativas" +
-                            "'> <input type='button' value='Remover' onclick='RemoverCampos(\"" + iLoop + "\",\"VF\")'></span></div>");
+                        document.write("<div class='' id='VFAlternativas" + iLoop + "' style='display:none'><div class='form-inline'> <div class='form - group mb - 2'><input type='checkbox' id='VFchbx" +
+                            "' name='VFchbx' value='" + iLoop + "' /> <span id='Alternativas' > " + iLoop + ") </div> <div class='form - group mx - sm - 3 mb - 2' style='min-width: 50%;'> <input class='form-control' style='min-width: 100%;' type='text' id='Alternativas' name='Alternativas'>     </div><input type='button' class='btn btn-default' style='background-color: #ffcfbe; color: black;' value='Remover' onclick='RemoverCampos(\"" + iLoop + "\",\"VF\")'></span> </div> </div>");
                     }
                 </script>
                 <br />
-                <input type="button" value="Adicionar Alternativas" onclick="AddCampos('VF')">
+                <input type="button" value="Adicionar Alternativas" class="btn btn-default" style="background-color: #D3D3D3;" onclick="AddCampos('VF')">
                 <input type="text" name="hidden1" id="hidden1" hidden>
                 <input type="hidden" name="hidden2" id="hidden2">
             </div>
             <br />
             <div class="form-row">
-                <button witdh="50" id="btnSalvar" type="submit" class="btn btn-primary btn-sm">Salvar</button>
+                <button witdh="50" id="btnSalvar" type="submit" class="btn btn-primary">Salvar</button>
             </div>
         </form>
     </div>
@@ -397,9 +407,17 @@
         <br />
         <form class="form-horizontal" name="form1" id="formCadDT" method="post" action="@Url.Action("CadastrarDT", "CadastrarQuestoes")">
             <div class="form-row">
-                <div class="col-md-4">
-                    <label for="AssuntoDT">Assunto</label>
-                    @Html.DropDownList("AssuntoQuestao", new SelectList(ViewBag.AssuntosQuestao, "AssuntoId", "Descricao"), htmlAttributes: new { @class = "form-control" })
+                <div class="col-md-5">
+                    <label>Assunto</label>
+                    @*<input type="text" class="form-control" id="Assunto" name="Assunto">*@
+                    <div class="col-md-10" style="padding-right: 0px !important;padding-left: 0px !important;contain: size;">
+                        @Html.DropDownList("AssuntoQuestao", new SelectList(ViewBag.AssuntosQuestao, "AssuntoId", "Descricao"), htmlAttributes: new { @class = "form-control" })
+                    </div>
+                    <div class="col-lg-2" style="float: right;padding-left: 0px;">
+                        <a href="@Url.Action("CadastrarAssunto", "CadastrarQuestoes")">
+                            <input type="button" class="btn btn-primary" value="+" />
+                        </a>
+                    </div>
                 </div>
                 <div class="col-md-4">
                     <label for="Disciplinas">Disciplinas</label>
