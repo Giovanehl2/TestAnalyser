@@ -120,6 +120,7 @@ namespace TestAnalyser.Controllers
                     respostaAluno.Alternativas = new List<Alternativa>();
                     respostaAluno.DataHoraInicio = null;
                     respostaAluno.DataHoraFim = null;
+                    respostaAluno.Prova = provaFixa;
                     listaRespostaAluno.Add(respostaAluno);
                 }
             }
