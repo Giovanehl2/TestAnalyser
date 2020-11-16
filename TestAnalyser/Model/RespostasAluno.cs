@@ -14,12 +14,13 @@ namespace TestAnalyser.Model
         {
             Questao = new Questao();
             Alternativas = new List<Alternativa>();
-            //Prova = new Prova();
+            Prova = new Prova();
             Aluno = new Aluno();
         }
         [Key]
         public int RespostasAlunoId { get; set; }
         public string RespostaDiscursiva { get; set; }
+        public Prova Prova { get; set; }
         public Questao Questao { get; set; }
         public List<Alternativa> Alternativas  { get; set; }
         public double NotaAluno { get; set; }

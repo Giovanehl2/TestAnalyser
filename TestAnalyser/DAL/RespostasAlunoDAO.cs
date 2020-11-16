@@ -19,6 +19,7 @@ namespace TestAnalyser.DAL
 
         public static bool Editar(RespostasAluno resp)
         {
+            //ctx.Entry(resp).Property("Prova_ProvaId").IsModified = false;
             ctx.Entry(resp).State = System.Data.Entity.EntityState.Modified;
             ctx.SaveChanges();
             return true;
@@ -37,6 +38,13 @@ namespace TestAnalyser.DAL
             return resps;
         }
 
+        public static List<RespostasAluno> BuscarRespostasPorProvaId(int ProvaID)
+        {
+            Prova prova = ProvaDAO.BuscarProvaId(ProvaID);
+
+            return prova.RespostasAlunos;
+        }
+
         //public static List<RespostasAluno> ListarPorAlunoProva (int idProva, int idAluno)
         //{
 
@@ -46,13 +54,52 @@ namespace TestAnalyser.DAL
         public static List<RespostasAluno> PerguntasParaCorrigir(int id, int situac)
         {
 
-            return ctx.RespostasAlunos.Include("Questao").Include("Questao.AssuntoQuestao").Include("Alternativas").Include("Aluno").Where(x => x.Aluno.AlunoId == id && x.SituacaoCorrecao == situac).ToList();
+            return ctx.RespostasAlunos
+                .Include("Questao")
+                .Include("Questao.AssuntoQuestao")
+                .Include("Alternativas")
+                .Include("Alternativas.Questao")
+                .Include("Alternativas.RespostaAluno")
+                .Include("Aluno")
+                .Where(x => x.Aluno.AlunoId == id && x.SituacaoCorrecao == situac).ToList();
         }
 
         public static List<RespostasAluno> PerguntasParaCorrigir(int situac)
         {
 
-            return ctx.RespostasAlunos.Include("Questao").Include("Questao.AssuntoQuestao").Include("Alternativas").Include("Alunos").Where(x => x.RespostaDiscursiva != null).ToList();
+            return ctx.RespostasAlunos
+                .Include("Questao")
+                .Include("Questao.AssuntoQuestao")
+                .Include("Alternativas")
+                .Include("Alternativas.Questao")
+                .Include("Alternativas.RespostaAluno")
+                .Include("Aluno")
+                .Where(x => x.RespostaDiscursiva != null).ToList();
+        }
+        public static RespostasAluno RespostasAlunoId(int id)
+        {
+
+            return ctx.RespostasAlunos
+                .Include("Questao")
+                .Include("Questao.AssuntoQuestao")
+                .Include("Alternativas")
+                .Include("Alternativas.Questao")
+                .Include("Alternativas.RespostaAluno")
+                .Include("Aluno")
+                .Where(x => x.RespostasAlunoId == id).FirstOrDefault();
+        }
+
+        public static List<RespostasAluno> RespostasAlunoProvaId(int id)
+        {
+
+            return ctx.RespostasAlunos
+                .Include("Questao")
+                .Include("Questao.AssuntoQuestao")
+                .Include("Alternativas")
+                .Include("Alternativas.Questao")
+                .Include("Alternativas.RespostaAluno")
+                .Include("Aluno")
+                .Where(x => x.Prova.ProvaId == id).ToList();
         }
 
         public static RespostasAluno BuscarProvaQuestaoAluno(int QuestaoID, int ProvaID, int AlunoID)
@@ -62,11 +109,13 @@ namespace TestAnalyser.DAL
             foreach (RespostasAluno item in prova.RespostasAlunos)
             {
                 if (item.Aluno.AlunoId == AlunoID && item.Questao.QuestaoId == QuestaoID)
-                    result = item;
+                    result = RespostasAlunoId(item.RespostasAlunoId);
             }
 
             return result;
         }
+
+
 
         public static bool VerificarSeProvaFeita(int ProvaID, int AlunoID)
         {

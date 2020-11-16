@@ -65,7 +65,7 @@ namespace TestAnalyser.DAL
         {
             Usuario usr = new Usuario();
 
-            usr = ctx.Usuarios.Include("Aluno").Include("Admin").Include("Professor").Where(x => x.Login.Equals(login) && x.Senha.Equals(null)).FirstOrDefault();
+            usr = ctx.Usuarios.Include("Aluno").Include("Admin").Include("Professor").Where(x => x.Login.Equals(login) && x.Senha == null).FirstOrDefault();
             if(usr != null)
             {
                 switch (usr.TipoUsr)
