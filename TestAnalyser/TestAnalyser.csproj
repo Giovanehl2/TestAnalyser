@@ -354,6 +354,7 @@
     <Content Include="Views\ConsultarProvaPr\OpcoesCorrecao.cshtml" />
     <Content Include="Views\ConsultarProvaAl\VisualizarProva.cshtml" />
     <Content Include="Views\CadastrarQuestoes\CadastrarAssunto.cshtml" />
+    <Content Include="Views\ConsultarProvaPr\CorrigirTodaProva.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

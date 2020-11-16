@@ -2,7 +2,7 @@
 @using TestAnalyser.Model;
 @using System.Web.Mvc;
 @{
-    ViewBag.Title = "Visualizar Prova";
+    ViewBag.Title = "Corrigir Todas as Questões";
     var count = 1;
     var MarcadasX = ViewBag.Marcadas;
     var provaID = Model.ProvaId;
@@ -13,26 +13,33 @@
     <div style="text-align: left;"><h5><b>@Html.Raw(Model.RespostasAlunos[0].Aluno.NomeAluno)</b></h5></div>
     @if (TempData["$NotaAluno$"] != null)
     {
-        <div id="NotaAluno" style="color: cornflowerblue; text-align: right;"><div><u>Nota Max: @Html.Raw(Model.ValorProva)</u></div><h4>Sua Nota: @TempData["$NotaAluno$"]</h4> <button witdh="50" title="Regerar Questões" class="btn btn-primary glyphicon glyphicon-refresh" onclick="SolicitarRevisao()">Solicitar Revisão</button></div>
+        <div id="NotaAluno" style="color: cornflowerblue; text-align: right;"><div><u>Nota Max: @Html.Raw(Model.ValorProva)</u></div><h4>Nota do Aluno: <b>@TempData["$NotaAluno$"]</b></h4></div>
     }
+    <br />
     <form class="form-horizontal" name="form1" id="form" @*method="post" action="@Url.Action("SalvarProva", "ConsultarProvaAl")*@>
         <div id="DivGeral">
-            @foreach (var x in Model.NotasQuestoes.Where(y => y.Questao.TipoQuestao == 1).ToList()) //VERIFICAR O MODELO, QUE ESTÁ VINDO VAZIO.
+            @foreach (var x in Model.NotasQuestoes.Where(y => y.Questao.TipoQuestao == 1).ToList())
             {
                 <div class="card">
                     <div class="card-body" style="border: 1px solid;border-color: darkcyan">
                         <br />
                         <div class="form-row">
                             <div class="col-md-4">
-                                <h6><b>Questão @count</b> - (@Html.Raw(Model.RespostasAlunos[(count - 1)].NotaAluno)/@Html.Raw(x.ValorQuestao))</h6>
+                                <h6><b>Questão @count</b></h6>
                             </div>
-
+                            <div class="col-md-2 offset-md-6">
+                                <h7><u>Nota Max Questão:</u> (@Html.Raw(x.ValorQuestao))</h7>
+                            </div>
                         </div>
                         <br />
                         <div class="form-row">
                             <div class="col-md-8">
-
                                 @Html.Raw(x.Questao.Enunciado)
+                            </div>
+                            <div class="col-md-2 offset-md-2 row">
+                                <h6>Nota Aluno: </h6>
+                                <input id="NotaQuestao_@count" class="form-control" name="NotaQuestao_@count" type="text" style="max-width: 50%;" value=@Html.Raw(Model.RespostasAlunos[(count - 1)].NotaAluno) />
+                                <input id="btnSalvar" value="Salvar" onclick="SalvarQuestao(@count, @x.Questao.QuestaoId, @provaID, @Model.RespostasAlunos[0].Aluno.AlunoId)" type="button" class="btn btn-primary" />
                             </div>
                         </div>
                         <div class="col-md-2">
@@ -70,18 +77,21 @@
                         <br />
                         <div class="form-row">
                             <div class="col-md-4">
-                                <h6><b>Questão @count</b> - (@Html.Raw(Model.RespostasAlunos[(count - 1)].NotaAluno)/@Html.Raw(x.ValorQuestao))</h6>
+                                <h6><b>Questão @count</b></h6>
                             </div>
-                            @*<div class="form-row">
-                              <button witdh="50" id="btnSalvar" type="submit" class="btn btn-primary btn-sm">Salvar</button>
-                        </div>*@
+                            <div class="col-md-2 offset-md-6">
+                                <h7><u>Nota Max Questão:</u> (@Html.Raw(x.ValorQuestao))</h7>
+                            </div>
                         </div>
                         <br />
                         <div class="form-row">
                             <div class="col-md-8">
-
                                 @Html.Raw(x.Questao.Enunciado)
-
+                            </div>
+                            <div class="col-md-2 offset-md-2 row">
+                                <h6>Nota Aluno: </h6>
+                                <input id="NotaQuestao_@count" class="form-control" name="NotaQuestao_@count" type="text" style="max-width: 50%;" value=@Html.Raw(Model.RespostasAlunos[(count - 1)].NotaAluno) />
+                                <input id="btnSalvar" value="Salvar" onclick="SalvarQuestao(@count, @x.Questao.QuestaoId, @provaID, @Model.RespostasAlunos[0].Aluno.AlunoId)" type="button" class="btn btn-primary" />
                             </div>
                         </div>
                         <div class="col-md-2">
@@ -118,18 +128,21 @@
                         <br />
                         <div class="form-row">
                             <div class="col-md-4">
-                                <h6><b>Questão @count</b> - (@Html.Raw(Model.RespostasAlunos[(count - 1)].NotaAluno)/@Html.Raw(x.ValorQuestao))</h6>
+                                <h6><b>Questão @count</b></h6>
                             </div>
-                            @*<div class="form-row">
-                              <button witdh="50" id="btnSalvar" type="submit" class="btn btn-primary btn-sm">Salvar</button>
-                        </div>*@
+                            <div class="col-md-2 offset-md-6">
+                                <h7><u>Nota Max Questão:</u> (@Html.Raw(x.ValorQuestao))</h7>
+                            </div>
                         </div>
                         <br />
                         <div class="form-row">
                             <div class="col-md-8">
-
                                 @Html.Raw(x.Questao.Enunciado)
-
+                            </div>
+                            <div class="col-md-2 offset-md-2 row">
+                                <h6>Nota Aluno: </h6>
+                                <input id="NotaQuestao_@count" class="form-control" name="NotaQuestao_@count" type="text" style="max-width: 50%;" value=@Html.Raw(Model.RespostasAlunos[(count - 1)].NotaAluno) />
+                                <input id="btnSalvar" value="Salvar" onclick="SalvarQuestao(@count, @x.Questao.QuestaoId, @provaID, @Model.RespostasAlunos[0].Aluno.AlunoId)" type="button" class="btn btn-primary" />
                             </div>
                         </div>
                         <div class="col-md-2">
@@ -166,14 +179,21 @@
                         <br />
                         <div class="form-row">
                             <div class="col-md-4">
-                                <h6><b>Questão @count</b> - (@Html.Raw(Model.RespostasAlunos[(count - 1)].NotaAluno)/@Html.Raw(x.ValorQuestao))</h6>
+                                <h6><b>Questão @count</b></h6>
+                            </div>
+                            <div class="col-md-2 offset-md-6">
+                                <h7><u>Nota Max Questão:</u> (@Html.Raw(x.ValorQuestao))</h7>
                             </div>
                         </div>
                         <br />
                         <div class="form-row">
                             <div class="col-md-8">
-
                                 @Html.Raw(x.Questao.Enunciado)
+                            </div>
+                            <div class="col-md-2 offset-md-2 row">
+                                <h6>Nota Aluno: </h6>
+                                <input id="NotaQuestao_@count" class="form-control" name="NotaQuestao_@count" type="text" style="max-width: 50%;" value=@Html.Raw(Model.RespostasAlunos[(count - 1)].NotaAluno) />
+                                <input id="btnSalvar" value="Salvar" onclick="SalvarQuestao(@count, @x.Questao.QuestaoId, @provaID, @Model.RespostasAlunos[0].Aluno.AlunoId)" type="button" class="btn btn-primary" />
                             </div>
                         </div>
                         <div class="col-md-2">
@@ -193,18 +213,18 @@
                         </div>
                         <br />
                         <script>@(count = count + 1) </script>
-                        </div>
                     </div>
-                        }
-                        @*<div class="form-row">
-                        <button witdh="50" id="btnSalvar" type="submit" class="btn btn-primary btn-sm">Salvar</button>
-                    </div>*@
-                        <div class="form-row">
-                            <br />
-                            <input id="btnVoltar" value="Cancelar" onclick="VoltarPagina()" type="button" class="btn btn-default" />
-                        </div>
-                    </div>
-</form>
+                </div>
+            }
+            @*<div class="form-row">
+                    <button witdh="50" id="btnSalvar" type="submit" class="btn btn-primary btn-sm">Salvar</button>
+                </div>*@
+            <br />
+            <div class="form-row">
+                <input id="btnVoltar" value="Voltar" onclick="VoltarPagina()" type="button" class="btn btn-default" />
+            </div>
+        </div>
+    </form>
 </div>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
@@ -243,27 +263,25 @@
             type: "GET",
             url: "/ConsultarProvaAl/Voltar",
             success: function (data) {
-                window.location.href = "/ConsultarProvaAl/ConsultarProvaAl";
+                window.location.href = "/ConsultarProvaPr/ConsultarProvaPr";
             }
         });
         location.reload();
     }
 
-    function SolicitarRevisao() {
-        var ProvID = parseInt("@provaID");
-        var r = confirm("Deseja solicitar ao professor a revisão dessa prova?");
-        if (r == true) {
+    function SalvarQuestao(CC, QustID, ProvID, AlunID) {
 
-            $.ajax({
-                type: "POST",
-                url: "/ConsultarProvaAl/SolicitarRevisao",
-                data: { ProvaID: ProvID },
-                success: function (data) {
-                }
-            });
-        }
-        window.location.href = "/ConsultarProvaAl/ConsultarProvaAl";
+        var nota = document.getElementById("NotaQuestao_"+CC).value;
+
+        $.ajax({
+            type: "POST",
+            url: '/ConsultarProvaPr/SalvarNotaManual',
+            data: { QuestaoID: QustID, ProvaID: ProvID, AlunoID: AlunID, Nota: nota },
+            success: function (data) {
+            }
+        });
     }
+    
 
 </script>
 

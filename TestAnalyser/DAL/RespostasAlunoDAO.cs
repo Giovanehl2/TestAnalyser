@@ -103,8 +103,10 @@ namespace TestAnalyser.DAL
             List<int> lista = new List<int>();
             List<RespostasAluno> respostaAluno = new List<RespostasAluno>();
             Prova prova = ProvaDAO.BuscarProvaId(ProvaID);
+            List<RespostasAluno> Respostas = new List<RespostasAluno>();
+            Respostas = prova.RespostasAlunos.OrderBy(x => x.RespostasAlunoId).ToList();
 
-            foreach (var item in prova.RespostasAlunos)
+            foreach (var item in Respostas)
             {
                 if (item.Aluno.AlunoId == AlunoID)
                     respostaAluno.Add(item);

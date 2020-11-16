@@ -121,7 +121,7 @@ namespace TestAnalyser.Controllers
                 prova = ProvaDAO.BuscarProvaId(ProvaId);
                 List<RespostasAluno> result = new List<RespostasAluno>();
                 List<RespostasAluno> resultAjst = new List<RespostasAluno>();
-                result = prova.RespostasAlunos.ToList().GroupBy(elem => elem.Aluno.AlunoId).Select(g => g.First()).ToList();
+                result = prova.RespostasAlunos.GroupBy(elem => elem.Aluno.AlunoId).Select(g => g.First()).ToList();
                 foreach (var itns in result)
                 {
                     if (itns.DataHoraInicio != null)
@@ -273,6 +273,36 @@ namespace TestAnalyser.Controllers
             todosGabaritos = new List<RespostasAluno>();
             CorrigirGabarito = new List<RespostasAluno>();
             return RedirectToAction("OpcoesCorrecao", "ConsultarProvaPr");
+        }
+
+
+        public ActionResult CorrigirTodaProva(int id, int idProva)
+        {
+            int AlunoID = id;
+
+            List<RespostasAluno> Resp = ProvaDAO.BuscarRespostasPorAluno(AlunoID, idProva);
+            double NotaSomada = 0;
+
+            foreach (var item in Resp)
+                { NotaSomada = (NotaSomada + item.NotaAluno); }
+            TempData["$NotaAluno$"] = NotaSomada.ToString("F");
+
+            ViewBag.Marcadas = RespostasAlunoDAO.BuscarAltsMarcadas(idProva, AlunoID); ;
+            Prova prova = ProvaDAO.BuscarProvaId(idProva);
+            prova.RespostasAlunos = Resp;
+            return View(prova);
+        }
+
+        public void SalvarNotaManual(int QuestaoID, int ProvaID, int AlunoID, string Nota)
+        {
+            double nota = Convert.ToDouble(Nota);
+            RespostasAluno questao = RespostasAlunoDAO.BuscarProvaQuestaoAluno(QuestaoID, ProvaID, AlunoID);
+
+            questao.SituacaoCorrecao = 4;
+            questao.NotaAluno = nota;
+            questao.DataHoraInicio = DateTime.Now;
+
+            RespostasAlunoDAO.Editar(questao);
         }
 
     }

@@ -37,28 +37,50 @@ namespace TestAnalyser.DAL
         }
         public static Prova BuscarProvaId(int id)
         {
-            Prova prova = ctx.Provas.Include("RespostasAlunos")
+            Prova prova = ctx.Provas.Include("ConfigPln")
                 .Include("Professor")
+                .Include("Professor.Disciplinas")
+                .Include("Professor.Provas")
                 .Include("NotasQuestoes")
-                .Include("ConfigPln")
+                .Include("NotasQuestoes.Questao")
                 .Include("Disciplina")
+                .Include("Disciplina.Turmas")
+                .Include("Disciplina.Professores")
+                .Include("Disciplina.Cursos")
+                .Include("Disciplina.Provas")
+                .Include("Disciplina.Alunos")
                 .Include("NotasQuestoes.Questao")
                 .Include("NotasQuestoes.Questao.AssuntoQuestao")
                 .Include("NotasQuestoes.Questao.Alternativas")
+                .Include("RespostasAlunos")
                 .Include("RespostasAlunos.Aluno")
                 .Include("RespostasAlunos.Alternativas")
+                .Include("RespostasAlunos.Questao")
                 .FirstOrDefault(x => x.ProvaId == id);
 
             return prova;
         }
         public static List<Prova> BuscarPorProfessor(int idProfessor)
         {
-            return ctx.Provas.Include("RespostasAlunos")
+            return ctx.Provas.Include("ConfigPln")
                 .Include("Professor")
+                .Include("Professor.Disciplinas")
+                .Include("Professor.Provas")
                 .Include("NotasQuestoes")
-                .Include("ConfigPln")
-                .Include("Disciplina.Cursos")
+                .Include("NotasQuestoes.Questao")
+                .Include("Disciplina")
                 .Include("Disciplina.Turmas")
+                .Include("Disciplina.Professores")
+                .Include("Disciplina.Cursos")
+                .Include("Disciplina.Provas")
+                .Include("Disciplina.Alunos")
+                .Include("NotasQuestoes.Questao")
+                .Include("NotasQuestoes.Questao.AssuntoQuestao")
+                .Include("NotasQuestoes.Questao.Alternativas")
+                .Include("RespostasAlunos")
+                .Include("RespostasAlunos.Aluno")
+                .Include("RespostasAlunos.Alternativas")
+                .Include("RespostasAlunos.Questao")
                 .Where(p => p.Professor.ProfessorId == idProfessor).ToList();
         }
 
