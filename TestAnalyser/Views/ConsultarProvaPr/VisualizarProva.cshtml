@@ -143,12 +143,12 @@
                         <div id="DivAlternativas">
                             @for (int i = 0; i < x.Questao.Alternativas.Count; i++)
                             {
-                                <div class="form-row">
-                                    @Html.Hidden("AlternativaCorreta", x.Questao.Alternativas[i].correto, new { id = "QstCorreta" })
-                                    @Html.RadioButton("AlternativaId" + "VF" + count, x.Questao.Alternativas[i].AlternativaId, new { disabled = "disabled" })
-                                    <label for="">@(i+1)) </label>
-                                    @Html.Raw(x.Questao.Alternativas[i].DescAlternativa)
-                                </div>
+                            <div class="form-row">
+                                @Html.Hidden("AlternativaCorreta", x.Questao.Alternativas[i].correto, new { id = "QstCorreta" })
+                                @Html.CheckBox("AlternativaId" + "VF" + count, new { disabled = "disabled" })
+                                <label for="">@(i+1)) </label>
+                                @Html.Raw(x.Questao.Alternativas[i].DescAlternativa)
+                            </div>
                             }
                         </div>
                         <br />
