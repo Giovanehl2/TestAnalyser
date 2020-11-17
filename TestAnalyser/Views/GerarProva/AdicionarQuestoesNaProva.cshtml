@@ -39,48 +39,54 @@
                 {
                     Texto = "<b>Questão " + (count + 1) + ": Discursiva</b>";
                 }
-                
-                <div class="col-md-12">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="card">
+                            <div class="card-body" style="border: 1px solid;border-color: darkcyan">
+                                <div class="row" id="EssaDIV">
+                                    <div class="col-md-8">
+                                        @Html.Raw(@Texto)
+                                        <input class="form-control" type="hidden" id="idquestao" name="idquestao" value="@item.Questao.QuestaoId" required />
+                                    </div>
+                                    <br />
+                                    <br />
+                                    <div class="col-md-8">
+                                        @Html.Raw(item.Questao.Enunciado)
+                                        <input class="form-control" type="hidden" id="idquestao" name="idquestao" value="@item.Questao.QuestaoId" required />
+                                    </div>
+                                    <div class="col-md-2">
+                                        <h6>Nota: </h6>
+                                        <input class="form-control" type="number" id="NotaQ" name="notas" value="@item.ValorQuestao" step="any" min="0" max="9999" />
+                                        @Html.Hidden("NotaProva", Model.ValorProva)
+                                    </div>
 
-                    <div class="row" id="EssaDIV">
-                        <div class="col-md-8">
-                            @Html.Raw(@Texto)
-                            <input class="form-control" type="hidden" id="idquestao" name="idquestao" value="@item.Questao.QuestaoId" required />
+                                </div>
+                            </div>
                         </div>
-                        <br />
-                        <br />
-                        <div class="col-md-8">
-                            @Html.Raw(item.Questao.Enunciado)
-                            <input class="form-control" type="hidden" id="idquestao" name="idquestao" value="@item.Questao.QuestaoId" required />
-                        </div>
-                        <div class="col-md-2">
-                            <h6>Nota: </h6>
-                            <input class="form-control" type="number" id="NotaQ" name="notas" value="@item.ValorQuestao"   step="any" min="0" max="9999" />
-                            @Html.Hidden("NotaProva", Model.ValorProva)
-                        </div>
-
                     </div>
                 </div>
-                <script>@(count = count + 1) </script>
-            }
-        }
-        <br />
-        <div class="row" id="DivFinal">
-            <div class="col-md-2" id="divConfirma">
-                <label>Total Questões: @count</label>
-                <button witdh="50" title="Confirmar prova" type="submit" class="btn btn-primary">Confirmar Prova</button>
-            </div>
-            <div class="col-md-2" style="Display: none" id="divErroNota">
-                @Html.Raw("A Soma das Notas deve ser igual á: " + Model.ValorProva)
-            </div>
-            <div class="col-md-6"></div>
-            <div class="col-md-2">
-                <label>Total Nota:</label>
-                <input class="form-control" type="number" id="NotaTotal" required />
+                        <script>@(count = count + 1) </script>
+                        <br />
+                        }
+            
+                        }
+                        <br />
+                        <div class="row" id="DivFinal">
+                            <div class="col-md-2" id="divConfirma">
+                                <label>Total Questões: @count</label>
+                                <button witdh="50" title="Confirmar prova" type="submit" class="btn btn-primary">Confirmar Prova</button>
+                            </div>
+                            <div class="col-md-2" style="Display: none" id="divErroNota">
+                                @Html.Raw("A Soma das Notas deve ser igual á: " + Model.ValorProva)
+                            </div>
+                            <div class="col-md-6"></div>
+                            <div class="col-md-2">
+                                <label>Total Nota:</label>
+                                <input class="form-control" type="number" id="NotaTotal" required />
 
-            </div>
-        </div>
-    </form>
+                            </div>
+                        </div>
+</form>
 
     <script>
         window.load = CalculaNotaTotal();

@@ -12,264 +12,297 @@
 
 </head>
 <div class="row">
-    <div>
+    <div class="col-md-6">
         <h2>Gerar Prova</h2>
     </div>
-    <div style="margin-left: 67%;">
+
+    
+</div>
+
+<div class="row">
+    <div class="col-md-4 offset-md-10">
+
         @*@Html.ActionLink("Consultar Turmas", "ConsultarTurmas", "ConsultarProvaPr")*@
         <button type="button" class="btn btn-default" data-toggle="modal" data-target="#ModalConsultarTurmas">
             Listar Turmas
         </button>
+
     </div>
 </div>
 <br />
 
-<div class="container">
+
     <div class="row">
         <div class="col-md-12">
             @if (TempData["$ProvaGerada$"] != null)
             {
                 <div id="alerta" style="color: red; text-align: center;">@TempData["$ProvaGerada$"]</div>
             }
-            <form name="form1" id="formCadSE" method="post" action="@Url.Action("CadastrarQuestoesProva", "GerarProva")">
-                <div class="form-row">
-                    <div class="form-group col-md-6">
+        <form name="form1" id="formCadSE" method="post" action="@Url.Action("CadastrarQuestoesProva", "GerarProva")">
 
-                        <label for="TituloProva">Titulo da prova</label>
-                        @Html.TextBoxFor(model => model.TituloProva, new { @class = "form-control", @placeholder = "Digite o Titulo" })
-                    </div>
+            <div class="card">
+                <div class="card-body" style="border: 1px solid;border-color: darkcyan">
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
 
-                    <div class="form-group col-md-6" style="text-align: center;">
-
-                        <div class="row" style="justify-content: center;">
-                            <div class="col-md-4"><label for="DataProvaInicio">Data inicio da Prova</label></div>
-                            <div class="col-md-4"><label for="HoraProvaInicio">Hora - Inicio</label></div>
-
+                            <label for="TituloProva">Titulo da prova</label>
+                            @Html.TextBoxFor(model => model.TituloProva, new { @class = "form-control", @placeholder = "Digite o Titulo" })
                         </div>
 
-                        <div class="row" style="justify-content: center;">
-                            <div class="col-md-4">
-                                <input class="form-control" id="DataProvaInicio" type="date" name="DataProvaInicio" required>
-                            </div>
-                            <div class="col-md-4">
-                                <input class="form-control" id="HoraProvaInicio" type="time" name="HoraInicio" required>
-                            </div>
-                        </div>
+                        <div class="form-group col-md-6" style="text-align: center;">
 
-                        <div class="row" style="justify-content: center;">
-                            <div class="col-md-4"><label for="DataProvaFim">Data fim da Prova</label></div>
-                            <div class="col-md-4"><label for="HoraProvaFim">Hora - Final</label></div>
-                        </div>
+                            <div class="row" style="justify-content: center;">
+                                <div class="col-md-4"><label for="DataProvaInicio">Data inicio da Prova</label></div>
+                                <div class="col-md-4"><label for="HoraProvaInicio">Hora - Inicio</label></div>
 
-                        <div class="row" style="justify-content: center;">
-                            <div class="col-md-4">
-                                <input class="form-control" id="DataProvaFim" type="date" name="DataProvaFim" required>
                             </div>
-                            <div class="col-md-4">
-                                <input class="form-control" id="HoraProvaFinal" type="time" name="HoraFim" required>
-                            </div>
-                        </div>
 
+                            <div class="row" style="justify-content: center;">
+                                <div class="col-md-4">
+                                    <input class="form-control" id="DataProvaInicio" type="date" name="DataProvaInicio" required>
+                                </div>
+                                <div class="col-md-4">
+                                    <input class="form-control" id="HoraProvaInicio" type="time" name="HoraInicio" required>
+                                </div>
+                            </div>
+
+                            <div class="row" style="justify-content: center;">
+                                <div class="col-md-4"><label for="DataProvaFim">Data fim da Prova</label></div>
+                                <div class="col-md-4"><label for="HoraProvaFim">Hora - Final</label></div>
+                            </div>
+
+                            <div class="row" style="justify-content: center;">
+                                <div class="col-md-4">
+                                    <input class="form-control" id="DataProvaFim" type="date" name="DataProvaFim" required>
+                                </div>
+                                <div class="col-md-4">
+                                    <input class="form-control" id="HoraProvaFinal" type="time" name="HoraFim" required>
+                                </div>
+                            </div>
+
+                        </div>
                     </div>
                 </div>
-                
-                <br />
-                <br />
-                <div class="form-row">
-                    <div class="form-group col-md-6">
-                        <div class="form-row">
-                            <div class="form-group col">
-                                <label for="DisciplinaProva">Curso</label>
-                                <select class="form-control" id="idCurso" name="Curso" size="1" required>
-                                    @{
-                                        <option value="0"> Selecione</option>
-                                        foreach (var item in ViewBag.Cursos)
-                                        {
-                                            <option value="@item.CursoId">@item.Descricao</option>
+            </div>
+
+
+
+
+
+
+
+
+
+            <br />
+            <br />
+            <div class="card">
+                <div class="card-body" style="border: 1px solid;border-color: darkcyan">
+                    <div class="form-row">
+
+                        <div class="form-group col-md-6" style="align-self: center;">
+
+                            <div class="form-row">
+
+                                <div class="form-group col">
+                                    <label for="DisciplinaProva">Curso</label>
+                                    <select class="form-control" id="idCurso" name="Curso" size="1" required>
+                                        @{
+                                            <option value="0"> Selecione</option>
+                                            foreach (var item in ViewBag.Cursos)
+                                            {
+                                                <option value="@item.CursoId">@item.Descricao</option>
+                                            }
                                         }
-                                    }
-                                </select>
+                                    </select>
+                                </div>
+                                <div class="form-group col">
+                                    <label for="DisciplinaProva">Disciplina</label>
+                                    <select class="form-control" id="idDisciplina" name="NomeDisciplina" size="1" required>
+                                        <option> </option>
+                                    </select>
+                                </div>
                             </div>
-                            <div class="form-group col">
-                                <label for="DisciplinaProva">Disciplina</label>
-                                <select class="form-control" id="idDisciplina" name="NomeDisciplina" size="1" required>
-                                    <option> </option>
-                                </select>
+
+                            <div class="form-row">
+                                <div class="form-group col">
+                                    <label for="TurmaProva">Turma</label>
+                                    <select class="form-control" id="idTurma" name="NomeTurma" size="1" required>
+                                        <option> </option>
+                                    </select>
+                                </div>
+                                <div class="form-group col">
+                                    <label for="NotaMax">Nota máxima</label>
+                                    <input class="form-control " id="NotaMax" type="number" name="ValorProva" required>
+                                </div>
                             </div>
+
                         </div>
 
-                        <div class="form-row">
-                            <div class="form-group col">
-                                <label for="TurmaProva">Turma</label>
-                                <select class="form-control" id="idTurma" name="NomeTurma" size="1" required>
-                                    <option> </option>
-                                </select>
+
+                        <div class="form-group col-md-6">
+                            <div class="form-row">
+                                <div class="form-group col" id="mydiv" style="text-align-last: center;">
+                                    <label for="AssuntoProva" title="Selecione os assuntos que essa prova irá abordar.">Assunto</label><br />
+                                    <select class="selectpicker" multiple name="Assuntos" id="idAssuntoProva" style="width:250px;" tabindex="2" required>
+                                        <option> </option>
+
+                                    </select>
+                                </div>
                             </div>
-                            <div class="form-group col">
-                                <label for="NotaMax">Nota máxima</label>
-                                <input class="form-control " id="NotaMax" type="number" name="ValorProva" required>
-                            </div>
-                        </div>
+                            <div class="row">
+                                <div class="col">
+                                    <div class="col" style="text-align: right;">
 
-                        <div class="form-row">
-                            <div class="form-group col" id="mydiv">
-                                <label for="AssuntoProva" title="Selecione os assuntos que essa prova irá abordar.">Assunto</label><br />
-                                <select class="selectpicker" multiple name="Assuntos" id="idAssuntoProva" style="width:250px;" tabindex="2" required>
-                                    <option> </option>
-
-                                </select>
-                            </div>
-                        </div>
-
-                    </div>
-                    
-                    <div class="form-group col-md-6">
-                        <div class="row">
-                            <div class="col">
-                                <div class="col" style="text-align: right;">
-                                    
-                                    <div class="row">
-                                        <div class="col" style="text-align:center">
-                                            <label class="form-check-label" for="gridCheck">
-                                                Tipo da questão
-                                            </label>
-                                        </div>
-                                        <div class="col" style="text-align:center">
-                                            <label class="form-check-label" for="gridCheck">
-                                                Total de questões
-                                            </label>
-                                        </div>
-                                        <div class="col" style="text-align:center">
-                                            <label class="form-check-label" for="gridCheck">
-                                                Questões da prova
-                                            </label>
-                                        </div>
-                                    </div>
-                                    <br />
-                                    <div class="row">
-                                        <div class="col" style="text-align:center">
-                                            <div class="form-check">
+                                        <div class="row">
+                                            <div class="col" style="text-align:center">
                                                 <label class="form-check-label" for="gridCheck">
-                                                    Simples escolha
+                                                    Tipo da questão
+                                                </label>
+                                            </div>
+                                            <div class="col" style="text-align:center">
+                                                <label class="form-check-label" for="gridCheck">
+                                                    Total de questões
+                                                </label>
+                                            </div>
+                                            <div class="col" style="text-align:center">
+                                                <label class="form-check-label" for="gridCheck">
+                                                    Questões da prova
                                                 </label>
                                             </div>
                                         </div>
-                                        <div class="col" style="text-align:center">
-                                            (<label id="QtSimplesEscolha">0</label>)
-                                        </div>
-                                        <div class="col" style="text-align:center">
-                                            <input class="form-control" id="IdQtSimplesEscolha" type="number" name="QtSimplesEscolha" required>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col" style="text-align:center">
-                                            <div class="form-check">
-                                                <label class="form-check-label" for="gridCheck">
-                                                    Multipla escolha
-                                                </label>
+                                        <br />
+                                        <div class="row">
+                                            <div class="col" style="text-align:center">
+                                                <div class="form-check">
+                                                    <label class="form-check-label" for="gridCheck">
+                                                        Simples escolha
+                                                    </label>
+                                                </div>
+                                            </div>
+                                            <div class="col" style="text-align:center">
+                                                (<label id="QtSimplesEscolha">0</label>)
+                                            </div>
+                                            <div class="col" style="text-align:center">
+                                                <input class="form-control" id="IdQtSimplesEscolha" type="number" name="QtSimplesEscolha" required>
                                             </div>
                                         </div>
-                                        <div class="col" style="text-align:center">
-                                            (<label id="QtMultiplaEscolha">0</label>)
-                                        </div>
-                                        <div class="col" style="text-align:center">
-                                            <input class="form-control" id="IdQtMultiplaEscolha" type="number" name="QtMultiplaEscolha" required>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col" style="text-align:center">
-                                            <div class="form-check">
-                                                <label class="form-check-label" for="gridCheck">
-                                                    Verdadeiro ou Falso
-                                                </label>
+                                        <div class="row">
+                                            <div class="col" style="text-align:center">
+                                                <div class="form-check">
+                                                    <label class="form-check-label" for="gridCheck">
+                                                        Multipla escolha
+                                                    </label>
+                                                </div>
+                                            </div>
+                                            <div class="col" style="text-align:center">
+                                                (<label id="QtMultiplaEscolha">0</label>)
+                                            </div>
+                                            <div class="col" style="text-align:center">
+                                                <input class="form-control" id="IdQtMultiplaEscolha" type="number" name="QtMultiplaEscolha" required>
                                             </div>
                                         </div>
-                                        <div class="col" style="text-align:center">
-                                            (<label id="QtVerdadeirFalso">0</label>)
+                                        <div class="row">
+                                            <div class="col" style="text-align:center">
+                                                <div class="form-check">
+                                                    <label class="form-check-label" for="gridCheck">
+                                                        Verdadeiro ou Falso
+                                                    </label>
+                                                </div>
+                                            </div>
+                                            <div class="col" style="text-align:center">
+                                                (<label id="QtVerdadeirFalso">0</label>)
+                                            </div>
+                                            <div class="col" style="text-align:center">
+                                                <input class="form-control" id="IdQtVerdadeirFalso" type="number" name="QtVerdadeirFalso" required>
+                                            </div>
                                         </div>
-                                        <div class="col" style="text-align:center">
-                                            <input class="form-control" id="IdQtVerdadeirFalso" type="number" name="QtVerdadeirFalso" required>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col" style="text-align:center">
-                                            <div class="form-check">
+                                        <div class="row">
+                                            <div class="col" style="text-align:center">
+                                                <div class="form-check">
 
-                                                <label class="form-check-label" for="gridCheck">
-                                                    Dissertativa
-                                                </label>
+                                                    <label class="form-check-label" for="gridCheck">
+                                                        Dissertativa
+                                                    </label>
+                                                </div>
                                             </div>
-                                        </div>
-                                        <div class="col" style="text-align:center">
-                                            (<label id="QtDissertativa">0</label>)
-                                        </div>
-                                        <div class="col" style="text-align:center">
-                                            <input class="form-control" id="IdQtDissertativa" type="number" name="QtDissertativa" required>
+                                            <div class="col" style="text-align:center">
+                                                (<label id="QtDissertativa">0</label>)
+                                            </div>
+                                            <div class="col" style="text-align:center">
+                                                <input class="form-control" id="IdQtDissertativa" type="number" name="QtDissertativa" required>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
+                            <br />
                         </div>
-                        <br />
                     </div>
+
                 </div>
-                <br />
-                <br />
-                <div class="form-row">
-                    <div class="form-group col-md-10 offset-md-1">
-                        <div class="row">
-                            <div class="col-md-6 offset-md-4">
-                                <label class="form-check-label" for="gridCheck">
-                                    Configuração da faixa de correto/incorreto:
-                                </label>
-                            </div>
-                        </div>
-                        <br />
-                        <div class="row">
-                            <div class="form-group col-md-12">
-                                <div class="col-md-2">
-                                    <label></label>
-                                </div>
-                                <div class="col-md-3">
-                                    <label>&emsp;&emsp;Incorreto</label>
-                                </div>
-                                <div class="col-md-3">
-                                    <label>&emsp;&emsp;&emsp;Revisar</label>
-                                </div>
-                                <div class="col-md-2">
-                                    <label>&emsp;&emsp;&emsp;&emsp;Correto</label>
+            </div>
+            <br />
+            <br />
+            <div class="card">
+                <div class="card-body" style="border: 1px solid;border-color: darkcyan">
+                    <div class="form-row">
+                        <div class="form-group col-md-10 offset-md-1">
+                            <div class="row">
+                                <div class="col-md-6 offset-md-4">
+                                    <label class="form-check-label" for="gridCheck">
+                                        Configuração da faixa de correto/incorreto:
+                                    </label>
                                 </div>
                             </div>
-                        </div>
-                        <div class="row">
-                            <div class="form-group col-md-12">
-                                @*<label for="Incorreto">&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp; Incorreto &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp; Revisar &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp; Correto</label>*@
-                                <div class="row">
-                                    <div class="col-lg-offset-1 col-md-2">
-                                        <input class="form-control" id="IncorretoInicio" name="InIni" type="number" value="0" readonly>
-                                    </div>
-                                    à
-                                    <div class="col-md-3">
-                                        <input class="form-control" id="IncorretoFim" name="InFim" type="number" value="35">
-                                    </div>
-                                    à
-                                    <div class="col-md-3">
-                                        <input class="form-control" id="RevisarFim" name="ParFim" type="number" value="70">
-                                    </div>
-                                    à
+                            <br />
+                            <div class="row">
+                                <div class="form-group col-md-12">
                                     <div class="col-md-2">
-                                        <input class="form-control" id="CorretoFim" name="CoFim" type="number" value="100" readonly>
+                                        <label></label>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <label>&emsp;&emsp;Incorreto</label>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <label>&emsp;&emsp;&emsp;Revisar</label>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <label>&emsp;&emsp;&emsp;&emsp;Correto</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="form-group col-md-12">
+                                    @*<label for="Incorreto">&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp; Incorreto &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp; Revisar &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp; Correto</label>*@
+                                    <div class="row">
+                                        <div class="col-lg-offset-1 col-md-2">
+                                            <input class="form-control" id="IncorretoInicio" name="InIni" type="number" value="0" readonly>
+                                        </div>
+                                        à
+                                        <div class="col-md-3">
+                                            <input class="form-control" id="IncorretoFim" name="InFim" type="number" value="35">
+                                        </div>
+                                        à
+                                        <div class="col-md-3">
+                                            <input class="form-control" id="RevisarFim" name="ParFim" type="number" value="70">
+                                        </div>
+                                        à
+                                        <div class="col-md-2">
+                                            <input class="form-control" id="CorretoFim" name="CoFim" type="number" value="100" readonly>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
+                    </div>
                 </div>
-                <input id="btnConfirmar" type="submit" value="Gerar Prova" class="btn btn-default" />
-            </form>
+            <br />
+                    <input id="btnConfirmar" type="submit" value="Gerar Prova" class="btn btn-default" />
+        </form>
         </div>
     </div>
-</div>
+
 
 @Scripts.Render("~/bundles/jquery")
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
