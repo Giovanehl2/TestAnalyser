@@ -10,7 +10,7 @@ namespace TestAnalyser.Model
     [DbConfigurationType(typeof(MySqlEFConfiguration))]
     public class Context : DbContext
     {
-        public Context() : base("DBTestAnalyser") { }
+        public Context() : base("DBTestAnalyzer") { }
         public DbSet<Alternativa> Alternativas { get; set; }
         public DbSet<Aluno> Alunos { get; set; }
         public DbSet<Professor> Professores { get; set; }
