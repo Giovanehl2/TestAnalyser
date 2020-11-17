@@ -39,8 +39,10 @@ namespace TestAnalyser.Controllers
 
         public ActionResult VisualizarProva(int ProvaID)
         {
+            
             Prova prova = ProvaDAO.BuscarProvaId(ProvaID);
-            return View(prova);
+
+            return View(OrdenarObjetosProva(prova));
         }
 
         public string ConsultarDisciplina(int id)
@@ -107,6 +109,7 @@ namespace TestAnalyser.Controllers
             TempData["provas"] = provas;
             return RedirectToAction("ConsultarProvaPr", "ConsultarProvaPr");
         }
+
         public void RecuperaGabaritosAlunos(int ProvaId)
         {
             List<string> status = new List<string>();
@@ -117,16 +120,18 @@ namespace TestAnalyser.Controllers
 
             foreach (var respostas in result)
             {
-                AlunoNota alunoNota =  AlunoNotaDAO.BuscarAlunoNota(respostas.Aluno.AlunoId, prova.ProvaId);
-                if(alunoNota != null)
-                {
-                    notas.Add(alunoNota.NotaTotal);
-                }
-                else
-                {
-                    notas.Add(0);
-                }
+                //testar e depois remover
+                //AlunoNota alunoNota =  AlunoNotaDAO.BuscarAlunoNota(respostas.Aluno.AlunoId, prova.ProvaId);
+                //if(alunoNota != null)
+                //{
 
+                //    notas.Add(alunoNota.NotaTotal);
+                //}
+                //else
+                //{
+                //    notas.Add(0);
+                //}
+                notas.Add(ClacularNotaTotalAluno(respostas.Aluno.AlunoId, respostas.Prova.ProvaId));
                 List<RespostasAluno> resps = new List<RespostasAluno>();
                 resps = respostas.Prova.RespostasAlunos.Where(x => x.RespostaDiscursiva != null && x.Aluno.AlunoId == respostas.Aluno.AlunoId).ToList();
                 if (resps.Count != 0)
@@ -339,17 +344,20 @@ namespace TestAnalyser.Controllers
         public void GerenciarNotaAluno(int alunoId , int provaId)
         {
             
-                AlunoNota alunoNota = new AlunoNota();
-                alunoNota = AlunoNotaDAO.BuscarAlunoNota(alunoId, provaId);
-
+            AlunoNota alunoNota = AlunoNotaDAO.BuscarAlunoNota(alunoId, provaId);
+            double notaTotal = 0;
+            if (alunoNota == null)
+            {
+                alunoNota = new AlunoNota();
+                alunoNota.Aluno = AlunoDAO.BuscarAlunoId(alunoId);
+                alunoNota.Prova = prova;
+            }
                 foreach (var item in BuscarRespostasPorAluno(alunoId, provaId))
                 {
-                    alunoNota.NotaTotal += item.NotaAluno;
+                   notaTotal += item.NotaAluno;
 
                 }
-                alunoNota.Prova = prova;
-                alunoNota.Aluno = AlunoDAO.BuscarAlunoId(alunoId);
-
+                alunoNota.NotaTotal = notaTotal;
                 if (AlunoNotaDAO.BuscarAlunoNota(alunoNota.Aluno.AlunoId, alunoNota.Prova.ProvaId) == null)
                 {
                     AlunoNotaDAO.CadastrarAlunoNota(alunoNota);
@@ -359,6 +367,48 @@ namespace TestAnalyser.Controllers
                     AlunoNotaDAO.EditarAlunoNota(alunoNota);
                 }
 
+        }
+
+        public double ClacularNotaTotalAluno(int alunoId, int provaId)
+        {
+
+            AlunoNota alunoNota = AlunoNotaDAO.BuscarAlunoNota(alunoId, provaId);
+            double notaTotal = 0;
+            if (alunoNota == null)
+            {
+                alunoNota = new AlunoNota();
+                alunoNota.Aluno = AlunoDAO.BuscarAlunoId(alunoId);
+                alunoNota.Prova = prova;
+            }
+            foreach (var item in BuscarRespostasPorAluno(alunoId, provaId))
+            {
+                notaTotal += item.NotaAluno;
+
+            }
+            alunoNota.NotaTotal = notaTotal;
+            if (AlunoNotaDAO.BuscarAlunoNota(alunoNota.Aluno.AlunoId, alunoNota.Prova.ProvaId) == null)
+            {
+                AlunoNotaDAO.CadastrarAlunoNota(alunoNota);
+            }
+            else
+            {
+                AlunoNotaDAO.EditarAlunoNota(alunoNota);
+            }
+
+            return alunoNota.NotaTotal;
+
+        }
+        public Prova OrdenarObjetosProva(Prova prova)
+        {
+
+            List<RespostasAluno> respostasAluno = prova.RespostasAlunos.OrderBy(o => o.RespostasAlunoId).ToList();
+            respostasAluno.ForEach(h => {
+                // This will order your cars for this person by Make
+                h.Alternativas = h.Alternativas.OrderBy(t => t.AlternativaId).ToList();
+            });
+            prova.RespostasAlunos.Clear();
+            prova.RespostasAlunos.AddRange(respostasAluno);
+            return prova;
         }
 
         public ActionResult CorrigirTodaProva(int id, int idProva)
@@ -375,17 +425,24 @@ namespace TestAnalyser.Controllers
             ViewBag.Marcadas = RespostasAlunoDAO.BuscarAltsMarcadas(idProva, AlunoID); ;
             Prova prova = ProvaDAO.BuscarProvaId(idProva);
             prova.RespostasAlunos = Resp;
-            return View(prova);
+
+
+            return View(OrdenarObjetosProva(prova));
         }
 
         public void SalvarNotaManual(int QuestaoID, int ProvaID, int AlunoID, string Nota)
         {
             double nota = Convert.ToDouble(Nota);
             Prova provatemp = ProvaDAO.BuscarProvaId(ProvaID);
+            provatemp.RespostasAlunos.Clear();
 
             RespostasAluno questao;
+            List<RespostasAluno> resultado = RespostasAlunoDAO.RespostasAlunoProvaId(ProvaID);
+            //adiciono pois o resultado não traz correto da base de dados
+            provatemp.RespostasAlunos = resultado;
 
-            foreach (RespostasAluno item in RespostasAlunoDAO.RespostasAlunoProvaId(ProvaID))
+
+            foreach (RespostasAluno item in resultado)
             {
                 questao = new RespostasAluno();
                 if (item.Aluno.AlunoId == AlunoID && item.Questao.QuestaoId == QuestaoID)
@@ -396,17 +453,12 @@ namespace TestAnalyser.Controllers
                     questao.Prova = provatemp;
                     RespostasAlunoDAO.Editar(questao);
                 }
-                else
-                {
-                    questao = item;
-                    questao.Prova = provatemp;
-                    RespostasAlunoDAO.Editar(questao);
-                }
+
                 
             }
 
 
-         
+
         }
 
     }

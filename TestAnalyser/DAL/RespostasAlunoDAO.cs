@@ -61,6 +61,7 @@ namespace TestAnalyser.DAL
                 .Include("Alternativas.Questao")
                 .Include("Alternativas.RespostaAluno")
                 .Include("Aluno")
+                .Include("Prova")
                 .Where(x => x.Aluno.AlunoId == id && x.SituacaoCorrecao == situac).ToList();
         }
 
@@ -74,6 +75,7 @@ namespace TestAnalyser.DAL
                 .Include("Alternativas.Questao")
                 .Include("Alternativas.RespostaAluno")
                 .Include("Aluno")
+                .Include("Prova")
                 .Where(x => x.RespostaDiscursiva != null).ToList();
         }
         public static RespostasAluno RespostasAlunoId(int id)
@@ -86,6 +88,7 @@ namespace TestAnalyser.DAL
                 .Include("Alternativas.Questao")
                 .Include("Alternativas.RespostaAluno")
                 .Include("Aluno")
+                .Include("Prova")
                 .Where(x => x.RespostasAlunoId == id).FirstOrDefault();
         }
 
@@ -99,6 +102,11 @@ namespace TestAnalyser.DAL
                 .Include("Alternativas.Questao")
                 .Include("Alternativas.RespostaAluno")
                 .Include("Aluno")
+                .Include("Prova.ConfigPln")
+                .Include("Prova.RespostasAlunos")
+                .Include("Prova.Professor")
+                .Include("Prova.NotasQuestoes")
+                .Include("Prova.Disciplina")
                 .Where(x => x.Prova.ProvaId == id).ToList();
         }
 

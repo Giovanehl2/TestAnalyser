@@ -87,10 +87,9 @@ namespace TestAnalyser.Controllers
             var output = Newtonsoft.Json.JsonConvert.SerializeObject(dict);
             return output;
         }
-        public ActionResult Voltar()
+        public void Voltar()
         {
             LimparDadosTela();
-            return RedirectToAction("ConsultarProvaAl", "ConsultarProvaAl");
         }
 
         private void LimparDadosTela()
