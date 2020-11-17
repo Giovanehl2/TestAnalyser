@@ -77,6 +77,7 @@
                     <th scope="col">Nome</th>
                     <th scope="col">Matrícula</th>
                     <th scope="col">Nota</th>
+                    <th scope="col">Status</th>
                     <th>Ações</th>
 
                 </tr>
@@ -89,17 +90,18 @@
                         foreach (var item in respostaAluno)
                         {
 
-                            <tr>
-                                <td>@item.Aluno.NomeAluno</td>
-                                <td>@item.Aluno.Matricula</td>
-                                <td>@ViewBag.NotaDaProva[cc]</td>
-                                <td>
-                                    <div id="divGridConsultaPr1">
-                                        @Html.ActionLink("Corrigir", "CorrigirProvaAlunoEspecifico", "ConsultarProvaPr", new { id = item.Aluno.AlunoId, idProva = Model.ProvaId }, null) |
-                                        @Html.ActionLink("Corrigir Tudo", "CorrigirTodaProva", "ConsultarProvaPr", new { id = item.Aluno.AlunoId, idProva = Model.ProvaId }, null)
-                                    </div>
-                                </td>
-                            </tr>
+                                <tr>
+                                    <td>@item.Aluno.NomeAluno</td>
+                                    <td>@item.Aluno.Matricula</td>
+                                    <td>@ViewBag.NotaDaProva[cc]</td>
+                                    <td>@ViewBag.StatusDSProva[cc]</td>
+                                    <td>
+                                        <div id="divGridConsultaPr1">
+                                            @Html.ActionLink("Corrigir", "CorrigirProvaAlunoEspecifico", "ConsultarProvaPr", new { id = item.Aluno.AlunoId, idProva = Model.ProvaId }, null) |
+                                            @Html.ActionLink("Corrigir Tudo", "CorrigirTodaProva", "ConsultarProvaPr", new { id = item.Aluno.AlunoId, idProva = Model.ProvaId }, null)
+                                        </div>
+                                    </td>
+                                </tr>
                             cc++;
                         }
                     }

@@ -109,6 +109,7 @@ namespace TestAnalyser.Controllers
         }
         public void RecuperaGabaritosAlunos(int ProvaId)
         {
+            List<string> status = new List<string>();
             prova = ProvaDAO.BuscarProvaId(ProvaId);
             List<double> notas = new List<double>();
 
@@ -116,7 +117,7 @@ namespace TestAnalyser.Controllers
 
             foreach (var respostas in result)
             {
-           AlunoNota alunoNota =  AlunoNotaDAO.BuscarAlunoNota(respostas.Aluno.AlunoId, prova.ProvaId);
+                AlunoNota alunoNota =  AlunoNotaDAO.BuscarAlunoNota(respostas.Aluno.AlunoId, prova.ProvaId);
                 if(alunoNota != null)
                 {
                     notas.Add(alunoNota.NotaTotal);
@@ -125,9 +126,36 @@ namespace TestAnalyser.Controllers
                 {
                     notas.Add(0);
                 }
-               
+
+                List<RespostasAluno> resps = new List<RespostasAluno>();
+                resps = respostas.Prova.RespostasAlunos.Where(x => x.RespostaDiscursiva != null && x.Aluno.AlunoId == respostas.Aluno.AlunoId).ToList();
+                if (resps.Count != 0)
+                {
+                    foreach (var item in resps)
+                    {
+                        if (item.SituacaoCorrecao == 1 || item.SituacaoCorrecao == 3 || item.SituacaoCorrecao == 4)
+                        {
+                            status.Add("Corrigido");
+                        }else if (item.SituacaoCorrecao == 0)
+                        {
+                            status.Add("Processando");
+                        }else if (item.SituacaoCorrecao == 2 || item.SituacaoCorrecao == 5)
+                        {
+                            status.Add("Corrigir Manual");
+                        }else
+                        {
+                            status.Add("Erro!");
+                        }
+                    }
+                }
+                else
+                {
+                    status.Add("Não Realizado");
+                }
+                
             }
 
+            ViewBag.StatusDSProva = status;
             ViewBag.NotaDaProva = notas;
             ViewBag.RespostasAluno = result;
 
@@ -146,7 +174,6 @@ namespace TestAnalyser.Controllers
                 RecuperaGabaritosAlunos(prova.ProvaId);
             }
       
-
             return View(ProvaDAO.BuscarProvaId(ProvaId));
         }
 

@@ -14,21 +14,25 @@ namespace TestAnalyser.Controllers
         // GET: EditarQuestoes
         public ActionResult Dissertativa()
         {
+            ViewBag.AssuntosQuestao = QuestaoDAO.BuscarAssuntosQuestaoTodos();
             var QQ = TempData["objquestao"];
             return View(QQ);
         }
         public ActionResult SimplesEscolha()
         {
+            ViewBag.AssuntosQuestao = QuestaoDAO.BuscarAssuntosQuestaoTodos();
             var QQ = TempData["objquestao"];
             return View(QQ);
         }
         public ActionResult MultiplaEscolha()
         {
+            ViewBag.AssuntosQuestao = QuestaoDAO.BuscarAssuntosQuestaoTodos();
             var QQ = TempData["objquestao"];
             return View(QQ);
         }
         public ActionResult VerdadeiroFalso()
         {
+            ViewBag.AssuntosQuestao = QuestaoDAO.BuscarAssuntosQuestaoTodos();
             var QQ = TempData["objquestao"];
             return View(QQ);
         }
@@ -96,5 +100,3 @@ namespace TestAnalyser.Controllers
         }
     }
 }
-
-//Projetos Futuros -> Aplicar a função de alterar as alternativas corretas pelo editar...

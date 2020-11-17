@@ -39,17 +39,15 @@ namespace TestAnalyser.DAL
         {
             Prova prova = ctx.Provas.Include("ConfigPln")
                 .Include("Professor")
-                .Include("Professor.Disciplinas")
-                .Include("Professor.Provas")
                 .Include("Disciplina")
                 .Include("Disciplina.Turmas")
                 .Include("Disciplina.Cursos")
                 .Include("NotasQuestoes")
-                .Include("NotasQuestoes.Questao.AssuntoQuestao")
                 .Include("RespostasAlunos")
                 .Include("RespostasAlunos.Aluno")
                 .Include("RespostasAlunos.Alternativas")
                 .Include("RespostasAlunos.Questao")
+                .Include("RespostasAlunos.Questao.AssuntoQuestao")
                 .FirstOrDefault(x => x.ProvaId == id);
 
             return prova;
@@ -218,12 +216,15 @@ namespace TestAnalyser.DAL
             foreach (RespostasAluno item in prova.RespostasAlunos)
             {
                 if (item.Aluno.AlunoId == idAluno)
+                {
                     result.Add(item);
+                }
             }
+
             //prova.RespostasAlunos.Clear();
             //prova.RespostasAlunos.AddRange(result);
 
-            return result;
+            return result.OrderBy(x => x.RespostasAlunoId).ToList();
         }
 
         public static double BuscarValorNotamax(int ProvaID, int QuestaoID)
