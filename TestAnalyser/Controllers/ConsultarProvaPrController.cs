@@ -116,21 +116,15 @@ namespace TestAnalyser.Controllers
             prova = ProvaDAO.BuscarProvaId(ProvaId);
             List<double> notas = new List<double>();
 
-            List<RespostasAluno> result = prova.RespostasAlunos.ToList().GroupBy(elem => elem.Aluno.AlunoId).Select(g => g.First()).ToList();
+           // List<RespostasAluno> result = prova.RespostasAlunos.ToList().GroupBy(elem => elem.Aluno.AlunoId).Select(g => g.First()).ToList();
+
+            List<RespostasAluno> result = prova.RespostasAlunos.GroupBy(x => x.Aluno.AlunoId)
+                                  .Select(g => g.First())
+                                  .ToList();
 
             foreach (var respostas in result)
             {
-                //testar e depois remover
-                //AlunoNota alunoNota =  AlunoNotaDAO.BuscarAlunoNota(respostas.Aluno.AlunoId, prova.ProvaId);
-                //if(alunoNota != null)
-                //{
 
-                //    notas.Add(alunoNota.NotaTotal);
-                //}
-                //else
-                //{
-                //    notas.Add(0);
-                //}
                 notas.Add(ClacularNotaTotalAluno(respostas.Aluno.AlunoId, respostas.Prova.ProvaId));
                 List<RespostasAluno> resps = new List<RespostasAluno>();
                 resps = respostas.Prova.RespostasAlunos.Where(x => x.RespostaDiscursiva != null && x.Aluno.AlunoId == respostas.Aluno.AlunoId).ToList();
@@ -179,55 +173,9 @@ namespace TestAnalyser.Controllers
                 RecuperaGabaritosAlunos(prova.ProvaId);
             }
       
-            return View(ProvaDAO.BuscarProvaId(ProvaId));
+            return View(prova);
         }
 
-        //public ActionResult OpcoesCorrecao(int? idProva)
-        //{
-
-        //    if (idProva != null)
-        //    {
-        //        ProvaId = Convert.ToInt32(idProva);
-        //    }
-
-        //    if (todosGabaritos?.Any() != true && CorrigirAlunoEspecifico.Count() == 0)
-        //    {
-        //        prova = ProvaDAO.BuscarProvaId(ProvaId);
-        //        List<RespostasAluno> result = new List<RespostasAluno>();
-        //        List<RespostasAluno> resultAjst = new List<RespostasAluno>();
-        //        result = prova.RespostasAlunos.ToList().GroupBy(elem => elem.Aluno.AlunoId).Select(g => g.First()).ToList();
-        //        foreach (var itns in result)
-        //        {
-        //            if (itns.DataHoraInicio != null)
-        //                resultAjst.Add(itns);
-        //        }
-        //        todosGabaritos = resultAjst.OrderBy(x => x.Aluno.NomeAluno).ToList();
-
-        //        List<string> Notas = new List<string>();
-        //        foreach (var item in todosGabaritos)
-        //        {
-        //            List<RespostasAluno> Resp = ProvaDAO.BuscarRespostasPorAluno(item.Aluno.AlunoId, ProvaId);
-        //            double NotaSomada = 0;
-
-        //            foreach (var item2 in Resp)
-        //            {
-        //                NotaSomada = (NotaSomada + item2.NotaAluno);
-        //            }
-        //            Notas.Add(Convert.ToString(NotaSomada));
-        //        }
-        //        ViewBag.NotaDaProva = Notas;
-        //    }
-        //    else if (CorrigirAlunoEspecifico.Count() != 0)
-        //    {
-        //        ViewBag.RespostasAluno = CorrigirAlunoEspecifico;
-        //        return View(ProvaDAO.BuscarProvaId(ProvaId));
-        //    }
-
-
-        //    ViewBag.RespostasAluno = todosGabaritos;
-        //    return View(ProvaDAO.BuscarProvaId(ProvaId));
-        //}
-        // tela corrigir prova aluno especifico
         public ActionResult CorrigirRespostastoAluno(int idAluno)
         {
             ViewBag.Provas = new Prova();
@@ -291,10 +239,10 @@ namespace TestAnalyser.Controllers
         {
             return null;
         }
-        public ActionResult VoltarOpcoesCorrecao()
+        public void Voltar()
         {
             CorrigirAlunoEspecifico.Clear();
-            return RedirectToActionPermanent("OpcoesCorrecao", "ConsultarProvaPr");
+
         }
          public void limpar()
         {
@@ -343,14 +291,20 @@ namespace TestAnalyser.Controllers
 
         public void GerenciarNotaAluno(int alunoId , int provaId)
         {
-            
+            Prova provatemp = ProvaDAO.BuscarProvaId(provaId);
+            provatemp.RespostasAlunos.Clear();
+
+            List<RespostasAluno> resultado = RespostasAlunoDAO.RespostasAlunoProvaId(provaId);
+            //adiciono pois o resultado não traz correto da base de dados
+            provatemp.RespostasAlunos = resultado;
+
             AlunoNota alunoNota = AlunoNotaDAO.BuscarAlunoNota(alunoId, provaId);
             double notaTotal = 0;
             if (alunoNota == null)
             {
                 alunoNota = new AlunoNota();
                 alunoNota.Aluno = AlunoDAO.BuscarAlunoId(alunoId);
-                alunoNota.Prova = prova;
+                alunoNota.Prova = provatemp;
             }
                 foreach (var item in BuscarRespostasPorAluno(alunoId, provaId))
                 {
@@ -371,6 +325,12 @@ namespace TestAnalyser.Controllers
 
         public double ClacularNotaTotalAluno(int alunoId, int provaId)
         {
+            Prova provatemp = ProvaDAO.BuscarProvaId(provaId);
+            provatemp.RespostasAlunos.Clear();
+
+            List<RespostasAluno> resultado = RespostasAlunoDAO.RespostasAlunoProvaId(provaId);
+            //adiciono pois o resultado não traz correto da base de dados
+            provatemp.RespostasAlunos = resultado;
 
             AlunoNota alunoNota = AlunoNotaDAO.BuscarAlunoNota(alunoId, provaId);
             double notaTotal = 0;
@@ -378,7 +338,7 @@ namespace TestAnalyser.Controllers
             {
                 alunoNota = new AlunoNota();
                 alunoNota.Aluno = AlunoDAO.BuscarAlunoId(alunoId);
-                alunoNota.Prova = prova;
+                alunoNota.Prova = provatemp;
             }
             foreach (var item in BuscarRespostasPorAluno(alunoId, provaId))
             {

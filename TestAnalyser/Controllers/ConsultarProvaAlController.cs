@@ -90,6 +90,7 @@ namespace TestAnalyser.Controllers
         public void Voltar()
         {
             LimparDadosTela();
+
         }
 
         private void LimparDadosTela()
