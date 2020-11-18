@@ -15,8 +15,7 @@ namespace TestAnalyser.Controllers
         private static int cursoId = 0;
         private static int ProvaId = 0;
         private static Prova prova;
-        private static List<RespostasAluno> todosGabaritos = new List<RespostasAluno>();
-        private static List<RespostasAluno> CorrigirGabarito= new List<RespostasAluno>();
+        private static List<RespostasAluno> Filtrados = new List<RespostasAluno>();
         private static List<RespostasAluno> CorrigirAlunoEspecifico = new List<RespostasAluno>();
 
         // GET: ConsultarProvaPr
@@ -116,8 +115,6 @@ namespace TestAnalyser.Controllers
             prova = ProvaDAO.BuscarProvaId(ProvaId);
             List<double> notas = new List<double>();
 
-           // List<RespostasAluno> result = prova.RespostasAlunos.ToList().GroupBy(elem => elem.Aluno.AlunoId).Select(g => g.First()).ToList();
-
             List<RespostasAluno> result = prova.RespostasAlunos.GroupBy(x => x.Aluno.AlunoId)
                                   .Select(g => g.First())
                                   .ToList();
@@ -126,6 +123,7 @@ namespace TestAnalyser.Controllers
             {
 
                 notas.Add(ClacularNotaTotalAluno(respostas.Aluno.AlunoId, respostas.Prova.ProvaId));
+
                 List<RespostasAluno> resps = new List<RespostasAluno>();
                 resps = respostas.Prova.RespostasAlunos.Where(x => x.RespostaDiscursiva != null && x.Aluno.AlunoId == respostas.Aluno.AlunoId).ToList();
                 if (resps.Count != 0)
@@ -218,11 +216,10 @@ namespace TestAnalyser.Controllers
         public ActionResult CorrigirProvaAlunoEspecifico(int id, int idProva)
         {
             Prova prova = ProvaDAO.BuscarProvaId(idProva);
-            CorrigirGabarito = BuscarRespostasPorAluno(id, idProva);
-            ViewBag.Prova = prova;
-            ViewBag.RespostasAlunoCorrecao = CorrigirGabarito;
+            ViewBag.Prova = OrdenarObjetosProva(prova);
+            ViewBag.RespostasAlunoCorrecao = OrdenarObjetosProva(prova).RespostasAlunos;
 
-            return View(prova);
+            return View(OrdenarObjetosProva(prova));
         }
         private static List<RespostasAluno> BuscarRespostasPorAluno(int idAluno, int idProva)
         {
@@ -248,9 +245,6 @@ namespace TestAnalyser.Controllers
         {
             cursoId = 0;
             ProvaId = 0;
-            //prova = new Prova();
-            todosGabaritos = new List<RespostasAluno>();
-            CorrigirGabarito= new List<RespostasAluno>();
 
         }  
 
@@ -282,10 +276,6 @@ namespace TestAnalyser.Controllers
 
             GerenciarNotaAluno(aluno.AlunoId, prova.ProvaId);
 
-            //limpa os objetos para que sejam regerados e populados com os dados atualizados
-            prova = new Prova();
-            todosGabaritos = new List<RespostasAluno>();
-            CorrigirGabarito = new List<RespostasAluno>();
             return RedirectToAction("OpcoesCorrecao", "ConsultarProvaPr");
         }
 
@@ -325,37 +315,15 @@ namespace TestAnalyser.Controllers
 
         public double ClacularNotaTotalAluno(int alunoId, int provaId)
         {
-            Prova provatemp = ProvaDAO.BuscarProvaId(provaId);
-            provatemp.RespostasAlunos.Clear();
-
-            List<RespostasAluno> resultado = RespostasAlunoDAO.RespostasAlunoProvaId(provaId);
-            //adiciono pois o resultado não traz correto da base de dados
-            provatemp.RespostasAlunos = resultado;
-
-            AlunoNota alunoNota = AlunoNotaDAO.BuscarAlunoNota(alunoId, provaId);
             double notaTotal = 0;
-            if (alunoNota == null)
-            {
-                alunoNota = new AlunoNota();
-                alunoNota.Aluno = AlunoDAO.BuscarAlunoId(alunoId);
-                alunoNota.Prova = provatemp;
-            }
+
             foreach (var item in BuscarRespostasPorAluno(alunoId, provaId))
             {
                 notaTotal += item.NotaAluno;
 
             }
-            alunoNota.NotaTotal = notaTotal;
-            if (AlunoNotaDAO.BuscarAlunoNota(alunoNota.Aluno.AlunoId, alunoNota.Prova.ProvaId) == null)
-            {
-                AlunoNotaDAO.CadastrarAlunoNota(alunoNota);
-            }
-            else
-            {
-                AlunoNotaDAO.EditarAlunoNota(alunoNota);
-            }
 
-            return alunoNota.NotaTotal;
+            return notaTotal;
 
         }
         public Prova OrdenarObjetosProva(Prova prova)
@@ -364,7 +332,7 @@ namespace TestAnalyser.Controllers
             List<RespostasAluno> respostasAluno = prova.RespostasAlunos.OrderBy(o => o.RespostasAlunoId).ToList();
             respostasAluno.ForEach(h => {
                 // This will order your cars for this person by Make
-                h.Alternativas = h.Alternativas.OrderBy(t => t.AlternativaId).ToList();
+                h.Questao.Alternativas = h.Questao.Alternativas.OrderBy(t => t.AlternativaId).ToList();
             });
             prova.RespostasAlunos.Clear();
             prova.RespostasAlunos.AddRange(respostasAluno);
