@@ -119,7 +119,21 @@ namespace TestAnalyser.Controllers
             {
                 foreach (var item in Resp)
                 {
-                    NotaSomada = (NotaSomada + item.NotaAluno);
+                    if (item.NotaAluno > 3 && item.NotaAluno <= 10)
+                    {
+                        item.NotaAluno = (item.NotaAluno / 10);
+                        NotaSomada = NotaSomada + item.NotaAluno;
+                    }
+                    else if (item.NotaAluno > 10)
+                    {
+                        item.NotaAluno = (item.NotaAluno / 100);
+                        NotaSomada = NotaSomada + item.NotaAluno;
+                    }
+                    else
+                    {
+                        NotaSomada = NotaSomada + item.NotaAluno;
+                    }
+                    //NotaSomada = (NotaSomada + item.NotaAluno);
                 }
                 TempData["$NotaAluno$"] = NotaSomada.ToString("F");
 
