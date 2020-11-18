@@ -79,8 +79,7 @@ namespace TestAnalyser.DAL
         public static List<Assunto> BuscarAssuntosQuestaoTodos()
         {
             List<Assunto> assuntos = ctx.AssuntosQuestao.ToList();
-            //verificar o motivo dessa linha
-            //assuntos.RemoveRange(0,1);
+            assuntos.RemoveRange(0,1);
             return assuntos;
         }
 

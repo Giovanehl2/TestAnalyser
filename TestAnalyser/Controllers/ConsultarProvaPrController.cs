@@ -288,41 +288,20 @@ namespace TestAnalyser.Controllers
         public ActionResult FiltrarConsulta(int Situacao, int? matriculaAluno)
         {
 
-            //int situac = -1;
-            //int matr = -1;
-            //if (Situacao != 0)
-            //    situac = Convert.ToInt32(Situacao);
-
-
-            //if (matriculaAluno != null)
-            //    matr = Convert.ToInt32(matriculaAluno);
-
-            //if (situac != -1 && matr != -1)
-            //{
-            //    List<RespostasAluno> respostasFiltradas = new List<RespostasAluno>();
-            //    Aluno aluno = AlunoDAO.BuscarAlunoPorMatricula(matr);
-            //    //adiciona apenas do aluno especifico
-            //    if (aluno != null)
-            //    {
-            //        CorrigirAlunoEspecifico = new List<RespostasAluno>();
-            //        List<RespostasAluno> result = new List<RespostasAluno>();
-            //        result = RespostasAlunoDAO.PerguntasParaCorrigir(aluno.AlunoId, situac).ToList().GroupBy(elem => elem.Aluno.AlunoId).Select(g => g.First()).ToList();
-            //        CorrigirAlunoEspecifico.AddRange(result);
-            //    }
-            //}
-            //else
-            //{
-            //    CorrigirAlunoEspecifico.Clear();
-            //}
-
             return RedirectToAction("OpcoesCorrecao", "ConsultarProvaPr", new { Matricula = matriculaAluno, Situ = Situacao });
         }
 
         public ActionResult CorrigirProvaAlunoEspecifico(int id, int idProva)
         {
             Prova prova = ProvaDAO.BuscarProvaId(idProva);
+            List<RespostasAluno> respos = new List<RespostasAluno>();
             ViewBag.Prova = OrdenarObjetosProva(prova);
-            ViewBag.RespostasAlunoCorrecao = OrdenarObjetosProva(prova).RespostasAlunos;
+            foreach (var item in OrdenarObjetosProva(prova).RespostasAlunos)
+            {
+                if (item.Aluno.AlunoId == id)
+                    respos.Add(item);
+            }
+            ViewBag.RespostasAlunoCorrecao = respos;
 
             return View(OrdenarObjetosProva(prova));
         }

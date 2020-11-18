@@ -37,28 +37,31 @@ namespace TestAnalyser.DAL
         }
         public static Prova BuscarProvaId(int id)
         {
-            Prova prova = ctx.Provas.Include("ConfigPln")
-                .Include("Professor")
-                .Include("Professor.Disciplinas")
-                .Include("Professor.Provas")
-                .Include("NotasQuestoes")
-                .Include("NotasQuestoes.Questao")
-                .Include("Disciplina")
-                .Include("Disciplina.Turmas")
-                .Include("Disciplina.Professores")
-                .Include("Disciplina.Cursos")
-                .Include("Disciplina.Provas")
-                .Include("Disciplina.Alunos")
-                .Include("NotasQuestoes.Questao")
-                .Include("NotasQuestoes.Questao.AssuntoQuestao")
-                .Include("NotasQuestoes.Questao.Alternativas")
-                .Include("RespostasAlunos")
-                .Include("RespostasAlunos.Aluno")
-                .Include("RespostasAlunos.Alternativas")
-                .Include("RespostasAlunos.Questao")
-                .FirstOrDefault(x => x.ProvaId == id);
+            using ( var context = new TestAnalyser.Model.Context())
+            {
+                Prova prova = context.Provas.Include("ConfigPln")
+                    .Include("Professor")
+                    .Include("Professor.Disciplinas")
+                    .Include("Professor.Provas")
+                    .Include("NotasQuestoes")
+                    .Include("NotasQuestoes.Questao")
+                    .Include("Disciplina")
+                    .Include("Disciplina.Turmas")
+                    .Include("Disciplina.Professores")
+                    .Include("Disciplina.Cursos")
+                    .Include("Disciplina.Provas")
+                    .Include("Disciplina.Alunos")
+                    .Include("NotasQuestoes.Questao")
+                    .Include("NotasQuestoes.Questao.AssuntoQuestao")
+                    .Include("NotasQuestoes.Questao.Alternativas")
+                    .Include("RespostasAlunos")
+                    .Include("RespostasAlunos.Aluno")
+                    .Include("RespostasAlunos.Alternativas")
+                    .Include("RespostasAlunos.Questao")
+                    .FirstOrDefault(x => x.ProvaId == id);
 
-            return prova;
+                return prova;
+            }
         }
 
         public static List<Prova> BuscarTodasProvas()
