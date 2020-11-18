@@ -112,154 +112,165 @@ namespace TestAnalyser.Controllers
 
         public void RecuperaGabaritosAlunos(int ProvaId, int? Matricula, int? Situacao)
         {
-            List<string> status = new List<string>();
-            List<string> statusSitu = new List<string>();
-            List<double> notas = new List<double>();
-            List<double> notasSitu = new List<double>();
-            List<RespostasAluno> result = new List<RespostasAluno>();
-            List<RespostasAluno> resultSitu = new List<RespostasAluno>();
-            prova = ProvaDAO.BuscarProvaId(ProvaId);
-
-            if (Matricula != null)
+            try
             {
-                var matr = Convert.ToInt32(Matricula);
-                Aluno aluno = AlunoDAO.BuscarAlunoPorMatricula(matr);
-                result = prova.RespostasAlunos.GroupBy(x => x.Aluno.AlunoId == aluno.AlunoId)
-                    .Select(g => g.First()).ToList();
-                result.Remove(prova.RespostasAlunos.Where(f => f.Aluno.AlunoId != aluno.AlunoId).First());
-            }
-            else
-            {
-                result = prova.RespostasAlunos.GroupBy(x => x.Aluno.AlunoId)
-                    .Select(g => g.First()).ToList();
-            }
+                List<string> status = new List<string>();
+                List<string> statusSitu = new List<string>();
+                List<double> notas = new List<double>();
+                List<double> notasSitu = new List<double>();
+                List<RespostasAluno> result = new List<RespostasAluno>();
+                List<RespostasAluno> resultSitu = new List<RespostasAluno>();
+                prova = ProvaDAO.BuscarProvaIdConsultaProf(ProvaId);
 
-            var cont = 0;
-            foreach (var respostas in result)
-            {
-                notas.Add(ClacularNotaTotalAluno(respostas.Aluno.AlunoId, respostas.Prova.ProvaId));
-
-                List<RespostasAluno> resps = new List<RespostasAluno>();
-                resps = respostas.Prova.RespostasAlunos.Where(x => x.RespostaDiscursiva != null && x.Aluno.AlunoId == respostas.Aluno.AlunoId).ToList(); 
-                status.Add("");
-                if (resps.Count != 0)
+                if (Matricula != null)
                 {
-                    foreach (var item in resps)
-                    {
-                        if (item.SituacaoCorrecao == 1 || item.SituacaoCorrecao == 3 || item.SituacaoCorrecao == 4)
-                        {
-                            status[cont] = "Corrigido";
-                        }else if (item.SituacaoCorrecao == 0)
-                        {
-                            status[cont] = "Processando";
-                        }else if (item.SituacaoCorrecao == 2 || item.SituacaoCorrecao == 5)
-                        {
-                            status[cont] = "Corrigir Manual";
-                            break;
-                        }else
-                        {
-                            status[cont] = "Erro!";
-                        }
-                    }
+                    var matr = Convert.ToInt32(Matricula);
+                    Aluno aluno = AlunoDAO.BuscarAlunoPorMatricula(matr);
+                    result = prova.RespostasAlunos.GroupBy(x => x.Aluno.AlunoId == aluno.AlunoId)
+                        .Select(g => g.First()).ToList();
+                    result.Remove(prova.RespostasAlunos.Where(f => f.Aluno.AlunoId != aluno.AlunoId).First());
                 }
                 else
                 {
-                    status[cont] = "Não Realizado";
+                    result = prova.RespostasAlunos.GroupBy(x => x.Aluno.AlunoId)
+                        .Select(g => g.First()).ToList();
                 }
-                cont++;
-            }
 
-            var cc = 0;
-            var cc2 = 0;
-            foreach (var respostas in result)
-            {
-                List<RespostasAluno> resps = new List<RespostasAluno>();
-                resps = respostas.Prova.RespostasAlunos.Where(x => x.RespostaDiscursiva != null && x.Aluno.AlunoId == respostas.Aluno.AlunoId).ToList();
-                if (resps.Count != 0)
+                var cont = 0;
+                foreach (var respostas in result)
                 {
-                    var contcor = 0;
-                    foreach (var item in resps)
+                    notas.Add(ClacularNotaTotalAluno(respostas.Aluno.AlunoId, respostas.Prova.ProvaId));
+
+                    List<RespostasAluno> resps = new List<RespostasAluno>();
+                    resps = respostas.Prova.RespostasAlunos.Where(x => x.RespostaDiscursiva != null && x.Aluno.AlunoId == respostas.Aluno.AlunoId).ToList();
+                    status.Add("");
+                    if (resps.Count != 0)
                     {
-                        switch (Situacao)
+                        foreach (var item in resps)
                         {
-                            case 0:
+                            if (item.SituacaoCorrecao == 1 || item.SituacaoCorrecao == 3 || item.SituacaoCorrecao == 4)
+                            {
+                                status[cont] = "Corrigido";
+                            }
+                            else if (item.SituacaoCorrecao == 0)
+                            {
+                                status[cont] = "Processando";
+                            }
+                            else if (item.SituacaoCorrecao == 2 || item.SituacaoCorrecao == 5)
+                            {
+                                status[cont] = "Corrigir Manual";
                                 break;
-                            case 1:
-                                if (item.SituacaoCorrecao == 1 || item.SituacaoCorrecao == 3 || item.SituacaoCorrecao == 4)
-                                {
-                                    if (contcor == 0)
+                            }
+                            else
+                            {
+                                status[cont] = "Erro!";
+                            }
+                        }
+                    }
+                    else
+                    {
+                        status[cont] = "Não Realizado";
+                    }
+                    cont++;
+                }
+
+                var cc = 0;
+                var cc2 = 0;
+                foreach (var respostas in result)
+                {
+                    List<RespostasAluno> resps = new List<RespostasAluno>();
+                    resps = respostas.Prova.RespostasAlunos.Where(x => x.RespostaDiscursiva != null && x.Aluno.AlunoId == respostas.Aluno.AlunoId).ToList();
+                    if (resps.Count != 0)
+                    {
+                        var contcor = 0;
+                        foreach (var item in resps)
+                        {
+                            switch (Situacao)
+                            {
+                                case 0:
+                                    break;
+                                case 1:
+                                    if (item.SituacaoCorrecao == 1 || item.SituacaoCorrecao == 3 || item.SituacaoCorrecao == 4)
+                                    {
+                                        if (contcor == 0)
+                                        {
+                                            notasSitu.Add(0);
+                                            statusSitu.Add("");
+                                            resultSitu.Add(item);
+                                            statusSitu[cc] = (status[cc2]);
+                                            notasSitu[cc] = (notas[cc2]);
+                                            cc++;
+                                        }
+                                        contcor++;
+                                    }
+                                    break;
+                                case 2:
+                                    if (item.SituacaoCorrecao == 0)
                                     {
                                         notasSitu.Add(0);
                                         statusSitu.Add("");
+
                                         resultSitu.Add(item);
                                         statusSitu[cc] = (status[cc2]);
                                         notasSitu[cc] = (notas[cc2]);
                                         cc++;
                                     }
-                                    contcor++;
-                                }
-                                break;
-                            case 2:
-                                if (item.SituacaoCorrecao == 0)
-                                {
-                                    notasSitu.Add(0);
-                                    statusSitu.Add("");
+                                    break;
+                                case 3:
+                                    if (item.SituacaoCorrecao == 2 || item.SituacaoCorrecao == 5)
+                                    {
+                                        notasSitu.Add(0);
+                                        statusSitu.Add("");
 
-                                    resultSitu.Add(item);
-                                    statusSitu[cc] = (status[cc2]);
-                                    notasSitu[cc] = (notas[cc2]);
-                                    cc++;
-                                }
-                                break;
-                            case 3:
-                                if (item.SituacaoCorrecao == 2 || item.SituacaoCorrecao == 5)
-                                {
-                                    notasSitu.Add(0);
-                                    statusSitu.Add("");
+                                        resultSitu.Add(item);
+                                        statusSitu[cc] = (status[cc2]);
+                                        notasSitu[cc] = (notas[cc2]);
+                                        cc++;
+                                        return;
+                                    }
+                                    break;
 
-                                    resultSitu.Add(item);
-                                    statusSitu[cc] = (status[cc2]);
-                                    notasSitu[cc] = (notas[cc2]);
-                                    cc++;
-                                    return;
-                                }
-                                break;
-
-                            default:
-                                break;
+                                default:
+                                    break;
+                            }
+                            if (item.SituacaoCorrecao == 2 || item.SituacaoCorrecao == 5)
+                            { break; }
+                            if (item.SituacaoCorrecao == 0)
+                            { break; }
                         }
-                        if (item.SituacaoCorrecao == 2 || item.SituacaoCorrecao == 5)
-                            { break; }
-                        if (item.SituacaoCorrecao == 0)
-                            { break; }
+
                     }
-                    
+                    else if (Situacao == 4)
+                    {
+                        notasSitu.Add(0);
+                        statusSitu.Add("");
+
+                        resultSitu.Add(respostas);
+                        statusSitu[cc] = (status[cc2]);
+                        notasSitu[cc] = (notas[cc2]);
+                        cc++;
+                    }
+                    cc2++;
                 }
-                else if (Situacao == 4)
+
+                if (Situacao == 1 || Situacao == 2 || Situacao == 3 || Situacao == 4)
                 {
-                    notasSitu.Add(0);
-                    statusSitu.Add("");
-
-                    resultSitu.Add(respostas);
-                    statusSitu[cc] = (status[cc2]);
-                    notasSitu[cc] = (notas[cc2]);
-                    cc++;
+                    ViewBag.StatusDSProva = statusSitu;
+                    ViewBag.NotaDaProva = notasSitu;
+                    ViewBag.RespostasAluno = resultSitu;
                 }
-                cc2++;
+                else
+                {
+                    ViewBag.StatusDSProva = status;
+                    ViewBag.NotaDaProva = notas;
+                    ViewBag.RespostasAluno = result;
+                }
             }
-
-            if (Situacao == 1 || Situacao == 2 || Situacao == 3 || Situacao == 4)
+            catch (Exception e)
             {
-                ViewBag.StatusDSProva = statusSitu;
-                ViewBag.NotaDaProva = notasSitu;
-                ViewBag.RespostasAluno = resultSitu;
+                Console.WriteLine("{0} Exception caught.", e);
             }
-            else
-            {
-                ViewBag.StatusDSProva = status;
-                ViewBag.NotaDaProva = notas;
-                ViewBag.RespostasAluno = result;
-            }
+            
         }
         //tela para filtrar as provas a serem corrigidas
         public ActionResult OpcoesCorrecao(int? idProva, int? Matricula, int? Situ)
