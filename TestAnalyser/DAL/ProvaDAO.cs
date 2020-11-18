@@ -60,6 +60,32 @@ namespace TestAnalyser.DAL
 
             return prova;
         }
+
+        public static List<Prova> BuscarTodasProvas()
+        {
+            List<Prova> prova = ctx.Provas.Include("ConfigPln")
+                .Include("Professor")
+                .Include("Professor.Disciplinas")
+                .Include("Professor.Provas")
+                .Include("NotasQuestoes")
+                .Include("NotasQuestoes.Questao")
+                .Include("Disciplina")
+                .Include("Disciplina.Turmas")
+                .Include("Disciplina.Professores")
+                .Include("Disciplina.Cursos")
+                .Include("Disciplina.Provas")
+                .Include("Disciplina.Alunos")
+                .Include("NotasQuestoes.Questao")
+                .Include("NotasQuestoes.Questao.AssuntoQuestao")
+                .Include("NotasQuestoes.Questao.Alternativas")
+                .Include("RespostasAlunos")
+                .Include("RespostasAlunos.Aluno")
+                .Include("RespostasAlunos.Alternativas")
+                .Include("RespostasAlunos.Questao").ToList();
+
+            return prova;
+        }
+
         public static List<Prova> BuscarPorProfessor(int idProfessor)
         {
             return ctx.Provas.Include("ConfigPln")

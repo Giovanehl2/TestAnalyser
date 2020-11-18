@@ -34,5 +34,49 @@ namespace TestAnalyser.Controllers
 
             return "Erro inesperado durante a carga, favor entrar em contato com o suporte!";
         }
+
+        public static void ValidarCorrecoesDiscursivas()
+        {
+
+            List<Prova> provas = ProvaDAO.BuscarTodasProvas();
+
+            foreach (var item in provas)
+            {
+                List<RespostasAluno> respostas = RespostasAlunoDAO.BuscarRespostasPorProvaId(item.ProvaId);
+                respostas = respostas.Where(x => x.RespostaDiscursiva != null).ToList();
+
+                foreach (var item2 in respostas)
+                {
+                    if (item2.SituacaoCorrecao == 0 && item2.NotaAluno != 0)
+                    {
+                        var incorreto = item.ConfigPln.IncorretoFim;
+                        var parcial = item.ConfigPln.RevisarFim;
+                        var notaMAX = ProvaDAO.BuscarValorNotamax(item.ProvaId, item2.Questao.QuestaoId);
+
+                        if (item2.NotaAluno <= incorreto)
+                        {
+                            item2.SituacaoCorrecao = 3;
+                            item2.NotaAluno = 0;
+                        }
+                        else if (item2.NotaAluno <= parcial)
+                        {
+                            item2.SituacaoCorrecao = 2;
+                            item2.NotaAluno = 0;
+                        }
+                        else
+                        {
+                            item2.SituacaoCorrecao = 1;
+                            item2.NotaAluno = notaMAX;
+                        }
+
+                        RespostasAlunoDAO.Editar(item2);
+                    }
+
+                }
+            
+            }
+
+        }
+
     }
 }

@@ -21,6 +21,7 @@ namespace TestAnalyser.Controllers
         // GET: ConsultarProvaPr
         public ActionResult ConsultarProvaPr()
         {
+            ConfiguracoesController.ValidarCorrecoesDiscursivas();
             limpar();
             ViewBag.Cursos = ViewBag.Cursos = CursoDAO.listarCursosPorProfessor(Convert.ToInt32(Session["IdUsr"]));
 
@@ -126,7 +127,6 @@ namespace TestAnalyser.Controllers
                 result = prova.RespostasAlunos.GroupBy(x => x.Aluno.AlunoId == aluno.AlunoId)
                     .Select(g => g.First()).ToList();
                 result.Remove(prova.RespostasAlunos.Where(f => f.Aluno.AlunoId != aluno.AlunoId).First());
-                //resultFnl = result.Where(f => f.Aluno.AlunoId == aluno.AlunoId).First();
             }
             else
             {
@@ -248,7 +248,7 @@ namespace TestAnalyser.Controllers
                 cc2++;
             }
 
-            if (resultSitu.Count !=0)
+            if (Situacao == 1 || Situacao == 2 || Situacao == 3 || Situacao == 4)
             {
                 ViewBag.StatusDSProva = statusSitu;
                 ViewBag.NotaDaProva = notasSitu;

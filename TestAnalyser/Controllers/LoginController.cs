@@ -67,6 +67,7 @@ namespace TestAnalyser.Controllers
                         NA = 2;
                         NomeUser = result.Professor.Nome;
                         IdUsr = result.Professor.ProfessorId;
+                        //ConfiguracoesController.ValidarCorrecoesDiscursivas();
                     }
                     else if (result.TipoUsr == 3)
                     {
